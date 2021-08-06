@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_dash_board">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/active_contract_card_view"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/in_active_card_view">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/active_contract_bg1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_hills_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/guideline"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:id="@+id/active_contract_bg2"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_hills_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/guideline"
+                app:layout_constraintRight_toLeftOf="@+id/guideline3"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:id="@+id/active_contract_bg3"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_hills_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/guideline2"
+                app:layout_constraintRight_toRightOf="parent"
+                android:contentDescription="@null" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".6" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="273dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".85" />
+
+            <TextView
+                android:id="@+id/active_contract_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="start"
+                android:text="hhhhhhhhhh"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/active_contract_dollar_img"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="8dp" />
+
+            <ImageView
+                android:id="@+id/active_contract_dollar_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_dollar"
+                app:layout_constraintBottom_toBottomOf="@+id/active_contract_amount"
+                app:layout_constraintRight_toLeftOf="@+id/active_contract_amount"
+                app:layout_constraintTop_toTopOf="@+id/active_contract_amount"
+                android:contentDescription="@null"
+                android:layout_marginRight="4dp"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/active_contract_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="24dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/in_active_card_view"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/active_contract_card_view"
+        app:layout_constraintStart_toStartOf="@+id/active_contract_card_view"
+        app:layout_constraintTop_toBottomOf="@+id/active_contract_card_view"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/in_active_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="start"
+                android:text="inactive_contract_value"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/in_active_dollar_img"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="8dp" />
+
+            <ImageView
+                android:id="@+id/in_active_dollar_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_dollar"
+                app:layout_constraintBottom_toBottomOf="@+id/in_active_amount"
+                app:layout_constraintRight_toLeftOf="@+id/in_active_amount"
+                app:layout_constraintTop_toTopOf="@+id/in_active_amount"
+                android:contentDescription="@null"
+                android:layout_marginRight="4dp" />
+
+            <TextView
+                android:id="@+id/in_active_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="24dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/registration_constrain"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/in_active_card_view"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/direct_affiliates_constrain">-->
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/ic_registration_card"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            app:cardCornerRadius="25dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/registration_bottom_view"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/ic_registration"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:src="@drawable/ic_calendar"-->
+<!--                android:contentDescription="@null" />-->
+
+<!--        </androidx.cardview.widget.CardView>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/registration_txt"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginEnd="6dp"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:text="@string/date_of_registration"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_registration_card"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/registration_date"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/ic_registration_card"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_registration_card"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:layout_marginRight="6dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/registration_date"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="6dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            android:fontFamily="@font/roboto_bold"-->
+<!--            android:gravity="center"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            android:textSize="13sp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_registration_card"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/registration_txt"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_registration_card"-->
+<!--            android:layout_marginLeft="6dp"-->
+<!--            android:layout_marginRight="2dp" />-->
+
+<!--        <View-->
+<!--            android:id="@+id/registration_bottom_view"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            android:background="@color/light_black"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="@+id/registration_txt"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            android:layout_marginRight="2dp" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/direct_affiliates_constrain"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/registration_constrain"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/left_affiliates_constrain">-->
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/ic_direct_affiliates_card"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            app:cardCornerRadius="25dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/direct_affiliates_bottom_view"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/ic_direct_affiliates1"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:src="@drawable/ic_right_arrow"-->
+<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintHorizontal_chainStyle="packed"-->
+<!--                    app:layout_constraintRight_toLeftOf="@+id/ic_direct_affiliates2"-->
+<!--                    android:contentDescription="@null"/>-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/ic_direct_affiliates2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:src="@drawable/ic_left_arrow"-->
+<!--                    app:layout_constraintLeft_toRightOf="@+id/ic_direct_affiliates1"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/ic_direct_affiliates1"-->
+<!--                    app:layout_constraintRight_toRightOf="parent"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/ic_direct_affiliates1"-->
+<!--                    android:contentDescription="@null"/>-->
+
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--        </androidx.cardview.widget.CardView>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/direct_affiliates_txt"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginEnd="6dp"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:text="@string/direct_affiliates"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_direct_affiliates_card"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/direct_affiliates_date"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/ic_direct_affiliates_card"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_direct_affiliates_card"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:layout_marginRight="6dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/direct_affiliates_date"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/roboto_bold"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            android:textSize="13sp"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_marginStart="6dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_direct_affiliates_card"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/direct_affiliates_txt"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_direct_affiliates_card"-->
+<!--            android:layout_marginLeft="6dp"-->
+<!--            android:layout_marginRight="2dp" />-->
+
+<!--        <View-->
+<!--            android:id="@+id/direct_affiliates_bottom_view"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            android:background="@color/light_black"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="@+id/direct_affiliates_txt"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            android:layout_marginRight="2dp" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/left_affiliates_constrain"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/direct_affiliates_constrain"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/right_affiliates_constrain">-->
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/ic_left_affiliates_card"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            app:cardCornerRadius="25dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/left_affiliates_bottom_view"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/ic_left_affiliates"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:src="@drawable/ic_left_arrow"-->
+<!--                android:contentDescription="@null" />-->
+
+<!--        </androidx.cardview.widget.CardView>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/left_affiliates_txt"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginEnd="6dp"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:text="@string/left_affiliates"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_left_affiliates_card"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/left_affiliates_date"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/ic_left_affiliates_card"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_left_affiliates_card"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:layout_marginRight="6dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/left_affiliates_date"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="6dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            android:fontFamily="@font/roboto_bold"-->
+<!--            android:gravity="center"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            android:textSize="13sp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_left_affiliates_card"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/left_affiliates_txt"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_left_affiliates_card"-->
+<!--            android:layout_marginLeft="6dp"-->
+<!--            android:layout_marginRight="2dp" />-->
+
+<!--        <View-->
+<!--            android:id="@+id/left_affiliates_bottom_view"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            android:background="@color/light_black"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="@+id/left_affiliates_txt"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            android:layout_marginRight="2dp" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/right_affiliates_constrain"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/left_affiliates_constrain"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/active_contracts_constrain">-->
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/ic_right_affiliates_card"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            app:cardCornerRadius="25dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/right_affiliates_bottom_view"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/ic_right_affiliates"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:src="@drawable/ic_right_arrow"-->
+<!--                android:contentDescription="@null" />-->
+
+<!--        </androidx.cardview.widget.CardView>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/right_affiliates_txt"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginEnd="6dp"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:text="@string/right_affiliates"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_right_affiliates_card"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/right_affiliates_date"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/ic_right_affiliates_card"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_right_affiliates_card"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:layout_marginRight="6dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/right_affiliates_date"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="6dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            android:fontFamily="@font/roboto_bold"-->
+<!--            android:gravity="center"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            android:textSize="13sp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_right_affiliates_card"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/right_affiliates_txt"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_right_affiliates_card"-->
+<!--            android:layout_marginLeft="6dp"-->
+<!--            android:layout_marginRight="2dp" />-->
+
+<!--        <View-->
+<!--            android:id="@+id/right_affiliates_bottom_view"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            android:background="@color/light_black"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="@+id/right_affiliates_txt"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            android:layout_marginRight="2dp" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/active_contracts_constrain"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/right_affiliates_constrain"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/in_active_contracts_constrain">-->
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/ic_active_contracts_card"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            app:cardCornerRadius="25dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/active_contracts_bottom_view"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/ic_active_contracts"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:src="@drawable/ic_tick"-->
+<!--                android:contentDescription="@null" />-->
+
+<!--        </androidx.cardview.widget.CardView>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/active_contracts_txt"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginEnd="6dp"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:text="@string/active_contracts"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_active_contracts_card"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/active_contracts_date"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/ic_active_contracts_card"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_active_contracts_card"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:layout_marginRight="6dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/active_contracts_date"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="6dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            android:fontFamily="@font/roboto_bold"-->
+<!--            android:gravity="center"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            android:textSize="13sp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_active_contracts_card"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/active_contracts_txt"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_active_contracts_card"-->
+<!--            android:layout_marginLeft="6dp"-->
+<!--            android:layout_marginRight="2dp" />-->
+
+<!--        <View-->
+<!--            android:id="@+id/active_contracts_bottom_view"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            android:background="@color/light_black"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="@+id/active_contracts_txt"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            android:layout_marginRight="2dp" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/in_active_contracts_constrain"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginBottom="8dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/active_contract_card_view"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/active_contracts_constrain"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent">-->
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/ic_in_active_contracts_card"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            app:cardCornerRadius="25dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/ic_in_active_contracts"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:src="@drawable/ic_cross"-->
+<!--                android:contentDescription="@null"/>-->
+
+<!--        </androidx.cardview.widget.CardView>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/in_active_contracts_txt"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginEnd="6dp"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:text="@string/in_active_contracts"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_in_active_contracts_card"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/in_active_contracts_date"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/ic_in_active_contracts_card"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_in_active_contracts_card"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:layout_marginRight="6dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/in_active_contracts_date"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="6dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            android:fontFamily="@font/roboto_bold"-->
+<!--            android:gravity="center"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            android:textSize="13sp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ic_in_active_contracts_card"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/in_active_contracts_txt"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ic_in_active_contracts_card"-->
+<!--            android:layout_marginLeft="6dp"-->
+<!--            android:layout_marginRight="2dp" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

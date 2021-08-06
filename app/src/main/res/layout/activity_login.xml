@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00000000"
+        android:orientation="vertical"
+        android:weightSum="12">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_dis_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="60dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:text="Log In"
+                        android:textColor="#002f4f"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/txt_welcome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="11dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:text="Welcome To 'Retail Vend'"
+                        android:textColor="#002f4f"
+                        android:textFontWeight="600"
+                        android:textSize="16sp" />
+
+
+                    <LinearLayout
+                        android:id="@+id/lin_user_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edt_box_size"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="73dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/lin_storke"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:padding="1dp"
+                        android:weightSum="3">
+
+                        <LinearLayout
+                            android:id="@+id/lin_user_back1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/lin_login_clr_storke"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_size"
+                                android:layout_height="@dimen/icon_size"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_phone" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="#c3cde4" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2.5">
+
+
+                            <EditText
+                                android:id="@+id/edt_username"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:fontFamily="@font/roboto_regular"
+                                android:hint="Mobile Number/User Name"
+                                android:inputType="textCapWords"
+                                android:maxLength="16"
+                                android:paddingLeft="@dimen/left_right_margin_12"
+                                android:paddingRight="@dimen/left_right_margin_12"
+                                android:singleLine="true"
+                                android:textColor="#5b636a"
+                                android:textColorHint="#805b636a"
+                                android:textCursorDrawable="@drawable/color_cursor"
+                                android:textFontWeight="600"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txt_user_error"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="16dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Not a valid mobile number"
+                        android:textColor="@color/red"
+                        android:textSize="13sp"
+                        android:visibility="gone" />
+
+
+                    <LinearLayout
+                        android:id="@+id/lin_pass"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edt_box_size"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/lin_storke"
+                        android:orientation="horizontal"
+                        android:padding="1dp"
+                        android:weightSum="3">
+
+                        <LinearLayout
+                            android:id="@+id/lin_pass1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/lin_login_clr_storke"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_size"
+                                android:layout_height="@dimen/icon_size"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_password" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="#c3cde4" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2.5"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2.5">
+
+                                <EditText
+                                    android:id="@+id/edt_pass"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@null"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:textFontWeight="600"
+                                    android:hint="Password"
+                                    android:inputType="textPassword"
+                                    android:maxLength="16"
+                                    android:paddingLeft="@dimen/left_right_margin_12"
+                                    android:singleLine="true"
+                                    android:textColor="#5b636a"
+                                    android:textColorHint="#805b636a"
+                                    android:textCursorDrawable="@drawable/color_cursor"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/lin_eye"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/img_eye"
+                                    android:layout_width="19dp"
+                                    android:layout_height="19dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_show_eye" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp">
+
+                        <TextView
+                            android:id="@+id/txt_forgot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
+                            android:gravity="center|right"
+                            android:paddingRight="16dp"
+                            android:text="Forgot Password ?"
+                            android:textColor="#674cf3"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/btn_box_size"
+                        android:layout_marginTop="80dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/lin_login"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/lin_button"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/txt_signIn"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/roboto_medium"
+                                android:gravity="center"
+                                android:text="SIGN IN"
+                                android:textColor="#002f4f"
+                                android:textFontWeight="700"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:indeterminate="true"
+                            android:indeterminateTintMode="src_atop"
+                            android:theme="@style/CardView.Dark"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp" />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
