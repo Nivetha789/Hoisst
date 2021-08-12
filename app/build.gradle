@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.retailvend"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -34,6 +34,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
 
-    //edit text
-    implementation 'com.libizo:customedittext:1.0.4'
+    // Bubble Bottom Navigation bar
+    implementation  'com.fxn769:bubbletabbar:1.0.6'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

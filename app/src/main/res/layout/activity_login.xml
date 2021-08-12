@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,15 +23,21 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/logo" />
 
                     <TextView
                         android:id="@+id/txt_dis_login"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="60dp"
-                        android:fontFamily="@font/roboto_bold"
+                        android:fontFamily="@font/quicksand_bold"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:text="Log In"
@@ -42,10 +49,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="11dp"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/quicksand_bold"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:text="Welcome To 'Retail Vend'"
+                        android:text="Welcome To 'Hoisst'"
                         android:textColor="#002f4f"
                         android:textFontWeight="600"
                         android:textSize="16sp" />
@@ -78,7 +85,6 @@
                                 android:layout_gravity="center"
                                 android:src="@drawable/ic_phone" />
 
-
                         </LinearLayout>
 
                         <View
@@ -97,8 +103,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@null"
-                                android:fontFamily="@font/roboto_regular"
-                                android:hint="Mobile Number/User Name"
+                                android:fontFamily="@font/quicksand_regular"
+                                android:hint="Mobile Number"
                                 android:inputType="textCapWords"
                                 android:maxLength="16"
                                 android:paddingLeft="@dimen/left_right_margin_12"
@@ -108,7 +114,7 @@
                                 android:textColorHint="#805b636a"
                                 android:textCursorDrawable="@drawable/color_cursor"
                                 android:textFontWeight="600"
-                                android:textSize="14sp" />
+                                android:textSize="@dimen/edit_text_size" />
 
                         </LinearLayout>
 
@@ -122,7 +128,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginRight="16dp"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/quicksand_regular"
                         android:text="Not a valid mobile number"
                         android:textColor="@color/red"
                         android:textSize="13sp"
@@ -179,7 +185,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@null"
-                                    android:fontFamily="@font/roboto_regular"
+                                    android:fontFamily="@font/quicksand_regular"
                                     android:textFontWeight="600"
                                     android:hint="Password"
                                     android:inputType="textPassword"
@@ -189,7 +195,7 @@
                                     android:textColor="#5b636a"
                                     android:textColorHint="#805b636a"
                                     android:textCursorDrawable="@drawable/color_cursor"
-                                    android:textSize="14sp" />
+                                    android:textSize="@dimen/edit_text_size" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -222,11 +228,11 @@
                             android:id="@+id/txt_forgot"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_regular"
+                            android:fontFamily="@font/quicksand_regular"
                             android:gravity="center|right"
                             android:paddingRight="16dp"
                             android:text="Forgot Password ?"
-                            android:textColor="#674cf3"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="13sp" />
 
                     </LinearLayout>
@@ -252,12 +258,12 @@
                                 android:id="@+id/txt_signIn"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:fontFamily="@font/roboto_medium"
+                                android:fontFamily="@font/quicksand_medium"
                                 android:gravity="center"
                                 android:text="SIGN IN"
-                                android:textColor="#002f4f"
+                                android:textColor="#ffffff"
                                 android:textFontWeight="700"
-                                android:textSize="14sp" />
+                                android:textSize="@dimen/btn_text_size" />
 
                         </LinearLayout>
 
@@ -269,14 +275,10 @@
                             android:background="@android:color/transparent"
                             android:indeterminate="true"
                             android:indeterminateTintMode="src_atop"
-                            android:theme="@style/CardView.Dark"
+                            android:theme="@style/ThemeOverlay.AppCompat.Dark"
                             android:visibility="gone" />
 
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp" />
 
                 </LinearLayout>
 
