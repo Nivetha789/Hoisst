@@ -10,11 +10,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Moisst">
-        <activity android:name=".TodayOutletActivity"
+        <activity android:name=".CollectionActivity"></activity>
+        <activity
+            android:name=".TodayOutletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Moisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ForgetPasswordActivity"
             android:screenOrientation="portrait"
