@@ -1,4 +1,4 @@
-package com.retailvend;
+package com.retailvend.todayoutlet;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
+import com.retailvend.R;
 
 public class TodayOutletActivity extends AppCompatActivity {
 

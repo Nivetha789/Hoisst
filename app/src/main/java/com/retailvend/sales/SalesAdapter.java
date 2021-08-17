@@ -1,42 +1,38 @@
-package com.retailvend;
+package com.retailvend.sales;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.Guideline;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.content.Intent;
-import android.os.*;
+import com.retailvend.R;
 
-import java.util.ArrayList;
-import java.util.List;
+public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder> {
 
-public class TodayOutletAdapter extends RecyclerView.Adapter<TodayOutletAdapter.MyViewHolder> {
-
+    private static final int VIEW_TYPE_LOADING = 0;
+    private static final int VIEW_TYPE_NORMAL = 1;
+    private static boolean isLoaderVisible = false;
+    //    private List<Saleslist> saleslists;
     private Activity activity;
 
 
-    TodayOutletAdapter(Activity activity) {
+//    public SalesAdapter(Context context, List<Saleslist> postItems) {
+//        this.saleslists = postItems;
+//        this.context = context;
+//    }
+
+    SalesAdapter(Activity activity) {
         this.activity = activity;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.today_outlet_adapter, viewGroup, false);
-        return new MyViewHolder(view);
+    public SalesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(activity).inflate(R.layout.item_sales_list, viewGroup, false);
+        return new SalesAdapter.MyViewHolder(view);
     }
 
     @Override
@@ -63,7 +59,7 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<TodayOutletAdapter.
 
     @Override
     public int getItemCount() {
-        return 6;
+        return 10;
     }
 
 //    void setOnClickListener(OnClickListener onClickListener) {

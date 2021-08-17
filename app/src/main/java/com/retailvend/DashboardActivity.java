@@ -1,6 +1,5 @@
 package com.retailvend;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,13 +9,14 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+import com.retailvend.sales.SalesActivity;
+import com.retailvend.todayoutlet.TodayOutletActivity;
 
 public class DashboardActivity extends AppCompatActivity {
 
     CardView todayOutletCardview;
+    CardView salesCardview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,7 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         todayOutletCardview=findViewById(R.id.today_outlet_cardview);
+        salesCardview=findViewById(R.id.shop_card_view);
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -46,8 +47,15 @@ public class DashboardActivity extends AppCompatActivity {
         todayOutletCardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(DashboardActivity.this,TodayOutletActivity.class);
+                Intent i = new Intent(DashboardActivity.this, TodayOutletActivity.class);
                 startActivity(i);
+            }
+        });
+        salesCardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent salesIntent=new Intent(DashboardActivity.this, SalesActivity.class);
+                startActivity(salesIntent);
             }
         });
     }

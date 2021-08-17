@@ -98,6 +98,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:contentDescription="@null"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/dash_collection"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -355,36 +356,35 @@
                         app:layout_constraintGuide_percent=".85" />
 
                     <ImageView
-                        android:id="@+id/sales_card"
+                        android:id="@+id/ic_sales_card"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:layout_marginEnd="10dp"
                         android:background="@drawable/circle_bg"
                         android:backgroundTint="@color/white"
-                        android:layout_marginEnd="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                            <ImageView
-                                android:id="@+id/ic_sales"
-                                android:layout_width="40dp"
-                                android:layout_height="35dp"
-                                android:layout_gravity="center"
-                                android:contentDescription="@null"
-                                android:src="@drawable/ic_sales"
-                                app:layout_constraintBottom_toBottomOf="@id/sales_card"
-                                app:layout_constraintLeft_toLeftOf="@id/sales_card"
-                                app:layout_constraintTop_toTopOf="@id/sales_card"
-                                app:layout_constraintRight_toRightOf="@id/sales_card"/>
-
+                    <ImageView
+                        android:id="@+id/ic_sales"
+                        android:layout_width="40dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_sales"
+                        app:layout_constraintBottom_toBottomOf="@+id/ic_sales_card"
+                        app:layout_constraintEnd_toEndOf="@+id/ic_sales_card"
+                        app:layout_constraintStart_toStartOf="@+id/ic_sales_card"
+                        app:layout_constraintTop_toTopOf="@+id/ic_sales_card" />
                     <TextView
                         android:id="@+id/shop_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
                         android:fontFamily="@font/quicksand_semi_bold"
                         android:text="SALES DETAILS"
                         android:textColor="@color/black"
-                        android:layout_marginStart="16dp"
                         android:textSize="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -448,6 +448,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="@null"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/dash_outstand"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
