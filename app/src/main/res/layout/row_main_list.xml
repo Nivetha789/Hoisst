@@ -144,7 +144,7 @@
                                 android:background="@drawable/lin_storke"
                                 android:gravity="center"
                                 android:fontFamily="@font/quicksand_bold"
-                                android:hint="Enter Price *"
+                                android:hint="Price *"
                                 android:inputType="number"
                                 android:singleLine="true"
                                 android:textColor="@color/black"

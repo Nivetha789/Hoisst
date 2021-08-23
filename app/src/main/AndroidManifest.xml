@@ -21,11 +21,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hoisst">
-        <activity android:name=".sales.CreateSalesOrderActivity"
+        <activity android:name=".todayoutlet.TodayOutletDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
             tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".sales.CreateSalesOrderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Hoisst.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".sales.SalesActivity"
             android:screenOrientation="portrait"

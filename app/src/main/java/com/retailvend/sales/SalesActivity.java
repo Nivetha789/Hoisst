@@ -1,4 +1,4 @@
-package com.retailvend.sales;
+ package com.retailvend.sales;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -53,6 +53,7 @@ public class SalesActivity extends AppCompatActivity {
         }
 
         toolbar = findViewById(R.id.toolbar);
+        salesRecycler = findViewById(R.id.recyclerView);
         mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

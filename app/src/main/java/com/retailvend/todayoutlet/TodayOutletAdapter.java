@@ -1,14 +1,21 @@
 package com.retailvend.todayoutlet;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.retailvend.DashboardActivity;
 import com.retailvend.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class TodayOutletAdapter extends RecyclerView.Adapter<TodayOutletAdapter.MyViewHolder> {
 
@@ -46,6 +53,13 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<TodayOutletAdapter.
 //        if((datas.size()-1)==position){
 //            holder.view.setVisibility(View.VISIBLE);
 //        }
+        holder.todayOutletCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(activity, TodayOutletDetailsActivity.class);
+                activity.startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -58,10 +72,12 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<TodayOutletAdapter.
 //    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        CardView todayOutletCard;
+
 
         MyViewHolder(View itemView) {
             super(itemView);
+            todayOutletCard=itemView.findViewById(R.id.today_outlet);
         }
-
     }
 }
