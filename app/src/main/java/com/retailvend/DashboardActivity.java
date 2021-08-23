@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -17,6 +18,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     CardView todayOutletCardview;
     CardView salesCardview;
+    ImageView profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,8 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         todayOutletCardview=findViewById(R.id.today_outlet_cardview);
-        salesCardview=findViewById(R.id.shop_card_view);
+        salesCardview=findViewById(R.id.sales_card_view);
+        profile=findViewById(R.id.profile);
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -56,6 +59,14 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent salesIntent=new Intent(DashboardActivity.this, SalesActivity.class);
                 startActivity(salesIntent);
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent profileIntent=new Intent(DashboardActivity.this, ProfileActivity.class);
+                startActivity(profileIntent);
             }
         });
     }

@@ -48,7 +48,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/collection_cardview"
@@ -59,16 +59,18 @@
                 android:layout_marginEnd="24dp"
                 app:cardBackgroundColor="#8F7E7C"
                 app:cardCornerRadius="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/shop_card_view"
-                app:layout_constraintStart_toStartOf="@+id/shop_card_view"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintEnd_toEndOf="@+id/sales_card_view"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/sales_card_view"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/collection_constrain"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintEnd_toEndOf="@+id/shop_card_view"
-                    app:layout_constraintStart_toStartOf="@+id/shop_card_view"
+                    app:layout_constraintEnd_toEndOf="@+id/sales_card_view"
+                    app:layout_constraintStart_toStartOf="@+id/sales_card_view"
                     app:layout_constraintTop_toBottomOf="@+id/order_count_card_view">
 
                     <ImageView
@@ -80,7 +82,7 @@
                         android:backgroundTint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/ic_collection"
@@ -121,9 +123,9 @@
                         android:id="@+id/outstanding_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:fontFamily="@font/quicksand_medium"
                         android:text="Total"
-                        android:layout_marginTop="5dp"
                         android:textColor="@color/black"
                         android:textSize="13dp"
                         app:layout_constraintStart_toStartOf="@+id/collection_txt"
@@ -131,12 +133,12 @@
                         app:layout_constraintVertical_chainStyle="packed" />
 
                     <TextView
-                        android:id="@+id/outstanding_count"
+                        android:id="@+id/collection_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/quicksand_medium"
                         android:gravity="center"
-                        android:text="20/05"
+                        android:text="05/20"
                         android:textColor="@color/black"
                         android:textSize="13dp"
                         app:layout_constraintStart_toStartOf="@+id/collection_txt"
@@ -146,37 +148,51 @@
 
             </androidx.cardview.widget.CardView>
 
+<!--            <View-->
+<!--                android:id="@+id/collect_shape"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="-12dp"-->
+<!--                android:background="@drawable/down_arrow"-->
+<!--                android:backgroundTint="#8F7E7C"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/today_outlet_cardview"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/collection_cardview"-->
+<!--                app:layout_constraintHorizontal_bias="0.5"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/collection_cardview"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/collection_cardview" />-->
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/today_outlet_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="145dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="24dp"
                 app:cardBackgroundColor="#FBC12E"
                 app:cardCornerRadius="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/shop_card_view"
-                app:layout_constraintStart_toStartOf="@+id/shop_card_view"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/sales_card_view"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/sales_card_view"
                 app:layout_constraintTop_toBottomOf="@+id/collection_cardview">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/today_outlet_constrain"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintEnd_toEndOf="@+id/shop_card_view"
-                    app:layout_constraintStart_toStartOf="@+id/shop_card_view"
+                    app:layout_constraintEnd_toEndOf="@+id/sales_card_view"
+                    app:layout_constraintStart_toStartOf="@+id/sales_card_view"
                     app:layout_constraintTop_toBottomOf="@+id/outstanding_constrain">
 
                     <ImageView
                         android:id="@+id/today_outlet_card"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:layout_marginEnd="10dp"
                         android:background="@drawable/circle_bg"
                         android:backgroundTint="@color/white"
-                        android:layout_marginEnd="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/ic_today_outlet1"
@@ -189,6 +205,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/today_outlet_card"
                         app:layout_constraintStart_toStartOf="@+id/today_outlet_card"
                         app:layout_constraintTop_toTopOf="@+id/today_outlet_card" />
+
                     <ImageView
                         android:id="@+id/outlet_bg1"
                         android:layout_width="0dp"
@@ -273,7 +290,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/quicksand_medium"
                         android:gravity="center"
-                        android:text="20/02"
+                        android:text="02/20"
                         android:textColor="@color/black"
                         android:textSize="13dp"
                         app:layout_constraintStart_toStartOf="@+id/today_outlet_txt"
@@ -283,16 +300,30 @@
 
             </androidx.cardview.widget.CardView>
 
+<!--            <View-->
+<!--                android:id="@+id/outlet_shape"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="-12dp"-->
+<!--                android:background="@drawable/down_arrow"-->
+<!--                android:backgroundTint="#FBC12E"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/sales_card_view"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/today_outlet_cardview"-->
+<!--                app:layout_constraintHorizontal_bias="0.5"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/today_outlet_cardview"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/today_outlet_cardview" />-->
+
             <androidx.cardview.widget.CardView
-                android:id="@+id/shop_card_view"
+                android:id="@+id/sales_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="145dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="24dp"
                 app:cardBackgroundColor="#b5bdcf"
                 app:cardCornerRadius="10dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/today_outlet_cardview"
                 app:layout_constraintVertical_chainStyle="spread_inside">
@@ -377,6 +408,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/ic_sales_card"
                         app:layout_constraintStart_toStartOf="@+id/ic_sales_card"
                         app:layout_constraintTop_toTopOf="@+id/ic_sales_card" />
+
                     <TextView
                         android:id="@+id/shop_title"
                         android:layout_width="0dp"
@@ -422,25 +454,40 @@
 
             </androidx.cardview.widget.CardView>
 
+<!--            <View-->
+<!--                android:id="@+id/sales_shape"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="-12dp"-->
+<!--                android:background="@drawable/down_arrow"-->
+<!--                android:backgroundTint="#b5bdcf"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/outstanding_cardview"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/sales_card_view"-->
+<!--                app:layout_constraintHorizontal_bias="0.5"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/sales_card_view"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/sales_card_view" />-->
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/outstanding_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="145dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="24dp"
                 app:cardBackgroundColor="#9EA18E"
                 app:cardCornerRadius="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/shop_card_view"
-                app:layout_constraintStart_toStartOf="@+id/shop_card_view"
-                app:layout_constraintTop_toBottomOf="@+id/shop_card_view">
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/sales_card_view"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/sales_card_view"
+                app:layout_constraintTop_toBottomOf="@+id/sales_card_view">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/outstanding_constrain"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintEnd_toEndOf="@+id/shop_card_view"
-                    app:layout_constraintStart_toStartOf="@+id/shop_card_view"
+                    app:layout_constraintEnd_toEndOf="@+id/sales_card_view"
+                    app:layout_constraintStart_toStartOf="@+id/sales_card_view"
                     app:layout_constraintTop_toBottomOf="@+id/order_count_card_view">
 
                     <ImageView
@@ -459,12 +506,12 @@
                         android:id="@+id/ic_outstanding_card"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:layout_marginEnd="10dp"
                         android:background="@drawable/circle_bg"
                         android:backgroundTint="@color/white"
-                        android:layout_marginEnd="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/imageView2"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/ic_outstanding"
@@ -515,6 +562,19 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
+
+<!--            <View-->
+<!--                android:id="@+id/outstand_shape"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="-12dp"-->
+<!--                android:background="@drawable/down_arrow"-->
+<!--                android:backgroundTint="#9EA18E"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/outstanding_cardview"-->
+<!--                app:layout_constraintHorizontal_bias="0.5"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/outstanding_cardview"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/outstanding_cardview" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

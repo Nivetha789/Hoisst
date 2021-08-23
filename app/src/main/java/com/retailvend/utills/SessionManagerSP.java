@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class SessionManagerSP {
-
     // Shared Preferences
     SharedPreferences pref;
 
@@ -29,88 +28,54 @@ public class SessionManagerSP {
     }
 
 
+    public void setPhonelogin(String authkey) {
 
-    public void setlogin(String authkey) {
-
-        editor.putString("login", authkey);
-
-        editor.commit();
-
-
-    }
-
-    public String getlogin() {
-
-
-        return pref.getString("login", "");
-    }
-
-
-    public void setAppVersion(String authkey) {
-
-        editor.putString("appversion", authkey);
+        editor.putString("Phonelogin", authkey);
 
         editor.commit();
 
 
     }
 
-    public String getAppVersion() {
+    public String getPhonelogin() {
 
 
-        return pref.getString("appversion", "");
+        return pref.getString("Phonelogin", "");
     }
 
+    public void setSociallogin(String authkey) {
 
-    public void setPincode(String authkey) {
-
-        editor.putString("pincode", authkey);
+        editor.putString("SocialLogin", authkey);
 
         editor.commit();
 
 
     }
 
-    public String getPincode() {
+    public String getSociallogin() {
 
 
-        return pref.getString("pincode", "");
+        return pref.getString("SocialLogin", "");
     }
 
 
 
+    public void setFirstTime(String authkey) {
 
-
-    public void setUserKey(String authkey) {
-
-        editor.putString("key", authkey);
+        editor.putString("firstTime", authkey);
 
         editor.commit();
 
 
     }
 
-    public String getUserKey() {
+    public String getFirstTime() {
 
 
-        return pref.getString("key", "");
+        return pref.getString("firstTime", "");
     }
 
 
-    public void setUserToken(String authkey) {
-
-        editor.putString("token", authkey);
-
-        editor.commit();
-
-
-    }
-
-    public String getUserToken() {
-
-
-        return pref.getString("token", "");
-    }
 
 
 
@@ -121,6 +86,4 @@ public class SessionManagerSP {
         editor.clear();
         editor.commit();
     }
-
-
 }
