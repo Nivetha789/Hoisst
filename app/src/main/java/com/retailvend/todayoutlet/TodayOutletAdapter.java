@@ -1,22 +1,30 @@
 package com.retailvend.todayoutlet;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
+import com.retailvend.model.outlets.AssignOutletsDatum;
+
+import java.util.List;
 
 public class TodayOutletAdapter extends RecyclerView.Adapter<TodayOutletAdapter.MyViewHolder> {
 
     private Activity activity;
+    private List<AssignOutletsDatum> todayOutletsDatum;
 
 
-    TodayOutletAdapter(Activity activity) {
+    TodayOutletAdapter(Activity activity, List<AssignOutletsDatum> assignOutletsDatum) {
         this.activity = activity;
+        this.todayOutletsDatum=assignOutletsDatum;
     }
 
     @NonNull
@@ -28,29 +36,28 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<TodayOutletAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//        BuyEShareListData data = datas.get(position);
-//        holder.cardView.setTag(data);
-//        String value = "$ " + data.getEsPrice();
-//        holder.cost.setText(value);
-//        if (data.getEsName().equalsIgnoreCase("Gold")) {
-//            holder.backgroundImg.setBackground(ContextCompat.getDrawable(activity, R.drawable.gold));
-//        } else if (data.getEsName().equalsIgnoreCase("Silver")) {
-//            holder.backgroundImg.setBackground(ContextCompat.getDrawable(activity, R.drawable.silver));
-//        } else if (data.getEsName().equalsIgnoreCase("diamond")) {
-//            holder.backgroundImg.setBackground(ContextCompat.getDrawable(activity, R.drawable.diamond));
-//        } else if (data.getEsName().equalsIgnoreCase("Platinum")) {
-//            holder.backgroundImg.setBackground(ContextCompat.getDrawable(activity, R.drawable.platinum));
-//        } else if (data.getEsName().equalsIgnoreCase("Bronze")) {
-//            holder.backgroundImg.setBackground(ContextCompat.getDrawable(activity, R.drawable.bronze));
-//        }
-//        if((datas.size()-1)==position){
-//            holder.view.setVisibility(View.VISIBLE);
-//        }
+        AssignOutletsDatum data = todayOutletsDatum.get(position);
+        holder.todayOutletCard.setTag(data);
+        String companyName = data.getCompanyName();
+        String contactName = data.getContactName();
+        String companyNumber = data.getMobile();
+        holder.compName.setText(companyName);
+        holder.contactName.setText(contactName);
+        holder.contactNum.setText(companyNumber);
+//
+        holder.todayOutletCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(activity, TodayOutletDetailsActivity.class);
+                i.putExtra("todayOutlet", data);
+                activity.startActivity(i);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        return todayOutletsDatum.size();
     }
 
 //    void setOnClickListener(OnClickListener onClickListener) {
@@ -58,10 +65,17 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<TodayOutletAdapter.
 //    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        CardView todayOutletCard;
+        TextView compName;
+        TextView contactName;
+        TextView contactNum;
 
         MyViewHolder(View itemView) {
             super(itemView);
+            todayOutletCard=itemView.findViewById(R.id.today_outlet);
+            compName=itemView.findViewById(R.id.shop_title);
+            contactName=itemView.findViewById(R.id.contact_name);
+            contactNum=itemView.findViewById(R.id.contact_number);
         }
-
     }
 }

@@ -1,6 +1,7 @@
-package com.retailvend.collection;
+package com.retailvend.outstand;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,24 +10,24 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
-import androidx.appcompat.widget.Toolbar;
 
 import com.retailvend.R;
 
-public class CollectionActivity extends AppCompatActivity {
+public class OutstandingActivity extends AppCompatActivity {
 
-    RecyclerView collectionRecycler;
+    RecyclerView outstandingRecycler;
     Activity activity;
     LinearLayoutManager mLayoutManager;
-    CollectionAdapter collectionAdapter;
+    OutstandingAdapter outstandingAdapter;
     ImageView leftArrow;
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_collection);
+        setContentView(R.layout.activity_outstanding);
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -43,9 +44,12 @@ public class CollectionActivity extends AppCompatActivity {
             window.setStatusBarColor(this.getResources().getColor(R.color.white));
 //            window.setNavigationBarColor(this.getResources().getColor(R.color.black_overlay));
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
 
-        toolbar = findViewById(R.id.collection_toolbar);
-        collectionRecycler = findViewById(R.id.total_recyclerView);
+        toolbar = findViewById(R.id.toolbar);
+        outstandingRecycler = findViewById(R.id.outstanding_recyclerView);
         leftArrow = findViewById(R.id.left_arrow);
 
 
@@ -54,10 +58,10 @@ public class CollectionActivity extends AppCompatActivity {
 //        saleslists = new ArrayList<>();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        collectionRecycler.setLayoutManager(layoutManager);
+        outstandingRecycler.setLayoutManager(layoutManager);
 
-        collectionAdapter = new CollectionAdapter(this);
-        collectionRecycler.setAdapter(collectionAdapter);
+        outstandingAdapter = new OutstandingAdapter(this);
+        outstandingRecycler.setAdapter(outstandingAdapter);
 
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,8 +12,10 @@
         android:background="@drawable/profile_top_bg"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/profile_bg_bottom_view"
@@ -57,30 +59,30 @@
         android:id="@+id/profiler_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/light_dark"
-        android:fontFamily="@font/opensans_bold"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/opensans_semibold"
         android:gravity="center"
-        android:text="Sai Krish"
         android:maxHeight="100dp"
         android:minHeight="40dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
+        android:text="Sai Krish"
         android:textColor="@color/white"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/profiler_user_id"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@id/profile_details_card"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/profiler_user_id"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
         android:src="@drawable/ic_toolbar_profile"
-        app:layout_constraintBottom_toTopOf="@+id/profile_details_card"
+        app:layout_constraintBottom_toTopOf="@+id/profiler_name"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profiler_name" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/profile_details_card"
@@ -103,6 +105,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".30" />
+        app:layout_constraintGuide_percent=".25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
