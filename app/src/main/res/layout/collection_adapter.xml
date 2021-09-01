@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        tools:ignore="UselessParent">
+        android:layout_height="120dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/sales_cardview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:cardCornerRadius="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="6dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="6dp"
-            app:cardCornerRadius="10dp">
+            android:layout_marginBottom="6dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,6 +33,7 @@
                     android:weightSum="2">
 
 
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -46,12 +45,12 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
                             android:gravity="center|left"
                             android:paddingLeft="20dp"
                             android:paddingBottom="2dp"
                             android:singleLine="true"
-                            android:text="Product Name :"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Store Name :"
                             android:textColor="#CC2f3145"
                             android:textSize="12dp" />
 
@@ -59,15 +58,14 @@
                             android:id="@+id/txt_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
                             android:gravity="center|left"
                             android:paddingLeft="20dp"
                             android:singleLine="true"
-                            android:text="Kara Muruku"
+                            android:text="KR Bakes"
+                            android:fontFamily="@font/quicksand_medium"
                             android:textColor="#2f3145"
                             android:textSize="15dp" />
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -80,24 +78,24 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
                             android:gravity="center|left"
                             android:paddingLeft="20dp"
                             android:paddingBottom="2dp"
                             android:singleLine="true"
-                            android:text="Unit :"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Sales code :"
                             android:textColor="#CC2f3145"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:id="@+id/unit"
+                            android:id="@+id/txt_sales_no"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
                             android:gravity="center|left"
                             android:paddingLeft="20dp"
+                            android:fontFamily="@font/quicksand_medium"
                             android:singleLine="true"
-                            android:text="Kg"
+                            android:text="1564156415614561"
                             android:textColor="#2f3145"
                             android:textSize="14dp" />
 
@@ -108,7 +106,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:orientation="vertical"
                     android:weightSum="2">
 
@@ -121,9 +119,9 @@
                             android:id="@+id/txt_amt"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/quicksand_bold"
                             android:gravity="center"
                             android:singleLine="true"
+                            android:fontFamily="@font/quicksand_bold"
                             android:text="₹.5000"
                             android:textColor="@color/colorAccent"
                             android:textSize="15dp" />
@@ -137,47 +135,16 @@
                         android:gravity="center">
 
                         <TextView
-                            android:id="@+id/txt_qty"
+                            android:id="@+id/txt_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="5dp"
-                            android:fontFamily="@font/quicksand_medium"
                             android:gravity="center"
                             android:singleLine="true"
-                            android:text="Qty: 10"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="15-Aug-2021"
                             android:textColor="#CC2f3145"
                             android:textSize="14dp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.5">
-
-                    <LinearLayout
-                        android:id="@+id/delBtn"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/ic_delete"
-                        android:backgroundTint="@color/red"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/btnDel"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_margin="5dp"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="@color/white"
-                            android:textSize="20dp" />
 
                     </LinearLayout>
 

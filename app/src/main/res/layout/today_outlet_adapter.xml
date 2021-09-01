@@ -74,7 +74,7 @@
                             app:layout_constraintTop_toTopOf="@+id/circle_bg" />
 
             <TextView
-                android:id="@+id/owner_name"
+                android:id="@+id/contact_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksand_medium"
@@ -87,7 +87,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/shop_title" />
 
             <TextView
-                android:id="@+id/shop_number"
+                android:id="@+id/contact_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksand_medium"
@@ -97,7 +97,7 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/shop_title"
-                app:layout_constraintTop_toBottomOf="@+id/owner_name" />
+                app:layout_constraintTop_toBottomOf="@+id/contact_name" />
 
             <TextView
                 android:id="@+id/check_in"
@@ -115,7 +115,7 @@
                 android:textSize="11dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/shop_title"
-                app:layout_constraintTop_toBottomOf="@+id/shop_number" />
+                app:layout_constraintTop_toBottomOf="@+id/contact_number" />
 
             <ImageView
                 android:id="@+id/navigate"
@@ -125,7 +125,7 @@
                 android:src="@drawable/ic_location"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/check_in"
-                app:layout_constraintTop_toBottomOf="@+id/shop_number"
+                app:layout_constraintTop_toBottomOf="@+id/contact_number"
                 app:tint="@color/colorAccent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
