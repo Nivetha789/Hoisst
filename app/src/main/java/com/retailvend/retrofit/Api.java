@@ -52,10 +52,10 @@ public interface Api {
             @Field("store_id") String store_id,
             @Field("sales_order") String sales_order);
 
-    //add attendance
+    //update attendance
     @FormUrlEncoded
     @POST("attendance/api/add_attendance")
-    Call<AddAttendanceModel> addAttendance(
+    Call<AddAttendanceModel> updateAttendance(
             @Field("method") String method,
             @Field("employee_id") String employee_id,
             @Field("store_id") String store_id,
@@ -64,6 +64,17 @@ public interface Api {
             @Field("attendance_type") String attendance_type,
             @Field("reason") String reason,
             @Field("attendance_id") String attendance_id
+    );
+
+    //add attendance
+    @FormUrlEncoded
+    @POST("attendance/api/add_attendance")
+    Call<AddAttendanceModel> addAttendance(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id,
+            @Field("store_id") String store_id,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude
     );
 
     //product type

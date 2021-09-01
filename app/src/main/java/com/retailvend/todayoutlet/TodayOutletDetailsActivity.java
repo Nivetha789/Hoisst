@@ -131,14 +131,15 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
         gst.setText(gst1);
         pan.setText(pan1);
 
-        if(attendance_status=="1"){
-            check_in.setVisibility(View.VISIBLE);
-            checked.setVisibility(View.GONE);
-            order_type_constrain.setVisibility(View.GONE);
-        }else{
+        if(attendance_status.equals("1")){
             check_in.setVisibility(View.GONE);
             checked.setVisibility(View.VISIBLE);
             order_type_constrain.setVisibility(View.VISIBLE);
+
+        }else{
+            check_in.setVisibility(View.VISIBLE);
+            checked.setVisibility(View.GONE);
+            order_type_constrain.setVisibility(View.GONE);
         }
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -155,20 +156,18 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!reason.getText().toString().isEmpty())
                 {
-                    addAttendanceApi(type_id,type_val);
+                    updateAttendanceApi(type_id,type_val);
                 }else{
                     CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Enter Reason");
                 }
             }
         });
-//        check_in.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                check_in.setVisibility(View.GONE);
-//                checked.setVisibility(View.VISIBLE);
-//                order_type_recycler.setVisibility(View.VISIBLE);
-//            }
-//        });
+        check_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addAttendanceApi();
+            }
+        });
 //        checked.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -244,14 +243,14 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
         type_val=typeVal;
     }
 
-    public void addAttendanceApi(String typeId, String typeVal) {
+    public void updateAttendanceApi(String typeId, String typeVal) {
         final CustomProgress customProgress = new CustomProgress(this);
 //        text_signIn.setVisibility(View.GONE);
         Loader.showLoad(customProgress, this, true);
         String emp_id= SharedPrefManager.getInstance(this).getUser().getId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().addAttendance("_updateAttendance",emp_id,store_id,latitude,longitude,typeVal,reason.getText().toString(),typeId);
+                .getInstance().getApi().updateAttendance("_updateAttendance",emp_id,store_id,latitude,longitude,typeVal,reason.getText().toString(),typeId);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -268,6 +267,55 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
 
                         CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
 
+                        Loader.showLoad(customProgress, activity, false);
+
+                    } else {
+                        Loader.showLoad(customProgress, activity, false);
+                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
+                    }
+
+                } catch (Exception e) {
+                    Log.d("Exception", e.getMessage());
+                    Loader.showLoad(customProgress, activity, false);
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AddAttendanceModel> call, @NonNull Throwable t) {
+                Log.d("Failure ", t.getMessage());
+                CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
+                Loader.showLoad(customProgress, activity, false);
+            }
+        });
+    }
+
+    public void addAttendanceApi() {
+        final CustomProgress customProgress = new CustomProgress(this);
+//        text_signIn.setVisibility(View.GONE);
+        Loader.showLoad(customProgress, this, true);
+        String emp_id= SharedPrefManager.getInstance(this).getUser().getId();
+
+        Call<AddAttendanceModel> call = RetrofitClient
+                .getInstance().getApi().addAttendance("_addAttendance",emp_id,store_id,latitude,longitude);
+
+        call.enqueue(new Callback<AddAttendanceModel>() {
+            @Override
+            public void onResponse(@NonNull Call<AddAttendanceModel> call, @NonNull Response<AddAttendanceModel> response) {
+
+                try {
+
+                    Gson gson = new Gson();
+                    String json = gson.toJson(response.body());
+
+                    AddAttendanceModel attendanceTypeModel = gson.fromJson(json, AddAttendanceModel.class);
+
+                    if (attendanceTypeModel.getStatus()==1) {
+
+//                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
+                        check_in.setVisibility(View.GONE);
+                        checked.setVisibility(View.VISIBLE);
+                        order_type_recycler.setVisibility(View.VISIBLE);
                         Loader.showLoad(customProgress, activity, false);
 
                     } else {
