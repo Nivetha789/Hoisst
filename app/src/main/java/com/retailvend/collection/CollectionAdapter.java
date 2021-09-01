@@ -1,4 +1,4 @@
-package com.retailvend.sales;
+package com.retailvend.collection;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
 
-public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder> {
+public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.MyViewHolder> {
 
     private static final int VIEW_TYPE_LOADING = 0;
     private static final int VIEW_TYPE_NORMAL = 1;
@@ -24,15 +24,15 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 //        this.context = context;
 //    }
 
-    SalesAdapter(Activity activity) {
+    public CollectionAdapter(Activity activity) {
         this.activity = activity;
     }
 
     @NonNull
     @Override
-    public SalesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.item_sales_list, viewGroup, false);
-        return new SalesAdapter.MyViewHolder(view);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(activity).inflate(R.layout.collection_adapter, viewGroup, false);
+        return new MyViewHolder(view);
     }
 
     @Override

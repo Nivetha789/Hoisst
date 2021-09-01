@@ -2,22 +2,27 @@ package com.retailvend.todayoutlet;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.retailvend.R;
+import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.model.outlets.AttendanceTypeDatum;
@@ -29,7 +34,9 @@ import com.retailvend.utills.Loader;
 import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;
+import java.util.Locale;
 
+import at.markushi.ui.CircleButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,18 +48,26 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
     TextView shop_name;
     TextView shop_number;
     TextView contact_name;
-    TextView address;
+    TextView address,submit_btn;
     TextView mail;
     TextView gst;
     TextView pan;
     TextView check_in;
     TextView checked;
     Activity activity;
+    EditText reason;
     List<AttendanceTypeDatum> attendanceTypeData;
     ButtonTypeAdapter buttonTypeAdapter;
     RecyclerView order_type_recycler;
     LinearLayoutManager mLayoutManager;
     String store_id="";
+    String attendance_status="";
+    String latitude="";
+    String longitude="";
+    ConstraintLayout order_type_constrain,reason_constrain;
+    CircleButton fab;
+    String type_id="";
+    String type_val="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,19 +103,26 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
         pan = findViewById(R.id.pan);
         check_in = findViewById(R.id.check_in);
         checked = findViewById(R.id.checked);
+        reason = findViewById(R.id.reason);
+        submit_btn = findViewById(R.id.submit_btn);
+        order_type_constrain = findViewById(R.id.order_type_constrain);
         order_type_recycler=findViewById(R.id.order_type_recycler);
+        reason_constrain=findViewById(R.id.reason_constrain);
+        fab=findViewById(R.id.fab);
 
         assignOutletsDatum = (AssignOutletsDatum) getIntent().getSerializableExtra("todayOutlet");
         String shop_name1 = assignOutletsDatum.getCompanyName();
         store_id = assignOutletsDatum.getStoreId();
-        System.out.println("fbfffggg "+store_id);
         String shop_number1 = assignOutletsDatum.getMobile();
         String contact_name1 = assignOutletsDatum.getContactName();
         String address1 = assignOutletsDatum.getAddress();
         String mail1 = assignOutletsDatum.getEmail();
         String gst1 = assignOutletsDatum.getGstNo();
         String pan1 = assignOutletsDatum.getPanNo();
-        System.out.println("gstPan "+gst1+pan1);
+        attendance_status = assignOutletsDatum.getAttendanceStatus();
+        latitude = assignOutletsDatum.getLatitude();
+        longitude = assignOutletsDatum.getLongitude();
+        System.out.println("attendance_status "+gst1+pan1);
         shop_name.setText(shop_name1);
         shop_number.setText(shop_number1);
         contact_name.setText(contact_name1);
@@ -109,29 +131,58 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
         gst.setText(gst1);
         pan.setText(pan1);
 
-        check_in.setOnClickListener(new View.OnClickListener() {
+        if(attendance_status=="1"){
+            check_in.setVisibility(View.VISIBLE);
+            checked.setVisibility(View.GONE);
+            order_type_constrain.setVisibility(View.GONE);
+        }else{
+            check_in.setVisibility(View.GONE);
+            checked.setVisibility(View.VISIBLE);
+            order_type_constrain.setVisibility(View.VISIBLE);
+        }
+
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check_in.setVisibility(View.GONE);
-                checked.setVisibility(View.VISIBLE);
-                order_type_recycler.setVisibility(View.VISIBLE);
+                String uri =  "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + "Map" + ")";
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(intent);
             }
         });
-        checked.setOnClickListener(new View.OnClickListener() {
+
+        submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check_in.setVisibility(View.VISIBLE);
-                checked.setVisibility(View.GONE);
-                order_type_recycler.setVisibility(View.GONE);
+                if(!reason.getText().toString().isEmpty())
+                {
+                    addAttendanceApi(type_id,type_val);
+                }else{
+                    CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Enter Reason");
+                }
             }
         });
+//        check_in.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                check_in.setVisibility(View.GONE);
+//                checked.setVisibility(View.VISIBLE);
+//                order_type_recycler.setVisibility(View.VISIBLE);
+//            }
+//        });
+//        checked.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                check_in.setVisibility(View.VISIBLE);
+//                checked.setVisibility(View.GONE);
+//                order_type_recycler.setVisibility(View.GONE);
+//            }
+//        });
     }
 
     public void attendanceListApi() {
         final CustomProgress customProgress = new CustomProgress(this);
 //        text_signIn.setVisibility(View.GONE);
         Loader.showLoad(customProgress, this, true);
-
         Call<AttendanceTypeModel> call = RetrofitClient
                 .getInstance().getApi().attendanceList("_attendanceType");
 
@@ -182,6 +233,59 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
 //                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                 CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
+                Loader.showLoad(customProgress, activity, false);
+            }
+        });
+    }
+
+    public void showReason(String typeId, String typeVal){
+        reason_constrain.setVisibility(View.VISIBLE);
+        type_id=typeId;
+        type_val=typeVal;
+    }
+
+    public void addAttendanceApi(String typeId, String typeVal) {
+        final CustomProgress customProgress = new CustomProgress(this);
+//        text_signIn.setVisibility(View.GONE);
+        Loader.showLoad(customProgress, this, true);
+        String emp_id= SharedPrefManager.getInstance(this).getUser().getId();
+
+        Call<AddAttendanceModel> call = RetrofitClient
+                .getInstance().getApi().addAttendance("_updateAttendance",emp_id,store_id,latitude,longitude,typeVal,reason.getText().toString(),typeId);
+
+        call.enqueue(new Callback<AddAttendanceModel>() {
+            @Override
+            public void onResponse(@NonNull Call<AddAttendanceModel> call, @NonNull Response<AddAttendanceModel> response) {
+
+                try {
+
+                    Gson gson = new Gson();
+                    String json = gson.toJson(response.body());
+
+                    AddAttendanceModel attendanceTypeModel = gson.fromJson(json, AddAttendanceModel.class);
+
+                    if (attendanceTypeModel.getStatus()==1) {
+
+                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
+
+                        Loader.showLoad(customProgress, activity, false);
+
+                    } else {
+                        Loader.showLoad(customProgress, activity, false);
+                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
+                    }
+
+                } catch (Exception e) {
+                    Log.d("Exception", e.getMessage());
+                    Loader.showLoad(customProgress, activity, false);
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AddAttendanceModel> call, @NonNull Throwable t) {
+                Log.d("Failure ", t.getMessage());
+                CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
                 Loader.showLoad(customProgress, activity, false);
             }
         });

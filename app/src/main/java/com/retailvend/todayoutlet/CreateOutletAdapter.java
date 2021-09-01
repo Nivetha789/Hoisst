@@ -47,12 +47,12 @@ public class CreateOutletAdapter extends RecyclerView.Adapter<CreateOutletAdapte
         holder.txt_amt.setText(data.getPrice());
         holder.txt_qty.setText(data.getQty());
 
-//        holder.delBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ((CreateOutletOrderActivity) context).updateAddProductAdapter("remove",index);
-//            }
-//        });
+        holder.delBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((CreateOutletOrderActivity) context).updateAddProductAdapter("remove",index);
+            }
+        });
 
 //        holder.delBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override

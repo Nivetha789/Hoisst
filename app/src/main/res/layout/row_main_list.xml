@@ -85,7 +85,7 @@
                             android:paddingLeft="20dp"
                             android:paddingBottom="2dp"
                             android:singleLine="true"
-                            android:text="Unit :"
+                            android:text="Type :"
                             android:textColor="#CC2f3145"
                             android:textSize="12dp" />
 

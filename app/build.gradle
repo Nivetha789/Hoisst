@@ -42,6 +42,9 @@ dependencies {
     implementation "com.jakewharton:butterknife:10.1.0"
     annotationProcessor "com.jakewharton:butterknife-compiler:10.1.0"
 
+    //gif image loading
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.16'
+
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
@@ -51,5 +54,8 @@ dependencies {
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'stax', module: 'stax'
     }
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.13.1'
+
+    implementation 'com.github.markushi:circlebutton:1.1'
 
 }

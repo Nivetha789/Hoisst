@@ -63,6 +63,9 @@ public class AssignOutletsDatum implements Serializable {
     @SerializedName("credit_note")
     @Expose
     private String creditNote;
+    @SerializedName("attendance_status")
+    @Expose
+    private String attendanceStatus;
 
     public String getStoreId() {
         return storeId;
@@ -214,5 +217,12 @@ public class AssignOutletsDatum implements Serializable {
 
     public void setCreditNote(String creditNote) {
         this.creditNote = creditNote;
+    }
+    public String getAttendanceStatus() {
+        return attendanceStatus;
+    }
+
+    public void setAttendanceStatus(String attendanceStatus) {
+        this.attendanceStatus = attendanceStatus;
     }
 }

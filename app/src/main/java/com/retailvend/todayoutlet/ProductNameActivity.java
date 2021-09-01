@@ -31,6 +31,8 @@ import com.retailvend.R;
 import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.model.outlets.ProductNameResData;
 import com.retailvend.model.outlets.ProductNameResModel;
+import com.retailvend.model.outlets.ProductTypeDatum;
+import com.retailvend.model.outlets.ProductTypeModel;
 import com.retailvend.retrofit.Api;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
@@ -38,6 +40,7 @@ import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.Loader;
 import com.retailvend.utills.SharedPrefManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +63,7 @@ public class ProductNameActivity extends AppCompatActivity {
     ImageView search_icon;
     Activity activity;
     String prod_name="";
+    List<ProductTypeDatum> productTypeData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,15 +226,12 @@ public class ProductNameActivity extends AppCompatActivity {
         });
     }
 
-    public void updateProdName(String prodName,String prodId, String gst, String hsn){
-        prod_name=prodName;
+    public void updateProdName(String prodName, String prodId, String gst, String hsn){
         Intent productIntent=new Intent(ProductNameActivity.this, CreateOutletOrderActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("prod_name",prodName);
-        bundle.putString("prod_id",prodId);
-        bundle.putString("gst",gst);
-        bundle.putString("hsn",hsn);
-        productIntent.putExtras(bundle);
+        productIntent.putExtra("prod_name",prodName);
+        productIntent.putExtra("prod_id",prodId);
+        productIntent.putExtra("gst",gst);
+        productIntent.putExtra("hsn",hsn);
         startActivity(productIntent);
         finish();
     }

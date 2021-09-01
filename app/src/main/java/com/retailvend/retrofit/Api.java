@@ -2,9 +2,11 @@ package com.retailvend.retrofit;
 
 import com.retailvend.model.login.LoginResModel;
 import com.retailvend.model.order.CreateOrderModel;
+import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.model.outlets.AttendanceTypeModel;
 import com.retailvend.model.outlets.ProductNameResModel;
+import com.retailvend.model.outlets.ProductTypeModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -49,4 +51,26 @@ public interface Api {
             @Field("employee_id") String employee_id,
             @Field("store_id") String store_id,
             @Field("sales_order") String sales_order);
+
+    //add attendance
+    @FormUrlEncoded
+    @POST("attendance/api/add_attendance")
+    Call<AddAttendanceModel> addAttendance(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id,
+            @Field("store_id") String store_id,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude,
+            @Field("attendance_type") String attendance_type,
+            @Field("reason") String reason,
+            @Field("attendance_id") String attendance_id
+    );
+
+    //product type
+    @FormUrlEncoded
+    @POST("catlog/api/productType")
+    Call<ProductTypeModel> productType(
+            @Field("method") String method,
+            @Field("product_id") String product_id
+    );
 }

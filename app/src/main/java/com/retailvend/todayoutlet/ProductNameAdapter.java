@@ -1,7 +1,9 @@
 package com.retailvend.todayoutlet;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +16,32 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.model.outlets.ProductNameResData;
+import com.retailvend.model.outlets.ProductTypeModel;
+import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.utills.CustomProgress;
+import com.retailvend.utills.CustomToast;
+import com.retailvend.utills.Loader;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ProductNameAdapter extends RecyclerView.Adapter<ProductNameAdapter.MyViewHolder> implements Filterable {
 
-    Context context;
     List<ProductNameResData> productNameResData;
     List<ProductNameResData> productNameResDataFull;
+    Activity activity;
 
-    public ProductNameAdapter(Context context, List<ProductNameResData> itemsModelsl) {
+    public ProductNameAdapter(Activity context, List<ProductNameResData> itemsModelsl) {
         this.productNameResData = itemsModelsl;
         productNameResDataFull = new ArrayList();
-        this.context = context;
-    }
+        this.activity = context; }
 
     @NonNull
     @Override
@@ -49,7 +60,7 @@ public class ProductNameAdapter extends RecyclerView.Adapter<ProductNameAdapter.
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((ProductNameActivity) context).updateProdName(item.getProductName(), item.getProductId(),item.getGstVal(),item.getHsnCode());
+                ((ProductNameActivity) activity).updateProdName(item.getProductName(),item.getProductId(),item.getGstVal(),item.getHsnCode());
             }
         });
     }

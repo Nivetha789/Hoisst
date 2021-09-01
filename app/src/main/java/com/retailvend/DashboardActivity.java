@@ -6,17 +6,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.retailvend.collection.CollectionActivity;
+import com.retailvend.outstand.OutstandingActivity;
 import com.retailvend.sales.SalesActivity;
 import com.retailvend.todayoutlet.TodayOutletActivity;
 
 public class DashboardActivity extends AppCompatActivity {
 
     CardView todayOutletCardview;
-    CardView salesCardview;
+    CardView collectionCard;
+    CardView outstanding_cardview;
+    ImageView profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +29,9 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         todayOutletCardview=findViewById(R.id.today_outlet_cardview);
-        salesCardview=findViewById(R.id.shop_card_view);
+        collectionCard=findViewById(R.id.collection_cardview);
+        outstanding_cardview=findViewById(R.id.outstanding_cardview);
+        profile=findViewById(R.id.profile);
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -51,11 +58,27 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        salesCardview.setOnClickListener(new View.OnClickListener() {
+        collectionCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent salesIntent=new Intent(DashboardActivity.this, SalesActivity.class);
-                startActivity(salesIntent);
+                Intent collectionIntent=new Intent(DashboardActivity.this, CollectionActivity.class);
+                startActivity(collectionIntent);
+            }
+        });
+
+        outstanding_cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent outstandIntent=new Intent(DashboardActivity.this, OutstandingActivity.class);
+                startActivity(outstandIntent);
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent profileIntent=new Intent(DashboardActivity.this, ProfileActivity.class);
+                startActivity(profileIntent);
             }
         });
     }

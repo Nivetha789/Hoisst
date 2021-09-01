@@ -177,7 +177,7 @@
                                                 android:fontFamily="@font/quicksand_medium"
                                                 android:gravity="center|left"
                                                 android:paddingLeft="10dp"
-                                                android:text="Unit *"
+                                                android:text="Type *"
                                                 android:textColor="#40000000"
                                                 android:textSize="12dp" />
 

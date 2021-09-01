@@ -81,6 +81,7 @@ public class TodayOutletActivity extends AppCompatActivity {
 //        text_signIn.setVisibility(View.GONE);
         Loader.showLoad(customProgress, activity, true);
       String emp_id= SharedPrefManager.getInstance(TodayOutletActivity.this).getUser().getId();
+        System.out.println("emmmpidd "+emp_id);
 
         Call<AssignOutletsModel> call = RetrofitClient
                 .getInstance().getApi().todayOutletList("_employeeWiseList",emp_id);
@@ -117,7 +118,7 @@ public class TodayOutletActivity extends AppCompatActivity {
 //                        text_signIn.setVisibility(View.VISIBLE);
                         Loader.showLoad(customProgress, activity, false);
                         //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Invalid User Name or Password");
+                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
