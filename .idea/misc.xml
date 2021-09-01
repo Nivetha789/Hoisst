@@ -4,7 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/RetailVend/app/src/main/res/drawable/background.xml" value="0.3828125" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_collection.xml" value="0.2463768115942029" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_create_sales_order.xml" value="0.2463768115942029" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_dashboard.xml" value="0.3523550724637681" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_login.xml" value="0.2957427536231884" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_sales.xml" value="0.20520833333333333" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_today_outlet_details.xml" value="0.22201198360138757" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/button_type_adapter.xml" value="0.2463768115942029" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/layout_custom_toast.xml" value="0.3523550724637681" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/row_main_list.xml" value="0.2463768115942029" />
       </map>
     </option>
   </component>
