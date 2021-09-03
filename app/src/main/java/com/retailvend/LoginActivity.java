@@ -1,13 +1,17 @@
 package com.retailvend;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -18,7 +22,9 @@ import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.login.LoginDatum;
 import com.retailvend.model.login.LoginResModel;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
+import com.retailvend.utills.Loader;
 import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
@@ -39,17 +45,22 @@ public class LoginActivity extends AppCompatActivity {
     List<LoginDatum> loginDataModelList;
     LoginDatum loginDataModel;
     SessionManagerSP sessionManagerSP;
+    Activity activity;
+    LinearLayout lin_eye,lin_eye_inv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        activity=this;
 
         text_signIn=findViewById(R.id.txt_signIn);
         txt_forgot=findViewById(R.id.txt_forgot);
         edt_mob_number=findViewById(R.id.edt_mob_number);
         edt_password=findViewById(R.id.edt_pass);
         progress = findViewById(R.id.progressBar);
+        lin_eye = findViewById(R.id.lin_eye);
+        lin_eye_inv = findViewById(R.id.lin_eye_inv);
         sessionManagerSP = new SessionManagerSP(LoginActivity.this);
 
         if (Build.VERSION.SDK_INT >= 19) {
@@ -87,6 +98,23 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        lin_eye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                lin_eye_inv.setVisibility(View.VISIBLE);
+                lin_eye.setVisibility(View.GONE);
+            }
+        });
+        lin_eye_inv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                lin_eye_inv.setVisibility(View.GONE);
+                lin_eye.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void checkConnection(String mobNo, String pass) {
@@ -105,8 +133,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void userLogin(String mobNo, String pass) {
 
+     final CustomProgress customProgress = new CustomProgress(this);
 //        text_signIn.setVisibility(View.GONE);
-        progress.setVisibility(View.VISIBLE);
+        Loader.showLoad(customProgress, this, true);
 
         Call<LoginResModel> call = RetrofitClient
                 .getInstance().getApi().userlogin("_employeeLogin",mobNo, pass);
@@ -146,12 +175,13 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
 
 //                        text_signIn.setVisibility(View.VISIBLE);
-                        progress.setVisibility(View.GONE);
+                        Loader.showLoad(customProgress, activity, false);
 
 
                     } else {
 //                        text_signIn.setVisibility(View.VISIBLE);
-                        progress.setVisibility(View.GONE);
+                        Loader.showLoad(customProgress, activity, false);
+
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                         CustomToast.getInstance(LoginActivity.this).showSmallCustomToast("Invalid User Name or Password");
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
@@ -169,12 +199,9 @@ public class LoginActivity extends AppCompatActivity {
 //                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                 CustomToast.getInstance(LoginActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
-                progress.setVisibility(View.GONE);
-
+                Loader.showLoad(customProgress, activity, false);
             }
         });
-
-
     }
 
     private boolean Validate_Email(EditText et) {

@@ -125,6 +125,54 @@
                                             android:fontFamily="@font/quicksand_medium"
                                             android:gravity="center|left"
                                             android:paddingLeft="10dp"
+                                            android:text="Sales Agent Type *"
+                                            android:textColor="#40000000"
+                                            android:textSize="12dp" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="40dp"
+                                            android:layout_marginTop="5dp"
+                                            android:orientation="horizontal">
+
+
+                                            <LinearLayout
+                                                android:id="@+id/linSalesAgent"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:orientation="horizontal"
+                                                android:weightSum="2">
+
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_marginRight="2dp"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/lin_storke">
+
+                                                    <Spinner
+                                                        android:id="@+id/spin_sales_agent"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent" />
+
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
+
+                                        </LinearLayout>
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/quicksand_medium"
+                                            android:gravity="center|left"
+                                            android:paddingLeft="10dp"
                                             android:text="Product Name *"
                                             android:textColor="#40000000"
                                             android:textSize="12dp" />
@@ -168,7 +216,7 @@
                                             android:layout_marginTop="5dp"
                                             android:layout_weight="1"
                                             android:orientation="horizontal"
-                                            android:weightSum="2">
+                                            android:weightSum="1">
 
                                             <TextView
                                                 android:layout_width="0dp"
@@ -181,17 +229,7 @@
                                                 android:textColor="#40000000"
                                                 android:textSize="12dp" />
 
-                                            <TextView
-                                                android:layout_width="0dp"
-                                                android:layout_height="match_parent"
-                                                android:layout_marginTop="5dp"
-                                                android:layout_weight="1"
-                                                android:fontFamily="@font/quicksand_medium"
-                                                android:gravity="center|left"
-                                                android:paddingLeft="10dp"
-                                                android:text="Price *"
-                                                android:textColor="#40000000"
-                                                android:textSize="12dp" />
+
                                         </LinearLayout>
 
                                         <LinearLayout
@@ -225,22 +263,6 @@
 
                                                 </LinearLayout>
 
-                                                <EditText
-                                                    android:id="@+id/txtPrice"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_marginLeft="2dp"
-                                                    android:layout_weight="1"
-                                                    android:background="@drawable/lin_storke"
-                                                    android:fontFamily="@font/quicksand_bold"
-                                                    android:gravity="center"
-                                                    android:hint="Price *"
-                                                    android:inputType="number"
-                                                    android:singleLine="true"
-                                                    android:textColor="@color/black"
-                                                    android:textColorHint="#40000000"
-                                                    android:textSize="14dp" />
-
 
                                             </LinearLayout>
 
@@ -253,7 +275,7 @@
                                             android:layout_marginTop="5dp"
                                             android:layout_weight="1"
                                             android:orientation="horizontal"
-                                            android:weightSum="1">
+                                            android:weightSum="2">
 
                                             <TextView
                                                 android:layout_width="0dp"
@@ -264,6 +286,17 @@
                                                 android:gravity="center|left"
                                                 android:paddingLeft="10dp"
                                                 android:text="Qty *"
+                                                android:textColor="#40000000"
+                                                android:textSize="12dp" />
+                                            <TextView
+                                                android:layout_width="0dp"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/quicksand_medium"
+                                                android:gravity="center|left"
+                                                android:paddingLeft="10dp"
+                                                android:text="Price *"
                                                 android:textColor="#40000000"
                                                 android:textSize="12dp" />
                                         </LinearLayout>
@@ -292,6 +325,22 @@
                                                     android:fontFamily="@font/quicksand_bold"
                                                     android:gravity="center"
                                                     android:hint="Enter Qty *"
+                                                    android:inputType="number"
+                                                    android:singleLine="true"
+                                                    android:textColor="@color/black"
+                                                    android:textColorHint="#40000000"
+                                                    android:textSize="14dp" />
+
+                                                <EditText
+                                                    android:id="@+id/txtPrice"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_marginLeft="2dp"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/lin_storke"
+                                                    android:fontFamily="@font/quicksand_bold"
+                                                    android:gravity="center"
+                                                    android:hint="Price *"
                                                     android:inputType="number"
                                                     android:singleLine="true"
                                                     android:textColor="@color/black"
@@ -367,12 +416,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/quicksand_medium"
-                                android:text="Total Nos : "
+                                android:text="Total Qty : "
                                 android:textColor="@color/black"
                                 android:textSize="16dp" />
 
                             <TextView
-                                android:id="@+id/txtTotalNos"
+                                android:id="@+id/txtTotalQty"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
@@ -384,34 +433,34 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:paddingTop="5dp"-->
+<!--                            android:paddingBottom="5dp">-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:text="Total Kgs : "
-                                android:textColor="@color/black"
-                                android:textSize="16dp" />
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:fontFamily="@font/quicksand_medium"-->
+<!--                                android:text="Total Kgs : "-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="16dp" />-->
 
-                            <TextView
-                                android:id="@+id/txtTotalkg"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:fontFamily="@font/quicksand_bold"
-                                android:text="0"
-                                android:textColor="@color/black"
-                                android:textSize="16dp"
-                                android:textStyle="bold" />
+<!--                            <TextView-->
+<!--                                android:id="@+id/txtTotalkg"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginLeft="5dp"-->
+<!--                                android:fontFamily="@font/quicksand_bold"-->
+<!--                                android:text="0"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="16dp"-->
+<!--                                android:textStyle="bold" />-->
 
-                        </LinearLayout>
+<!--                        </LinearLayout>-->
 
                         <LinearLayout
                             android:layout_width="match_parent"

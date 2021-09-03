@@ -201,7 +201,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
                         attendanceTypeData = attendanceTypeModel.getData();
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 
-                        buttonTypeAdapter = new ButtonTypeAdapter(activity, attendanceTypeData,store_id);
+                        buttonTypeAdapter = new ButtonTypeAdapter(activity, attendanceTypeData,store_id, latitude,longitude);
                         order_type_recycler.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
                         mLayoutManager = new LinearLayoutManager(activity);
                         //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -315,7 +315,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
 //                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
                         check_in.setVisibility(View.GONE);
                         checked.setVisibility(View.VISIBLE);
-                        order_type_recycler.setVisibility(View.VISIBLE);
+                        order_type_constrain.setVisibility(View.VISIBLE);
                         Loader.showLoad(customProgress, activity, false);
 
                     } else {

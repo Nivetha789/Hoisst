@@ -7,6 +7,7 @@ import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.model.outlets.AttendanceTypeModel;
 import com.retailvend.model.outlets.ProductNameResModel;
 import com.retailvend.model.outlets.ProductTypeModel;
+import com.retailvend.model.outlets.SalesAgentsListModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -50,6 +51,8 @@ public interface Api {
             @Field("method") String method,
             @Field("employee_id") String employee_id,
             @Field("store_id") String store_id,
+            @Field("order_type") String order_type,
+            @Field("salesagents_id") String salesagents_id,
             @Field("sales_order") String sales_order);
 
     //update attendance
@@ -83,5 +86,12 @@ public interface Api {
     Call<ProductTypeModel> productType(
             @Field("method") String method,
             @Field("product_id") String product_id
+    );
+
+    //sales agent types
+    @FormUrlEncoded
+    @POST("salesagents/api/salesagents")
+    Call<SalesAgentsListModel> salesAgentsType(
+            @Field("method") String method
     );
 }

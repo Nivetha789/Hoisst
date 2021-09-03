@@ -1,7 +1,10 @@
 package com.retailvend.todayoutlet;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
@@ -41,7 +45,8 @@ public class ProductNameAdapter extends RecyclerView.Adapter<ProductNameAdapter.
     public ProductNameAdapter(Activity context, List<ProductNameResData> itemsModelsl) {
         this.productNameResData = itemsModelsl;
         productNameResDataFull = new ArrayList();
-        this.activity = context; }
+        this.activity = context;
+    }
 
     @NonNull
     @Override
@@ -60,7 +65,7 @@ public class ProductNameAdapter extends RecyclerView.Adapter<ProductNameAdapter.
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((ProductNameActivity) activity).updateProdName(item.getProductName(),item.getProductId(),item.getGstVal(),item.getHsnCode());
+                 ((ProductNameActivity) activity).updateProdName(item.getProductName(),item.getProductId(),item.getGstVal(),item.getHsnCode());
             }
         });
     }

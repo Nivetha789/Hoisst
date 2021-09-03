@@ -26,12 +26,16 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
     private Activity activity;
     private List<AttendanceTypeDatum> attendanceTypeDatumList;
     String store_Id="";
+    String long_val="";
+    String lat="";
     private int index = -1;
 
-    ButtonTypeAdapter(Activity activity, List<AttendanceTypeDatum> assignOutletsDatum, String storeId) {
+    ButtonTypeAdapter(Activity activity, List<AttendanceTypeDatum> assignOutletsDatum, String storeId,String lat1, String long_val1) {
         this.activity = activity;
         this.attendanceTypeDatumList=assignOutletsDatum;
         this.store_Id=storeId;
+        this.lat=lat1;
+        this.long_val=long_val1;
     }
 
     @NonNull
@@ -63,8 +67,11 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
                     bundle.putString("type_id", typeId);
                     bundle.putString("store_id", store_Id);
                     bundle.putString("type", typeVal);
+                    bundle.putString("lat", lat);
+                    bundle.putString("long", long_val);
                     intent.putExtras(bundle);
                     activity.startActivity(intent);
+                    activity.finish();
                 }else if(typeVal.equals("Payment Collection")){
 
                 }

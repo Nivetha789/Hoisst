@@ -63,7 +63,11 @@ public class ProductNameActivity extends AppCompatActivity {
     ImageView search_icon;
     Activity activity;
     String prod_name="";
+    String prod_id="";
+    String gst="";
+    String hsn="";
     List<ProductTypeDatum> productTypeData;
+//    public static final int RESULT_OK = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,11 +195,10 @@ public class ProductNameActivity extends AppCompatActivity {
 //                        CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast(todayOutletList.getMessage());
                         productNameAdapter = new ProductNameAdapter(ProductNameActivity.this,productNameList);
                         LinearLayoutManager mLayoutManager = new LinearLayoutManager(ProductNameActivity.this);
-
                         product_name_recycler.setLayoutManager(mLayoutManager);
                         product_name_recycler.setItemAnimator(new DefaultItemAnimator());
                         product_name_recycler.setAdapter(productNameAdapter);
-                        productNameAdapter.notifyDataSetChanged();
+//                        productNameAdapter.notifyDataSetChanged();
 
 //                        text_signIn.setVisibility(View.VISIBLE);
                         Loader.showLoad(customProgress, activity, false);
@@ -226,13 +229,29 @@ public class ProductNameActivity extends AppCompatActivity {
         });
     }
 
-    public void updateProdName(String prodName, String prodId, String gst, String hsn){
-        Intent productIntent=new Intent(ProductNameActivity.this, CreateOutletOrderActivity.class);
-        productIntent.putExtra("prod_name",prodName);
-        productIntent.putExtra("prod_id",prodId);
-        productIntent.putExtra("gst",gst);
-        productIntent.putExtra("hsn",hsn);
-        startActivity(productIntent);
+    public void updateProdName(String prodName, String prodId, String gstVal, String hsnCode){
+        prod_name=prodName;
+        prod_id=prodId;
+        gst=gstVal;
+        hsn=hsnCode;
+        Intent mIntent = new Intent();
+        mIntent.putExtra("prod_name",prod_name);
+        mIntent.putExtra("prod_id",prod_id);
+        mIntent.putExtra("gst", gst);
+        mIntent.putExtra("hsn", hsn);
+        activity.setResult(RESULT_OK, mIntent);
         finish();
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent();
+//        intent.putExtra("prod_name", prod_name);
+//        intent.putExtra("prod_id", prod_id);
+//        intent.putExtra("gst", gst);
+//        intent.putExtra("hsn", hsn);
+//        setResult(RESULT_OK, intent);
+//        finish();
+//        super.onBackPressed();
+//    }
 }
