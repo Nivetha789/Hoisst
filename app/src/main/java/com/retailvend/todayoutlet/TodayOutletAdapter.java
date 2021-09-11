@@ -64,7 +64,7 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<TodayOutletAdapter.
 //        this.onClickListener = onClickListener;
 //    }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView todayOutletCard;
         TextView compName;
         TextView contactName;

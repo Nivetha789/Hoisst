@@ -502,7 +502,7 @@
                     android:fontFamily="@font/quicksand_medium"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="Checked"
+                    android:text="Check out"
                     android:textColor="@color/white"
                     android:textSize="14dp"
                     android:visibility="gone"

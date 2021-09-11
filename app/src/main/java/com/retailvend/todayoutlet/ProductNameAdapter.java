@@ -1,12 +1,7 @@
 package com.retailvend.todayoutlet;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,24 +12,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.model.outlets.ProductNameResData;
-import com.retailvend.model.outlets.ProductTypeModel;
-import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.utills.CustomProgress;
-import com.retailvend.utills.CustomToast;
-import com.retailvend.utills.Loader;
+import com.retailvend.model.outlets.SalesAgentData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ProductNameAdapter extends RecyclerView.Adapter<ProductNameAdapter.MyViewHolder> implements Filterable {
 
@@ -44,15 +32,15 @@ public class ProductNameAdapter extends RecyclerView.Adapter<ProductNameAdapter.
 
     public ProductNameAdapter(Activity context, List<ProductNameResData> itemsModelsl) {
         this.productNameResData = itemsModelsl;
-        productNameResDataFull = new ArrayList();
+        this.productNameResDataFull = new ArrayList<>();
         this.activity = context;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View myView = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_name_adapter, parent, false);
-        return new MyViewHolder(myView);
+    public ProductNameAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(activity).inflate(R.layout.product_name_adapter, viewGroup, false);
+        return new ProductNameAdapter.MyViewHolder(view);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -112,7 +100,6 @@ public class ProductNameAdapter extends RecyclerView.Adapter<ProductNameAdapter.
         }
     };
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private final TextView productName;
         private final CardView cardview;
@@ -125,10 +112,5 @@ public class ProductNameAdapter extends RecyclerView.Adapter<ProductNameAdapter.
             cardview = view.findViewById(R.id.product_code_card);
 //            productHsnCode = view.findViewById(R.id.product_hsn_code);
         }
-    }
-
-    public void filterList(ArrayList<ProductNameResData> filteredList) {
-        productNameResData.addAll(filteredList);
-        notifyDataSetChanged();
     }
 }

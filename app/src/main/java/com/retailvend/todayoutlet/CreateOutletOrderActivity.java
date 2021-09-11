@@ -5,8 +5,10 @@ import static android.content.ContentValues.TAG;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,13 +38,11 @@ import com.retailvend.model.order.CreateOrderModel;
 import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.ProductTypeDatum;
 import com.retailvend.model.outlets.ProductTypeModel;
-import com.retailvend.model.outlets.SalesAgentData;
-import com.retailvend.model.outlets.SalesAgentsListModel;
 import com.retailvend.productModel.AddProductModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
-import com.retailvend.utills.Loader;
+import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
 import java.lang.reflect.Type;
@@ -70,39 +71,45 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
     public static TextView txtTotalPrice, txtTotalQty;
 
-    Spinner spin_name,spin_sales_agent;
-    TextView txt_date, txt_invoice_mob, txt_invoice_address, product_name;
+    Spinner spin_name;
+    TextView txt_date, txt_invoice_mob, txt_invoice_address, rv, sales_agent, product_name, order_type_txt, cod, credit, txt_sales_agent;
     EditText txtPrice, qty;
-    LinearLayout linBtn, lin_submit,linSalesAgent;
+    LinearLayout linBtn, lin_submit, linSalesAgent;
+    ImageView left_arrow;
     Calendar c;
     int mYear, mMonth, mDay, mHour, mMinute;
     Activity activity;
     String prod_name = "";
+    int auto_id = 0;
     String prod_id = "";
     String gst_val = "";
     String hsn_code = "";
     String store_id = "";
+    String bill_type = "";
     String order_type = "";
     String btn_Type_id = "";
     String btn_Type_val = "";
     String type_id = "";
     String unitItem = "";
     String unitId = "";
-    String salesAgentName="";
-    String sales_agentId="";
-    String lat_val="";
-    String long_val="";
+    String lat_val = "";
+    String long_val = "";
     List<ProductTypeDatum> productTypeData;
-    List<SalesAgentData> salesAgentDataList;
     private final static int MY_REQUEST_CODE = 1;
+    private final static int MY_REQUEST_CODE1 = 2;
     String[] unitValue;
-    String[] salesAgentValue;
+    SessionManagerSP sessionManagerSP;
+    String sales_agent_name = "";
+    String sales_agent_id = "";
+    LinearLayout sales_agent_show, rv_show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_sales_order);
         activity = this;
+        sessionManagerSP = new SessionManagerSP(CreateOutletOrderActivity.this);
+
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -131,10 +138,25 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         qty = findViewById(R.id.edt_qty);
         tableList = findViewById(R.id.tableList);
         spin_name = findViewById(R.id.spin_unit);
-        spin_sales_agent = findViewById(R.id.spin_sales_agent);
+        txt_sales_agent = findViewById(R.id.txt_sales_agent);
         linBtn = findViewById(R.id.linBtn);
         linSalesAgent = findViewById(R.id.linSalesAgent);
         lin_submit = findViewById(R.id.lin_submit);
+        order_type_txt = findViewById(R.id.order_type_txt);
+        cod = findViewById(R.id.cod);
+        credit = findViewById(R.id.credit);
+        left_arrow = findViewById(R.id.left_arrow);
+        rv = findViewById(R.id.rv);
+        sales_agent = findViewById(R.id.sales_agent);
+        sales_agent_show = findViewById(R.id.sales_agent_show);
+        rv_show = findViewById(R.id.rv_show);
+
+        left_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         Bundle b = new Bundle();
         b = getIntent().getExtras();
@@ -148,7 +170,27 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         } else {
             Log.e(TAG, "product", null);
         }
-        salesAgentType();
+
+        Intent data = getIntent();
+        if (data != null) {
+            sales_agent_name = data.getStringExtra("sales_name");
+            sales_agent_id = data.getStringExtra("sales_id");
+
+            if (sales_agent_name != null) {
+                sales_agent_show.setVisibility(View.VISIBLE);
+                txt_sales_agent.setText(sales_agent_name);
+                order_type = "2";//sales agent
+//                System.out.println("sales_agent_namesales_agent_name"+sales_agent_name+sales_agent_id);
+            } else {
+
+                sales_agent_show.setVisibility(View.GONE);
+                order_type = "1";//retail vend
+            }
+        } else {
+            Log.e(TAG, "salesss", null);
+            sales_agent_show.setVisibility(View.GONE);
+        }
+
 
 //            store_id = bundle.getString("store_id");
 
@@ -162,8 +204,19 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         product_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent productIntent = new Intent(CreateOutletOrderActivity.this, ProductNameActivity.class);
-                startActivityForResult(productIntent, MY_REQUEST_CODE);
+//                System.out.println("prodtype::: " + order_type);
+//                System.out.println("bill_typebill_typebill_type::: " + bill_type);
+                if (!TextUtils.isEmpty(order_type)) {
+                    if (!TextUtils.isEmpty(bill_type)) {
+                        Intent productIntent = new Intent(CreateOutletOrderActivity.this, ProductNameActivity.class);
+                        productIntent.putExtra("order_type", order_type);
+                        startActivityForResult(productIntent, MY_REQUEST_CODE);
+                    } else {
+                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Select Bill Type");
+                    }
+                } else {
+                    CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Select Order Type");
+                }
             }
         });
 
@@ -189,6 +242,63 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                 } else {
                     CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Product Name should not be empty");
                 }
+            }
+        });
+
+        rv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rv.setBackgroundResource(R.drawable.background);
+                sales_agent.setBackgroundResource(R.drawable.lin_storke);
+                rv.setTextColor(Color.parseColor("#ffffff"));
+                sales_agent.setTextColor(Color.parseColor("#000000"));
+                rv_show.setVisibility(View.VISIBLE);
+                sales_agent_show.setVisibility(View.GONE);
+                order_type = "Retail Vend";
+            }
+        });
+
+        sales_agent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sales_agent.setBackgroundResource(R.drawable.background);
+                rv.setBackgroundResource(R.drawable.lin_storke);
+                rv.setTextColor(Color.parseColor("#000000"));
+                sales_agent.setTextColor(Color.parseColor("#ffffff"));
+                rv_show.setVisibility(View.GONE);
+                sales_agent_show.setVisibility(View.VISIBLE);
+                order_type = "Sales Agent";
+            }
+        });
+
+        linSalesAgent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent salesIntent = new Intent(CreateOutletOrderActivity.this, SalesAgentNameActivity.class);
+                startActivityForResult(salesIntent, MY_REQUEST_CODE1);
+            }
+        });
+
+        cod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bill_type = "1";
+                cod.setBackgroundResource(R.drawable.background);
+                credit.setBackgroundResource(R.drawable.lin_storke);
+                cod.setTextColor(Color.parseColor("#ffffff"));
+                credit.setTextColor(Color.parseColor("#000000"));
+            }
+        });
+
+        credit.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                bill_type = "2";
+                cod.setBackgroundResource(R.drawable.lin_storke);
+                credit.setBackgroundResource(R.drawable.background);
+                cod.setTextColor(Color.parseColor("#000000"));
+                credit.setTextColor(Color.parseColor("#ffffff"));
             }
         });
     }
@@ -225,6 +335,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 //        refreshActivity();
 //        RegistorSharedPreManager.getInstance(DetailsActivity.this).clear();
         super.onBackPressed();
+        finish();
     }
 
     public void datePicker() {
@@ -267,14 +378,12 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     }
 
     public void createOrderApi() {
-        final CustomProgress customProgress = new CustomProgress(this);
-//        text_signIn.setVisibility(View.GONE);
-        Loader.showLoad(customProgress, activity, true);
+        CustomProgress.showProgress(activity);
 
         String emp_id = SharedPrefManager.getInstance(CreateOutletOrderActivity.this).getUser().getId();
 
         Call<CreateOrderModel> call = RetrofitClient
-                .getInstance().getApi().createOrder("_addSalesOrder", emp_id, store_id, "1", sales_agentId, addProductJson);
+                .getInstance().getApi().createOrder("_addSalesOrder", emp_id, store_id, bill_type, order_type, sales_agent_id, addProductJson);
 
         call.enqueue(new Callback<CreateOrderModel>() {
             @Override
@@ -293,12 +402,12 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 //                        text_signIn.setVisibility(View.VISIBLE);
                         CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
 
-                        Loader.showLoad(customProgress, activity, false);
-
+                        CustomProgress.hideProgress(activity);
+                        updateAttendanceApi();
 
                     } else {
 //                        text_signIn.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
+                        CustomProgress.hideProgress(activity);
                         //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                         CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
@@ -306,7 +415,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
-                    Loader.showLoad(customProgress, activity, false);
+                    CustomProgress.hideProgress(activity);
                 }
 
             }
@@ -317,7 +426,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 //                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                 CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
-                Loader.showLoad(customProgress, activity, false);
+                CustomProgress.hideProgress(activity);
             }
         });
     }
@@ -329,7 +438,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         int a = Integer.parseInt(part2);
         int b = Integer.parseInt(qty.getText().toString().trim());
         totalPriceList = a * b;
-        addProductModel.add(new AddProductModel("1", prod_id, type_id, unitId, hsn_code, gst_val, qty.getText().toString(), totalPriceList));
+        addProductModel.add(new AddProductModel(auto_id, prod_id, type_id, unitId, hsn_code, gst_val, qty.getText().toString(), totalPriceList));
         updateAddProductAdapter("add", 0);
         product_name.setText("");
         productTypeData.clear();
@@ -338,13 +447,32 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         qty.setText("");
     }
 
+    public void totalPrice(List<AddProductModel> addProductModel1) {
+        int price = 0;
+        int qty = 0;
+
+        for (int j = 0; j < addProductModel1.size(); j++) {
+            price += addProductModel1.get(j).getPrice();
+        }
+
+        for (int i = 0; i < addProductModel1.size(); i++) {
+            qty += Integer.valueOf(addProductModel1.get(i).getQty());
+
+        }
+
+        txtTotalQty.setText(String.valueOf(qty));
+        txtTotalPrice.setText("\u20B9 " + price);
+    }
+
     public void updateAddProductAdapter(String which, int pos) {
+        auto_id = pos;
         if (addProductModel.size() > 0) {
             if (which.equals("remove")) {
                 addProductModel.remove(pos);
-//                    lin_edit.setVisibility(View.VISIBLE);
+                totalPrice(addProductModel);
             }
-//                txt_measure_title.setVisibility(View.VISIBLE);
+            totalPrice(addProductModel);
+
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             adapterMain = new CreateOutletAdapter(CreateOutletOrderActivity.this, addProductModel, prod_name, unitItem);
             tableList.setLayoutManager(layoutManager);
@@ -356,18 +484,13 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
             Gson gson = new Gson();
             addProductJson = gson.toJson(addProductModel, baseType);
             System.out.println("addProductJson " + addProductJson);
-            totalQtyList = addProductModel.get(pos).getQty();
-            totalPriceList = addProductModel.get(pos).getPrice();
 
         } else {
-//                txt_measure_title.setVisibility(View.GONE);
         }
     }
 
     public void productTypeApi(String prodId) {
-        final CustomProgress customProgress = new CustomProgress(activity);
-//        text_signIn.setVisibility(View.GONE);
-        Loader.showLoad(customProgress, activity, true);
+        CustomProgress.showProgress(activity);
 
 //        String emp_id= SharedPrefManager.getInstance(CreateOutletOrderActivity.this).getUser().getId();
 
@@ -386,14 +509,14 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                     ProductTypeModel productTypeModel = gson.fromJson(json, ProductTypeModel.class);
 
                     if (productTypeModel.getStatus() == 1) {
-                        Loader.showLoad(customProgress, activity, false);
+                        CustomProgress.hideProgress(activity);
                         productTypeData = productTypeModel.getData();
 
                         if (productTypeData != null) {
                             ArrayList<String> list = new ArrayList<String>();
                             for (int i = 0; i < productTypeData.size(); i++) {
-                                list.add(productTypeData.get(i).getProductType() + " " + productTypeData.get(i).getProductUnit());
-                                unitItem = productTypeData.get(i).getProductType();
+                                list.add(productTypeData.get(i).getProductType() + " " + productTypeData.get(i).getUnitName());
+                                unitItem = productTypeData.get(i).getProductType() + " " + productTypeData.get(i).getUnitName();
                                 unitId = productTypeData.get(i).getProductUnit();
                                 txtPrice.setText("₹." + productTypeData.get(i).getProductPrice());
                                 type_id = productTypeData.get(i).getTypeId();
@@ -407,13 +530,13 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                             qty.setEnabled(true);
                         }
                     } else {
-                        Loader.showLoad(customProgress, activity, false);
+                        CustomProgress.hideProgress(activity);
 //                        CustomToast.getInstance(activity).showSmallCustomToast(productTypeModel.getMessage());
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
-                    Loader.showLoad(customProgress, activity, false);
+                    CustomProgress.hideProgress(activity);
                 }
 
             }
@@ -424,83 +547,17 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 //                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                 CustomToast.getInstance(activity).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
-                Loader.showLoad(customProgress, activity, false);
-            }
-        });
-    }
-
-    public void salesAgentType() {
-        final CustomProgress customProgress = new CustomProgress(activity);
-//        text_signIn.setVisibility(View.GONE);
-        Loader.showLoad(customProgress, activity, true);
-
-//        String emp_id= SharedPrefManager.getInstance(CreateOutletOrderActivity.this).getUser().getId();
-
-        Call<SalesAgentsListModel> call = RetrofitClient
-                .getInstance().getApi().salesAgentsType("_listSalesagents");
-
-        call.enqueue(new Callback<SalesAgentsListModel>() {
-            @Override
-            public void onResponse(@NonNull Call<SalesAgentsListModel> call, @NonNull Response<SalesAgentsListModel> response) {
-
-                try {
-
-                    Gson gson = new Gson();
-                    String json = gson.toJson(response.body());
-
-                    SalesAgentsListModel salesAgentsListModel = gson.fromJson(json, SalesAgentsListModel.class);
-
-                    if (salesAgentsListModel.getStatus() == 1) {
-                        Loader.showLoad(customProgress, activity, false);
-                        salesAgentDataList = salesAgentsListModel.getData();
-
-                        if (salesAgentDataList != null) {
-                            ArrayList<String> list = new ArrayList<String>();
-                            for (int i = 0; i < salesAgentDataList.size(); i++) {
-                                list.add(salesAgentDataList.get(i).getCompanyName());
-                                salesAgentName = salesAgentDataList.get(i).getCompanyName();
-                                sales_agentId = salesAgentDataList.get(i).getAgentsId();
-                                System.out.println("sales_agentId "+sales_agentId);
-                            }
-
-                            salesAgentValue = list.toArray(new String[list.size()]);
-
-                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, salesAgentValue);
-                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin_sales_agent.setAdapter(dataAdapter);
-                            qty.setEnabled(true);
-                        }
-                    } else {
-                        Loader.showLoad(customProgress, activity, false);
-//                        CustomToast.getInstance(activity).showSmallCustomToast(productTypeModel.getMessage());
-                    }
-
-                } catch (Exception e) {
-                    Log.d("Exception", e.getMessage());
-                    Loader.showLoad(customProgress, activity, false);
-                }
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<SalesAgentsListModel> call, @NonNull Throwable t) {
-                Log.d("Failure ", t.getMessage());
-//                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                CustomToast.getInstance(activity).showSmallCustomToast("Something went wrong try again..");
-//                text_signIn.setVisibility(View.VISIBLE);
-                Loader.showLoad(customProgress, activity, false);
+                CustomProgress.hideProgress(activity);
             }
         });
     }
 
     public void updateAttendanceApi() {
-        final CustomProgress customProgress = new CustomProgress(this);
-//        text_signIn.setVisibility(View.GONE);
-        Loader.showLoad(customProgress, this, true);
-        String emp_id= SharedPrefManager.getInstance(this).getUser().getId();
+        CustomProgress.showProgress(activity);
+        String emp_id = SharedPrefManager.getInstance(this).getUser().getId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance",emp_id,store_id,lat_val,long_val,btn_Type_val,"",btn_Type_id);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", btn_Type_id);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -513,20 +570,21 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
                     AddAttendanceModel attendanceTypeModel = gson.fromJson(json, AddAttendanceModel.class);
 
-                    if (attendanceTypeModel.getStatus()==1) {
+                    if (attendanceTypeModel.getStatus() == 1) {
 
                         CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
 
-                        Loader.showLoad(customProgress, activity, false);
+                        CustomProgress.hideProgress(activity);
+                        onBackPressed();
 
                     } else {
-                        Loader.showLoad(customProgress, activity, false);
+                        CustomProgress.hideProgress(activity);
                         CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
-                    Loader.showLoad(customProgress, activity, false);
+                    CustomProgress.hideProgress(activity);
                 }
 
             }
@@ -535,7 +593,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
             public void onFailure(@NonNull Call<AddAttendanceModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
                 CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Something went wrong try again..");
-                Loader.showLoad(customProgress, activity, false);
+                CustomProgress.hideProgress(activity);
             }
         });
     }
@@ -556,5 +614,10 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                 }
             }
         }
+    }
+
+    public void updateSales(String salesAgentName, String salesId) {
+        sales_agent_name = salesAgentName;
+        sales_agent_id = salesId;
     }
 }

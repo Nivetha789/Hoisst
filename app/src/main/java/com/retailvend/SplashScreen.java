@@ -123,7 +123,7 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
 //                startActivity(i);
 //                finish();
             }
-        }, 5000);
+        }, 3500);
     }
 
     private void checkConnection() {

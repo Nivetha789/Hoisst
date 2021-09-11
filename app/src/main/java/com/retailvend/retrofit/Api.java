@@ -42,7 +42,9 @@ public interface Api {
     @POST("order/api/manage_items")
     Call<ProductNameResModel> getProductName(
             @Field("method") String method,
-            @Field("order_type") String order_type);
+            @Field("order_type") String order_type,
+            @Field("search") String search
+            );
 
     //create order
     @FormUrlEncoded
@@ -51,6 +53,7 @@ public interface Api {
             @Field("method") String method,
             @Field("employee_id") String employee_id,
             @Field("store_id") String store_id,
+            @Field("bill_type") String bill_type,
             @Field("order_type") String order_type,
             @Field("salesagents_id") String salesagents_id,
             @Field("sales_order") String sales_order);
@@ -92,6 +95,9 @@ public interface Api {
     @FormUrlEncoded
     @POST("salesagents/api/salesagents")
     Call<SalesAgentsListModel> salesAgentsType(
-            @Field("method") String method
+            @Field("method") String method,
+            @Field("offset") int offset,
+            @Field("limit") int limit,
+            @Field("search") String search
     );
 }

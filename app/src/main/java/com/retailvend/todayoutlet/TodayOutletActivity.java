@@ -21,7 +21,6 @@ import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
-import com.retailvend.utills.Loader;
 import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;
@@ -63,7 +62,7 @@ public class TodayOutletActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
-        todayOutletListApi();
+
 
         todayOutletRecycler=findViewById(R.id.today_outlet_recycler);
         leftArrow=findViewById(R.id.left_arrow);
@@ -74,12 +73,11 @@ public class TodayOutletActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        todayOutletListApi();
     }
 
     public void todayOutletListApi() {
-        final CustomProgress customProgress = new CustomProgress(activity);
-//        text_signIn.setVisibility(View.GONE);
-        Loader.showLoad(customProgress, activity, true);
+        CustomProgress.showProgress(this);
       String emp_id= SharedPrefManager.getInstance(TodayOutletActivity.this).getUser().getId();
         System.out.println("emmmpidd "+emp_id);
 
@@ -111,20 +109,17 @@ public class TodayOutletActivity extends AppCompatActivity {
                         todayOutletRecycler.setItemAnimator(new DefaultItemAnimator());
                         todayOutletRecycler.setAdapter(todayOutletAdapter);
 
-//                        text_signIn.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
+                      CustomProgress.hideProgress(activity);
 
                     } else {
-//                        text_signIn.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
-                        //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                      CustomProgress.hideProgress(activity);
                         CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
-                    Loader.showLoad(customProgress, activity, false);
+                    CustomProgress.hideProgress(activity);
                 }
 
             }
@@ -135,7 +130,7 @@ public class TodayOutletActivity extends AppCompatActivity {
 //                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                 CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
-                Loader.showLoad(customProgress, activity, false);
+                CustomProgress.hideProgress(activity);
             }
         });
     }

@@ -21,6 +21,9 @@ public class ProductTypeDatum implements Serializable {
     @SerializedName("product_unit")
     @Expose
     private String productUnit;
+    @SerializedName("unit_name")
+    @Expose
+    private String unitName;
     @SerializedName("product_price")
     @Expose
     private String productPrice;
@@ -75,6 +78,14 @@ public class ProductTypeDatum implements Serializable {
 
     public void setProductUnit(String productUnit) {
         this.productUnit = productUnit;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
     }
 
     public String getProductPrice() {

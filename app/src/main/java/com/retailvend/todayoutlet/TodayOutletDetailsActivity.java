@@ -17,24 +17,22 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.AssignOutletsDatum;
-import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.model.outlets.AttendanceTypeDatum;
 import com.retailvend.model.outlets.AttendanceTypeModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
-import com.retailvend.utills.Loader;
+import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;
-import java.util.Locale;
 
 import at.markushi.ui.CircleButton;
 import retrofit2.Call;
@@ -43,7 +41,6 @@ import retrofit2.Response;
 
 public class TodayOutletDetailsActivity extends AppCompatActivity {
 
-    TextView takeOrder;
     AssignOutletsDatum assignOutletsDatum;
     TextView shop_name;
     TextView shop_number;
@@ -68,12 +65,15 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
     CircleButton fab;
     String type_id="";
     String type_val="";
+    SessionManagerSP sessionManagerSP;
+    ImageView left_arrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_outlet_details);
         activity=this;
+        sessionManagerSP = new SessionManagerSP(TodayOutletDetailsActivity.this);
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -109,6 +109,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
         order_type_recycler=findViewById(R.id.order_type_recycler);
         reason_constrain=findViewById(R.id.reason_constrain);
         fab=findViewById(R.id.fab);
+        left_arrow=findViewById(R.id.left_arrow);
 
         assignOutletsDatum = (AssignOutletsDatum) getIntent().getSerializableExtra("todayOutlet");
         String shop_name1 = assignOutletsDatum.getCompanyName();
@@ -122,7 +123,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
         attendance_status = assignOutletsDatum.getAttendanceStatus();
         latitude = assignOutletsDatum.getLatitude();
         longitude = assignOutletsDatum.getLongitude();
-        System.out.println("attendance_status "+gst1+pan1);
+//        System.out.println("attendance_status "+attendance_status);
         shop_name.setText(shop_name1);
         shop_number.setText(shop_number1);
         contact_name.setText(contact_name1);
@@ -130,6 +131,13 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
         mail.setText(mail1);
         gst.setText(gst1);
         pan.setText(pan1);
+
+        left_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         if(attendance_status.equals("1")){
             check_in.setVisibility(View.GONE);
@@ -178,10 +186,14 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
 //        });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     public void attendanceListApi() {
-        final CustomProgress customProgress = new CustomProgress(this);
-//        text_signIn.setVisibility(View.GONE);
-        Loader.showLoad(customProgress, this, true);
+        CustomProgress.showProgress(activity);
         Call<AttendanceTypeModel> call = RetrofitClient
                 .getInstance().getApi().attendanceList("_attendanceType");
 
@@ -209,11 +221,11 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
                         order_type_recycler.setAdapter(buttonTypeAdapter);
 
 //                        text_signIn.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
+                        CustomProgress.hideProgress(activity);
 
                     } else {
 //                        text_signIn.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
+                        CustomProgress.hideProgress(activity);
                         //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                         CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
@@ -221,7 +233,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
-                    Loader.showLoad(customProgress, activity, false);
+                    CustomProgress.hideProgress(activity);
                 }
 
             }
@@ -232,7 +244,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
 //                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                 CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
-                Loader.showLoad(customProgress, activity, false);
+                CustomProgress.hideProgress(activity);
             }
         });
     }
@@ -244,9 +256,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
     }
 
     public void updateAttendanceApi(String typeId, String typeVal) {
-        final CustomProgress customProgress = new CustomProgress(this);
-//        text_signIn.setVisibility(View.GONE);
-        Loader.showLoad(customProgress, this, true);
+        CustomProgress.showProgress(activity);
         String emp_id= SharedPrefManager.getInstance(this).getUser().getId();
 
         Call<AddAttendanceModel> call = RetrofitClient
@@ -267,16 +277,16 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
 
                         CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
 
-                        Loader.showLoad(customProgress, activity, false);
-
+                        CustomProgress.hideProgress(activity);
+                        onBackPressed();
                     } else {
-                        Loader.showLoad(customProgress, activity, false);
+                        CustomProgress.hideProgress(activity);
                         CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
-                    Loader.showLoad(customProgress, activity, false);
+                    CustomProgress.hideProgress(activity);
                 }
 
             }
@@ -285,15 +295,13 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<AddAttendanceModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
                 CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
-                Loader.showLoad(customProgress, activity, false);
+                CustomProgress.hideProgress(activity);
             }
         });
     }
 
     public void addAttendanceApi() {
-        final CustomProgress customProgress = new CustomProgress(this);
-//        text_signIn.setVisibility(View.GONE);
-        Loader.showLoad(customProgress, this, true);
+        CustomProgress.showProgress(activity);
         String emp_id= SharedPrefManager.getInstance(this).getUser().getId();
 
         Call<AddAttendanceModel> call = RetrofitClient
@@ -316,16 +324,16 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
                         check_in.setVisibility(View.GONE);
                         checked.setVisibility(View.VISIBLE);
                         order_type_constrain.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
+                        CustomProgress.hideProgress(activity);
 
                     } else {
-                        Loader.showLoad(customProgress, activity, false);
+                        CustomProgress.hideProgress(activity);
                         CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
-                    Loader.showLoad(customProgress, activity, false);
+                    CustomProgress.hideProgress(activity);
                 }
 
             }
@@ -334,7 +342,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<AddAttendanceModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
                 CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
-                Loader.showLoad(customProgress, activity, false);
+                CustomProgress.hideProgress(activity);
             }
         });
     }

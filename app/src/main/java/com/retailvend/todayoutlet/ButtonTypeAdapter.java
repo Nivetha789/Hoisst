@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.retailvend.R;
 import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AttendanceTypeDatum;
+import com.retailvend.utills.CustomToast;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         AttendanceTypeDatum data = attendanceTypeDatumList.get(position);
 
         String typeId = data.getTypeId();
@@ -58,8 +59,10 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
             public void onClick(View v) {
                 index = position;
                 notifyDataSetChanged();
-                System.out.println("tyyyyyyyyy"+typeVal);
+//                System.out.println("tyyyyyyyyy"+typeVal);
                 if(typeVal.equals("No Order")){
+                    holder.typeValue.setBackgroundResource(R.drawable.background3);
+                    holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
                     ((TodayOutletDetailsActivity) activity).showReason(typeId,typeVal);
                 } else if (typeVal.equals("Sales Order")) {
                     Intent intent = new Intent(activity, CreateOutletOrderActivity.class);
@@ -73,14 +76,19 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
                     activity.startActivity(intent);
                     activity.finish();
                 }else if(typeVal.equals("Payment Collection")){
-
+                    CustomToast.getInstance(activity).showSmallCustomToast("This feature will be enabled shortly");
                 }
             }
         });
-        if(index==position){
-            holder.typeValue.setTextColor(Color.parseColor("#27D1B0"));
-        }else {
-            holder.typeValue.setTextColor(Color.parseColor("#ffffff"));
+        if(typeVal.equals("Sales Order")){
+            holder.typeValue.setBackgroundResource(R.drawable.background);
+//            holder.typeValue.setBackgroundColor(Color.parseColor("#163764"));
+        }else if(typeVal.equals("Payment Collection")){
+            holder.typeValue.setBackgroundResource(R.drawable.background1);
+//            holder.typeValue.setBackgroundColor(Color.parseColor("#37AC06"));
+        }else{
+            holder.typeValue.setBackgroundResource(R.drawable.background2);
+//            holder.typeValue.setBackgroundColor(Color.parseColor("#63A1FF"));
         }
     }
 

@@ -2,10 +2,14 @@ package com.retailvend.todayoutlet;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -57,14 +61,6 @@ public class CreateOutletAdapter extends RecyclerView.Adapter<CreateOutletAdapte
                 ((CreateOutletOrderActivity) context).updateAddProductAdapter("remove",index);
             }
         });
-
-//        holder.delBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                notifyDataSetChanged();
-//                ((CreateOutletOrderActivity) context).updateAddProductAdapter("remove",position);
-//            }
-//        });
     }
 
     @Override

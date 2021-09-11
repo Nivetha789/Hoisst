@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -15,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -24,7 +24,6 @@ import com.retailvend.model.login.LoginResModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
-import com.retailvend.utills.Loader;
 import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
@@ -52,7 +51,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        activity=this;
 
         text_signIn=findViewById(R.id.txt_signIn);
         txt_forgot=findViewById(R.id.txt_forgot);
@@ -62,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
         lin_eye = findViewById(R.id.lin_eye);
         lin_eye_inv = findViewById(R.id.lin_eye_inv);
         sessionManagerSP = new SessionManagerSP(LoginActivity.this);
+
+        activity=this;
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -133,9 +133,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void userLogin(String mobNo, String pass) {
 
-     final CustomProgress customProgress = new CustomProgress(this);
-//        text_signIn.setVisibility(View.GONE);
-        Loader.showLoad(customProgress, this, true);
+        CustomProgress.showProgress(this);
 
         Call<LoginResModel> call = RetrofitClient
                 .getInstance().getApi().userlogin("_employeeLogin",mobNo, pass);
@@ -173,33 +171,24 @@ public class LoginActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
-
-//                        text_signIn.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
-
-
+                        CustomProgress.hideProgress(activity);
                     } else {
-//                        text_signIn.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
-
-//                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                        CustomProgress.hideProgress(activity);
                         CustomToast.getInstance(LoginActivity.this).showSmallCustomToast("Invalid User Name or Password");
-//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
+                    CustomProgress.hideProgress(activity);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<LoginResModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
-//                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                 CustomToast.getInstance(LoginActivity.this).showSmallCustomToast("Something went wrong try again..");
-//                text_signIn.setVisibility(View.VISIBLE);
-                Loader.showLoad(customProgress, activity, false);
+                CustomProgress.hideProgress(activity);
             }
         });
     }

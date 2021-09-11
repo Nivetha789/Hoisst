@@ -79,6 +79,182 @@
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="Order Type *"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:paddingStart="15dp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="15dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/rv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/lin_storke"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center"
+                                android:padding="8dp"
+                                android:text="Retail Vend"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:id="@+id/sales_agent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/lin_storke"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center"
+                                android:padding="8dp"
+                                android:text="Sales Agent"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/rv_show"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/order_type_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center|left"
+                                android:paddingLeft="10dp"
+                                android:text="Bill Type *"
+                                android:textColor="#40000000"
+                                android:textSize="12dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/cod"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="35dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@drawable/lin_storke"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="COD"
+                                    android:textColor="@color/black"
+                                    android:textSize="14dp" />
+
+                                <TextView
+                                    android:id="@+id/credit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="35dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@drawable/lin_storke"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="Credit"
+                                    android:textColor="@color/black"
+                                    android:textSize="14dp" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/sales_agent_show"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center|left"
+                                android:paddingLeft="10dp"
+                                android:paddingStart="15dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="5dp"
+                                android:text="Sales Agent Type *"
+                                android:textColor="#40000000"
+                                android:textSize="12dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:orientation="horizontal">
+
+
+                                <LinearLayout
+                                    android:id="@+id/linSalesAgent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/lin_storke">
+
+                                        <TextView
+                                            android:id="@+id/txt_sales_agent"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:fontFamily="@font/quicksand_medium"
+                                            android:textSize="14dp"
+                                            android:paddingStart="10dp"
+                                            android:hint="Choose Sales Agent"
+                                            android:textColorHint="#40000000"
+                                            android:gravity="center|left"
+                                            android:textColor="@color/black"/>
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/quicksand_bold"
@@ -117,54 +293,6 @@
                                         android:layout_marginBottom="20dp"
                                         android:layout_weight="2.5"
                                         android:orientation="vertical">
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_marginTop="5dp"
-                                            android:fontFamily="@font/quicksand_medium"
-                                            android:gravity="center|left"
-                                            android:paddingLeft="10dp"
-                                            android:text="Sales Agent Type *"
-                                            android:textColor="#40000000"
-                                            android:textSize="12dp" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="40dp"
-                                            android:layout_marginTop="5dp"
-                                            android:orientation="horizontal">
-
-
-                                            <LinearLayout
-                                                android:id="@+id/linSalesAgent"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:layout_weight="1"
-                                                android:gravity="center"
-                                                android:orientation="horizontal"
-                                                android:weightSum="2">
-
-
-                                                <LinearLayout
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_marginRight="2dp"
-                                                    android:layout_weight="1"
-                                                    android:background="@drawable/lin_storke">
-
-                                                    <Spinner
-                                                        android:id="@+id/spin_sales_agent"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="match_parent" />
-
-                                                </LinearLayout>
-
-
-                                            </LinearLayout>
-
-
-                                        </LinearLayout>
 
                                         <TextView
                                             android:layout_width="match_parent"

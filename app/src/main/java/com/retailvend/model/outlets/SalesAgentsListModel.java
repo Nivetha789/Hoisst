@@ -13,6 +13,15 @@ public class SalesAgentsListModel {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("total_record")
+    @Expose
+    private Integer totalRecord;
+    @SerializedName("offset")
+    @Expose
+    private Integer offset;
+    @SerializedName("limit")
+    @Expose
+    private Integer limit;
     @SerializedName("data")
     @Expose
     private List<SalesAgentData> data = new ArrayList<>();
@@ -33,11 +42,34 @@ public class SalesAgentsListModel {
         this.message = message;
     }
 
+    public Integer getTotalRecord() {
+        return totalRecord;
+    }
+
+    public void setTotalRecord(Integer totalRecord) {
+        this.totalRecord = totalRecord;
+    }
+
+    public Integer getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
     public List<SalesAgentData> getData() {
         return data;
     }
 
     public void setData(List<SalesAgentData> data) {
         this.data = data;
-    }
-}
+    }}

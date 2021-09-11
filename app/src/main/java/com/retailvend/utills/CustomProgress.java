@@ -1,25 +1,41 @@
 package com.retailvend.utills;
 
+
 import android.app.Activity;
 import android.app.Dialog;
-import android.os.Bundle;
+import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Window;
+
+
+import androidx.core.content.ContextCompat;
 
 import com.retailvend.R;
 
-import butterknife.ButterKnife;
+import java.util.Objects;
 
-public class CustomProgress extends Dialog{
+public class CustomProgress {
 
-    public CustomProgress(Activity activity) {
-        super(activity);
+    private static Dialog dialog;
+
+    public static void showProgress(Activity activity){
+        try {
+            dialog=new Dialog(activity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(activity, R.color.transparent)));
+            dialog.setContentView(R.layout.loader);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+        }catch (Exception e){
+            Log.d("ProgressDialog",e.toString());
+        }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.loader);
-        ButterKnife.bind(this);
+    public static void hideProgress(Activity activity){
+        try {
+            dialog.hide();
+        }catch (Exception e){
+            Log.d("ProgressDialog",e.toString());
+        }
     }
 }

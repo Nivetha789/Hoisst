@@ -21,31 +21,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hoisst">
-        <activity android:name=".ProfileActivity"
+        <activity
+            android:name=".todayoutlet.SalesAgentNameActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
             tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".outstand.OutstandingActivity"
+        <activity
+            android:name=".ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".todayoutlet.CreateOutletOrderActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".outstand.OutstandingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".todayoutlet.ProductNameActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".todayoutlet.CreateOutletOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".todayoutlet.TodayOutletDetailsActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".todayoutlet.ProductNameActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".todayoutlet.TodayOutletDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Hoisst.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".sales.SalesActivity"
             android:screenOrientation="portrait"
