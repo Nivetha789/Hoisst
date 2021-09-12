@@ -60,19 +60,31 @@ public class SessionManagerSP {
 
 
 
-    public void setFirstTime(String authkey) {
+    public void setSalesName(String authkey) {
 
-        editor.putString("firstTime", authkey);
+        editor.putString("salesName", authkey);
 
         editor.commit();
 
 
     }
 
-    public String getFirstTime() {
+    public String getSalesName() {
+
+        return pref.getString("salesName", "");
+    }
+    public void setSalesNameId(String authkey) {
+
+        editor.putString("salesNameId", authkey);
+
+        editor.commit();
 
 
-        return pref.getString("firstTime", "");
+    }
+
+    public String getSalesNameId() {
+
+        return pref.getString("salesNameId", "");
     }
 
 

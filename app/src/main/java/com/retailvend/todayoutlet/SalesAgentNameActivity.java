@@ -36,6 +36,7 @@ import com.retailvend.model.outlets.SalesAgentsListModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
+import com.retailvend.utills.SessionManagerSP;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,7 @@ public class SalesAgentNameActivity extends AppCompatActivity implements SwipeRe
     int totalcount = 0;
 
     String searchTxt = "";
+    SessionManagerSP sessionManagerSP;
 
 
     @Override
@@ -119,6 +121,8 @@ public class SalesAgentNameActivity extends AppCompatActivity implements SwipeRe
 
 
         salesAgentDataList = new ArrayList<>();
+
+        sessionManagerSP=new SessionManagerSP(SalesAgentNameActivity.this);
 
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
@@ -327,10 +331,16 @@ public class SalesAgentNameActivity extends AppCompatActivity implements SwipeRe
     public void updateSalesNameAdapter(String salesAgentName, String id) {
         sales_agent_name = salesAgentName;
         sales_agentId = id;
-        Intent mIntent = new Intent(SalesAgentNameActivity.this, CreateOutletOrderActivity.class);
-        mIntent.putExtra("sales_name", sales_agent_name);
-        mIntent.putExtra("sales_id", sales_agentId);
-        startActivity(mIntent);
+        System.out.println("salessssss na,me "+sales_agent_name);
+        System.out.println("salessssssidddd "+sales_agentId);
+//        Intent mIntent = new Intent(SalesAgentNameActivity.this, CreateOutletOrderActivity.class);
+//        mIntent.putExtra("which","activity");
+//        mIntent.putExtra("sales_name", sales_agent_name);
+//        mIntent.putExtra("sales_id", sales_agentId);
+//        startActivity(mIntent);
+
+        sessionManagerSP.setSalesName(sales_agent_name);
+        sessionManagerSP.setSalesNameId(sales_agentId);
         onBackPressed();
     }
 

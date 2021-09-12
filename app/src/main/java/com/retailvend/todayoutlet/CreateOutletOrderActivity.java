@@ -31,6 +31,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.retailvend.R;
@@ -108,7 +109,6 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_sales_order);
         activity = this;
-        sessionManagerSP = new SessionManagerSP(CreateOutletOrderActivity.this);
 
 
         if (Build.VERSION.SDK_INT >= 19) {
@@ -158,41 +158,17 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
             }
         });
 
-        Bundle b = new Bundle();
-        b = getIntent().getExtras();
-        if (b != null) {
-            btn_Type_id = getIntent().getExtras().getString("type_id");
-            store_id = getIntent().getExtras().getString("store_id");
-            btn_Type_val = getIntent().getExtras().getString("type");
-            lat_val = getIntent().getExtras().getString("lat");
-            long_val = getIntent().getExtras().getString("long");
-
-        } else {
-            Log.e(TAG, "product", null);
-        }
 
         Intent data = getIntent();
         if (data != null) {
-            sales_agent_name = data.getStringExtra("sales_name");
-            sales_agent_id = data.getStringExtra("sales_id");
-
-            if (sales_agent_name != null) {
-                sales_agent_show.setVisibility(View.VISIBLE);
-                txt_sales_agent.setText(sales_agent_name);
-                order_type = "2";//sales agent
-//                System.out.println("sales_agent_namesales_agent_name"+sales_agent_name+sales_agent_id);
-            } else {
-
-                sales_agent_show.setVisibility(View.GONE);
-                order_type = "1";//retail vend
-            }
-        } else {
-            Log.e(TAG, "salesss", null);
-            sales_agent_show.setVisibility(View.GONE);
+            btn_Type_id = getIntent().getStringExtra("type_id");
+            store_id = getIntent().getStringExtra("store_id");
+            btn_Type_val = getIntent().getStringExtra("type");
+            lat_val = getIntent().getStringExtra("lat");
+            long_val = getIntent().getStringExtra("long");
         }
 
-
-//            store_id = bundle.getString("store_id");
+        sessionManagerSP = new SessionManagerSP(CreateOutletOrderActivity.this);
 
         lin_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,13 +183,13 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 //                System.out.println("prodtype::: " + order_type);
 //                System.out.println("bill_typebill_typebill_type::: " + bill_type);
                 if (!TextUtils.isEmpty(order_type)) {
-                    if (!TextUtils.isEmpty(bill_type)) {
+//                    if (!TextUtils.isEmpty(bill_type)) {
                         Intent productIntent = new Intent(CreateOutletOrderActivity.this, ProductNameActivity.class);
                         productIntent.putExtra("order_type", order_type);
                         startActivityForResult(productIntent, MY_REQUEST_CODE);
-                    } else {
-                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Select Bill Type");
-                    }
+//                    else {
+//                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Select Bill Type");
+//                    }
                 } else {
                     CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Select Order Type");
                 }
@@ -245,6 +221,20 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
             }
         });
 
+        spin_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                unitItem = parentView.getItemAtPosition(position).toString();
+//                System.out.println("parentView " + unitItem);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+
+        });
+
         rv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,7 +244,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                 sales_agent.setTextColor(Color.parseColor("#000000"));
                 rv_show.setVisibility(View.VISIBLE);
                 sales_agent_show.setVisibility(View.GONE);
-                order_type = "Retail Vend";
+                order_type = "1";
             }
         });
 
@@ -265,9 +255,9 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                 rv.setBackgroundResource(R.drawable.lin_storke);
                 rv.setTextColor(Color.parseColor("#000000"));
                 sales_agent.setTextColor(Color.parseColor("#ffffff"));
-                rv_show.setVisibility(View.GONE);
+                rv_show.setVisibility(View.VISIBLE);
                 sales_agent_show.setVisibility(View.VISIBLE);
-                order_type = "Sales Agent";
+                order_type = "2";
             }
         });
 
@@ -304,13 +294,33 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        unitItem = parent.getItemAtPosition(position).toString();
-        System.out.println("SelectedSelected " + unitItem);
+    protected void onResume() {
+        super.onResume();
+        if(!TextUtils.isEmpty(sessionManagerSP.getSalesName())){
+            rv_show.setVisibility(View.VISIBLE);
+            sales_agent_show.setVisibility(View.VISIBLE);
+            order_type = "2";
+            sales_agent_name=sessionManagerSP.getSalesName();
+            sales_agent_id=sessionManagerSP.getSalesNameId();
+            System.out.println("fggffgffggf "+sales_agent_name);
+            System.out.println("iddddddddd "+sales_agent_id);
+            txt_sales_agent.setText(sales_agent_name);
+        }else{
+            rv_show.setVisibility(View.GONE);
+            sales_agent_show.setVisibility(View.GONE);
+            order_type = "1";
+            sessionManagerSP.setSalesName("");
+            sessionManagerSP.setSalesNameId("");
+        }
     }
 
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        unitItem = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
@@ -438,7 +448,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         int a = Integer.parseInt(part2);
         int b = Integer.parseInt(qty.getText().toString().trim());
         totalPriceList = a * b;
-        addProductModel.add(new AddProductModel(auto_id, prod_id, type_id, unitId, hsn_code, gst_val, qty.getText().toString(), totalPriceList));
+        addProductModel.add(new AddProductModel(auto_id, prod_id, prod_name,type_id, unitId,unitItem, hsn_code, gst_val, qty.getText().toString(), totalPriceList));
         updateAddProductAdapter("add", 0);
         product_name.setText("");
         productTypeData.clear();
@@ -465,7 +475,12 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     }
 
     public void updateAddProductAdapter(String which, int pos) {
-        auto_id = pos;
+        System.out.println("possss "+pos);
+        if(pos==0){
+            auto_id=1;
+        }else{
+            auto_id = pos;
+        }
         if (addProductModel.size() > 0) {
             if (which.equals("remove")) {
                 addProductModel.remove(pos);
@@ -474,7 +489,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
             totalPrice(addProductModel);
 
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            adapterMain = new CreateOutletAdapter(CreateOutletOrderActivity.this, addProductModel, prod_name, unitItem);
+            adapterMain = new CreateOutletAdapter(CreateOutletOrderActivity.this, addProductModel);
             tableList.setLayoutManager(layoutManager);
             tableList.setAdapter(adapterMain);
             adapterMain.notifyDataSetChanged();
@@ -619,5 +634,10 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     public void updateSales(String salesAgentName, String salesId) {
         sales_agent_name = salesAgentName;
         sales_agent_id = salesId;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }

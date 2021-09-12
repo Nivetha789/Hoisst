@@ -28,14 +28,10 @@ public class CreateOutletAdapter extends RecyclerView.Adapter<CreateOutletAdapte
     Context context;
     List<AddProductModel> addProductList = new ArrayList<>();
     int index=0;
-    String product_name="";
-    String unit_type="";
 
-    public CreateOutletAdapter(Context context, List<AddProductModel> addProductLists,String productName, String unitType) {
+    public CreateOutletAdapter(Context context, List<AddProductModel> addProductLists) {
         this.context = context;
         this.addProductList = addProductLists;
-        this.product_name = productName;
-        this.unit_type=unitType;
     }
 
     @NonNull
@@ -50,8 +46,8 @@ public class CreateOutletAdapter extends RecyclerView.Adapter<CreateOutletAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         index=position;
         AddProductModel data = addProductList.get(position);
-        holder.txt_name.setText(product_name);
-        holder.unit.setText(unit_type);
+        holder.txt_name.setText(data.getProduct_name());
+        holder.unit.setText(data.getUnit());
         holder.txt_amt.setText(String.valueOf("₹."+data.getPrice()));
         holder.txt_qty.setText("Qty: "+data.getQty());
 

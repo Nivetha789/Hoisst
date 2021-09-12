@@ -11,9 +11,15 @@ public class AddProductModel {
     @SerializedName("product_id")
     @Expose
     private String product_id;
+    @SerializedName("product_name")
+    @Expose
+    private String product_name;
     @SerializedName("type_id")
     @Expose
     private String type_id;
+    @SerializedName("unit_id")
+    @Expose
+    private String unit_id;
     @SerializedName("unit_val")
     @Expose
     private String unit_val;
@@ -30,10 +36,12 @@ public class AddProductModel {
     @Expose
     private int price;
 
-    public AddProductModel(int autoId, String prodId, String typeId,String unitVal,String hsn,String gst, String qty,int price) {
+    public AddProductModel(int autoId, String prodId, String prodName, String typeId,String unitId,String unitVal,String hsn,String gst, String qty,int price) {
         this.auto_id = autoId;
         this.product_id = prodId;
+        this.product_name = prodName;
         this.type_id = typeId;
+        this.unit_id = unitId;
         this.unit_val = unitVal;
         this.hsn_code = hsn;
         this.gst_val = gst;
@@ -56,6 +64,13 @@ public class AddProductModel {
     public void setProduct_id(String product_id) {
         this.product_id = product_id;
     }
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    public void setProduct_name(String product_name) {
+        this.product_id = product_name;
+    }
 
     public String getType_id() {
         return type_id;
@@ -63,6 +78,14 @@ public class AddProductModel {
 
     public void setType_id(String type_id) {
         this.type_id = type_id;
+    }
+
+    public String getUnit_id() {
+        return unit_id;
+    }
+
+    public void setUnit_id(String unit) {
+        this.unit_id = unit;
     }
 
     public String getUnit() {

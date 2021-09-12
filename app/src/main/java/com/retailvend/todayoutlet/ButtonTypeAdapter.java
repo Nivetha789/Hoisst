@@ -19,6 +19,7 @@ import com.retailvend.R;
 import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AttendanceTypeDatum;
 import com.retailvend.utills.CustomToast;
+import com.retailvend.utills.SessionManagerSP;
 
 import java.util.List;
 
@@ -31,12 +32,15 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
     String lat="";
     private int index = -1;
 
+    SessionManagerSP sessionManagerSP;
+
     ButtonTypeAdapter(Activity activity, List<AttendanceTypeDatum> assignOutletsDatum, String storeId,String lat1, String long_val1) {
         this.activity = activity;
         this.attendanceTypeDatumList=assignOutletsDatum;
         this.store_Id=storeId;
         this.lat=lat1;
         this.long_val=long_val1;
+        this.sessionManagerSP = new SessionManagerSP(activity);
     }
 
     @NonNull
@@ -65,16 +69,15 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
                     holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
                     ((TodayOutletDetailsActivity) activity).showReason(typeId,typeVal);
                 } else if (typeVal.equals("Sales Order")) {
+                    sessionManagerSP.setSalesName("");
+                    sessionManagerSP.setSalesNameId("");
                     Intent intent = new Intent(activity, CreateOutletOrderActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("type_id", typeId);
-                    bundle.putString("store_id", store_Id);
-                    bundle.putString("type", typeVal);
-                    bundle.putString("lat", lat);
-                    bundle.putString("long", long_val);
-                    intent.putExtras(bundle);
+                    intent.putExtra("type_id", typeId);
+                    intent.putExtra("store_id", store_Id);
+                    intent.putExtra("type", typeVal);
+                    intent.putExtra("lat", lat);
+                    intent.putExtra("long", long_val);
                     activity.startActivity(intent);
-                    activity.finish();
                 }else if(typeVal.equals("Payment Collection")){
                     CustomToast.getInstance(activity).showSmallCustomToast("This feature will be enabled shortly");
                 }
