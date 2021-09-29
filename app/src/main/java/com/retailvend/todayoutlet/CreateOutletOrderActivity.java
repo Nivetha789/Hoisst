@@ -1,7 +1,5 @@
 package com.retailvend.todayoutlet;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -31,7 +29,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.retailvend.R;
@@ -88,6 +85,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     String store_id = "";
     String bill_type = "";
     String order_type = "";
+    int price = 0;
     String btn_Type_id = "";
     String btn_Type_val = "";
     String type_id = "";
@@ -170,6 +168,14 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
         sessionManagerSP = new SessionManagerSP(CreateOutletOrderActivity.this);
 
+        rv.setBackgroundResource(R.drawable.background);
+        sales_agent.setBackgroundResource(R.drawable.lin_storke);
+        rv.setTextColor(Color.parseColor("#ffffff"));
+        sales_agent.setTextColor(Color.parseColor("#000000"));
+        rv_show.setVisibility(View.VISIBLE);
+        sales_agent_show.setVisibility(View.GONE);
+        order_type = "1";
+
         lin_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,9 +190,9 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 //                System.out.println("bill_typebill_typebill_type::: " + bill_type);
                 if (!TextUtils.isEmpty(order_type)) {
 //                    if (!TextUtils.isEmpty(bill_type)) {
-                        Intent productIntent = new Intent(CreateOutletOrderActivity.this, ProductNameActivity.class);
-                        productIntent.putExtra("order_type", order_type);
-                        startActivityForResult(productIntent, MY_REQUEST_CODE);
+                    Intent productIntent = new Intent(CreateOutletOrderActivity.this, ProductNameActivity.class);
+                    productIntent.putExtra("order_type", order_type);
+                    startActivityForResult(productIntent, MY_REQUEST_CODE);
 //                    else {
 //                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Select Bill Type");
 //                    }
@@ -255,7 +261,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                 rv.setBackgroundResource(R.drawable.lin_storke);
                 rv.setTextColor(Color.parseColor("#000000"));
                 sales_agent.setTextColor(Color.parseColor("#ffffff"));
-                rv_show.setVisibility(View.VISIBLE);
+                rv_show.setVisibility(View.GONE);
                 sales_agent_show.setVisibility(View.VISIBLE);
                 order_type = "2";
             }
@@ -296,17 +302,17 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     @Override
     protected void onResume() {
         super.onResume();
-        if(!TextUtils.isEmpty(sessionManagerSP.getSalesName())){
-            rv_show.setVisibility(View.VISIBLE);
+        if (!TextUtils.isEmpty(sessionManagerSP.getSalesName())) {
+            rv_show.setVisibility(View.GONE);
             sales_agent_show.setVisibility(View.VISIBLE);
             order_type = "2";
-            sales_agent_name=sessionManagerSP.getSalesName();
-            sales_agent_id=sessionManagerSP.getSalesNameId();
-            System.out.println("fggffgffggf "+sales_agent_name);
-            System.out.println("iddddddddd "+sales_agent_id);
+            sales_agent_name = sessionManagerSP.getSalesName();
+            sales_agent_id = sessionManagerSP.getSalesNameId();
+//            System.out.println("fggffgffggf " + sales_agent_name);
+//            System.out.println("iddddddddd " + sales_agent_id);
             txt_sales_agent.setText(sales_agent_name);
-        }else{
-            rv_show.setVisibility(View.GONE);
+        } else {
+            rv_show.setVisibility(View.VISIBLE);
             sales_agent_show.setVisibility(View.GONE);
             order_type = "1";
             sessionManagerSP.setSalesName("");
@@ -442,13 +448,13 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     }
 
     public void addProductList() {
-        String[] parts = txtPrice.getText().toString().split("\\.");
-        String part1 = parts[0];
-        String part2 = parts[1];
-        int a = Integer.parseInt(part2);
-        int b = Integer.parseInt(qty.getText().toString().trim());
-        totalPriceList = a * b;
-        addProductModel.add(new AddProductModel(auto_id, prod_id, prod_name,type_id, unitId,unitItem, hsn_code, gst_val, qty.getText().toString(), totalPriceList));
+//        String[] parts = txtPrice.getText().toString().split("\\.");
+//        String part1 = parts[0];
+//        String part2 = parts[1];
+//        int a = Integer.parseInt(part2);
+//        int b = Integer.parseInt(qty.getText().toString().trim());
+//        totalPriceList = a * b;
+        addProductModel.add(new AddProductModel(auto_id, prod_id, prod_name, type_id, unitId, unitItem, hsn_code, gst_val, qty.getText().toString(), price));
         updateAddProductAdapter("add", 0);
         product_name.setText("");
         productTypeData.clear();
@@ -475,10 +481,10 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     }
 
     public void updateAddProductAdapter(String which, int pos) {
-        System.out.println("possss "+pos);
-        if(pos==0){
-            auto_id=1;
-        }else{
+        System.out.println("possss " + pos);
+        if (pos == 0) {
+            auto_id = 1;
+        } else {
             auto_id = pos;
         }
         if (addProductModel.size() > 0) {
@@ -530,10 +536,11 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                         if (productTypeData != null) {
                             ArrayList<String> list = new ArrayList<String>();
                             for (int i = 0; i < productTypeData.size(); i++) {
-                                list.add(productTypeData.get(i).getProductType() + " " + productTypeData.get(i).getUnitName());
-                                unitItem = productTypeData.get(i).getProductType() + " " + productTypeData.get(i).getUnitName();
+                                list.add(productTypeData.get(i).getDescription());
+                                unitItem = productTypeData.get(i).getDescription();
                                 unitId = productTypeData.get(i).getProductUnit();
-                                txtPrice.setText("₹." + productTypeData.get(i).getProductPrice());
+                                price = Integer.valueOf(productTypeData.get(i).getProductPrice());
+                                txtPrice.setText("₹." + price);
                                 type_id = productTypeData.get(i).getTypeId();
                             }
 

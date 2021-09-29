@@ -7,24 +7,33 @@
         <entry key="..\:/RetailVend/app/src/main/res/drawable/background1.xml" value="0.3828125" />
         <entry key="..\:/RetailVend/app/src/main/res/drawable/background2.xml" value="0.3828125" />
         <entry key="..\:/RetailVend/app/src/main/res/drawable/background3.xml" value="0.3611111111111111" />
+        <entry key="..\:/RetailVend/app/src/main/res/drawable/curve_bg.xml" value="0.3828125" />
         <entry key="..\:/RetailVend/app/src/main/res/drawable/curve_bg2.xml" value="0.3828125" />
+        <entry key="..\:/RetailVend/app/src/main/res/drawable/curve_bg3.xml" value="0.3828125" />
+        <entry key="..\:/RetailVend/app/src/main/res/drawable/profile_circle_bg.xml" value="0.3828125" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_collection.xml" value="0.2463768115942029" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_create_sales_order.xml" value="0.33" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_dashboard.xml" value="0.3523550724637681" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_login.xml" value="0.2957427536231884" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_order_list.xml" value="0.25" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_product_name.xml" value="0.24864130434782608" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_profile.xml" value="0.36186594202898553" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_sales.xml" value="0.20520833333333333" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_sales_agent_name.xml" value="0.35688405797101447" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_today_outlet_details.xml" value="0.22201198360138757" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/button_type_adapter.xml" value="0.2463768115942029" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/dashboard_drawer.xml" value="0.24682971014492755" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/dashboard_new.xml" value="0.25" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/item_loading.xml" value="0.36666666666666664" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/layout_custom_toast.xml" value="0.3523550724637681" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/loader.xml" value="0.67" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/navigation_view.xml" value="0.25" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/order_list_adapter.xml" value="0.43460925039872406" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/product_name_adapter.xml" value="0.35688405797101447" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/profile_details_include.xml" value="0.36186594202898553" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/row_main_list.xml" value="0.2463768115942029" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/sales_agent_adapter.xml" value="0.35260416666666666" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/today_outlet_adapter.xml" value="0.22" />
       </map>
     </option>
   </component>

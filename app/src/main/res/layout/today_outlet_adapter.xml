@@ -75,14 +75,17 @@
 
             <TextView
                 android:id="@+id/contact_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand_medium"
-                android:gravity="center"
                 android:layout_marginTop="5dp"
-                android:text="Sai "
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="Sai"
                 android:textColor="@color/white"
                 android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/circle_bg"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/shop_title"
                 app:layout_constraintTop_toBottomOf="@+id/shop_title" />
 
@@ -110,6 +113,8 @@
                 android:paddingEnd="8dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="10dp"
                 android:text="Check In"
                 android:textColor="@color/white"
                 android:textSize="11dp"
@@ -121,11 +126,10 @@
                 android:id="@+id/navigate"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:contentDescription="@null"
                 android:src="@drawable/ic_location"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/check_in"
                 app:layout_constraintStart_toEndOf="@+id/check_in"
-                app:layout_constraintTop_toBottomOf="@+id/contact_number"
+                app:layout_constraintTop_toTopOf="@+id/check_in"
                 app:tint="@color/colorAccent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

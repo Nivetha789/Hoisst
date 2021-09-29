@@ -1,4 +1,4 @@
-package com.retailvend.todayoutlet;
+package com.retailvend.utills;
 
 import android.view.View;
 

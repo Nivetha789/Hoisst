@@ -3,6 +3,8 @@ package com.retailvend.model.outlets;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class AddAttendanceModel {
     @SerializedName("status")
     @Expose
@@ -12,7 +14,7 @@ public class AddAttendanceModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private AddAttendanceData data;
+    private List<AddAttendanceData> data;
 
     public Integer getStatus() {
         return status;
@@ -30,11 +32,11 @@ public class AddAttendanceModel {
         this.message = message;
     }
 
-    public AddAttendanceData getData() {
+    public List<AddAttendanceData> getData() {
         return data;
     }
 
-    public void setData(AddAttendanceData data) {
+    public void setData(List<AddAttendanceData> data) {
         this.data = data;
     }
 

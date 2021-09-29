@@ -1,9 +1,15 @@
-package com.retailvend.todayoutlet;
+package com.retailvend.orderList;
 
 import static com.retailvend.utills.PaginationListener.PAGE_START;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,21 +24,20 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
+import com.retailvend.model.manageorder.OrderListDatum;
+import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.model.outlets.ProductNameResData;
 import com.retailvend.model.outlets.ProductNameResModel;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.todayoutlet.CreateOutletOrderActivity;
+import com.retailvend.todayoutlet.ProductNameActivity;
+import com.retailvend.todayoutlet.ProductNameAdapter;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
+import com.retailvend.utills.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,24 +46,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductNameActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class OrderListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    ProductNameAdapter productNameAdapter;
-    RecyclerView product_name_recycler;
-    List<ProductNameResData> productNameList;
-    TextView mTitle,emptyView;
+    OrderListAdapter orderListAdapter;
+    RecyclerView order_list_recycler;
+    List<OrderListDatum> orderListData;
+    TextView mTitle, emptyView;
     private Toolbar toolbar;
-    String order_type="";
-    EditText search;
-    LinearLayout searchLayout;
-    ImageView search_icon,left_arrow;
+    String order_type = "";
+    ImageView left_arrow;
     Activity activity;
-    String prod_name="";
-    String prod_id="";
-    String gst="";
-    String hsn="";
-
-    String order_id="";
 
     private int currentPage = PAGE_START;
     private boolean isLastPage = false;
@@ -76,8 +73,8 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_name);
-        activity=this;
+        setContentView(R.layout.activity_order_list);
+        activity = this;
         if (Build.VERSION.SDK_INT >= 19) {
 
             Window window = getWindow();
@@ -97,29 +94,14 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
 
-        product_name_recycler=findViewById(R.id.product_name_recycler);
+        order_list_recycler = findViewById(R.id.order_recycler);
         toolbar = findViewById(R.id.toolbar);
-        search = findViewById(R.id.search);
-        search_icon = findViewById(R.id.search_icon);
-        searchLayout = findViewById(R.id.searchLayout);
         mTitle = toolbar.findViewById(R.id.toolbar_title);
         left_arrow = findViewById(R.id.left_arrow);
         progress = findViewById(R.id.progress);
         emptyView = findViewById(R.id.emptyView);
 
-        Intent iin = getIntent();
-        Bundle b = iin.getExtras();
-
-        if (b != null) {
-            order_type = (String) b.get("order_type");
-            if(order_type.equals("Sales Agent")){
-                order_id="2";
-            }else{
-                order_id="1";
-            }
-        }
-
-        productNameList = new ArrayList<>();
+        orderListData = new ArrayList<>();
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,38 +110,17 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
             }
         });
 
-        search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                offset = 0;
-                searchTxt = s.toString();
-
-                productNameApi(offset, limit, "2");
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
 
 //        swipeRefresh.setOnRefreshListener(this);
-        product_name_recycler.setHasFixedSize(true);
+        order_list_recycler.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        product_name_recycler.setLayoutManager(layoutManager);
+        order_list_recycler.setLayoutManager(layoutManager);
 
-        productNameAdapter = new ProductNameAdapter(ProductNameActivity.this, productNameList);
-        product_name_recycler.setAdapter(productNameAdapter);
+        orderListAdapter = new OrderListAdapter(OrderListActivity.this, orderListData);
+        order_list_recycler.setAdapter(orderListAdapter);
 
-        product_name_recycler.addOnScrollListener(new PaginationListener(layoutManager, totalPage) {
+        order_list_recycler.addOnScrollListener(new PaginationListener(layoutManager, totalPage) {
             @Override
             protected void loadMoreItems() {
                 isLoading = true;
@@ -167,10 +128,10 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    productNameApi(offset, limit, "1");
+                    orderListApi(offset, limit);
 
                 } else {
-                    CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast("Please check your internet connection");
+                    CustomToast.getInstance(OrderListActivity.this).showSmallCustomToast("Please check your internet connection");
                 }
 
             }
@@ -187,20 +148,19 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
         });
     }
 
-
     @Override
     public void onRefresh() {
         itemCount = 0;
         offset = 0;
         currentPage = PAGE_START;
         isLastPage = false;
-        productNameAdapter.clear();
+        orderListAdapter.clear();
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            productNameApi(offset, limit, "1");
+            orderListApi(offset, limit);
         } else {
-            CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast("Please check your internet connection");
+            CustomToast.getInstance(OrderListActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 
@@ -211,17 +171,18 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
         offset = 0;
         currentPage = PAGE_START;
         isLastPage = false;
-        productNameAdapter.clear();
+        orderListAdapter.clear();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            productNameApi(offset, limit, "1");
+            orderListApi(offset, limit);
         } else {
-            CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast("Please check your internet connection");
+            CustomToast.getInstance(OrderListActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 
-    public void productNameApi(int offset1, int limit1, String searchType) {
+    public void orderListApi(int offset1, int limit1) {
 //        CustomProgress.showProgress(activity);
+        String emp_id = SharedPrefManager.getInstance(OrderListActivity.this).getUser().getId();
 
         if (isLoading) {
             progress.setVisibility(View.GONE);
@@ -231,32 +192,26 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
             emptyView.setVisibility(View.GONE);
         }
 
-        Call<ProductNameResModel> call = RetrofitClient
-                .getInstance().getApi().getProductName("_listTypeWiseProduct",order_id,offset1, limit1, searchTxt);
+        Call<OrderListModel> call = RetrofitClient
+                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1);
 
-        call.enqueue(new Callback<ProductNameResModel>() {
+        call.enqueue(new Callback<OrderListModel>() {
             @Override
-            public void onResponse(@NonNull Call<ProductNameResModel> call, @NonNull Response<ProductNameResModel> response) {
+            public void onResponse(@NonNull Call<OrderListModel> call, @NonNull Response<OrderListModel> response) {
 
                 try {
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    ProductNameResModel productNameResModel = gson.fromJson(json, ProductNameResModel.class);
+                    OrderListModel productNameResModel = gson.fromJson(json, OrderListModel.class);
 
                     if (productNameResModel.getStatus() == 1) {
 
-                        if (searchType.equals("2")) {
-                            if (productNameList.size() > 0) {
-                                productNameAdapter.clear();
-                            }
-                        }
-
-                        product_name_recycler.setVisibility(View.VISIBLE);
+                        order_list_recycler.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
 
-                        productNameList = productNameResModel.getData();
+                        orderListData = productNameResModel.getData();
 
                         offset = productNameResModel.getOffset();
                         limit = productNameResModel.getLimit();
@@ -276,12 +231,12 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
 
 
                         if (currentPage != PAGE_START)
-                            productNameAdapter.removeLoading();
+                            orderListAdapter.removeLoading();
 
-                        productNameAdapter.addItems(productNameList);
+                        orderListAdapter.addItems(orderListData);
 
                         if (currentPage < totalPage) {
-                            productNameAdapter.addLoading();
+                            orderListAdapter.addLoading();
                         } else {
                             isLastPage = true;
                         }
@@ -293,13 +248,13 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
                         emptyView.setVisibility(View.GONE);
 
                     } else {
-                        product_name_recycler.setVisibility(View.GONE);
+                        order_list_recycler.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.VISIBLE);
                         emptyView.setText("No Record Found");
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast("No Record Found");
+                        CustomToast.getInstance(OrderListActivity.this).showSmallCustomToast("No Record Found");
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
@@ -310,45 +265,12 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
             }
 
             @Override
-            public void onFailure(@NonNull Call<ProductNameResModel> call, @NonNull Throwable t) {
-                product_name_recycler.setVisibility(View.GONE);
+            public void onFailure(@NonNull Call<OrderListModel> call, @NonNull Throwable t) {
+                order_list_recycler.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
                 emptyView.setText("Something went wrong try again..");
             }
         });
-    }
-
-    public void updateProdName(String prodName, String prodId, String gstVal, String hsnCode){
-        prod_name=prodName;
-        prod_id=prodId;
-        gst=gstVal;
-        hsn=hsnCode;
-        Intent mIntent = new Intent();
-        mIntent.putExtra("prod_name",prod_name);
-        mIntent.putExtra("prod_id",prod_id);
-        mIntent.putExtra("gst", gst);
-        mIntent.putExtra("hsn", hsn);
-        activity.setResult(RESULT_OK, mIntent);
-        finish();
-    }
-
-//    @Override
-//    public void onBackPressed() {
-//        Intent intent = new Intent();
-//        intent.putExtra("prod_name", prod_name);
-//        intent.putExtra("prod_id", prod_id);
-//        intent.putExtra("gst", gst);
-//        intent.putExtra("hsn", hsn);
-//        setResult(RESULT_OK, intent);
-//        finish();
-//        super.onBackPressed();
-//    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
     }
 }

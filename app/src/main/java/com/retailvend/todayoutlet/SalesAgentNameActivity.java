@@ -1,6 +1,6 @@
 package com.retailvend.todayoutlet;
 
-import static com.retailvend.todayoutlet.PaginationListener.PAGE_START;
+import static com.retailvend.utills.PaginationListener.PAGE_START;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,21 +9,17 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -34,8 +30,8 @@ import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.outlets.SalesAgentData;
 import com.retailvend.model.outlets.SalesAgentsListModel;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
+import com.retailvend.utills.PaginationListener;
 import com.retailvend.utills.SessionManagerSP;
 
 import java.util.ArrayList;
@@ -331,8 +327,8 @@ public class SalesAgentNameActivity extends AppCompatActivity implements SwipeRe
     public void updateSalesNameAdapter(String salesAgentName, String id) {
         sales_agent_name = salesAgentName;
         sales_agentId = id;
-        System.out.println("salessssss na,me "+sales_agent_name);
-        System.out.println("salessssssidddd "+sales_agentId);
+//        System.out.println("salessssss na,me "+sales_agent_name);
+//        System.out.println("salessssssidddd "+sales_agentId);
 //        Intent mIntent = new Intent(SalesAgentNameActivity.this, CreateOutletOrderActivity.class);
 //        mIntent.putExtra("which","activity");
 //        mIntent.putExtra("sales_name", sales_agent_name);

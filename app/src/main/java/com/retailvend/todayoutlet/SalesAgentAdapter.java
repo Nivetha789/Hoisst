@@ -1,28 +1,19 @@
 package com.retailvend.todayoutlet;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Typeface;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
-import com.retailvend.model.outlets.ProductNameResData;
 import com.retailvend.model.outlets.SalesAgentData;
+import com.retailvend.utills.BaseViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

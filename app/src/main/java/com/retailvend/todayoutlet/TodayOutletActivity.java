@@ -77,7 +77,7 @@ public class TodayOutletActivity extends AppCompatActivity {
     }
 
     public void todayOutletListApi() {
-        CustomProgress.showProgress(this);
+        CustomProgress.showProgress(activity);
       String emp_id= SharedPrefManager.getInstance(TodayOutletActivity.this).getUser().getId();
         System.out.println("emmmpidd "+emp_id);
 

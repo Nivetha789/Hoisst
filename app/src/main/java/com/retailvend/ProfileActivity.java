@@ -22,7 +22,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         left_arrow=findViewById(R.id.back);
-        logout=findViewById(R.id.logout);
+//        logout=findViewById(R.id.logout);
 
         sessionManagerSP = new SessionManagerSP(ProfileActivity.this);
         left_arrow.setOnClickListener(new View.OnClickListener() {
@@ -31,15 +31,15 @@ public class ProfileActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sessionManagerSP.setPhonelogin("0");
-                SharedPrefManager.getInstance(getApplicationContext()).clear();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
-            }
-        });
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sessionManagerSP.setPhonelogin("0");
+//                SharedPrefManager.getInstance(getApplicationContext()).clear();
+//                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//                finish();
+//            }
+//        });
     }
 
     @Override

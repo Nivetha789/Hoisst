@@ -15,6 +15,9 @@ public class ProductTypeDatum implements Serializable {
     @SerializedName("product_id")
     @Expose
     private String productId;
+    @SerializedName("description")
+    @Expose
+    private String description;
     @SerializedName("product_type")
     @Expose
     private String productType;
@@ -24,6 +27,9 @@ public class ProductTypeDatum implements Serializable {
     @SerializedName("unit_name")
     @Expose
     private String unitName;
+    @SerializedName("mrp_price")
+    @Expose
+    private String mrpPrice;
     @SerializedName("product_price")
     @Expose
     private String productPrice;
@@ -64,6 +70,14 @@ public class ProductTypeDatum implements Serializable {
         this.productId = productId;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getProductType() {
         return productType;
     }
@@ -86,6 +100,14 @@ public class ProductTypeDatum implements Serializable {
 
     public void setUnitName(String unitName) {
         this.unitName = unitName;
+    }
+
+    public String getMrpPrice() {
+        return mrpPrice;
+    }
+
+    public void setMrpPrice(String mrpPrice) {
+        this.mrpPrice = mrpPrice;
     }
 
     public String getProductPrice() {

@@ -1,6 +1,7 @@
 package com.retailvend.retrofit;
 
 import com.retailvend.model.login.LoginResModel;
+import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.model.order.CreateOrderModel;
 import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.AssignOutletsModel;
@@ -43,6 +44,8 @@ public interface Api {
     Call<ProductNameResModel> getProductName(
             @Field("method") String method,
             @Field("order_type") String order_type,
+            @Field("offset") int offset,
+            @Field("limit") int limit,
             @Field("search") String search
             );
 
@@ -99,5 +102,15 @@ public interface Api {
             @Field("offset") int offset,
             @Field("limit") int limit,
             @Field("search") String search
+    );
+
+    //orderList
+    @FormUrlEncoded
+    @POST("order/api/manage_order")
+    Call<OrderListModel> orderList(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit
     );
 }

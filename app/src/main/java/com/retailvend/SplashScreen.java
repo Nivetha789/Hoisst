@@ -26,6 +26,7 @@ import com.retailvend.utills.SessionManagerSP;
 public class SplashScreen extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
 
     SessionManagerSP sessionManagerSP;
+    private static int SPLASH_TIME_OUT = 3500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +124,7 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
 //                startActivity(i);
 //                finish();
             }
-        }, 3500);
+        }, SPLASH_TIME_OUT);
     }
 
     private void checkConnection() {

@@ -5,430 +5,140 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-<!--    <TextView-->
-<!--        android:id="@+id/app_icon_nav"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginTop="25dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:text="Retail Vend"-->
-<!--        android:textSize="15sp"-->
-<!--        android:fontFamily="@font/roboto_medium"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/close"
+        app:tint="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <View-->
-<!--        android:id="@+id/view"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="1dp"-->
-<!--        android:layout_marginTop="25dp"-->
-<!--        android:background="@color/light_dark"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/app_icon_nav" />-->
+    <ImageView
+        android:id="@+id/app_icon_nav"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <androidx.core.widget.NestedScrollView-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:layout_marginBottom="8dp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/logout_constrain"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/view">-->
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="25dp"
+        android:background="@color/light_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_icon_nav" />
 
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/logout_constrain"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view">
 
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/payment_details_constrain"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="46dp"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:background="@drawable/hover_style"-->
-<!--                app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                app:layout_constraintRight_toRightOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent">-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/payment_details_img"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_nav_payment_details"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="@+id/payment_details"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/order_list_constrain"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/hover_style"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/payment_details"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="75dp"-->
-<!--                    android:fontFamily="@font/roboto_regular"-->
-<!--                    android:text="@string/payment_details"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="15sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/payment_details_img"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/payment_details_img" />-->
+                <ImageView
+                    android:id="@+id/order_list_img"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="24dp"
+                    android:src="@drawable/order"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/order_list"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                   />
 
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+                <TextView
+                    android:id="@+id/order_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="ORDER LIST"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/order_list_img"
+                    app:layout_constraintStart_toEndOf="@+id/order_list_img"
+                    app:layout_constraintTop_toTopOf="@+id/order_list_img"
+                    app:layout_constraintVertical_bias="0.533" />
 
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/direct_affiliates_constrain_nav"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="46dp"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:background="@drawable/hover_style"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/payment_details_constrain">-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/direct_affiliates_img"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_nav_direct_affiliate"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="@+id/direct_affiliates"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/direct_affiliates"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="75dp"-->
-<!--                    android:fontFamily="@font/roboto_regular"-->
-<!--                    android:text="@string/direct_affiliate"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="15sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/direct_affiliates_img"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/direct_affiliates_img" />-->
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/affiliate_structure_constrain"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="46dp"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:background="@drawable/hover_style"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/direct_affiliates_constrain_nav">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/affiliate_structure_img"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_nav_affiliate_structure"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="@+id/affiliate_structure"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/affiliate_structure"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="75dp"-->
-<!--                    android:fontFamily="@font/roboto_regular"-->
-<!--                    android:text="@string/affiliate_structure"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="15sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/affiliate_structure_img"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/affiliate_structure_img" />-->
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/affiliate_commission_constrain"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="46dp"-->
-<!--                android:background="@drawable/hover_style"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/affiliate_structure_constrain">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/affiliate_commission_img"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_nav_affiliate_commission"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="@+id/affiliate_commission"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/affiliate_commission"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="75dp"-->
-<!--                    android:fontFamily="@font/roboto_regular"-->
-<!--                    android:text="@string/affiliate_commission"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="15sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/affiliate_commission_img"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/affiliate_commission_img" />-->
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/e_shares_constrain"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="46dp"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:background="@drawable/hover_style"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/affiliate_commission_constrain">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/e_shares_img"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_nav_e_shares"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="@+id/e_shares"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/e_shares"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="75dp"-->
-<!--                    android:fontFamily="@font/roboto_regular"-->
-<!--                    android:text="@string/e_shares"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="15sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/e_shares_img"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/e_shares_img" />-->
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/wallet_transfer_constrain"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="46dp"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:background="@drawable/hover_style"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/e_shares_constrain">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/wallet_img"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_wallet_transfer"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="@+id/wallet_transfer"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/wallet_transfer"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="75dp"-->
-<!--                    android:fontFamily="@font/roboto_regular"-->
-<!--                    android:text="@string/wallet_transfer"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="15sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/wallet_img"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/wallet_img" />-->
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/request_topup_constrain"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="46dp"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:background="@drawable/hover_style"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/wallet_transfer_constrain">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/request_topup_img"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_request_topup"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="@+id/request_topup"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/request_topup"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="75dp"-->
-<!--                    android:fontFamily="@font/roboto_regular"-->
-<!--                    android:text="@string/request_topup"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="15sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/request_topup_img"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/request_topup_img" />-->
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/mining_profit_constrain"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="46dp"-->
-<!--                android:background="@drawable/hover_style"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/request_topup_constrain">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/mining_profit_img"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_nav_mining_profit"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="@+id/mining_profit"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/mining_profit"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="75dp"-->
-<!--                    android:fontFamily="@font/roboto_regular"-->
-<!--                    android:text="@string/mining_profit"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="15sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/mining_profit_img"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/mining_profit_img" />-->
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/withdrawal_constrain"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="46dp"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:background="@drawable/hover_style"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/mining_profit_constrain">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/withdrawal_img"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_nav_withdrawal"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="@+id/withdrawal"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/withdrawal"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="75dp"-->
-<!--                    android:fontFamily="@font/roboto_regular"-->
-<!--                    android:text="@string/withdrawal"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="15sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/withdrawal_img"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/withdrawal_img" />-->
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/withdrawal_history_constrain"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="46dp"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:layout_marginBottom="12dp"-->
-<!--                android:background="@drawable/hover_style"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/withdrawal_constrain">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/withdrawal_history_img"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_nav_withdrawal_history"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="@+id/withdrawal_history"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/withdrawal_history"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="75dp"-->
-<!--                    android:fontFamily="@font/roboto_regular"-->
-<!--                    android:text="@string/withdrawal_history"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="15sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/withdrawal_history_img"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/withdrawal_history_img" />-->
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-<!--    </androidx.core.widget.NestedScrollView>-->
+    </androidx.core.widget.NestedScrollView>
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/logout_constrain"-->
-<!--        android:layout_width="192dp"-->
-<!--        android:layout_height="46dp"-->
-<!--        android:layout_marginStart="8dp"-->
-<!--        android:layout_marginLeft="16dp"-->
-<!--        android:layout_marginEnd="8dp"-->
-<!--        android:layout_marginRight="16dp"-->
-<!--        android:layout_marginBottom="24dp"-->
-<!--        android:background="@color/colorPrimary"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/logout_constrain"
+        android:layout_width="192dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-<!--        <TextView-->
-<!--            android:id="@+id/logout_txt"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:drawableStart="@drawable/ic_logout"-->
-<!--            android:drawablePadding="5dp"-->
-<!--            android:fontFamily="@font/roboto_regular"-->
-<!--            android:text="@string/logout"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="17sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+        <ImageView
+            android:id="@+id/logout_img"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:src="@drawable/logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/logout_txt"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
 
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <TextView
+            android:id="@+id/logout_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Logout"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/logout_img"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
