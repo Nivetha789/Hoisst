@@ -40,6 +40,7 @@ import com.retailvend.productModel.AddProductModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
+import com.retailvend.utills.ProductAdapter;
 import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
@@ -85,7 +86,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     String store_id = "";
     String bill_type = "";
     String order_type = "";
-    int price = 0;
+    String price = "";
     String btn_Type_id = "";
     String btn_Type_val = "";
     String type_id = "";
@@ -96,11 +97,13 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     List<ProductTypeDatum> productTypeData;
     private final static int MY_REQUEST_CODE = 1;
     private final static int MY_REQUEST_CODE1 = 2;
-    String[] unitValue;
+    //    String[] unitValue;
     SessionManagerSP sessionManagerSP;
     String sales_agent_name = "";
     String sales_agent_id = "";
     LinearLayout sales_agent_show, rv_show;
+
+    ProductAdapter productAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,16 +232,21 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
         spin_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                unitItem = parentView.getItemAtPosition(position).toString();
-//                System.out.println("parentView " + unitItem);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                ProductTypeDatum productTypeDatum = productTypeData.get(i);
+
+                unitItem = productTypeDatum.getDescription();
+                unitId = productTypeDatum.getProductUnit();
+                price = productTypeDatum.getProductPrice();
+                txtPrice.setText("₹." + price);
+                type_id = productTypeDatum.getTypeId();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-
         });
 
         rv.setOnClickListener(new View.OnClickListener() {
@@ -419,7 +427,8 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                         CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
 
                         CustomProgress.hideProgress(activity);
-                        updateAttendanceApi();
+                        finish();
+//                        updateAttendanceApi();
 
                     } else {
 //                        text_signIn.setVisibility(View.VISIBLE);
@@ -468,7 +477,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         int qty = 0;
 
         for (int j = 0; j < addProductModel1.size(); j++) {
-            price += addProductModel1.get(j).getPrice();
+            price += Double.parseDouble(addProductModel1.get(j).getPrice());
         }
 
         for (int i = 0; i < addProductModel1.size(); i++) {
@@ -534,21 +543,21 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                         productTypeData = productTypeModel.getData();
 
                         if (productTypeData != null) {
-                            ArrayList<String> list = new ArrayList<String>();
+//                            ArrayList<String> list = new ArrayList<String>();
                             for (int i = 0; i < productTypeData.size(); i++) {
-                                list.add(productTypeData.get(i).getDescription());
+//                                list.add(productTypeData.get(i).getDescription());
                                 unitItem = productTypeData.get(i).getDescription();
                                 unitId = productTypeData.get(i).getProductUnit();
-                                price = Integer.valueOf(productTypeData.get(i).getProductPrice());
-                                txtPrice.setText("₹." + price);
-                                type_id = productTypeData.get(i).getTypeId();
                             }
 
-                            unitValue = list.toArray(new String[list.size()]);
+//                            unitValue = list.toArray(new String[list.size()]);
 
-                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, unitValue);
-                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin_name.setAdapter(dataAdapter);
+//                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, unitValue);
+//                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                            spin_name.setAdapter(dataAdapter);
+                            productAdapter = new ProductAdapter(CreateOutletOrderActivity.this, productTypeData);
+                            spin_name.setAdapter(productAdapter);
+                            productAdapter.notifyDataSetChanged();
                             qty.setEnabled(true);
                         }
                     } else {

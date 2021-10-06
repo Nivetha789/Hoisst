@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -101,6 +102,7 @@ public class TodayOutletActivity extends AppCompatActivity {
 
                         todayOutletsDatum = todayOutletList.getData();
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
+
 
                         todayOutletAdapter = new TodayOutletAdapter(activity, todayOutletsDatum);
                         mLayoutManager = new LinearLayoutManager(activity);

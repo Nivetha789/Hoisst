@@ -34,9 +34,9 @@ public class AddProductModel {
     private String qty;
     @SerializedName("price")
     @Expose
-    private int price;
+    private String price;
 
-    public AddProductModel(int autoId, String prodId, String prodName, String typeId,String unitId,String unitVal,String hsn,String gst, String qty,int price) {
+    public AddProductModel(int autoId, String prodId, String prodName, String typeId,String unitId,String unitVal,String hsn,String gst, String qty,String price) {
         this.auto_id = autoId;
         this.product_id = prodId;
         this.product_name = prodName;
@@ -120,11 +120,11 @@ public class AddProductModel {
         this.qty = qty;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 }

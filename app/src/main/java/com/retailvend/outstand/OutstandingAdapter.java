@@ -4,23 +4,29 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
 import com.retailvend.collection.CollectionAdapter;
+import com.retailvend.model.outlets.AssignOutletsDatum;
+
+import java.util.List;
 
 public class OutstandingAdapter extends RecyclerView.Adapter<OutstandingAdapter.MyViewHolder> {
 
     private static final int VIEW_TYPE_LOADING = 0;
     private static final int VIEW_TYPE_NORMAL = 1;
     private static boolean isLoaderVisible = false;
-    //    private List<Saleslist> saleslists;
+    List<AssignOutletsDatum> todayOutletsDatum;
     private Activity activity;
 
-    public OutstandingAdapter(Activity activity) {
+    public OutstandingAdapter(Activity activity,List<AssignOutletsDatum> assignOutletsData) {
         this.activity = activity;
+        this.todayOutletsDatum = assignOutletsData;
     }
 
     @NonNull
@@ -32,29 +38,22 @@ public class OutstandingAdapter extends RecyclerView.Adapter<OutstandingAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//        BuyEShareListData data = datas.get(position);
-//        holder.cardView.setTag(data);
+        AssignOutletsDatum data = todayOutletsDatum.get(position);
+        holder.outstandingCardview.setTag(data);
 //        String value = "$ " + data.getEsPrice();
-//        holder.cost.setText(value);
-//        if (data.getEsName().equalsIgnoreCase("Gold")) {
-//            holder.backgroundImg.setBackground(ContextCompat.getDrawable(activity, R.drawable.gold));
-//        } else if (data.getEsName().equalsIgnoreCase("Silver")) {
-//            holder.backgroundImg.setBackground(ContextCompat.getDrawable(activity, R.drawable.silver));
-//        } else if (data.getEsName().equalsIgnoreCase("diamond")) {
-//            holder.backgroundImg.setBackground(ContextCompat.getDrawable(activity, R.drawable.diamond));
-//        } else if (data.getEsName().equalsIgnoreCase("Platinum")) {
-//            holder.backgroundImg.setBackground(ContextCompat.getDrawable(activity, R.drawable.platinum));
-//        } else if (data.getEsName().equalsIgnoreCase("Bronze")) {
-//            holder.backgroundImg.setBackground(ContextCompat.getDrawable(activity, R.drawable.bronze));
-//        }
-//        if((datas.size()-1)==position){
-//            holder.view.setVisibility(View.VISIBLE);
-//        }
+        if(position==0){
+            holder.txt_avai_no.setText("₹ " +"1000");
+        }else{
+            holder.txt_avai_no.setText("₹ " +data.getAvailableLimit());
+        }
+        holder.txt_name.setText(data.getCompanyName());
+        holder.contact_name.setText(data.getContactName());
+        holder.contact_number.setText(data.getMobile());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return todayOutletsDatum.size();
     }
 
 //    void setOnClickListener(OnClickListener onClickListener) {
@@ -63,9 +62,16 @@ public class OutstandingAdapter extends RecyclerView.Adapter<OutstandingAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
+        CardView outstandingCardview;
+        TextView txt_name,txt_avai_no,contact_name,contact_number;
+
         MyViewHolder(View itemView) {
             super(itemView);
+            outstandingCardview=itemView.findViewById(R.id.outstanding_cardview);
+            txt_name=itemView.findViewById(R.id.txt_name);
+            txt_avai_no=itemView.findViewById(R.id.txt_avai_no);
+            contact_name=itemView.findViewById(R.id.contact_name);
+            contact_number=itemView.findViewById(R.id.contact_number);
         }
-
     }
 }
