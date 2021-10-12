@@ -38,6 +38,7 @@ public class TodayOutletActivity extends AppCompatActivity {
     TodayOutletAdapter todayOutletAdapter;
     ImageView leftArrow;
     List<AssignOutletsDatum> todayOutletsDatum;
+    TextView nodata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class TodayOutletActivity extends AppCompatActivity {
 
         todayOutletRecycler=findViewById(R.id.today_outlet_recycler);
         leftArrow=findViewById(R.id.left_arrow);
+        nodata=findViewById(R.id.nodata);
 
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +101,9 @@ public class TodayOutletActivity extends AppCompatActivity {
                     String s = todayOutletList.getMessage();
 
                     if (todayOutletList.getStatus()==1) {
-
+                        nodata.setVisibility(View.GONE);
+                        todayOutletRecycler.setVisibility(View.VISIBLE);
+                        nodata.setText("");
                         todayOutletsDatum = todayOutletList.getData();
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 
@@ -115,13 +119,18 @@ public class TodayOutletActivity extends AppCompatActivity {
 
                     } else {
                       CustomProgress.hideProgress(activity);
-                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
-//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
+                        nodata.setVisibility(View.VISIBLE);
+                        todayOutletRecycler.setVisibility(View.GONE);
+                        nodata.setText(todayOutletList.getMessage());
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
                     CustomProgress.hideProgress(activity);
+                    nodata.setVisibility(View.VISIBLE);
+                    todayOutletRecycler.setVisibility(View.GONE);
+                    nodata.setText("");
                 }
 
             }
@@ -129,10 +138,12 @@ public class TodayOutletActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<AssignOutletsModel> call, Throwable t) {
                 Log.d("Failure ", t.getMessage());
-//                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Something went wrong try again..");
+//                CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
                 CustomProgress.hideProgress(activity);
+                nodata.setVisibility(View.VISIBLE);
+                nodata.setText("Something went wrong try again..");
+                todayOutletRecycler.setVisibility(View.GONE);
             }
         });
     }

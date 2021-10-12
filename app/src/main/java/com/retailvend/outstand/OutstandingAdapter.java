@@ -21,12 +21,10 @@ public class OutstandingAdapter extends RecyclerView.Adapter<OutstandingAdapter.
     private static final int VIEW_TYPE_LOADING = 0;
     private static final int VIEW_TYPE_NORMAL = 1;
     private static boolean isLoaderVisible = false;
-    List<AssignOutletsDatum> todayOutletsDatum;
     private Activity activity;
 
-    public OutstandingAdapter(Activity activity,List<AssignOutletsDatum> assignOutletsData) {
+    public OutstandingAdapter(Activity activity) {
         this.activity = activity;
-        this.todayOutletsDatum = assignOutletsData;
     }
 
     @NonNull
@@ -38,22 +36,22 @@ public class OutstandingAdapter extends RecyclerView.Adapter<OutstandingAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        AssignOutletsDatum data = todayOutletsDatum.get(position);
-        holder.outstandingCardview.setTag(data);
-//        String value = "$ " + data.getEsPrice();
-        if(position==0){
-            holder.txt_avai_no.setText("₹ " +"1000");
-        }else{
-            holder.txt_avai_no.setText("₹ " +data.getAvailableLimit());
-        }
-        holder.txt_name.setText(data.getCompanyName());
-        holder.contact_name.setText(data.getContactName());
-        holder.contact_number.setText(data.getMobile());
+//        AssignOutletsDatum data = todayOutletsDatum.get(position);
+//        holder.outstandingCardview.setTag(data);
+////        String value = "$ " + data.getEsPrice();
+//        if(position==0){
+//            holder.txt_avai_no.setText("₹ " +"1000");
+//        }else{
+//            holder.txt_avai_no.setText("₹ " +data.getAvailableLimit());
+//        }
+//        holder.txt_name.setText(data.getCompanyName());
+//        holder.contact_name.setText(data.getContactName());
+//        holder.contact_number.setText(data.getMobile());
     }
 
     @Override
     public int getItemCount() {
-        return todayOutletsDatum.size();
+        return 10;
     }
 
 //    void setOnClickListener(OnClickListener onClickListener) {

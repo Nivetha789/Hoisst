@@ -49,9 +49,10 @@
                             android:paddingLeft="20dp"
                             android:paddingBottom="2dp"
                             android:singleLine="true"
+                            android:textFontWeight="600"
                             android:fontFamily="@font/quicksand_medium"
-                            android:text="Store Name :"
-                            android:textColor="#CC2f3145"
+                            android:text="Store Name "
+                            android:textColor="#802F3145"
                             android:textSize="12dp" />
 
                         <TextView
@@ -62,7 +63,7 @@
                             android:paddingLeft="20dp"
                             android:singleLine="true"
                             android:text="KR Bakes"
-                            android:fontFamily="@font/quicksand_medium"
+                            android:fontFamily="@font/quicksand_bold"
                             android:textColor="#2f3145"
                             android:textSize="15dp" />
                     </LinearLayout>
@@ -82,9 +83,10 @@
                             android:paddingLeft="20dp"
                             android:paddingBottom="2dp"
                             android:singleLine="true"
+                            android:textFontWeight="600"
                             android:fontFamily="@font/quicksand_medium"
-                            android:text="Sales code :"
-                            android:textColor="#CC2f3145"
+                            android:text="Sales code "
+                            android:textColor="#802F3145"
                             android:textSize="12dp" />
 
                         <TextView
@@ -96,7 +98,7 @@
                             android:fontFamily="@font/quicksand_medium"
                             android:singleLine="true"
                             android:text="1564156415614561"
-                            android:textColor="#2f3145"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="14dp" />
 
                     </LinearLayout>
@@ -122,9 +124,9 @@
                             android:gravity="center"
                             android:singleLine="true"
                             android:fontFamily="@font/quicksand_bold"
-                            android:text="₹.5000"
+                            android:text="₹ 5000"
                             android:textColor="@color/colorAccent"
-                            android:textSize="15dp" />
+                            android:textSize="16dp" />
 
                     </LinearLayout>
 
@@ -143,8 +145,8 @@
                             android:singleLine="true"
                             android:fontFamily="@font/quicksand_medium"
                             android:text="15-Aug-2021"
-                            android:textColor="#CC2f3145"
-                            android:textSize="14dp" />
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 

@@ -54,7 +54,7 @@
                             android:fontFamily="@font/quicksand_medium"
                             android:gravity="right"
                             android:text="Success"
-                            android:textColor="@color/black"
+                            android:textColor="@color/green"
                             android:textSize="13dp" />
 
                         <ImageView
@@ -64,7 +64,8 @@
                             android:layout_gravity="right"
                             android:layout_marginEnd="5dp"
                             android:gravity="right"
-                            android:src="@drawable/tick" />
+                            android:background="@drawable/tick"
+                            />
 
                     </LinearLayout>
 
@@ -82,11 +83,13 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/quicksand_medium"
                                 android:paddingLeft="5dp"
                                 android:text="Contact Name"
-                                android:textColor="@color/black"
-                                android:textSize="13dp" />
+                                android:singleLine="true"
+                                android:textColor="#802F3145"
+                                android:textSize="12dp"
+                                android:textFontWeight="600"
+                                android:fontFamily="@font/quicksand_medium"/>
 
                             <TextView
                                 android:id="@+id/con_name"
@@ -95,6 +98,7 @@
                                 android:fontFamily="@font/quicksand_regular"
                                 android:paddingLeft="5dp"
                                 android:text="nive"
+                                android:textColor="@color/colorPrimary"
                                 android:textSize="14dp" />
                         </LinearLayout>
 
@@ -107,10 +111,12 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/quicksand_medium"
                                 android:text="Date"
-                                android:textColor="@color/black"
-                                android:textSize="13dp" />
+                                android:singleLine="true"
+                                android:textColor="#802F3145"
+                                android:textSize="12dp"
+                                android:textFontWeight="600"
+                                android:fontFamily="@font/quicksand_medium" />
 
                             <TextView
                                 android:id="@+id/date"
@@ -118,7 +124,8 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/quicksand_regular"
                                 android:text="16-MAR-2019"
-                                android:textSize="14dp" />
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="14sp"/>
                         </LinearLayout>
 
 
@@ -132,11 +139,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/quicksand_medium"
                             android:paddingLeft="5dp"
                             android:text="Order No"
-                            android:textColor="@color/black"
-                            android:textSize="13dp" />
+                            android:singleLine="true"
+                            android:textColor="#802F3145"
+                            android:textSize="12dp"
+                            android:textFontWeight="600"
+                            android:fontFamily="@font/quicksand_medium"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -150,6 +159,8 @@
                             android:fontFamily="@font/quicksand_regular"
                             android:gravity="center"
                             android:paddingLeft="5dp"
+                            android:text="test"
+                            android:layout_marginEnd="8dp"
                             android:textColor="@color/colorPrimary"
                             android:textSize="14dp" />
 
@@ -164,11 +175,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/quicksand_medium"
                             android:paddingLeft="5dp"
                             android:text="Store Name"
-                            android:textColor="@color/black"
-                            android:textSize="13dp" />
+                            android:singleLine="true"
+                            android:textColor="#802F3145"
+                            android:textSize="12dp"
+                            android:textFontWeight="600"
+                            android:fontFamily="@font/quicksand_medium" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -186,7 +199,8 @@
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
                             android:text="test"
-                            android:textSize="14dp" />
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="14sp"/>
 
                     </LinearLayout>
 

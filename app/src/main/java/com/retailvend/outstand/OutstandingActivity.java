@@ -43,6 +43,7 @@ public class OutstandingActivity extends AppCompatActivity {
     Toolbar toolbar;
     List<AssignOutletsDatum> todayOutletsDatum;
     TextView total_amount;
+    TextView nodata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +74,18 @@ public class OutstandingActivity extends AppCompatActivity {
         outstandingRecycler = findViewById(R.id.outstanding_recyclerView);
         leftArrow = findViewById(R.id.left_arrow);
         total_amount=findViewById(R.id.total_amount);
-
+        nodata=findViewById(R.id.nodata);
 
 //        swipeRefresh.setOnRefreshListener(this);
 //        salesRecycler.setHasFixedSize(true);
 //        saleslists = new ArrayList<>();
+
+        outstandingAdapter = new OutstandingAdapter(activity);
+        mLayoutManager = new LinearLayoutManager(activity);
+        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+        outstandingRecycler.setLayoutManager(mLayoutManager);
+        outstandingRecycler.setItemAnimator(new DefaultItemAnimator());
+        outstandingRecycler.setAdapter(outstandingAdapter);
 
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +93,6 @@ public class OutstandingActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        todayOutletListApi();
     }
 
     @Override
@@ -117,31 +124,33 @@ public class OutstandingActivity extends AppCompatActivity {
                     String s = todayOutletList.getMessage();
 
                     if (todayOutletList.getStatus()==1) {
-
+                        nodata.setVisibility(View.GONE);
+                        outstandingRecycler.setVisibility(View.VISIBLE);
+                        nodata.setText("");
                         todayOutletsDatum = todayOutletList.getData();
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 
                         String total=todayOutletsDatum.get(1).getAvailableLimit();
                         total_amount.setText(total);
 
-                        outstandingAdapter = new OutstandingAdapter(activity, todayOutletsDatum);
-                        mLayoutManager = new LinearLayoutManager(activity);
-                        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
-                        outstandingRecycler.setLayoutManager(mLayoutManager);
-                        outstandingRecycler.setItemAnimator(new DefaultItemAnimator());
-                        outstandingRecycler.setAdapter(outstandingAdapter);
 
                         CustomProgress.hideProgress(activity);
 
                     } else {
                         CustomProgress.hideProgress(activity);
-                        CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast(todayOutletList.getMessage());
+//                        CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                        nodata.setVisibility(View.VISIBLE);
+                        outstandingRecycler.setVisibility(View.GONE);
+                        nodata.setText(todayOutletList.getMessage());
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
                     CustomProgress.hideProgress(activity);
+                    nodata.setVisibility(View.VISIBLE);
+                    outstandingRecycler.setVisibility(View.GONE);
+                    nodata.setText("");
                 }
 
             }
@@ -150,9 +159,12 @@ public class OutstandingActivity extends AppCompatActivity {
             public void onFailure(Call<AssignOutletsModel> call, Throwable t) {
                 Log.d("Failure ", t.getMessage());
 //                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast("Something went wrong try again..");
+//                CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
                 CustomProgress.hideProgress(activity);
+                nodata.setVisibility(View.VISIBLE);
+                nodata.setText("Something went wrong try again..");
+                outstandingRecycler.setVisibility(View.GONE);
             }
         });
     }

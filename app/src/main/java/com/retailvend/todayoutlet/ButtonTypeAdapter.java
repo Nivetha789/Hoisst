@@ -27,19 +27,19 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
 
     private Activity activity;
     private List<AttendanceTypeDatum> attendanceTypeDatumList;
-    String store_Id="";
-    String long_val="";
-    String lat="";
+    String store_Id = "";
+    String long_val = "";
+    String lat = "";
     private int index = -1;
 
     SessionManagerSP sessionManagerSP;
 
-    ButtonTypeAdapter(Activity activity, List<AttendanceTypeDatum> assignOutletsDatum, String storeId,String lat1, String long_val1) {
+    ButtonTypeAdapter(Activity activity, List<AttendanceTypeDatum> assignOutletsDatum, String storeId, String lat1, String long_val1) {
         this.activity = activity;
-        this.attendanceTypeDatumList=assignOutletsDatum;
-        this.store_Id=storeId;
-        this.lat=lat1;
-        this.long_val=long_val1;
+        this.attendanceTypeDatumList = assignOutletsDatum;
+        this.store_Id = storeId;
+        this.lat = lat1;
+        this.long_val = long_val1;
         this.sessionManagerSP = new SessionManagerSP(activity);
     }
 
@@ -58,17 +58,30 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
         String typeVal = data.getTypeVal();
         holder.typeValue.setText(typeVal);
 
+//        if(typeVal.equals("Sales Order")){
+//            holder.typeValue.setBackgroundResource(R.drawable.lin_storke);
+//            holder.typeValue.setTextColor(Color.parseColor("#000000"));
+//        }else if(typeVal.equals("Payment Collection")){
+//            holder.typeValue.setBackgroundResource(R.drawable.lin_storke);
+//            holder.typeValue.setTextColor(Color.parseColor("#000000"));
+//        }else{
+//            holder.typeValue.setBackgroundResource(R.drawable.lin_storke);
+//            holder.typeValue.setTextColor(Color.parseColor("#000000"));
+//        }
+
         holder.typeValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 index = position;
                 notifyDataSetChanged();
 //                System.out.println("tyyyyyyyyy"+typeVal);
-                if(typeVal.equals("No Order")){
-                    holder.typeValue.setBackgroundResource(R.drawable.background3);
+                if (typeVal.equals("No Order")) {
+                    holder.typeValue.setBackgroundResource(R.drawable.background);
                     holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
-                    ((TodayOutletDetailsActivity) activity).showReason(typeId,typeVal);
+                    ((TodayOutletDetailsActivity) activity).showReason(typeId, typeVal);
                 } else if (typeVal.equals("Sales Order")) {
+                    holder.typeValue.setBackgroundResource(R.drawable.background);
+                    holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
                     sessionManagerSP.setSalesName("");
                     sessionManagerSP.setSalesNameId("");
                     Intent intent = new Intent(activity, CreateOutletOrderActivity.class);
@@ -78,21 +91,16 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
                     intent.putExtra("lat", lat);
                     intent.putExtra("long", long_val);
                     activity.startActivity(intent);
-                }else if(typeVal.equals("Payment Collection")){
+                } else if (typeVal.equals("Payment Collection")) {
+                    holder.typeValue.setBackgroundResource(R.drawable.background);
+                    holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
                     CustomToast.getInstance(activity).showSmallCustomToast("This feature will be enabled shortly");
+                } else {
+                    holder.typeValue.setBackgroundResource(R.drawable.lin_storke);
+                    holder.typeValue.setTextColor(Color.parseColor("#000000"));
                 }
             }
         });
-        if(typeVal.equals("Sales Order")){
-            holder.typeValue.setBackgroundResource(R.drawable.background);
-//            holder.typeValue.setBackgroundColor(Color.parseColor("#163764"));
-        }else if(typeVal.equals("Payment Collection")){
-            holder.typeValue.setBackgroundResource(R.drawable.background1);
-//            holder.typeValue.setBackgroundColor(Color.parseColor("#37AC06"));
-        }else{
-            holder.typeValue.setBackgroundResource(R.drawable.background2);
-//            holder.typeValue.setBackgroundColor(Color.parseColor("#63A1FF"));
-        }
     }
 
     @Override
@@ -109,7 +117,7 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
 
         MyViewHolder(View itemView) {
             super(itemView);
-            typeValue=itemView.findViewById(R.id.checked);
+            typeValue = itemView.findViewById(R.id.checked);
         }
     }
 }

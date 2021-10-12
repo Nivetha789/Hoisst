@@ -62,8 +62,6 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     TextView contact_name;
     TextView address,submit_btn;
     TextView mail;
-    TextView gst;
-    TextView pan;
     TextView check_in;
     TextView checked;
     Activity activity;
@@ -76,8 +74,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     String attendance_status="";
     String latitude="";
     String longitude="";
-    ConstraintLayout order_type_constrain,reason_constrain;
-    CircleButton fab;
+    ConstraintLayout order_type_constrain,reason_constrain,location_constrain;
     String type_id="";
     String type_val="";
     SessionManagerSP sessionManagerSP;
@@ -118,8 +115,6 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         contact_name = findViewById(R.id.contact_name);
         address = findViewById(R.id.address);
         mail = findViewById(R.id.mail);
-        gst = findViewById(R.id.gst);
-        pan = findViewById(R.id.pan);
         check_in = findViewById(R.id.check_in);
         checked = findViewById(R.id.checked);
         reason = findViewById(R.id.reason);
@@ -127,7 +122,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         order_type_constrain = findViewById(R.id.order_type_constrain);
         order_type_recycler=findViewById(R.id.order_type_recycler);
         reason_constrain=findViewById(R.id.reason_constrain);
-        fab=findViewById(R.id.fab);
+        location_constrain=findViewById(R.id.location_constrain);
         left_arrow=findViewById(R.id.left_arrow);
 
         assignOutletsDatum = (AssignOutletsDatum) getIntent().getSerializableExtra("todayOutlet");
@@ -149,8 +144,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         contact_name.setText(contact_name1);
         address.setText(address1);
         mail.setText(mail1);
-        gst.setText(gst1);
-        pan.setText(pan1);
+//        gst.setText(gst1);
+//        pan.setText(pan1);
 
         if (Build.VERSION.SDK_INT >= 23) {
             // Marshmallow+
@@ -185,18 +180,18 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             }
         });
 
-        if(attendance_status.equals("1")){
-            check_in.setVisibility(View.GONE);
-            checked.setVisibility(View.VISIBLE);
-            order_type_constrain.setVisibility(View.VISIBLE);
+//        if(attendance_status.equals("1")){
+//            check_in.setVisibility(View.GONE);
+//            checked.setVisibility(View.VISIBLE);
+//            order_type_constrain.setVisibility(View.VISIBLE);
+//
+//        }else{
+//            check_in.setVisibility(View.VISIBLE);
+//            checked.setVisibility(View.GONE);
+//            order_type_constrain.setVisibility(View.GONE);
+//        }
 
-        }else{
-            check_in.setVisibility(View.VISIBLE);
-            checked.setVisibility(View.GONE);
-            order_type_constrain.setVisibility(View.GONE);
-        }
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        location_constrain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String uri =  "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + "Map" + ")";
