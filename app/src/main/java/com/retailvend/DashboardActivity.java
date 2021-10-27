@@ -21,6 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.retailvend.collection.CollectionActivity;
 import com.retailvend.orderList.OrderListActivity;
 import com.retailvend.outstand.OutstandingActivity;
+import com.retailvend.sales.SalesActivity;
 import com.retailvend.todayoutlet.TodayOutletActivity;
 import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
@@ -111,6 +112,14 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+        sales_main_cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent salesIntent = new Intent(DashboardActivity.this, SalesActivity.class);
+                startActivity(salesIntent);
+            }
+        });
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,6 +159,10 @@ public class DashboardActivity extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton("Yes", (dialog, which) -> {
                             sessionManagerSP.setPhonelogin("0");
+                            sessionManagerSP.setMobile("");
+                            sessionManagerSP.setPass("");
+                            sessionManagerSP.setSalesNameId("");
+                            sessionManagerSP.setSalesName("");
                             SharedPrefManager.getInstance(getApplicationContext()).clear();
                             Intent loginIntent = new Intent(DashboardActivity.this, LoginActivity.class);
                             TaskStackBuilder.create(this).addNextIntentWithParentStack(loginIntent).startActivities();
@@ -171,5 +184,13 @@ public class DashboardActivity extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
     }
 }

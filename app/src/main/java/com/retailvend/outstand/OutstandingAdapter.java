@@ -22,9 +22,11 @@ public class OutstandingAdapter extends RecyclerView.Adapter<OutstandingAdapter.
     private static final int VIEW_TYPE_NORMAL = 1;
     private static boolean isLoaderVisible = false;
     private Activity activity;
+    List<AssignOutletsDatum> todayOutletsDatum;
 
-    public OutstandingAdapter(Activity activity) {
+    public OutstandingAdapter(Activity activity, List<AssignOutletsDatum> todayOutletsDatum1) {
         this.activity = activity;
+        this.todayOutletsDatum = todayOutletsDatum1;
     }
 
     @NonNull
@@ -36,22 +38,22 @@ public class OutstandingAdapter extends RecyclerView.Adapter<OutstandingAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//        AssignOutletsDatum data = todayOutletsDatum.get(position);
-//        holder.outstandingCardview.setTag(data);
-////        String value = "$ " + data.getEsPrice();
-//        if(position==0){
-//            holder.txt_avai_no.setText("₹ " +"1000");
-//        }else{
-//            holder.txt_avai_no.setText("₹ " +data.getAvailableLimit());
-//        }
-//        holder.txt_name.setText(data.getCompanyName());
-//        holder.contact_name.setText(data.getContactName());
-//        holder.contact_number.setText(data.getMobile());
+        AssignOutletsDatum data = todayOutletsDatum.get(position);
+        holder.outstandingCardview.setTag(data);
+//        String value = "$ " + data.getEsPrice();
+        if (position == 0) {
+            holder.txt_avai_no.setText("₹ " + "1000");
+        } else {
+            holder.txt_avai_no.setText("₹ " + data.getAvailableLimit());
+        }
+        holder.txt_name.setText(data.getCompanyName());
+        holder.contact_name.setText(data.getContactName());
+        holder.contact_number.setText(data.getMobile());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return todayOutletsDatum.size();
     }
 
 //    void setOnClickListener(OnClickListener onClickListener) {
@@ -61,15 +63,15 @@ public class OutstandingAdapter extends RecyclerView.Adapter<OutstandingAdapter.
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         CardView outstandingCardview;
-        TextView txt_name,txt_avai_no,contact_name,contact_number;
+        TextView txt_name, txt_avai_no, contact_name, contact_number;
 
         MyViewHolder(View itemView) {
             super(itemView);
-            outstandingCardview=itemView.findViewById(R.id.outstanding_cardview);
-            txt_name=itemView.findViewById(R.id.txt_name);
-            txt_avai_no=itemView.findViewById(R.id.txt_avai_no);
-            contact_name=itemView.findViewById(R.id.contact_name);
-            contact_number=itemView.findViewById(R.id.contact_number);
+            outstandingCardview = itemView.findViewById(R.id.outstanding_cardview);
+            txt_name = itemView.findViewById(R.id.txt_name);
+            txt_avai_no = itemView.findViewById(R.id.txt_avai_no);
+            contact_name = itemView.findViewById(R.id.contact_name);
+            contact_number = itemView.findViewById(R.id.contact_number);
         }
     }
 }

@@ -166,6 +166,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         sessionManagerSP.setPhonelogin("1");
+                        sessionManagerSP.setMobile(mobNo);
+                        sessionManagerSP.setPass(pass);
+                        sessionManagerSP.setPhonelogin("1");
 
                         Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

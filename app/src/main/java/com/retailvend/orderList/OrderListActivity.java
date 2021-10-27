@@ -273,4 +273,10 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

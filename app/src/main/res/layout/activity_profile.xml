@@ -62,6 +62,7 @@
         android:padding="6dp"
         android:src="@drawable/edit"
         app:tint="@color/white"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/back"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toRightOf="@+id/back"

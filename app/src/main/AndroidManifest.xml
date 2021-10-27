@@ -24,6 +24,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hoisst">
         <activity
+            android:name=".sales.SalesDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Hoisst.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".orderList.OrderListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"

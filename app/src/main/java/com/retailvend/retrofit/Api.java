@@ -9,6 +9,7 @@ import com.retailvend.model.outlets.AttendanceTypeModel;
 import com.retailvend.model.outlets.ProductNameResModel;
 import com.retailvend.model.outlets.ProductTypeModel;
 import com.retailvend.model.outlets.SalesAgentsListModel;
+import com.retailvend.model.sales.SalesDetailsModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -112,5 +113,13 @@ public interface Api {
             @Field("employee_id") String employee_id,
             @Field("offset") int offset,
             @Field("limit") int limit
+    );
+
+    //sales details
+    @FormUrlEncoded
+    @POST("order/api/manage_order")
+    Call<SalesDetailsModel> salesDetails(
+            @Field("method") String method,
+            @Field("order_id") String order_id
     );
 }

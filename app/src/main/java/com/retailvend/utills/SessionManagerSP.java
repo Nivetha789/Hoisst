@@ -87,8 +87,27 @@ public class SessionManagerSP {
         return pref.getString("salesNameId", "");
     }
 
+    public String getMobile() {
+
+        return pref.getString("mobile", "");
+    }
 
 
+    public void setMobile(String authkey) {
+        editor.putString("mobile", authkey);
+        editor.commit();
+    }
+
+    public String getPass() {
+
+        return pref.getString("pass", "");
+    }
+
+
+    public void setPass(String authkey) {
+        editor.putString("pass", authkey);
+        editor.commit();
+    }
 
 
     //*************** Send to Mosambee Activity(Register Details) ******************

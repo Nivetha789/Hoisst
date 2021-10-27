@@ -147,6 +147,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 //        gst.setText(gst1);
 //        pan.setText(pan1);
 
+        order_type_constrain.setVisibility(View.VISIBLE);
+
         if (Build.VERSION.SDK_INT >= 23) {
             // Marshmallow+
             String coarseLocation = Manifest.permission.ACCESS_COARSE_LOCATION;

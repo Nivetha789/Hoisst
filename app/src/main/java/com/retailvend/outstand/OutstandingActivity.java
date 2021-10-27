@@ -80,12 +80,7 @@ public class OutstandingActivity extends AppCompatActivity {
 //        salesRecycler.setHasFixedSize(true);
 //        saleslists = new ArrayList<>();
 
-        outstandingAdapter = new OutstandingAdapter(activity);
-        mLayoutManager = new LinearLayoutManager(activity);
-        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
-        outstandingRecycler.setLayoutManager(mLayoutManager);
-        outstandingRecycler.setItemAnimator(new DefaultItemAnimator());
-        outstandingRecycler.setAdapter(outstandingAdapter);
+        outstandListApi();
 
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +97,7 @@ public class OutstandingActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void todayOutletListApi() {
+    public void outstandListApi() {
         CustomProgress.showProgress(activity);
         String emp_id= SharedPrefManager.getInstance(OutstandingActivity.this).getUser().getId();
         System.out.println("emmmpidd "+emp_id);
@@ -132,7 +127,12 @@ public class OutstandingActivity extends AppCompatActivity {
 
                         String total=todayOutletsDatum.get(1).getAvailableLimit();
                         total_amount.setText(total);
-
+                        outstandingAdapter = new OutstandingAdapter(activity,todayOutletsDatum);
+                        mLayoutManager = new LinearLayoutManager(activity);
+                        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+                        outstandingRecycler.setLayoutManager(mLayoutManager);
+                        outstandingRecycler.setItemAnimator(new DefaultItemAnimator());
+                        outstandingRecycler.setAdapter(outstandingAdapter);
 
                         CustomProgress.hideProgress(activity);
 

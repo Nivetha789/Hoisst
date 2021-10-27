@@ -14,6 +14,7 @@
         android:fontFamily="@font/quicksand_medium"
         android:gravity="start"
         android:text="Email"
+        android:layout_marginTop="30dp"
         android:textColor="@color/colorPrimary"
         android:textSize="13sp"
         app:layout_constraintBottom_toTopOf="@+id/email_view"
@@ -46,6 +47,7 @@
         android:id="@+id/email_view"
         android:layout_width="0dp"
         android:layout_height="1dp"
+        android:layout_marginTop="20dp"
         android:background="@color/light_dark"
         app:layout_constraintBottom_toTopOf="@+id/mobile_no_txt"
         app:layout_constraintLeft_toLeftOf="@+id/email_txt"
@@ -57,6 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="4dp"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="start"
@@ -93,24 +96,26 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/light_dark"
-        app:layout_constraintBottom_toTopOf="@+id/address_1_txt"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/address_txt"
         app:layout_constraintLeft_toLeftOf="@+id/mobile_no_txt"
         app:layout_constraintRight_toRightOf="@+id/mobile_no"
         app:layout_constraintTop_toBottomOf="@+id/mobile_no_txt" />
 
     <TextView
-        android:id="@+id/address_1_txt"
+        android:id="@+id/address_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="4dp"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="start"
-        android:text="Address 1"
+        android:text="Address "
+        android:layout_marginTop="20dp"
         android:textColor="@color/colorPrimary"
         android:textSize="13sp"
         app:layout_constraintBottom_toTopOf="@+id/address_1_view"
-        app:layout_constraintEnd_toStartOf="@+id/address_1"
+        app:layout_constraintEnd_toStartOf="@+id/address"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +123,7 @@
         tools:layout_editor_absoluteY="30dp" />
 
     <TextView
-        android:id="@+id/address_1"
+        android:id="@+id/address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -128,240 +133,20 @@
         android:text="A Block"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/address_1_txt"
+        app:layout_constraintBottom_toBottomOf="@+id/address_txt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/address_1_txt"
-        app:layout_constraintTop_toTopOf="@+id/address_1_txt" />
+        app:layout_constraintStart_toEndOf="@+id/address_txt"
+        app:layout_constraintTop_toTopOf="@+id/address_txt" />
 
     <View
         android:id="@+id/address_1_view"
         android:layout_width="0dp"
         android:layout_height="1dp"
+        android:layout_marginTop="20dp"
         android:background="@color/light_dark"
-        app:layout_constraintBottom_toTopOf="@+id/address_2_txt"
-        app:layout_constraintLeft_toLeftOf="@+id/address_1_txt"
-        app:layout_constraintRight_toRightOf="@+id/address_1"
-        app:layout_constraintTop_toBottomOf="@+id/address_1_txt" />
-
-    <TextView
-        android:id="@+id/address_2_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="Address 2"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/address_2_view"
-        app:layout_constraintEnd_toStartOf="@+id/address_2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address_1_view"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/address_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_regular"
-        android:gravity="end"
-        android:text="2/2A"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/address_2_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/address_2_txt"
-        app:layout_constraintTop_toTopOf="@+id/address_2_txt" />
-
-    <View
-        android:id="@+id/address_2_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/light_dark"
-        app:layout_constraintBottom_toTopOf="@+id/city_txt"
-        app:layout_constraintLeft_toLeftOf="@+id/address_2_txt"
-        app:layout_constraintRight_toRightOf="@+id/address_2"
-        app:layout_constraintTop_toBottomOf="@+id/address_2_txt" />
-
-    <TextView
-        android:id="@+id/city_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="City"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/city_view"
-        app:layout_constraintEnd_toStartOf="@+id/city"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address_2_view"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/city"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_regular"
-        android:gravity="end"
-        android:text="Coimbatore"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/city_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/city_txt"
-        app:layout_constraintTop_toTopOf="@+id/city_txt" />
-
-    <View
-        android:id="@+id/city_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/light_dark"
-        app:layout_constraintBottom_toTopOf="@+id/state_txt"
-        app:layout_constraintLeft_toLeftOf="@+id/city_txt"
-        app:layout_constraintRight_toRightOf="@+id/city"
-        app:layout_constraintTop_toBottomOf="@+id/city_txt" />
-
-    <TextView
-        android:id="@+id/state_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="State"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/state_view"
-        app:layout_constraintEnd_toStartOf="@+id/state"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/city_view"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/state"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_regular"
-        android:gravity="end"
-        android:text="Tamilnadu"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/state_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/state_txt"
-        app:layout_constraintTop_toTopOf="@+id/state_txt" />
-
-    <View
-        android:id="@+id/state_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/light_dark"
-        app:layout_constraintBottom_toTopOf="@+id/zip_code_txt"
-        app:layout_constraintLeft_toLeftOf="@+id/state_txt"
-        app:layout_constraintRight_toRightOf="@+id/state"
-        app:layout_constraintTop_toBottomOf="@+id/state_txt" />
-
-    <TextView
-        android:id="@+id/zip_code_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="Zip Code"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/zip_code_view"
-        app:layout_constraintEnd_toStartOf="@+id/zip_code"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/state_view"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/zip_code"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_regular"
-        android:gravity="end"
-        android:text="641100"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/zip_code_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/zip_code_txt"
-        app:layout_constraintTop_toTopOf="@+id/zip_code_txt" />
-
-    <View
-        android:id="@+id/zip_code_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/light_dark"
-        app:layout_constraintBottom_toTopOf="@+id/country_txt"
-        app:layout_constraintLeft_toLeftOf="@+id/zip_code_txt"
-        app:layout_constraintRight_toRightOf="@+id/zip_code"
-        app:layout_constraintTop_toBottomOf="@+id/zip_code_txt" />
-
-    <TextView
-        android:id="@+id/country_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="Country"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/country"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/zip_code_view"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/country"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_regular"
-        android:gravity="end"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:text="India"
-        app:layout_constraintBottom_toBottomOf="@+id/country_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/country_txt"
-        app:layout_constraintTop_toTopOf="@+id/country_txt" />
+        app:layout_constraintLeft_toLeftOf="@+id/address_txt"
+        app:layout_constraintRight_toRightOf="@+id/address"
+        app:layout_constraintTop_toBottomOf="@+id/address_txt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
