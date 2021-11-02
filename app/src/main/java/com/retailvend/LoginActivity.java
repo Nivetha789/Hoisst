@@ -39,13 +39,13 @@ public class LoginActivity extends AppCompatActivity {
     TextView txt_forgot;
     EditText edt_mob_number;
     ProgressBar progress;
-
     EditText edt_password;
     List<LoginDatum> loginDataModelList;
     LoginDatum loginDataModel;
     SessionManagerSP sessionManagerSP;
     Activity activity;
     LinearLayout lin_eye,lin_eye_inv;
+    String login_type="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         txt_forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LoginActivity.this,ForgetPasswordActivity.class);
+                Intent i = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
                 startActivity(i);
             }
         });
@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<LoginResModel>() {
             @Override
-            public void onResponse(Call<LoginResModel> call, Response<LoginResModel> response) {
+            public void onResponse(@NonNull Call<LoginResModel> call, @NonNull Response<LoginResModel> response) {
 
                 try {
 
@@ -160,20 +160,20 @@ public class LoginActivity extends AppCompatActivity {
                         for (int i = 0; i < loginDataModelList.size(); i++) {
                             loginDataModel = loginDataModelList.get(i);
                         }
+                        login_type=loginDataModel.getLogType();
+                            SharedPrefManager.getInstance(LoginActivity.this)
+                                    .saveUser(loginDataModel);
 
-                        SharedPrefManager.getInstance(LoginActivity.this)
-                                .saveUser(loginDataModel);
+                            sessionManagerSP.setLoginType(login_type);
+                            sessionManagerSP.setPhonelogin("1");
+                            sessionManagerSP.setMobile(mobNo);
+                            sessionManagerSP.setPass(pass);
+                            sessionManagerSP.setPhonelogin("1");
 
-
-                        sessionManagerSP.setPhonelogin("1");
-                        sessionManagerSP.setMobile(mobNo);
-                        sessionManagerSP.setPass(pass);
-                        sessionManagerSP.setPhonelogin("1");
-
-                        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        finish();
+                            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
                         CustomProgress.hideProgress(activity);
                     } else {
                         CustomProgress.hideProgress(activity);

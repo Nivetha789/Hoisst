@@ -43,6 +43,21 @@ public class SessionManagerSP {
         return pref.getString("Phonelogin", "");
     }
 
+    public void setLoginType(String authkey) {
+
+        editor.putString("loginType", authkey);
+
+        editor.commit();
+
+
+    }
+
+    public String getLoginType() {
+
+
+        return pref.getString("loginType", "");
+    }
+
     public void setSociallogin(String authkey) {
 
         editor.putString("SocialLogin", authkey);

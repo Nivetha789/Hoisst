@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -38,6 +39,8 @@ public class DashboardActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navView;
     ImageView menu, close;
+    String login_type="";
+    TextView sales_main_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +53,11 @@ public class DashboardActivity extends AppCompatActivity {
         sales_main_cardview = findViewById(R.id.sales_main_cardview);
         outstand_main_cardview = findViewById(R.id.outstand_main_cardview);
         profile = findViewById(R.id.profile);
-        navigaion = findViewById(R.id.menu);
         drawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
         menu = findViewById(R.id.menu);
         close = findViewById(R.id.close);
+        sales_main_txt = findViewById(R.id.sales_main_txt);
 
         sessionManagerSP = new SessionManagerSP(DashboardActivity.this);
 
@@ -89,6 +92,15 @@ public class DashboardActivity extends AppCompatActivity {
             setWindowFlag(DashboardActivity.this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+        login_type=sessionManagerSP.getLoginType();
+        if(login_type.equals("1")){
+            sales_main_txt.setText("SALES DETAILS");
+            sales_main_txt.setTextSize(15);
+        }else{
+            sales_main_txt.setText("DELIVERY DETAILS");
+            sales_main_txt.setTextSize(15);
+        }
+
         outlet_main_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

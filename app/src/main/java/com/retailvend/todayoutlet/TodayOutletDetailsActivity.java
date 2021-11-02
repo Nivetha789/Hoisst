@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,7 +48,6 @@ import com.retailvend.utills.SharedPrefManager;
 import java.util.List;
 import java.util.Locale;
 
-import at.markushi.ui.CircleButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

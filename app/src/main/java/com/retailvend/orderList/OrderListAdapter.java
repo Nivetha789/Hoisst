@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
 import com.retailvend.model.manageorder.OrderListDatum;
-import com.retailvend.model.outlets.ProductNameResData;
 import com.retailvend.todayoutlet.ProductNameActivity;
 import com.retailvend.todayoutlet.ProductNameAdapter;
 import com.retailvend.utills.BaseViewHolder;

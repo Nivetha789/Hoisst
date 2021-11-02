@@ -4,19 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
-import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AttendanceTypeDatum;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;

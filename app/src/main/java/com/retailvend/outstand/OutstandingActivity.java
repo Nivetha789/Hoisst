@@ -24,7 +24,6 @@ import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.todayoutlet.TodayOutletActivity;
 import com.retailvend.todayoutlet.TodayOutletAdapter;
 import com.retailvend.utills.CustomProgress;
-import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;

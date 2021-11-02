@@ -1,7 +1,6 @@
 package com.retailvend;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
-import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;
 

@@ -955,7 +955,7 @@
                                 android:paddingBottom="5dp"
                                 android:singleLine="true"
                                 android:fontFamily="@font/quicksand_semi_bold"
-                                android:text="Hundred OnlyHundred Only"
+                                android:text="Hundred Only"
                                 android:textColor="@color/black"
                                 android:textSize="14dp" />
 

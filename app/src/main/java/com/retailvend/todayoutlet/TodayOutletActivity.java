@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +22,6 @@ import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
-import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;
@@ -82,20 +82,20 @@ public class TodayOutletActivity extends AppCompatActivity {
     public void todayOutletListApi() {
         CustomProgress.showProgress(activity);
       String emp_id= SharedPrefManager.getInstance(TodayOutletActivity.this).getUser().getId();
-        System.out.println("emmmpidd "+emp_id);
+//        System.out.println("emmmpidd "+emp_id);
 
         Call<AssignOutletsModel> call = RetrofitClient
                 .getInstance().getApi().todayOutletList("_employeeWiseList",emp_id);
 
         call.enqueue(new Callback<AssignOutletsModel>() {
             @Override
-            public void onResponse(Call<AssignOutletsModel> call, Response<AssignOutletsModel> response) {
+            public void onResponse(@NonNull Call<AssignOutletsModel> call, @NonNull Response<AssignOutletsModel> response) {
 
                 try {
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    System.out.println("responseOutletsss "+response.body());
+//                    System.out.println("responseOutletsss "+response.body());
 
                     AssignOutletsModel todayOutletList = gson.fromJson(json, AssignOutletsModel.class);
                     String s = todayOutletList.getMessage();
@@ -136,7 +136,7 @@ public class TodayOutletActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AssignOutletsModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<AssignOutletsModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
 //                CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);

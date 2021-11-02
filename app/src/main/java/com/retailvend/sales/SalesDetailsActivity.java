@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.model.sales.SalesBillDetails;
-import com.retailvend.model.sales.SalesDetailsData;
 import com.retailvend.model.sales.SalesDetailsModel;
 import com.retailvend.model.sales.SalesProductDetail;
 import com.retailvend.model.sales.SalesStoreDetails;
