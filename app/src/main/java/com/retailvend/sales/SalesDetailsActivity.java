@@ -41,7 +41,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
             txt_inoive_details_total_kgs, txt_inoive_details_total_price, txt_dis_invoice,
             txt_invoice_last_bill, txt_invoice_bal_amt, txt_invoice_current_total, txt_store_name,
             txt_store_ship, hsnCode, tax_val, central_tax_rate, central_tax_amount, state_tax_rate, state_tax_amount,
-            tax_val_total, central_total, state_total, final_hsn_total,amount_in_words;
+            tax_val_total, central_total, state_total, final_hsn_total,amount_in_words,invoice_num;
     RecyclerView recyclerView;
     ProgressBar progress;
     NestedScrollView lin_invoice_details_scrollview;
@@ -115,6 +115,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
         state_total = findViewById(R.id.state_total);
         final_hsn_total = findViewById(R.id.final_hsn_total);
         amount_in_words = findViewById(R.id.amount_in_words);
+        invoice_num = findViewById(R.id.invoice_num);
 
         productDetails = new ArrayList<>();
         taxDetails = new ArrayList<>();
@@ -123,6 +124,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
     }
 
     public void salesInvoiceDetails(String orderId) {
+//        System.out.println("orderIDDDDD :"+orderId);
 
         progress.setVisibility(View.VISIBLE);
         lin_invoice_details_scrollview.setVisibility(View.GONE);

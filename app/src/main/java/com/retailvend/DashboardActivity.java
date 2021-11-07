@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -96,9 +97,19 @@ public class DashboardActivity extends AppCompatActivity {
         if(login_type.equals("1")){
             sales_main_txt.setText("SALES DETAILS");
             sales_main_txt.setTextSize(15);
+            Typeface font = Typeface.createFromAsset(
+                    this.getAssets(),
+                    "font/quicksand_medium.ttf");
+            sales_main_txt.setTypeface(font);
+            sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }else{
             sales_main_txt.setText("DELIVERY DETAILS");
             sales_main_txt.setTextSize(15);
+            Typeface font = Typeface.createFromAsset(
+                    this.getAssets(),
+                    "font/quicksand_medium.ttf");
+            sales_main_txt.setTypeface(font);
+            sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
 
         outlet_main_cardview.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +122,7 @@ public class DashboardActivity extends AppCompatActivity {
         collection_main_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent collectionIntent = new Intent(DashboardActivity.this, CollectionActivity.class);
+                Intent collectionIntent = new Intent (DashboardActivity.this, CollectionActivity.class);
                 startActivity(collectionIntent);
             }
         });

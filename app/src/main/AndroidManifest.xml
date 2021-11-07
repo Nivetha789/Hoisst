@@ -24,6 +24,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hoisst">
         <activity
+            android:name=".collection.PaymentDetailsActivity"
+            android:exported="true" />
+        <activity
             android:name=".sales.SalesDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
