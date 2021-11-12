@@ -1,5 +1,8 @@
 package com.retailvend.retrofit;
 
+import com.retailvend.model.delCollection.DeliveryCollectionListModel;
+import com.retailvend.model.delCollection.paymentCollection.PaymentCollectionModel;
+import com.retailvend.model.delCollection.paymentCollection.PaymentTypeModel;
 import com.retailvend.model.login.LoginResModel;
 import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.model.order.CreateOrderModel;
@@ -41,7 +44,7 @@ public interface Api {
 
     //product name list
     @FormUrlEncoded
-    @POST("order/api/manage_items")
+    @POST("catlog/api/product")
     Call<ProductNameResModel> getProductName(
             @Field("method") String method,
             @Field("order_type") String order_type,
@@ -122,4 +125,37 @@ public interface Api {
             @Field("method") String method,
             @Field("order_id") String order_id
     );
+
+
+    /*Delivery man*/
+
+    //Collection api
+    @FormUrlEncoded
+    @POST("distributors/api/distributor_outlet_list")
+    Call<DeliveryCollectionListModel> collectionList(
+            @Field("method") String method,
+            @Field("distributor_id") String distributor_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit
+    );
+
+    //Collection payment
+    @FormUrlEncoded
+    @POST("payment/api/outlet_payment")
+    Call<PaymentCollectionModel> collectionPaymentList(
+            @Field("method") String method,
+            @Field("assign_id") String assign_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit
+    );
+
+
+ //payment type
+    @FormUrlEncoded
+    @POST("payment/api/outlet_payment")
+    Call<PaymentTypeModel> paymentTypeGet(
+            @Field("method") String method
+    );
+
+
 }

@@ -26,6 +26,12 @@ public class LoginDatum {
     @SerializedName("log_type")
     @Expose
     private String logType;
+    @SerializedName("company_type")
+    @Expose
+    private String companyType;
+    @SerializedName("company_id")
+    @Expose
+    private String companyId;
     @SerializedName("permission")
     @Expose
     private String permission;
@@ -37,18 +43,13 @@ public class LoginDatum {
     private String published;
     @SerializedName("createdate")
     @Expose
-    private Object createdate;
+    private String createdate;
     @SerializedName("updatedate")
     @Expose
     private String updatedate;
 
-    public LoginDatum(String id, String username, String mobile, String email, String address, String password) {
-        this.id = id;
-        this.username = username;
-        this.mobile = mobile;
-        this.email = email;
-        this.address = address;
-        this.password = password;
+    public LoginDatum(String id, String username, String mobile, String email, String address, String password, String log_type, String company_type, String company_id,
+                      String permission, String status, String published, String createdate, String updatedate) {
     }
 
     public String getId() {
@@ -107,6 +108,22 @@ public class LoginDatum {
         this.logType = logType;
     }
 
+    public String getCompanyType() {
+        return companyType;
+    }
+
+    public void setCompanyType(String companyType) {
+        this.companyType = companyType;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
     public String getPermission() {
         return permission;
     }
@@ -131,11 +148,11 @@ public class LoginDatum {
         this.published = published;
     }
 
-    public Object getCreatedate() {
+    public String getCreatedate() {
         return createdate;
     }
 
-    public void setCreatedate(Object createdate) {
+    public void setCreatedate(String createdate) {
         this.createdate = createdate;
     }
 
@@ -146,5 +163,4 @@ public class LoginDatum {
     public void setUpdatedate(String updatedate) {
         this.updatedate = updatedate;
     }
-
 }

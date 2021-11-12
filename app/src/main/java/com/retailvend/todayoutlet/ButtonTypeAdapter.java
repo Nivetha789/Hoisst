@@ -70,33 +70,60 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
             public void onClick(View v) {
                 index = position;
                 notifyDataSetChanged();
+
 //                System.out.println("tyyyyyyyyy"+typeVal);
-                if (typeVal.equals("No Order")) {
-                    holder.typeValue.setBackgroundResource(R.drawable.background);
-                    holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
-                    ((TodayOutletDetailsActivity) activity).showReason(typeId, typeVal);
-                } else if (typeVal.equals("Sales Order")) {
-                    holder.typeValue.setBackgroundResource(R.drawable.background);
-                    holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
-                    sessionManagerSP.setSalesName("");
-                    sessionManagerSP.setSalesNameId("");
-                    Intent intent = new Intent(activity, CreateOutletOrderActivity.class);
-                    intent.putExtra("type_id", typeId);
-                    intent.putExtra("store_id", store_Id);
-                    intent.putExtra("type", typeVal);
-                    intent.putExtra("lat", lat);
-                    intent.putExtra("long", long_val);
-                    activity.startActivity(intent);
-                } else if (typeVal.equals("Payment Collection")) {
-                    holder.typeValue.setBackgroundResource(R.drawable.background);
-                    holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
-                    CustomToast.getInstance(activity).showSmallCustomToast("This feature will be enabled shortly");
-                } else {
-                    holder.typeValue.setBackgroundResource(R.drawable.lin_storke);
-                    holder.typeValue.setTextColor(Color.parseColor("#000000"));
-                }
+//                if (typeVal.equals("No Order")) {
+//                    holder.typeValue.setBackgroundResource(R.drawable.background);
+//                    holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
+//                    ((TodayOutletDetailsActivity) activity).showReason(typeId, typeVal);
+//                } else if (typeVal.equals("Sales Order")) {
+//                    holder.typeValue.setBackgroundResource(R.drawable.background);
+//                    holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
+//                    sessionManagerSP.setSalesName("");
+//                    sessionManagerSP.setSalesNameId("");
+//                    Intent intent = new Intent(activity, CreateOutletOrderActivity.class);
+//                    intent.putExtra("type_id", typeId);
+//                    intent.putExtra("store_id", store_Id);
+//                    intent.putExtra("type", typeVal);
+//                    intent.putExtra("lat", lat);
+//                    intent.putExtra("long", long_val);
+//                    activity.startActivity(intent);
+//                }
+////                else if (typeVal.equals("Payment Collection")) {
+////                    holder.typeValue.setBackgroundResource(R.drawable.background);
+////                    holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
+////                    CustomToast.getInstance(activity).showSmallCustomToast("This feature will be enabled shortly");
+////                }
+//                else {
+//                    holder.typeValue.setBackgroundResource(R.drawable.lin_storke);
+//                    holder.typeValue.setTextColor(Color.parseColor("#000000"));
+//                }
             }
         });
+
+        if (index == position) {
+            holder.typeValue.setBackgroundResource(R.drawable.background);
+            holder.typeValue.setTextColor(Color.parseColor("#FFFFFF"));
+
+            if (typeVal.equals("No Order")) {
+                ((TodayOutletDetailsActivity) activity).showReason(typeId, typeVal);
+            } else if (typeVal.equals("Sales Order")) {
+                sessionManagerSP.setSalesName("");
+                sessionManagerSP.setSalesNameId("");
+                Intent intent = new Intent(activity, CreateOutletOrderActivity.class);
+                intent.putExtra("type_id", typeId);
+                intent.putExtra("store_id", store_Id);
+                intent.putExtra("type", typeVal);
+                intent.putExtra("lat", lat);
+                intent.putExtra("long", long_val);
+                activity.startActivity(intent);
+                ((TodayOutletDetailsActivity) activity).hideReason(typeId, typeVal);
+            }
+        } else {
+            holder.typeValue.setBackgroundResource(R.drawable.lin_storke);
+            holder.typeValue.setTextColor(Color.parseColor("#000000"));
+            ((TodayOutletDetailsActivity) activity).hideReason(typeId, typeVal);
+        }
     }
 
     @Override

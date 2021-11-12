@@ -37,6 +37,14 @@ public class SharedPrefManager {
         editor.putString("email", user.getEmail());
         editor.putString("address", user.getAddress());
         editor.putString("password", user.getPassword());
+        editor.putString("log_type", user.getLogType());
+        editor.putString("company_type", user.getCompanyType());
+        editor.putString("company_id", user.getCompanyId());
+        editor.putString("permission", user.getPermission());
+        editor.putString("status", user.getStatus());
+        editor.putString("published", user.getPublished());
+        editor.putString("createdate", user.getCreatedate());
+        editor.putString("updatedate", user.getUpdatedate());
         editor.apply();
 
     }
@@ -54,7 +62,15 @@ public class SharedPrefManager {
                 sharedPreferences.getString("mobile", null),
                 sharedPreferences.getString("email", null),
                 sharedPreferences.getString("address", null),
-                sharedPreferences.getString("password", null)
+                sharedPreferences.getString("password", null),
+                sharedPreferences.getString("log_type", null),
+                sharedPreferences.getString("company_type", null),
+                sharedPreferences.getString("company_id", null),
+                sharedPreferences.getString("permission", null),
+                sharedPreferences.getString("status", null),
+                sharedPreferences.getString("published", null),
+                sharedPreferences.getString("createdate", null),
+                sharedPreferences.getString("updatedate", null)
         );
     }
 

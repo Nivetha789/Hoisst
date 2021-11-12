@@ -44,7 +44,7 @@
                             android:gravity="center"
                             android:text="Type"
                             android:fontFamily="@font/quicksand_regular"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="12dp" />
 
                         <TextView
@@ -78,7 +78,7 @@
                             android:gravity="center"
                             android:text="Date"
                             android:fontFamily="@font/quicksand_regular"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="12dp" />
 
                         <TextView
@@ -112,7 +112,7 @@
                             android:gravity="center"
                             android:text="Amount"
                             android:fontFamily="@font/quicksand_regular"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="12dp" />
 
                         <TextView

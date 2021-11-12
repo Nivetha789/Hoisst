@@ -382,6 +382,11 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         type_id=typeId;
         type_val=typeVal;
     }
+    public void hideReason(String typeId, String typeVal){
+        reason_constrain.setVisibility(View.GONE);
+        type_id=typeId;
+        type_val=typeVal;
+    }
 
     public void updateAttendanceApi(String typeId, String typeVal) {
         CustomProgress.showProgress(activity);

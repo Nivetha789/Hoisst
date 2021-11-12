@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResModel loginModule = gson.fromJson(json, LoginResModel.class);
 //                LoginModule loginModule = response.body();
                     String s = loginModule.getMessage();
+                    System.out.println("ssssss "+s);
 
 
                     if (loginModule.getStatus()) {
@@ -169,6 +170,7 @@ public class LoginActivity extends AppCompatActivity {
                             sessionManagerSP.setMobile(mobNo);
                             sessionManagerSP.setPass(pass);
                             sessionManagerSP.setPhonelogin("1");
+                            sessionManagerSP.setDistributorId(loginDataModel.getCompanyId());
 
                             Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

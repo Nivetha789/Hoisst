@@ -124,6 +124,17 @@ public class SessionManagerSP {
         editor.commit();
     }
 
+    public String getDistributorId() {
+
+        return pref.getString("DistributorId", "");
+    }
+
+
+    public void setDistributorId(String authkey) {
+        editor.putString("DistributorId", authkey);
+        editor.commit();
+    }
+
 
     //*************** Send to Mosambee Activity(Register Details) ******************
 

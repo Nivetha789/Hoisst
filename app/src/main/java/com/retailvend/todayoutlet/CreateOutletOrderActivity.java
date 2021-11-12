@@ -70,7 +70,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     public static TextView txtTotalPrice, txtTotalQty;
 
     Spinner spin_name;
-    TextView txt_date, txt_invoice_mob, txt_invoice_address, rv, sales_agent, product_name, order_type_txt, cod, credit, txt_sales_agent;
+    TextView txt_date, txt_invoice_mob, txt_invoice_address, rv, sales_agent, product_name, order_type_txt, cod, credit, txt_sales_agent, discount, dueDays;
     EditText txtPrice, qty;
     LinearLayout linBtn, lin_submit, linSalesAgent;
     ImageView left_arrow;
@@ -100,7 +100,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     SessionManagerSP sessionManagerSP;
     String sales_agent_name = "";
     String sales_agent_id = "";
-    LinearLayout sales_agent_show, rv_show;
+    LinearLayout sales_agent_show, rv_show, discountLayout;
 
     ProductAdapter productAdapter;
 
@@ -150,6 +150,9 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         sales_agent = findViewById(R.id.sales_agent);
         sales_agent_show = findViewById(R.id.sales_agent_show);
         rv_show = findViewById(R.id.rv_show);
+        discount = findViewById(R.id.discount);
+        dueDays = findViewById(R.id.dueDays);
+        discountLayout = findViewById(R.id.discountLayout);
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,7 +193,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
             public void onClick(View v) {
 //                System.out.println("prodtype::: " + order_type);
 //                System.out.println("bill_typebill_typebill_type::: " + bill_type);
-                if (!TextUtils.isEmpty(order_type)) {
+                if (!TextUtils.isEmpty(bill_type)) {
 //                    if (!TextUtils.isEmpty(bill_type)) {
                     Intent productIntent = new Intent(CreateOutletOrderActivity.this, ProductNameActivity.class);
                     productIntent.putExtra("order_type", order_type);
@@ -199,32 +202,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 //                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Select Bill Type");
 //                    }
                 } else {
-                    CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Select Order Type");
-                }
-            }
-        });
-
-        linBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qty.setEnabled(false);
-                if (!product_name.getText().toString().isEmpty()) {
-                    if (spin_name != null) {
-                        if (!txtPrice.getText().toString().isEmpty()) {
-                            if (!qty.getText().toString().isEmpty()) {
-                                addProductList();
-                            } else {
-                                CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Qty should not be empty");
-                                qty.setEnabled(true);
-                            }
-                        } else {
-                            CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Price Amount should not be empty");
-                        }
-                    } else {
-                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Unit Value should not be empty");
-                    }
-                } else {
-                    CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Product Name should not be empty");
+                    CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Select Bill Type");
                 }
             }
         });
@@ -290,6 +268,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                 credit.setBackgroundResource(R.drawable.lin_storke);
                 cod.setTextColor(Color.parseColor("#ffffff"));
                 credit.setTextColor(Color.parseColor("#000000"));
+                discountLayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -302,6 +281,67 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                 credit.setBackgroundResource(R.drawable.background);
                 cod.setTextColor(Color.parseColor("#000000"));
                 credit.setTextColor(Color.parseColor("#ffffff"));
+                discountLayout.setVisibility(View.GONE);
+            }
+        });
+
+        linBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qty.setEnabled(false);
+//                System.out.println("billltypeee "+bill_type);
+                if (!TextUtils.isEmpty(bill_type)) {
+                    if (bill_type.equals("1")) {
+                        if(!TextUtils.isEmpty(discount.getText().toString())){
+                            if(!TextUtils.isEmpty(dueDays.getText().toString())){
+                                if (!TextUtils.isEmpty(product_name.getText().toString())) {
+                                    if (spin_name != null) {
+                                        if (!TextUtils.isEmpty(txtPrice.getText().toString())) {
+                                            if (!TextUtils.isEmpty(qty.getText().toString())) {
+                                                addProductList();
+                                            } else {
+                                                CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Qty should not be empty");
+                                                qty.setEnabled(true);
+                                            }
+                                        } else {
+                                            CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Price Amount should not be empty");
+                                        }
+                                    } else {
+                                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Unit Value should not be empty");
+                                    }
+                                } else {
+                                    CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Product Name should not be empty");
+                                }
+                            }else{
+                                CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Due Days should not be empty");
+                            }
+                        }else{
+                            CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Discount should not be empty");
+                        }
+                    } else {
+                        if (!TextUtils.isEmpty(product_name.getText().toString())) {
+                            if (spin_name != null) {
+                                if (!TextUtils.isEmpty(txtPrice.getText().toString())) {
+                                    if (!TextUtils.isEmpty(qty.getText().toString())) {
+                                        addProductList();
+                                    } else {
+                                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Qty should not be empty");
+                                        qty.setEnabled(true);
+                                    }
+                                } else {
+                                    CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Price Amount should not be empty");
+                                }
+                            } else {
+                                CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Unit Value should not be empty");
+                            }
+                        } else {
+                            CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Product Name should not be empty");
+                        }
+//                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Discount and Due Days should not be empty");
+                    }
+                } else {
+                    CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Select Bill Type");
+                }
             }
         });
     }
@@ -456,12 +496,14 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     }
 
     public void addProductList() {
-//        String[] parts = txtPrice.getText().toString().split("\\.");
-//        String part1 = parts[0];
-//        String part2 = parts[1];
-//        int a = Integer.parseInt(part2);
-//        int b = Integer.parseInt(qty.getText().toString().trim());
-//        totalPriceList = a * b;
+        String[] parts = txtPrice.getText().toString().split("\\.");
+        String part1 = parts[0];
+        String part2 = parts[1];
+        int a = Integer.parseInt(part2);
+        int b = Integer.parseInt(qty.getText().toString().trim());
+        totalPriceList = a * b;
+//        System.out.println("parts " + parts[2]);
+        System.out.println("totalPriceList " + totalPriceList);
         addProductModel.add(new AddProductModel(auto_id, prod_id, prod_name, type_id, unitId, unitItem, hsn_code, gst_val, qty.getText().toString(), price));
         updateAddProductAdapter("add", 0);
         product_name.setText("");

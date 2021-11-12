@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,6 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.retailvend.collection.CollectionActivity;
+import com.retailvend.devliveryman.CollectionDeliveryActivity;
 import com.retailvend.orderList.OrderListActivity;
 import com.retailvend.outstand.OutstandingActivity;
 import com.retailvend.sales.SalesActivity;
@@ -42,6 +44,7 @@ public class DashboardActivity extends AppCompatActivity {
     ImageView menu, close;
     String login_type="";
     TextView sales_main_txt;
+    String distributor_id="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +97,10 @@ public class DashboardActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         login_type=sessionManagerSP.getLoginType();
+        distributor_id=sessionManagerSP.getDistributorId();
+
         if(login_type.equals("1")){
-            sales_main_txt.setText("SALES DETAILS");
+            sales_main_txt.setText("DELIVERY DETAILS");
             sales_main_txt.setTextSize(15);
             Typeface font = Typeface.createFromAsset(
                     this.getAssets(),
@@ -103,7 +108,7 @@ public class DashboardActivity extends AppCompatActivity {
             sales_main_txt.setTypeface(font);
             sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }else{
-            sales_main_txt.setText("DELIVERY DETAILS");
+            sales_main_txt.setText("SALES DETAILS");
             sales_main_txt.setTextSize(15);
             Typeface font = Typeface.createFromAsset(
                     this.getAssets(),
@@ -122,8 +127,15 @@ public class DashboardActivity extends AppCompatActivity {
         collection_main_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent collectionIntent = new Intent (DashboardActivity.this, CollectionActivity.class);
-                startActivity(collectionIntent);
+                System.out.println("distributoridddd "+distributor_id);
+                if(TextUtils.isEmpty(distributor_id)){
+                    Intent collectionIntent = new Intent (DashboardActivity.this, CollectionActivity.class);
+                    startActivity(collectionIntent);
+                }
+               else{
+                    Intent collectionIntent = new Intent (DashboardActivity.this, CollectionDeliveryActivity.class);
+                    startActivity(collectionIntent);
+                }
             }
         });
 

@@ -3,14 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/CSQ/AndroidStudioProjects/RetailVend/app/src/main/res/drawable/toast_rounded_red.xml" value="0.19583333333333333" />
-        <entry key="..\:/Users/CSQ/AndroidStudioProjects/RetailVend/app/src/main/res/layout/activity_payment_details.xml" value="0.1796875" />
-        <entry key="..\:/Users/CSQ/AndroidStudioProjects/RetailVend/app/src/main/res/layout/activity_sales_details.xml" value="0.4361567635903919" />
-        <entry key="..\:/Users/CSQ/AndroidStudioProjects/RetailVend/app/src/main/res/layout/content_invoice_details.xml" value="0.40185185185185185" />
-        <entry key="..\:/Users/CSQ/AndroidStudioProjects/RetailVend/app/src/main/res/layout/content_payment_details.xml" value="0.22" />
-        <entry key="..\:/Users/CSQ/AndroidStudioProjects/RetailVend/app/src/main/res/layout/dashboard_drawer.xml" value="0.1796875" />
-        <entry key="..\:/Users/CSQ/AndroidStudioProjects/RetailVend/app/src/main/res/layout/dashboard_new.xml" value="0.1796875" />
-        <entry key="..\:/Users/CSQ/AndroidStudioProjects/RetailVend/app/src/main/res/layout/item_cust_pay_details.xml" value="0.4466666666666667" />
+        <entry key="..\:/RetailVend/app/src/main/res/drawable/lin_gray_back.xml" value="0.37864583333333335" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_add_payment.xml" value="0.3625" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_collection.xml" value="0.3484375" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_collection_delivery.xml" value="0.18" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_create_sales_order.xml" value="0.3625" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_payment_details.xml" value="0.3625" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_product_name.xml" value="0.3625" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/collection_adapter.xml" value="0.3625" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/collection_delivery_adapter.xml" value="0.3625" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/content_add_payment.xml" value="0.3625" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/content_payment_details.xml" value="0.3625" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/item_cust_pay_details.xml" value="0.33" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/layout_add_payment_type.xml" value="0.3625" />
       </map>
     </option>
   </component>
