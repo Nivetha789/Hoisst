@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/shop_card_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/today_outlet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
-        app:cardBackgroundColor="@color/colorPrimary"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/lin_storke1"
         app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +31,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@null"
+                android:scaleType="fitXY"
                 android:src="@drawable/dash_outlet"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -41,15 +44,26 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/quicksand_bold"
                 android:gravity="start"
                 android:text="KR Bakes"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:textSize="16dp"
-                app:layout_constraintEnd_toStartOf="@+id/shop_dollar_img"
+                app:layout_constraintEnd_toStartOf="@+id/arrow"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/right_arrow"
+                android:backgroundTint="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/shop_title" />
 
             <ImageView
                 android:id="@+id/circle_bg"
@@ -57,80 +71,87 @@
                 android:layout_height="60dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/circle_bg"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/shop_title"/>
+                app:layout_constraintTop_toTopOf="@+id/shop_title" />
 
-                        <ImageView
-                            android:id="@+id/shop_dollar_img"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:contentDescription="@null"
-                            android:src="@drawable/retail_logo"
-                            app:layout_constraintStart_toStartOf="@+id/circle_bg"
-                            app:layout_constraintBottom_toBottomOf="@+id/circle_bg"
-                            app:layout_constraintEnd_toEndOf="@+id/circle_bg"
-                            app:layout_constraintTop_toTopOf="@+id/circle_bg" />
+            <ImageView
+                android:id="@+id/shop_dollar_img"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:contentDescription="@null"
+                android:src="@drawable/retail_logo"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/circle_bg"
+                app:layout_constraintEnd_toEndOf="@+id/circle_bg"
+                app:layout_constraintStart_toStartOf="@+id/circle_bg"
+                app:layout_constraintTop_toTopOf="@+id/circle_bg" />
 
             <TextView
-                android:id="@+id/owner_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/contact_name"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand_medium"
-                android:gravity="center"
                 android:layout_marginTop="5dp"
-                android:text="Sai "
-                android:textColor="@color/white"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="Sai"
+                android:textColor="@color/black"
                 android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/shop_title"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/shop_title"
                 app:layout_constraintTop_toBottomOf="@+id/shop_title" />
 
             <TextView
-                android:id="@+id/shop_number"
+                android:id="@+id/contact_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
                 android:fontFamily="@font/quicksand_medium"
                 android:gravity="center"
                 android:text="9195667788"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/white"
+                android:textColor="@color/grey"
                 android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/shop_title"
-                app:layout_constraintTop_toBottomOf="@+id/owner_name" />
+                app:layout_constraintTop_toBottomOf="@+id/contact_name" />
 
             <TextView
                 android:id="@+id/check_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/button_shape1"
                 android:fontFamily="@font/quicksand_bold"
                 android:gravity="center"
                 android:paddingStart="8dp"
-                android:paddingEnd="8dp"
                 android:paddingTop="5dp"
+                android:paddingEnd="8dp"
                 android:paddingBottom="5dp"
                 android:text="Check In"
                 android:textColor="@color/white"
                 android:textSize="11dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/shop_title"
-                app:layout_constraintTop_toBottomOf="@+id/shop_number" />
+                app:layout_constraintTop_toBottomOf="@+id/contact_number" />
 
             <ImageView
                 android:id="@+id/navigate"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginStart="5dp"
-                android:contentDescription="@null"
                 android:src="@drawable/ic_location"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/check_in"
-                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/check_in"
                 app:layout_constraintTop_toTopOf="@+id/check_in"
                 app:tint="@color/colorAccent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

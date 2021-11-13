@@ -1,16 +1,20 @@
 package com.retailvend;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -18,6 +22,7 @@ import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.login.LoginDatum;
 import com.retailvend.model.login.LoginResModel;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
@@ -34,11 +39,13 @@ public class LoginActivity extends AppCompatActivity {
     TextView txt_forgot;
     EditText edt_mob_number;
     ProgressBar progress;
-
     EditText edt_password;
     List<LoginDatum> loginDataModelList;
     LoginDatum loginDataModel;
     SessionManagerSP sessionManagerSP;
+    Activity activity;
+    LinearLayout lin_eye,lin_eye_inv;
+    String login_type="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +57,11 @@ public class LoginActivity extends AppCompatActivity {
         edt_mob_number=findViewById(R.id.edt_mob_number);
         edt_password=findViewById(R.id.edt_pass);
         progress = findViewById(R.id.progressBar);
+        lin_eye = findViewById(R.id.lin_eye);
+        lin_eye_inv = findViewById(R.id.lin_eye_inv);
         sessionManagerSP = new SessionManagerSP(LoginActivity.this);
+
+        activity=this;
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -83,8 +94,25 @@ public class LoginActivity extends AppCompatActivity {
         txt_forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LoginActivity.this,ForgetPasswordActivity.class);
+                Intent i = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
                 startActivity(i);
+            }
+        });
+
+        lin_eye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                lin_eye_inv.setVisibility(View.VISIBLE);
+                lin_eye.setVisibility(View.GONE);
+            }
+        });
+        lin_eye_inv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                lin_eye_inv.setVisibility(View.GONE);
+                lin_eye.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -105,15 +133,14 @@ public class LoginActivity extends AppCompatActivity {
 
     public void userLogin(String mobNo, String pass) {
 
-//        text_signIn.setVisibility(View.GONE);
-        progress.setVisibility(View.VISIBLE);
+        CustomProgress.showProgress(this);
 
         Call<LoginResModel> call = RetrofitClient
                 .getInstance().getApi().userlogin("_employeeLogin",mobNo, pass);
 
         call.enqueue(new Callback<LoginResModel>() {
             @Override
-            public void onResponse(Call<LoginResModel> call, Response<LoginResModel> response) {
+            public void onResponse(@NonNull Call<LoginResModel> call, @NonNull Response<LoginResModel> response) {
 
                 try {
 
@@ -122,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResModel loginModule = gson.fromJson(json, LoginResModel.class);
 //                LoginModule loginModule = response.body();
                     String s = loginModule.getMessage();
+                    System.out.println("ssssss "+s);
 
 
                     if (loginModule.getStatus()) {
@@ -133,48 +161,41 @@ public class LoginActivity extends AppCompatActivity {
                         for (int i = 0; i < loginDataModelList.size(); i++) {
                             loginDataModel = loginDataModelList.get(i);
                         }
+                        login_type=loginDataModel.getLogType();
+                            SharedPrefManager.getInstance(LoginActivity.this)
+                                    .saveUser(loginDataModel);
 
-                        SharedPrefManager.getInstance(LoginActivity.this)
-                                .saveUser(loginDataModel);
+                            sessionManagerSP.setLoginType(login_type);
+                            sessionManagerSP.setPhonelogin("1");
+                            sessionManagerSP.setMobile(mobNo);
+                            sessionManagerSP.setPass(pass);
+                            sessionManagerSP.setPhonelogin("1");
+                            sessionManagerSP.setDistributorId(loginDataModel.getCompanyId());
 
-
-                        sessionManagerSP.setPhonelogin("1");
-
-                        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        finish();
-
-//                        text_signIn.setVisibility(View.VISIBLE);
-                        progress.setVisibility(View.GONE);
-
-
+                            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+                        CustomProgress.hideProgress(activity);
                     } else {
-//                        text_signIn.setVisibility(View.VISIBLE);
-                        progress.setVisibility(View.GONE);
-//                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                        CustomProgress.hideProgress(activity);
                         CustomToast.getInstance(LoginActivity.this).showSmallCustomToast("Invalid User Name or Password");
-//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
+                    CustomProgress.hideProgress(activity);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<LoginResModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
-//                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                 CustomToast.getInstance(LoginActivity.this).showSmallCustomToast("Something went wrong try again..");
-//                text_signIn.setVisibility(View.VISIBLE);
-                progress.setVisibility(View.GONE);
-
+                CustomProgress.hideProgress(activity);
             }
         });
-
-
     }
 
     private boolean Validate_Email(EditText et) {

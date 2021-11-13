@@ -1,5 +1,7 @@
 package com.retailvend.todayoutlet;
 
+import static com.retailvend.utills.PaginationListener.PAGE_START;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
@@ -7,36 +9,30 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.retailvend.R;
-import com.retailvend.model.outlets.AssignOutletsModel;
+import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.outlets.ProductNameResData;
 import com.retailvend.model.outlets.ProductNameResModel;
-import com.retailvend.retrofit.Api;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
-import com.retailvend.utills.Loader;
-import com.retailvend.utills.SharedPrefManager;
+import com.retailvend.utills.PaginationListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,22 +40,38 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ProductNameActivity extends AppCompatActivity {
+public class ProductNameActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     ProductNameAdapter productNameAdapter;
     RecyclerView product_name_recycler;
-    List<ProductNameResData> productNameList = new ArrayList<>();
-    TextView mTitle;
+    List<ProductNameResData> productNameList;
+    TextView mTitle,emptyView;
     private Toolbar toolbar;
-    String WHICHPART="";
+    String order_type="";
     EditText search;
     LinearLayout searchLayout;
-    ImageView search_icon;
+    ImageView search_icon,left_arrow;
     Activity activity;
     String prod_name="";
+    String prod_id="";
+    String gst="";
+    String hsn="";
+
+    String order_id="";
+
+    private int currentPage = PAGE_START;
+    private boolean isLastPage = false;
+    private int totalPage = 0;
+    private boolean isLoading = false;
+    int itemCount = 0;
+    ProgressBar progress;
+
+    int offset = 0;
+    int limit = 10;
+    int totalcount = 0;
+
+    String searchTxt = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,83 +103,136 @@ public class ProductNameActivity extends AppCompatActivity {
         search_icon = findViewById(R.id.search_icon);
         searchLayout = findViewById(R.id.searchLayout);
         mTitle = toolbar.findViewById(R.id.toolbar_title);
+        left_arrow = findViewById(R.id.left_arrow);
+        progress = findViewById(R.id.progress);
+        emptyView = findViewById(R.id.emptyView);
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
 
         if (b != null) {
-            WHICHPART = (String) b.get("WHICHPART");
+            order_type = (String) b.get("order_type");
+            if(order_type.equals("Sales Agent")){
+                order_id="2";
+            }else{
+                order_id="1";
+            }
         }
 
-        productNameApi();
+        productNameList = new ArrayList<>();
 
-        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
+        left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if(actionId == EditorInfo.IME_ACTION_SEARCH
-                        || actionId == EditorInfo.IME_ACTION_DONE
-                        || keyEvent.getAction() == KeyEvent.ACTION_DOWN
-                        || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER){
-
-                    //execute our method for searching
-                }
-
-                return false;
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
         search.addTextChangedListener(new TextWatcher() {
-
             @Override
-            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                productNameAdapter.getFilter().filter(cs);
-                productNameAdapter.notifyDataSetChanged();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                if (cs.length() >= 1) {
-                    productNameAdapter.getFilter().filter(cs);
-                }
-                else {
-                    productNameAdapter = new ProductNameAdapter(ProductNameActivity.this,productNameList);
-                    LinearLayoutManager mLayoutManager = new LinearLayoutManager(ProductNameActivity.this);
-
-                    product_name_recycler.setLayoutManager(mLayoutManager);
-                    product_name_recycler.setItemAnimator(new DefaultItemAnimator());
-                    product_name_recycler.setAdapter(productNameAdapter);
-                    productNameAdapter.notifyDataSetChanged();
-                }
             }
 
             @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-//                                    Toast.makeText(getApplicationContext(),"before text change",Toast.LENGTH_LONG).show();
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                offset = 0;
+                searchTxt = s.toString();
+
+                productNameApi(offset, limit, "2");
+
             }
 
             @Override
-            public void afterTextChanged(Editable arg0) {
-//                productNameAdapter.getFilter().filter(arg0);
-//                productNameAdapter.notifyDataSetChanged();
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+//        swipeRefresh.setOnRefreshListener(this);
+        product_name_recycler.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        product_name_recycler.setLayoutManager(layoutManager);
+
+        productNameAdapter = new ProductNameAdapter(ProductNameActivity.this, productNameList);
+        product_name_recycler.setAdapter(productNameAdapter);
+
+        product_name_recycler.addOnScrollListener(new PaginationListener(layoutManager, totalPage) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+//                currentPage++;
+
+                boolean isConnected = ConnectivityReceiver.isConnected();
+                if (isConnected) {
+                    productNameApi(offset, limit, "1");
+
+                } else {
+                    CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast("Please check your internet connection");
+                }
+
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
             }
         });
     }
 
-    private void filter(String text) {
-        ArrayList<ProductNameResData> filteredList = new ArrayList<>();
-        for (ProductNameResData item : productNameList) {
-            if (item.getProductName().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(item);
-            }
+
+    @Override
+    public void onRefresh() {
+        itemCount = 0;
+        offset = 0;
+        currentPage = PAGE_START;
+        isLastPage = false;
+        productNameAdapter.clear();
+
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            productNameApi(offset, limit, "1");
+        } else {
+            CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast("Please check your internet connection");
         }
-        productNameAdapter.filterList(filteredList);
     }
 
-    public void productNameApi() {
-        final CustomProgress customProgress = new CustomProgress(this);
-//        text_signIn.setVisibility(View.GONE);
-        Loader.showLoad(customProgress, activity, true);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        itemCount = 0;
+        offset = 0;
+        currentPage = PAGE_START;
+        isLastPage = false;
+        productNameAdapter.clear();
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            productNameApi(offset, limit, "1");
+        } else {
+            CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
+    }
+
+    public void productNameApi(int offset1, int limit1, String searchType) {
+//        CustomProgress.showProgress(activity);
+
+        if (isLoading) {
+            progress.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+        } else {
+            progress.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
 
         Call<ProductNameResModel> call = RetrofitClient
-                .getInstance().getApi().getProductName("_listTypeWiseProduct","1");
+                .getInstance().getApi().getProductName("_listTypeWiseProduct",order_id,offset1, limit1, searchTxt);
 
         call.enqueue(new Callback<ProductNameResModel>() {
             @Override
@@ -177,61 +242,113 @@ public class ProductNameActivity extends AppCompatActivity {
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-
                     ProductNameResModel productNameResModel = gson.fromJson(json, ProductNameResModel.class);
-                    String s = productNameResModel.getMessage();
 
-                    if (productNameResModel.getStatus()==1) {
+                    if (productNameResModel.getStatus() == 1) {
+
+                        if (searchType.equals("2")) {
+                            if (productNameList.size() > 0) {
+                                productNameAdapter.clear();
+                            }
+                        }
+
+                        product_name_recycler.setVisibility(View.VISIBLE);
+                        progress.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
 
                         productNameList = productNameResModel.getData();
-//                        CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast(todayOutletList.getMessage());
-                        productNameAdapter = new ProductNameAdapter(ProductNameActivity.this,productNameList);
-                        LinearLayoutManager mLayoutManager = new LinearLayoutManager(ProductNameActivity.this);
 
-                        product_name_recycler.setLayoutManager(mLayoutManager);
-                        product_name_recycler.setItemAnimator(new DefaultItemAnimator());
-                        product_name_recycler.setAdapter(productNameAdapter);
-                        productNameAdapter.notifyDataSetChanged();
+                        offset = productNameResModel.getOffset();
+                        limit = productNameResModel.getLimit();
+                        totalcount = productNameResModel.getTotalRecord();
 
-//                        text_signIn.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
+                        int offest1 = offset;
+                        int totalcount1;
+                        if (totalcount > offset) {
+                            totalcount1 = offset + limit;
+                        } else {
+                            totalcount1 = offset;
+                        }
+
+
+                        currentPage = offest1;
+                        totalPage = totalcount1;
+
+
+                        if (currentPage != PAGE_START)
+                            productNameAdapter.removeLoading();
+
+                        productNameAdapter.addItems(productNameList);
+
+                        if (currentPage < totalPage) {
+                            productNameAdapter.addLoading();
+                        } else {
+                            isLastPage = true;
+                        }
+                        isLoading = false;
+
+
+//                        offset = siteListModel.getOffset();
+                        progress.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
 
                     } else {
-//                        text_signIn.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
-                        //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast(productNameResModel.getMessage());
+                        product_name_recycler.setVisibility(View.GONE);
+                        progress.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.VISIBLE);
+                        emptyView.setText("No Record Found");
+//                        siteListDataModelList.clear();
+//                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                        CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast("No Record Found");
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
-                    Log.d("Exception", e.getMessage());
-                    Loader.showLoad(customProgress, activity, false);
+                    progress.setVisibility(View.GONE);
+                    Log.d("Exceptionnnn", e.getMessage());
                 }
-
             }
 
             @Override
             public void onFailure(@NonNull Call<ProductNameResModel> call, @NonNull Throwable t) {
-                Log.d("Failure ", t.getMessage());
-//                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast("Something went wrong try again..");
-//                text_signIn.setVisibility(View.VISIBLE);
-                Loader.showLoad(customProgress, activity, false);
+                product_name_recycler.setVisibility(View.GONE);
+                progress.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+                emptyView.setText("Something went wrong try again..");
             }
         });
     }
 
-    public void updateProdName(String prodName,String prodId, String gst, String hsn){
+    public void updateProdName(String prodName, String prodId, String gstVal, String hsnCode){
         prod_name=prodName;
-        Intent productIntent=new Intent(ProductNameActivity.this, CreateOutletOrderActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("prod_name",prodName);
-        bundle.putString("prod_id",prodId);
-        bundle.putString("gst",gst);
-        bundle.putString("hsn",hsn);
-        productIntent.putExtras(bundle);
-        startActivity(productIntent);
+        prod_id=prodId;
+        gst=gstVal;
+        hsn=hsnCode;
+        Intent mIntent = new Intent();
+        mIntent.putExtra("prod_name",prod_name);
+        mIntent.putExtra("prod_id",prod_id);
+        mIntent.putExtra("gst", gst);
+        mIntent.putExtra("hsn", hsn);
+        activity.setResult(RESULT_OK, mIntent);
+        finish();
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent();
+//        intent.putExtra("prod_name", prod_name);
+//        intent.putExtra("prod_id", prod_id);
+//        intent.putExtra("gst", gst);
+//        intent.putExtra("hsn", hsn);
+//        setResult(RESULT_OK, intent);
+//        finish();
+//        super.onBackPressed();
+//    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         finish();
     }
 }

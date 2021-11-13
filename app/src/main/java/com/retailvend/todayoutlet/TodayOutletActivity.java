@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,8 +22,6 @@ import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
-import com.retailvend.utills.CustomToast;
-import com.retailvend.utills.Loader;
 import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;
@@ -38,6 +38,7 @@ public class TodayOutletActivity extends AppCompatActivity {
     TodayOutletAdapter todayOutletAdapter;
     ImageView leftArrow;
     List<AssignOutletsDatum> todayOutletsDatum;
+    TextView nodata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +64,11 @@ public class TodayOutletActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
-        todayOutletListApi();
+
 
         todayOutletRecycler=findViewById(R.id.today_outlet_recycler);
         leftArrow=findViewById(R.id.left_arrow);
+        nodata=findViewById(R.id.nodata);
 
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,34 +76,37 @@ public class TodayOutletActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        todayOutletListApi();
     }
 
     public void todayOutletListApi() {
-        final CustomProgress customProgress = new CustomProgress(activity);
-//        text_signIn.setVisibility(View.GONE);
-        Loader.showLoad(customProgress, activity, true);
+        CustomProgress.showProgress(activity);
       String emp_id= SharedPrefManager.getInstance(TodayOutletActivity.this).getUser().getId();
+//        System.out.println("emmmpidd "+emp_id);
 
         Call<AssignOutletsModel> call = RetrofitClient
                 .getInstance().getApi().todayOutletList("_employeeWiseList",emp_id);
 
         call.enqueue(new Callback<AssignOutletsModel>() {
             @Override
-            public void onResponse(Call<AssignOutletsModel> call, Response<AssignOutletsModel> response) {
+            public void onResponse(@NonNull Call<AssignOutletsModel> call, @NonNull Response<AssignOutletsModel> response) {
 
                 try {
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    System.out.println("responseOutletsss "+response.body());
+//                    System.out.println("responseOutletsss "+response.body());
 
                     AssignOutletsModel todayOutletList = gson.fromJson(json, AssignOutletsModel.class);
                     String s = todayOutletList.getMessage();
 
                     if (todayOutletList.getStatus()==1) {
-
+                        nodata.setVisibility(View.GONE);
+                        todayOutletRecycler.setVisibility(View.VISIBLE);
+                        nodata.setText("");
                         todayOutletsDatum = todayOutletList.getData();
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
+
 
                         todayOutletAdapter = new TodayOutletAdapter(activity, todayOutletsDatum);
                         mLayoutManager = new LinearLayoutManager(activity);
@@ -110,31 +115,35 @@ public class TodayOutletActivity extends AppCompatActivity {
                         todayOutletRecycler.setItemAnimator(new DefaultItemAnimator());
                         todayOutletRecycler.setAdapter(todayOutletAdapter);
 
-//                        text_signIn.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
+                      CustomProgress.hideProgress(activity);
 
                     } else {
-//                        text_signIn.setVisibility(View.VISIBLE);
-                        Loader.showLoad(customProgress, activity, false);
-                        //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Invalid User Name or Password");
-//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                      CustomProgress.hideProgress(activity);
+//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
+                        nodata.setVisibility(View.VISIBLE);
+                        todayOutletRecycler.setVisibility(View.GONE);
+                        nodata.setText(todayOutletList.getMessage());
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
-                    Loader.showLoad(customProgress, activity, false);
+                    CustomProgress.hideProgress(activity);
+                    nodata.setVisibility(View.VISIBLE);
+                    todayOutletRecycler.setVisibility(View.GONE);
+                    nodata.setText("");
                 }
 
             }
 
             @Override
-            public void onFailure(Call<AssignOutletsModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<AssignOutletsModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
-//                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Something went wrong try again..");
+//                CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
-                Loader.showLoad(customProgress, activity, false);
+                CustomProgress.hideProgress(activity);
+                nodata.setVisibility(View.VISIBLE);
+                nodata.setText("Something went wrong try again..");
+                todayOutletRecycler.setVisibility(View.GONE);
             }
         });
     }

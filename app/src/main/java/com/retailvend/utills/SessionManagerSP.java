@@ -43,6 +43,21 @@ public class SessionManagerSP {
         return pref.getString("Phonelogin", "");
     }
 
+    public void setLoginType(String authkey) {
+
+        editor.putString("loginType", authkey);
+
+        editor.commit();
+
+
+    }
+
+    public String getLoginType() {
+
+
+        return pref.getString("loginType", "");
+    }
+
     public void setSociallogin(String authkey) {
 
         editor.putString("SocialLogin", authkey);
@@ -60,23 +75,65 @@ public class SessionManagerSP {
 
 
 
-    public void setFirstTime(String authkey) {
+    public void setSalesName(String authkey) {
 
-        editor.putString("firstTime", authkey);
+        editor.putString("salesName", authkey);
 
         editor.commit();
 
 
     }
 
-    public String getFirstTime() {
+    public String getSalesName() {
+
+        return pref.getString("salesName", "");
+    }
+    public void setSalesNameId(String authkey) {
+
+        editor.putString("salesNameId", authkey);
+
+        editor.commit();
 
 
-        return pref.getString("firstTime", "");
+    }
+
+    public String getSalesNameId() {
+
+        return pref.getString("salesNameId", "");
+    }
+
+    public String getMobile() {
+
+        return pref.getString("mobile", "");
     }
 
 
+    public void setMobile(String authkey) {
+        editor.putString("mobile", authkey);
+        editor.commit();
+    }
 
+    public String getPass() {
+
+        return pref.getString("pass", "");
+    }
+
+
+    public void setPass(String authkey) {
+        editor.putString("pass", authkey);
+        editor.commit();
+    }
+
+    public String getDistributorId() {
+
+        return pref.getString("DistributorId", "");
+    }
+
+
+    public void setDistributorId(String authkey) {
+        editor.putString("DistributorId", authkey);
+        editor.commit();
+    }
 
 
     //*************** Send to Mosambee Activity(Register Details) ******************

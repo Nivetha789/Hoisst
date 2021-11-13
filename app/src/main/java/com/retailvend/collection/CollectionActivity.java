@@ -9,7 +9,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.retailvend.R;
@@ -22,6 +25,7 @@ public class CollectionActivity extends AppCompatActivity {
     CollectionAdapter collectionAdapter;
     ImageView leftArrow;
     Toolbar toolbar;
+    TextView nodata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +47,14 @@ public class CollectionActivity extends AppCompatActivity {
             window.setStatusBarColor(this.getResources().getColor(R.color.white));
 //            window.setNavigationBarColor(this.getResources().getColor(R.color.black_overlay));
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
 
         toolbar = findViewById(R.id.collection_toolbar);
         collectionRecycler = findViewById(R.id.total_recyclerView);
         leftArrow = findViewById(R.id.left_arrow);
-
+        nodata=findViewById(R.id.nodata);
 
 //        swipeRefresh.setOnRefreshListener(this);
 //        salesRecycler.setHasFixedSize(true);

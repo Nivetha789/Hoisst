@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
@@ -64,8 +64,8 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<TodayOutletAdapter.
 //        this.onClickListener = onClickListener;
 //    }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        CardView todayOutletCard;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        ConstraintLayout todayOutletCard;
         TextView compName;
         TextView contactName;
         TextView contactNum;

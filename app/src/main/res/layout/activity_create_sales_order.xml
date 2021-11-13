@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            android:elevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -53,11 +53,6 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#20000000" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -76,6 +71,285 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:gravity="center|left"
+                            android:paddingStart="15dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:text="Order Type *"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="15dp"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/rv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/lin_storke"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:text="Retail Vend"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:id="@+id/sales_agent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/lin_storke"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:text="Sales Agent"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/rv_show"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/order_type_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/quicksand_bold"
+                                android:gravity="left"
+                                android:text="Bill Type *"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="5dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/cod"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="38dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@drawable/lin_storke"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="COD"
+                                    android:textColor="@color/black"
+                                    android:textSize="14dp" />
+
+                                <TextView
+                                    android:id="@+id/credit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="38dp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/lin_storke"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="Credit"
+                                    android:textColor="@color/black"
+                                    android:textSize="14dp" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/discountLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginTop="5dp"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="center|left"
+                                    android:paddingLeft="10dp"
+                                    android:text="Discount *"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="14dp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="center|left"
+                                    android:paddingLeft="10dp"
+                                    android:text="Due Days *"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <EditText
+                                        android:id="@+id/discount"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="2dp"
+                                        android:layout_marginEnd="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/lin_storke"
+                                        android:fontFamily="@font/quicksand_bold"
+                                        android:gravity="center"
+                                        android:hint="Discount *"
+                                        android:inputType="number"
+                                        android:maxLength="2"
+                                        android:singleLine="true"
+                                        android:textColor="@color/black"
+                                        android:textColorHint="#40000000"
+                                        android:textSize="14dp" />
+
+                                    <EditText
+                                        android:id="@+id/dueDays"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginStart="2dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/lin_storke"
+                                        android:fontFamily="@font/quicksand_bold"
+                                        android:gravity="center"
+                                        android:hint="Due Days *"
+                                        android:inputType="number"
+                                        android:singleLine="true"
+                                        android:textColor="@color/black"
+                                        android:textColorHint="#40000000"
+                                        android:textSize="14dp" />
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/sales_agent_show"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center|left"
+                                android:paddingStart="15dp"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="5dp"
+                                android:text="Sales Agent Type *"
+                                android:textColor="#40000000"
+                                android:textSize="12dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:orientation="horizontal">
+
+
+                                <LinearLayout
+                                    android:id="@+id/linSalesAgent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/lin_storke">
+
+                                        <TextView
+                                            android:id="@+id/txt_sales_agent"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:fontFamily="@font/quicksand_medium"
+                                            android:gravity="center|left"
+                                            android:hint="Choose Sales Agent"
+                                            android:paddingStart="10dp"
+                                            android:textColor="@color/black"
+                                            android:textColorHint="#40000000"
+                                            android:textSize="14dp" />
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -140,13 +414,13 @@
                                                 android:id="@+id/product_name"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:fontFamily="@font/quicksand_medium"
-                                                android:textSize="14dp"
-                                                android:paddingStart="10dp"
-                                                android:hint="Choose Product"
-                                                android:textColorHint="#40000000"
+                                                android:fontFamily="@font/quicksand_bold"
                                                 android:gravity="center|left"
+                                                android:hint="Choose Product"
+                                                android:paddingStart="10dp"
                                                 android:textColor="@color/black"
+                                                android:textColorHint="#40000000"
+                                                android:textSize="14dp"
                                                 android:visibility="visible" />
 
                                             <TextView
@@ -168,7 +442,7 @@
                                             android:layout_marginTop="5dp"
                                             android:layout_weight="1"
                                             android:orientation="horizontal"
-                                            android:weightSum="2">
+                                            android:weightSum="1">
 
                                             <TextView
                                                 android:layout_width="0dp"
@@ -177,21 +451,11 @@
                                                 android:fontFamily="@font/quicksand_medium"
                                                 android:gravity="center|left"
                                                 android:paddingLeft="10dp"
-                                                android:text="Unit *"
+                                                android:text="Type *"
                                                 android:textColor="#40000000"
                                                 android:textSize="12dp" />
 
-                                            <TextView
-                                                android:layout_width="0dp"
-                                                android:layout_height="match_parent"
-                                                android:layout_marginTop="5dp"
-                                                android:layout_weight="1"
-                                                android:fontFamily="@font/quicksand_medium"
-                                                android:gravity="center|left"
-                                                android:paddingLeft="10dp"
-                                                android:text="Price *"
-                                                android:textColor="#40000000"
-                                                android:textSize="12dp" />
+
                                         </LinearLayout>
 
                                         <LinearLayout
@@ -221,9 +485,81 @@
                                                     <Spinner
                                                         android:id="@+id/spin_unit"
                                                         android:layout_width="match_parent"
-                                                        android:layout_height="match_parent" />
+                                                        android:layout_height="match_parent"
+                                                        android:padding="4dp"/>
 
                                                 </LinearLayout>
+
+
+                                            </LinearLayout>
+
+
+                                        </LinearLayout>
+
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_weight="1"
+                                            android:orientation="horizontal"
+                                            android:weightSum="2">
+
+                                            <TextView
+                                                android:layout_width="0dp"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/quicksand_medium"
+                                                android:gravity="center|left"
+                                                android:paddingLeft="10dp"
+                                                android:text="Qty *"
+                                                android:textColor="#40000000"
+                                                android:textSize="12dp" />
+
+                                            <TextView
+                                                android:layout_width="0dp"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/quicksand_medium"
+                                                android:gravity="center|left"
+                                                android:paddingLeft="10dp"
+                                                android:text="Price *"
+                                                android:textColor="#40000000"
+                                                android:textSize="12dp" />
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="40dp"
+                                            android:layout_marginTop="5dp"
+                                            android:orientation="horizontal">
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:orientation="horizontal"
+                                                android:weightSum="2">
+
+                                                <EditText
+                                                    android:id="@+id/edt_qty"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_marginLeft="2dp"
+                                                    android:layout_marginEnd="4dp"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/lin_storke"
+                                                    android:fontFamily="@font/quicksand_bold"
+                                                    android:gravity="center"
+                                                    android:hint="Qty *"
+                                                    android:inputType="number"
+                                                    android:singleLine="true"
+                                                    android:textColor="@color/black"
+                                                    android:textColorHint="#40000000"
+                                                    android:textSize="14dp" />
 
                                                 <EditText
                                                     android:id="@+id/txtPrice"
@@ -252,8 +588,9 @@
                                             android:layout_height="match_parent"
                                             android:layout_marginTop="5dp"
                                             android:layout_weight="1"
+                                            android:visibility="gone"
                                             android:orientation="horizontal"
-                                            android:weightSum="1">
+                                            android:weightSum="2">
 
                                             <TextView
                                                 android:layout_width="0dp"
@@ -263,7 +600,19 @@
                                                 android:fontFamily="@font/quicksand_medium"
                                                 android:gravity="center|left"
                                                 android:paddingLeft="10dp"
-                                                android:text="Qty *"
+                                                android:text="Net Amount *"
+                                                android:textColor="#40000000"
+                                                android:textSize="12dp" />
+
+                                            <TextView
+                                                android:layout_width="0dp"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/quicksand_medium"
+                                                android:gravity="center|left"
+                                                android:paddingLeft="10dp"
+                                                android:text="Including Tax *"
                                                 android:textColor="#40000000"
                                                 android:textSize="12dp" />
                                         </LinearLayout>
@@ -272,6 +621,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="40dp"
                                             android:layout_marginTop="5dp"
+                                            android:visibility="gone"
                                             android:orientation="horizontal">
 
                                             <LinearLayout
@@ -283,7 +633,24 @@
                                                 android:weightSum="2">
 
                                                 <EditText
-                                                    android:id="@+id/edt_qty"
+                                                    android:id="@+id/edt_net_amount"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_marginLeft="2dp"
+                                                    android:layout_marginEnd="4dp"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/lin_storke"
+                                                    android:fontFamily="@font/quicksand_bold"
+                                                    android:gravity="center"
+                                                    android:hint="Net Amount *"
+                                                    android:inputType="number|numberDecimal"
+                                                    android:singleLine="true"
+                                                    android:textColor="@color/black"
+                                                    android:textColorHint="#40000000"
+                                                    android:textSize="14dp" />
+
+                                                <EditText
+                                                    android:id="@+id/including_txt"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:layout_marginLeft="2dp"
@@ -291,8 +658,8 @@
                                                     android:background="@drawable/lin_storke"
                                                     android:fontFamily="@font/quicksand_bold"
                                                     android:gravity="center"
-                                                    android:hint="Enter Qty *"
-                                                    android:inputType="number"
+                                                    android:hint="Including Tax *"
+                                                    android:inputType="number|numberDecimal"
                                                     android:singleLine="true"
                                                     android:textColor="@color/black"
                                                     android:textColorHint="#40000000"
@@ -367,12 +734,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/quicksand_medium"
-                                android:text="Total Nos : "
+                                android:text="Total Qty : "
                                 android:textColor="@color/black"
                                 android:textSize="16dp" />
 
                             <TextView
-                                android:id="@+id/txtTotalNos"
+                                android:id="@+id/txtTotalQty"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
@@ -384,34 +751,34 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp">
+                        <!--                        <LinearLayout-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:gravity="center"-->
+                        <!--                            android:orientation="horizontal"-->
+                        <!--                            android:paddingTop="5dp"-->
+                        <!--                            android:paddingBottom="5dp">-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:text="Total Kgs : "
-                                android:textColor="@color/black"
-                                android:textSize="16dp" />
+                        <!--                            <TextView-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:fontFamily="@font/quicksand_medium"-->
+                        <!--                                android:text="Total Kgs : "-->
+                        <!--                                android:textColor="@color/black"-->
+                        <!--                                android:textSize="16dp" />-->
 
-                            <TextView
-                                android:id="@+id/txtTotalkg"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:fontFamily="@font/quicksand_bold"
-                                android:text="0"
-                                android:textColor="@color/black"
-                                android:textSize="16dp"
-                                android:textStyle="bold" />
+                        <!--                            <TextView-->
+                        <!--                                android:id="@+id/txtTotalkg"-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:layout_marginLeft="5dp"-->
+                        <!--                                android:fontFamily="@font/quicksand_bold"-->
+                        <!--                                android:text="0"-->
+                        <!--                                android:textColor="@color/black"-->
+                        <!--                                android:textSize="16dp"-->
+                        <!--                                android:textStyle="bold" />-->
 
-                        </LinearLayout>
+                        <!--                        </LinearLayout>-->
 
                         <LinearLayout
                             android:layout_width="match_parent"

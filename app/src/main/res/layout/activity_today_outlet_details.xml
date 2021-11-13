@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        android:elevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,11 +33,11 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
+                android:fontFamily="@font/quicksand_bold"
+                android:gravity="center"
                 android:text="Outlet Details"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"
-                android:gravity="center"
-                android:fontFamily="@font/quicksand_bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -65,13 +64,13 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
                 app:cardBackgroundColor="@color/colorPrimary"
                 app:cardCornerRadius="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/contact_name_constrain"
+                app:layout_constraintBottom_toTopOf="@+id/location_constrain"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -89,10 +88,12 @@
 
                     <TextView
                         android:id="@+id/shop_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:fontFamily="@font/quicksand_bold"
+                        android:gravity="center"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
                         android:text="KR Bakes"
@@ -118,10 +119,12 @@
 
                     <TextView
                         android:id="@+id/shop_number"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:fontFamily="@font/quicksand_bold"
+                        android:gravity="center"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
                         android:text="9195667788"
@@ -138,25 +141,64 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/location_constrain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/lin_storke1"
+                app:layout_constraintEnd_toEndOf="@+id/cardView"
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                app:layout_constraintVertical_chainStyle="spread_inside">
+
+                <ImageView
+                    android:id="@+id/location"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_location"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/colorAccent" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/quicksand_semi_bold"
+                    android:text="Location"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/location"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/location"
+                    app:layout_constraintTop_toTopOf="@+id/location"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/contact_name_constrain"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/address_constrain"
                 app:layout_constraintEnd_toEndOf="@+id/cardView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/cardView"
-                app:layout_constraintTop_toBottomOf="@+id/cardView">
+                app:layout_constraintTop_toBottomOf="@+id/location_constrain">
 
                 <ImageView
                     android:id="@+id/ic_name"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/ic_profile"
-                    android:backgroundTint="@color/colorAccent"
+                    android:src="@drawable/profile1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -203,7 +245,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/mail_constrain"
                 app:layout_constraintEnd_toEndOf="@+id/cardView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/cardView"
@@ -211,8 +252,8 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="40dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
@@ -267,7 +308,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/gst_constrain"
                 app:layout_constraintEnd_toEndOf="@+id/cardView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/cardView"
@@ -275,13 +315,13 @@
 
                 <ImageView
                     android:id="@+id/email_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="28dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/ic_mail"
                     android:backgroundTint="@color/colorAccent"
+                    android:src="@drawable/ic_mail"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -327,189 +367,160 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/gst_constrain"
-                android:layout_width="0dp"
+                android:id="@+id/constrain_check"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/pan_constrain"
-                app:layout_constraintEnd_toEndOf="@+id/cardView"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/cardView"
-                app:layout_constraintTop_toBottomOf="@+id/mail_constrain">
-
-                <ImageView
-                    android:id="@+id/gst_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/ic_gst"
-                    android:backgroundTint="@color/colorAccent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/colorAccent" />
-
-                <TextView
-                    android:id="@+id/gst_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/quicksand_regular"
-                    android:text="GST No"
-                    android:textColor="@color/grey"
-                    android:textSize="12dp"
-                    app:layout_constraintBottom_toTopOf="@+id/gst"
-                    app:layout_constraintStart_toEndOf="@+id/gst_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
-
-                <TextView
-                    android:id="@+id/gst"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:text="1001231212"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/gst_txt"
-                    app:layout_constraintTop_toBottomOf="@+id/gst_txt" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/light_grey"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/pan_constrain"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/cardView"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/cardView"
-                app:layout_constraintTop_toBottomOf="@+id/gst_constrain">
-
-                <ImageView
-                    android:id="@+id/pan_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/ic_pan"
-                    android:backgroundTint="@color/colorAccent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/colorAccent" />
-
-                <TextView
-                    android:id="@+id/pan_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/quicksand_regular"
-                    android:text="PAN No"
-                    android:textColor="@color/grey"
-                    android:textSize="13dp"
-                    app:layout_constraintBottom_toTopOf="@+id/pan"
-                    app:layout_constraintStart_toEndOf="@+id/pan_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
-
-                <TextView
-                    android:id="@+id/pan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:text="1001231212"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    app:layout_constraintBottom_toTopOf="@+id/view5"
-                    app:layout_constraintStart_toStartOf="@+id/pan_txt"
-                    app:layout_constraintTop_toBottomOf="@+id/pan_txt" />
-
-                <View
-                    android:id="@+id/view5"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/light_grey"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/checkInConstrain"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pan_constrain">
+                app:layout_constraintTop_toBottomOf="@+id/mail_constrain">
 
-                <TextView
-                    android:id="@+id/check_in"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/checkInConstrain"
                     android:layout_width="0dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/button_shape1"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="Check In"
-                    android:textColor="@color/white"
-                    android:textSize="14dp"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/checked"
-                    android:layout_width="0dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/button_shape1"
-                    android:backgroundTint="@color/text_color1"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="Checked"
-                    android:textColor="@color/white"
-                    android:textSize="14dp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/check_in"
+                        android:layout_width="0dp"
+                        android:layout_height="37dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/button_shape1"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:text="Check In"
+                        android:textColor="@color/white"
+                        android:textSize="14dp"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/checked"
+                        android:layout_width="0dp"
+                        android:layout_height="37dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/button_shape1"
+                        android:backgroundTint="@color/text_color1"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:text="Check out"
+                        android:textColor="@color/white"
+                        android:textSize="14dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/order_type_recycler"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/order_type_constrain"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/checkInConstrain"
-                app:layout_constraintStart_toStartOf="@+id/checkInConstrain"
-                app:layout_constraintTop_toBottomOf="@+id/checkInConstrain" />
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constrain_check">
 
+                <TextView
+                    android:id="@+id/order_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="Order Type"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/order_type_recycler"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="@+id/order_type_constrain"
+                    app:layout_constraintStart_toStartOf="@+id/order_type_constrain"
+                    app:layout_constraintTop_toBottomOf="@+id/order_type" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/reason_constrain"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/cardView"
+                app:layout_constraintStart_toStartOf="@id/cardView"
+                app:layout_constraintTop_toBottomOf="@+id/order_type_constrain">
+
+                <TextView
+                    android:id="@+id/reason_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="Reason"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <EditText
+                    android:id="@+id/reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/lin_storke"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:hint="Reason"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_color"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/reason_txt" />
+
+                <TextView
+                    android:id="@+id/submit_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_shape1"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/reason"
+                    app:layout_constraintTop_toBottomOf="@id/reason" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

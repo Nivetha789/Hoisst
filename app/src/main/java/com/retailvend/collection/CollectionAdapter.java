@@ -30,9 +30,9 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
 
     @NonNull
     @Override
-    public CollectionAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(activity).inflate(R.layout.collection_adapter, viewGroup, false);
-        return new CollectionAdapter.MyViewHolder(view);
+        return new MyViewHolder(view);
     }
 
     @Override

@@ -4,20 +4,20 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <TextView
         android:id="@+id/checked"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button_shape1"
+        android:background="@drawable/lin_storke1"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="center"
         android:padding="8dp"
         android:text="Order"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

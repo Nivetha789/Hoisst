@@ -14,6 +14,15 @@ public class ProductNameResModel {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("total_record")
+    @Expose
+    private Integer totalRecord;
+    @SerializedName("offset")
+    @Expose
+    private Integer offset;
+    @SerializedName("limit")
+    @Expose
+    private Integer limit;
     @SerializedName("data")
     @Expose
     private List<ProductNameResData> data = new ArrayList<>();
@@ -32,6 +41,30 @@ public class ProductNameResModel {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Integer getTotalRecord() {
+        return totalRecord;
+    }
+
+    public void setTotalRecord(Integer totalRecord) {
+        this.totalRecord = totalRecord;
+    }
+
+    public Integer getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 
     public List<ProductNameResData> getData() {

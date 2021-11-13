@@ -26,6 +26,7 @@ import com.retailvend.utills.SessionManagerSP;
 public class SplashScreen extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
 
     SessionManagerSP sessionManagerSP;
+    private static final int SPLASH_TIME_OUT = 3500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +124,7 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
 //                startActivity(i);
 //                finish();
             }
-        }, 5000);
+        }, SPLASH_TIME_OUT);
     }
 
     private void checkConnection() {
@@ -178,7 +179,7 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
         }
     }
 
-    private BroadcastReceiver mConnReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mConnReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             boolean noConnectivity = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
             String reason = intent.getStringExtra(ConnectivityManager.EXTRA_REASON);

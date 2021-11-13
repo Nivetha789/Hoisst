@@ -39,28 +39,20 @@ public class CreateOutletAdapter extends RecyclerView.Adapter<CreateOutletAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder,  int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         index=position;
         AddProductModel data = addProductList.get(position);
-        holder.txt_name.setText(data.getName());
+        holder.txt_name.setText(data.getProduct_name());
         holder.unit.setText(data.getUnit());
-        holder.txt_amt.setText(data.getPrice());
-        holder.txt_qty.setText(data.getQty());
+        holder.txt_amt.setText(String.valueOf("₹."+data.getPrice()));
+        holder.txt_qty.setText("Qty: "+data.getQty());
 
-//        holder.delBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ((CreateOutletOrderActivity) context).updateAddProductAdapter("remove",index);
-//            }
-//        });
-
-//        holder.delBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                notifyDataSetChanged();
-//                ((CreateOutletOrderActivity) context).updateAddProductAdapter("remove",position);
-//            }
-//        });
+        holder.delBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((CreateOutletOrderActivity) context).updateAddProductAdapter("remove",index);
+            }
+        });
     }
 
     @Override

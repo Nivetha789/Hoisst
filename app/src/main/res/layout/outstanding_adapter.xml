@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/outstanding_cardview"
@@ -28,31 +28,29 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2.5"
-                    android:orientation="vertical"
-                    android:weightSum="2">
-
-
+                    android:layout_weight="2"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
                         android:gravity="center"
+                        android:layout_marginTop="10dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center|left"
                             android:paddingLeft="20dp"
                             android:paddingBottom="2dp"
+                            android:layout_marginTop="4dp"
                             android:singleLine="true"
+                            android:textColor="#802F3145"
+                            android:textSize="12dp"
+                            android:textFontWeight="600"
                             android:fontFamily="@font/quicksand_medium"
-                            android:text="Store Name :"
-                            android:textColor="#CC2f3145"
-                            android:textSize="12dp" />
+                            android:text="Store Name " />
 
                         <TextView
                             android:id="@+id/txt_name"
@@ -62,89 +60,149 @@
                             android:paddingLeft="20dp"
                             android:singleLine="true"
                             android:text="KR Bakes"
-                            android:fontFamily="@font/quicksand_medium"
+                            android:fontFamily="@font/quicksand_bold"
                             android:textColor="#2f3145"
                             android:textSize="15dp" />
+
                     </LinearLayout>
-                    <LinearLayout
+
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:paddingLeft="20dp"
+                        android:paddingBottom="2dp"
+                        android:singleLine="true"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:text="Contact Name "
+                        android:textFontWeight="600"
+                        android:textColor="#802F3145"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/contact_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="start"
+                        android:text="Sai"
                         android:layout_weight="1"
-                        android:gravity="center|top"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|left"
-                            android:paddingLeft="20dp"
-                            android:paddingBottom="2dp"
-                            android:singleLine="true"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:text="Sales code :"
-                            android:textColor="#CC2f3145"
-                            android:textSize="12dp" />
-
-                        <TextView
-                            android:id="@+id/txt_sales_no"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|left"
-                            android:paddingLeft="20dp"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:singleLine="true"
-                            android:text="1564156415614561"
-                            android:textColor="#2f3145"
-                            android:textSize="14dp" />
-
-                    </LinearLayout>
+                        android:paddingLeft="20dp"
+                        android:singleLine="true"
+                        android:textFontWeight="600"
+                        android:layout_marginBottom="15dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toStartOf="@+id/circle_bg"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/shop_title"
+                        app:layout_constraintTop_toBottomOf="@+id/shop_title" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.5"
-                    android:orientation="vertical"
-                    android:weightSum="2">
+                    android:layout_weight="2"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:orientation="vertical"
+                      >
 
-                        <TextView
-                            android:id="@+id/txt_amt"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:fontFamily="@font/quicksand_bold"
-                            android:text="₹.5000"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="15dp" />
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top"
+                            android:gravity="top"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|right"
+                                android:paddingLeft="20dp"
+                                android:paddingBottom="2dp"
+                                android:layout_marginEnd="8dp"
+                                android:singleLine="true"
+                                android:layout_marginTop="4dp"
+                                android:textFontWeight="600"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Available Limit "
+                                android:textColor="#802F3145"
+                                android:textSize="12dp" />
+
+                            <TextView
+                                android:id="@+id/txt_avai_no"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:layout_marginEnd="8dp"
+                                android:paddingLeft="20dp"
+                                android:fontFamily="@font/quicksand_bold"
+                                android:singleLine="true"
+                                android:text="₹ 50000"
+                                android:textColor="#2f3145"
+                                android:textSize="14dp" />
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center">
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="right">
 
-                        <TextView
-                            android:id="@+id/txt_date"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:text="15-Aug-2021"
-                            android:textColor="#CC2f3145"
-                            android:textSize="14dp" />
+                            android:layout_gravity="end"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|right"
+                                android:paddingLeft="20dp"
+                                android:paddingBottom="2dp"
+                                android:layout_marginEnd="8dp"
+                                android:singleLine="true"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Contact Number "
+                                android:textColor="#802F3145"
+                                android:textSize="12dp"
+                                android:textFontWeight="600"
+                                />
+
+                            <TextView
+                                android:id="@+id/contact_number"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:layout_marginEnd="8dp"
+                                android:paddingLeft="20dp"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:singleLine="true"
+                                android:text="9150555555"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
