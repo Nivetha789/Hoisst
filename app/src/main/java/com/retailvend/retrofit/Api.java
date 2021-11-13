@@ -1,6 +1,7 @@
 package com.retailvend.retrofit;
 
 import com.retailvend.model.delCollection.DeliveryCollectionListModel;
+import com.retailvend.model.delCollection.addpayment.AddPaymentModel;
 import com.retailvend.model.delCollection.paymentCollection.PaymentCollectionModel;
 import com.retailvend.model.delCollection.paymentCollection.PaymentTypeModel;
 import com.retailvend.model.login.LoginResModel;
@@ -157,5 +158,19 @@ public interface Api {
             @Field("method") String method
     );
 
+    //add payment
+    @FormUrlEncoded
+    @POST("payment/api/outlet_payment")
+    Call<AddPaymentModel> addPayment(
+            @Field("method") String method,
+            @Field("assign_id") String assign_id,
+            @Field("employee_id") String employee_id,
+            @Field("distributor_id") String distributor_id,
+            @Field("outlet_id") String outlet_id,
+            @Field("amount") String amount,
+            @Field("discount") String discount,
+            @Field("amt_type") String amt_type,
+            @Field("description") String description
+    );
 
 }

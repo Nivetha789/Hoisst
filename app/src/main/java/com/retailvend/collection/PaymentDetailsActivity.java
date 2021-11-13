@@ -28,7 +28,6 @@ import com.retailvend.model.delCollection.paymentCollection.PaymentCollectionDat
 import com.retailvend.model.delCollection.paymentCollection.PaymentCollectionModel;
 import com.retailvend.payment.AddPaymentActivity;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.todayoutlet.ProductNameActivity;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
 
@@ -65,6 +64,7 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
     Activity activity;
     String name="";
     String amt="";
+    String outletId="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +159,7 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
                 intent.putExtra("assignId", assignId);
                 intent.putExtra("balamt", amt);
                 intent.putExtra("name", name);
+                intent.putExtra("outletId", outletId);
                 startActivity(intent);
             }
         });
@@ -363,4 +364,9 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
         });
 
     }*/
+
+    public void sendOutletId(String outlet_id){
+        outletId=outlet_id;
+        System.out.println("sendOutletIdsendOutletId "+outletId);
+    }
 }

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sales_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            app:cardCornerRadius="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|left"
+                            android:paddingLeft="20dp"
+                            android:paddingBottom="2dp"
+                            android:singleLine="true"
+                            android:text="Order No"
+                            android:textColor="#802F3145"
+                            android:textSize="12dp"
+                            android:textFontWeight="600"
+                            android:fontFamily="@font/quicksand_medium" />
+
+                        <TextView
+                            android:id="@+id/order_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|left"
+                            android:paddingLeft="20dp"
+                            android:text="123"
+                            android:singleLine="true"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:textColor="#2f3145"
+                            android:textSize="15dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|left"
+                            android:paddingLeft="20dp"
+                            android:paddingBottom="2dp"
+                            android:singleLine="true"
+                            android:text="Employee Name"
+                            android:textColor="#802F3145"
+                            android:textSize="12dp"
+                            android:textFontWeight="600"
+                            android:fontFamily="@font/quicksand_medium" />
+
+                        <TextView
+                            android:id="@+id/emp_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|left"
+                            android:paddingLeft="20dp"
+                            android:text="test"
+                            android:singleLine="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:textColor="#2f3145"
+                            android:textSize="15dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|right"
+                            android:paddingLeft="20dp"
+                            android:paddingBottom="2dp"
+                            android:singleLine="true"
+                            android:text="Store Name"
+                            android:textColor="#802F3145"
+                            android:textSize="12dp"
+                            android:textFontWeight="600"
+                            android:fontFamily="@font/quicksand_medium" />
+
+                        <TextView
+                            android:id="@+id/store_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|right"
+                            android:paddingLeft="20dp"
+                            android:text="test"
+                            android:singleLine="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="15dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|right"
+                            android:paddingLeft="20dp"
+                            android:paddingBottom="2dp"
+                            android:text="Contact Name"
+                            android:textColor="#802F3145"
+                            android:textSize="12dp"
+                            android:textFontWeight="600"
+                            android:fontFamily="@font/quicksand_medium" />
+
+                        <TextView
+                            android:id="@+id/contact_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|right"
+                            android:paddingLeft="20dp"
+                            android:text="test"
+                            android:singleLine="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:textColor="#2f3145"
+                            android:textSize="15dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

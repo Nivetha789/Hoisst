@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -112,6 +113,8 @@ public class PaymentDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         TextView txt_pay_describ;
         @BindView(R.id.img_delete)
         ImageView img_delete;
+        @BindView(R.id.card)
+        CardView card;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -132,6 +135,13 @@ public class PaymentDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                 txt_pay_amt.setText("Rs.0");
             }
             txt_pay_describ.setText("Discount : "+item.getDiscount());
+
+            card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        ((PaymentDetailsActivity) context).sendOutletId(item.getOutletId());
+                }
+            });
 
             img_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
