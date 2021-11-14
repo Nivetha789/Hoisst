@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_outstanding.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/layout/activity_payment_details.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/activity_product_name.xml" value="0.23854166666666668" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_sales.xml" value="0.25" />
@@ -25,6 +26,7 @@
         <entry key="app/src/main/res/layout/button_type_adapter.xml" value="0.30512820512820515" />
         <entry key="app/src/main/res/layout/collection_adapter.xml" value="0.25" />
         <entry key="app/src/main/res/layout/content_add_payment.xml" value="0.2526041666666667" />
+        <entry key="app/src/main/res/layout/content_payment_details.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/content_purchase_invoice.xml" value="0.25" />
         <entry key="app/src/main/res/layout/dashboard_new.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/item_cust_pay_details.xml" value="0.2526041666666667" />

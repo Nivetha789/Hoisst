@@ -134,6 +134,7 @@ public class CollectionDeliveryAdapter extends RecyclerView.Adapter<BaseViewHold
                     Intent paymentIntent = new Intent(activity, PaymentDetailsActivity.class);
                     paymentIntent.putExtra("assign_id", item.getAssignId());
                     paymentIntent.putExtra("name", item.getOutletName());
+                    paymentIntent.putExtra("balamnt", item.getCurBal()+item.getPreBal());
                     activity.startActivity(paymentIntent);
                 }
             });

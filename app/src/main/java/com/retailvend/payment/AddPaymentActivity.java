@@ -112,14 +112,10 @@ public class AddPaymentActivity extends AppCompatActivity {
             balamt = (String) b.get("balamt");
             name = (String) b.get("name");
             outletId = (String) b.get("outletId");
+            System.out.println("balamnt :"+balamt);
         }
 
         paymentTypeApi();
-
-        addPaymentTypeAdapter = new AddPaymentTypeAdapter(AddPaymentActivity.this, addPaymentTypeList);
-        spin_add_payment_type.setAdapter(addPaymentTypeAdapter);
-        addPaymentTypeAdapter.notifyDataSetChanged();
-
 
         spin_add_payment_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -301,10 +297,15 @@ public class AddPaymentActivity extends AppCompatActivity {
                     if (paymentTypeModel.getStatus() == 1) {
 
                         progress.setVisibility(View.GONE);
+                        CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(paymentTypeModel.getMessage());
+
                         addPaymentTypeList=paymentTypeModel.getData();
+                        addPaymentTypeAdapter = new AddPaymentTypeAdapter(AddPaymentActivity.this, addPaymentTypeList);
+                        spin_add_payment_type.setAdapter(addPaymentTypeAdapter);
+                        addPaymentTypeAdapter.notifyDataSetChanged();
+
 //                        lin_add_payment.setVisibility(View.GONE);
 //                        onBackPressed();
-//                        CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(addPaymentModel.getMessage());
 
 
                     } else {

@@ -106,6 +106,7 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
         if (extras != null) {
             name = getIntent().getExtras().getString("name");
             assignId = getIntent().getExtras().getString("assign_id");
+            amt = getIntent().getExtras().getString("balamnt");
             System.out.println("assign_idassign_id " + assignId);
         }
 
