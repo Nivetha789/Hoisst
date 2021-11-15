@@ -1,6 +1,7 @@
 package com.retailvend;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
+import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
         email=findViewById(R.id.email);
         mobile_no=findViewById(R.id.mobile_no);
         address=findViewById(R.id.address);
-//        logout=findViewById(R.id.logout);
+        logout=findViewById(R.id.logout);
 
         sessionManagerSP = new SessionManagerSP(ProfileActivity.this);
         left_arrow.setOnClickListener(new View.OnClickListener() {
@@ -54,15 +56,23 @@ public class ProfileActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                sessionManagerSP.setPhonelogin("0");
-//                SharedPrefManager.getInstance(getApplicationContext()).clear();
-//                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-//                finish();
-//            }
-//        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionManagerSP.setPhonelogin("0");
+                SharedPrefManager.getInstance(getApplicationContext()).clear();
+                sessionManagerSP.setPhonelogin("0");
+                sessionManagerSP.setMobile("");
+                sessionManagerSP.setPass("");
+                sessionManagerSP.setSalesNameId("");
+                sessionManagerSP.setSalesName("");
+                sessionManagerSP.setDistributorId("");
+                sessionManagerSP.setEmployeeId("");
+                sessionManagerSP.setLoginType("");
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+            }
+        });
 
        mobNo= sessionManagerSP.getMobile();
        pass= sessionManagerSP.getPass();

@@ -128,7 +128,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("distributoridddd "+distributor_id);
-                if(TextUtils.isEmpty(distributor_id)){
+                if(distributor_id.length()>0){
                     Intent collectionIntent = new Intent (DashboardActivity.this, CollectionActivity.class);
                     startActivity(collectionIntent);
                 }
@@ -194,10 +194,15 @@ public class DashboardActivity extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton("Yes", (dialog, which) -> {
                             sessionManagerSP.setPhonelogin("0");
+                            SharedPrefManager.getInstance(getApplicationContext()).clear();
+                            sessionManagerSP.setPhonelogin("0");
                             sessionManagerSP.setMobile("");
                             sessionManagerSP.setPass("");
                             sessionManagerSP.setSalesNameId("");
                             sessionManagerSP.setSalesName("");
+                            sessionManagerSP.setDistributorId("");
+                            sessionManagerSP.setEmployeeId("");
+                            sessionManagerSP.setLoginType("");
                             SharedPrefManager.getInstance(getApplicationContext()).clear();
                             Intent loginIntent = new Intent(DashboardActivity.this, LoginActivity.class);
                             TaskStackBuilder.create(this).addNextIntentWithParentStack(loginIntent).startActivities();

@@ -50,6 +50,9 @@ public class SalesProductDetail {
     @SerializedName("receive_qty")
     @Expose
     private String receiveQty;
+    @SerializedName("product_status")
+    @Expose
+    private String productStatus;
     @SerializedName("published")
     @Expose
     private String published;
@@ -178,6 +181,14 @@ public class SalesProductDetail {
 
     public void setReceiveQty(String receiveQty) {
         this.receiveQty = receiveQty;
+    }
+
+    public String getProductStatus() {
+        return productStatus;
+    }
+
+    public void setProductStatus(String productStatus) {
+        this.productStatus = productStatus;
     }
 
     public String getPublished() {

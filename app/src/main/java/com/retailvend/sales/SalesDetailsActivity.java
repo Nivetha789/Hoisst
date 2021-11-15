@@ -42,7 +42,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
             txt_invoice_last_bill, txt_invoice_bal_amt, txt_invoice_current_total, txt_store_name,
             txt_store_ship, hsnCode, tax_val, central_tax_rate, central_tax_amount, state_tax_rate, state_tax_amount,
             tax_val_total, central_total, state_total, final_hsn_total, amount_in_words, invoice_num, comp_name, comp_address,
-            gst_num, contact_no, state_code, pay_method,order_type,amount;
+            gst_num, contact_no, state_code, pay_method,order_type,amount,bill_date;
     RecyclerView recyclerView;
     ProgressBar progress;
     NestedScrollView lin_invoice_details_scrollview;
@@ -123,6 +123,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
         pay_method = findViewById(R.id.pay_method);
         order_type = findViewById(R.id.order_type);
         amount = findViewById(R.id.amount);
+        bill_date = findViewById(R.id.bill_date);
 
         productDetails = new ArrayList<>();
         taxDetails = new ArrayList<>();
@@ -165,6 +166,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
                             gst_num.setText("GST: " + salesStoreDetails.getGstNo());
                             contact_no.setText("Mobile No: " + salesStoreDetails.getMobile());
                             state_code.setText("State Code: " + salesStoreDetails.getStateCode());
+                            bill_date.setText("Bill Date: " + salesBillDetails.getCreatedate());
 //                            amount.setText("Amount: " + salesStoreDetails.ge());
 //                            pay_method.setText("Payment Method :"+salesStoreDetails.getpa);
 //                            order_type.setText("Order Type " + salesStoreDetails.get());
