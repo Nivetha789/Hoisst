@@ -11,9 +11,6 @@ public class OrderListDatum {
     @SerializedName("order_no")
     @Expose
     private String orderNo;
-    @SerializedName("bill_view")
-    @Expose
-    private String billView;
     @SerializedName("emp_name")
     @Expose
     private String empName;
@@ -41,6 +38,9 @@ public class OrderListDatum {
     @SerializedName("_delivery")
     @Expose
     private String delivery;
+    @SerializedName("random_value")
+    @Expose
+    private String randomValue;
     @SerializedName("published")
     @Expose
     private String published;
@@ -65,14 +65,6 @@ public class OrderListDatum {
 
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
-    }
-
-    public String getBillView() {
-        return billView;
-    }
-
-    public void setBillView(String billView) {
-        this.billView = billView;
     }
 
     public String getEmpName() {
@@ -145,6 +137,14 @@ public class OrderListDatum {
 
     public void setDelivery(String delivery) {
         this.delivery = delivery;
+    }
+
+    public String getRandomValue() {
+        return randomValue;
+    }
+
+    public void setRandomValue(String randomValue) {
+        this.randomValue = randomValue;
     }
 
     public String getPublished() {

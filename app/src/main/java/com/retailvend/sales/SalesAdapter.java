@@ -135,7 +135,7 @@ public class SalesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Intent salesDetailsIntent = new Intent(activity, SalesDetailsActivity.class);
-                    salesDetailsIntent.putExtra("order_id",item.getOrderId());
+                    salesDetailsIntent.putExtra("random_value",item.getRandomValue());
                     activity.startActivity(salesDetailsIntent);
                 }
             });

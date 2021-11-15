@@ -25,12 +25,14 @@ import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.manageorder.OrderListDatum;
 import com.retailvend.model.manageorder.OrderListModel;
+import com.retailvend.outstand.OutstandingActivity;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.todayoutlet.CreateOutletOrderActivity;
 import com.retailvend.todayoutlet.ProductNameActivity;
 import com.retailvend.todayoutlet.ProductNameAdapter;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
+import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
 import java.util.ArrayList;
@@ -63,6 +65,7 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
     int totalcount = 0;
 
     String searchTxt = "";
+    SessionManagerSP sessionManagerSP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,8 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
         left_arrow = findViewById(R.id.left_arrow);
         progress = findViewById(R.id.progress);
         emptyView = findViewById(R.id.emptyView);
+
+        sessionManagerSP=new SessionManagerSP(OrderListActivity.this);
 
         orderListData = new ArrayList<>();
 
@@ -176,7 +181,7 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
 
     public void orderListApi(int offset1, int limit1) {
 //        CustomProgress.showProgress(activity);
-        String emp_id = SharedPrefManager.getInstance(OrderListActivity.this).getUser().getId();
+        String emp_id = sessionManagerSP.getEmployeeId();
 
         if (isLoading) {
             progress.setVisibility(View.GONE);

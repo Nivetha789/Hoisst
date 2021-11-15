@@ -170,6 +170,7 @@ public class LoginActivity extends AppCompatActivity {
                             sessionManagerSP.setMobile(mobNo);
                             sessionManagerSP.setPass(pass);
                             sessionManagerSP.setPhonelogin("1");
+                            sessionManagerSP.setEmployeeId(loginDataModel.getId());
                             sessionManagerSP.setDistributorId(loginDataModel.getCompanyId());
 
                             Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);

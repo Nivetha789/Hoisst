@@ -24,6 +24,7 @@ import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.todayoutlet.TodayOutletActivity;
 import com.retailvend.todayoutlet.TodayOutletAdapter;
 import com.retailvend.utills.CustomProgress;
+import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;
@@ -43,6 +44,7 @@ public class OutstandingActivity extends AppCompatActivity {
     List<AssignOutletsDatum> todayOutletsDatum;
     TextView total_amount;
     TextView nodata;
+    SessionManagerSP sessionManagerSP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,8 @@ public class OutstandingActivity extends AppCompatActivity {
         leftArrow = findViewById(R.id.left_arrow);
         total_amount=findViewById(R.id.total_amount);
         nodata=findViewById(R.id.nodata);
+        sessionManagerSP=new SessionManagerSP(OutstandingActivity.this);
+
 
 //        swipeRefresh.setOnRefreshListener(this);
 //        salesRecycler.setHasFixedSize(true);
@@ -98,7 +102,7 @@ public class OutstandingActivity extends AppCompatActivity {
 
     public void outstandListApi() {
         CustomProgress.showProgress(activity);
-        String emp_id= SharedPrefManager.getInstance(OutstandingActivity.this).getUser().getId();
+        String emp_id= sessionManagerSP.getEmployeeId();
         System.out.println("emmmpidd "+emp_id);
 
         Call<AssignOutletsModel> call = RetrofitClient

@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class AssignOutletsDatum implements Serializable {
+
     @SerializedName("store_id")
     @Expose
     private String storeId;
@@ -218,6 +219,7 @@ public class AssignOutletsDatum implements Serializable {
     public void setCreditNote(String creditNote) {
         this.creditNote = creditNote;
     }
+
     public String getAttendanceStatus() {
         return attendanceStatus;
     }

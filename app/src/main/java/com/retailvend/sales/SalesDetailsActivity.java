@@ -41,7 +41,8 @@ public class SalesDetailsActivity extends AppCompatActivity {
             txt_inoive_details_total_kgs, txt_inoive_details_total_price, txt_dis_invoice,
             txt_invoice_last_bill, txt_invoice_bal_amt, txt_invoice_current_total, txt_store_name,
             txt_store_ship, hsnCode, tax_val, central_tax_rate, central_tax_amount, state_tax_rate, state_tax_amount,
-            tax_val_total, central_total, state_total, final_hsn_total,amount_in_words,invoice_num;
+            tax_val_total, central_total, state_total, final_hsn_total, amount_in_words, invoice_num, comp_name, comp_address,
+            gst_num, contact_no, state_code, pay_method,order_type,amount;
     RecyclerView recyclerView;
     ProgressBar progress;
     NestedScrollView lin_invoice_details_scrollview;
@@ -51,7 +52,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
     SalesDetailsAdapter salesDetailsAdapter;
     List<SalesProductDetail> productDetails;
     List<SalesTaxDetail> taxDetails;
-    String orderId = "";
+    String random_value = "";
     Activity activity;
 
     @Override
@@ -81,8 +82,8 @@ public class SalesDetailsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            orderId = getIntent().getExtras().getString("order_id");
-            System.out.println("orderIddd " + orderId);
+            random_value = getIntent().getExtras().getString("random_value");
+            System.out.println("random_value " + random_value);
         }
 
 
@@ -92,7 +93,6 @@ public class SalesDetailsActivity extends AppCompatActivity {
         txt_invoice_details_order = findViewById(R.id.txt_invoice_details_order);
         txt_inovoice_details_billed = findViewById(R.id.txt_inovoice_details_billed);
         txt_invoice_details_billed_address = findViewById(R.id.txt_invoice_details_billed_address);
-        txt_invoice_details_shipped = findViewById(R.id.txt_invoice_details_shipped);
         txt_invoice_details_shipped_address = findViewById(R.id.txt_invoice_details_shipped_address);
         txt_inoive_details_total_nos = findViewById(R.id.txt_inoive_details_total_nos);
         txt_inoive_details_total_kgs = findViewById(R.id.txt_inoive_details_total_kgs);
@@ -100,10 +100,10 @@ public class SalesDetailsActivity extends AppCompatActivity {
         txt_dis_invoice = findViewById(R.id.txt_dis_invoice);
         txt_invoice_last_bill = findViewById(R.id.txt_invoice_last_bill);
         txt_invoice_bal_amt = findViewById(R.id.txt_invoice_bal_amt);
-        txt_invoice_current_total = findViewById(R.id.txt_invoice_current_total);
         lin_invoice_details_scrollview = findViewById(R.id.lin_invoice_details_scrollview);
         txt_store_name = findViewById(R.id.txt_store_name);
         txt_store_ship = findViewById(R.id.txt_store_ship);
+        gst_num = findViewById(R.id.gst_num);
         hsnCode = findViewById(R.id.hsnCode);
         tax_val = findViewById(R.id.tax_val);
         central_tax_rate = findViewById(R.id.central_tax_rate);
@@ -114,16 +114,23 @@ public class SalesDetailsActivity extends AppCompatActivity {
         central_total = findViewById(R.id.central_total);
         state_total = findViewById(R.id.state_total);
         final_hsn_total = findViewById(R.id.final_hsn_total);
-        amount_in_words = findViewById(R.id.amount_in_words);
+//        amount_in_words = findViewById(R.id.amount_in_words);
         invoice_num = findViewById(R.id.invoice_num);
+        comp_name = findViewById(R.id.comp_name);
+        comp_address = findViewById(R.id.comp_address);
+        contact_no = findViewById(R.id.contact_no);
+        state_code = findViewById(R.id.state_code);
+        pay_method = findViewById(R.id.pay_method);
+        order_type = findViewById(R.id.order_type);
+        amount = findViewById(R.id.amount);
 
         productDetails = new ArrayList<>();
         taxDetails = new ArrayList<>();
-        salesInvoiceDetails(orderId);
+        salesInvoiceDetails(random_value);
 
     }
 
-    public void salesInvoiceDetails(String orderId) {
+    public void salesInvoiceDetails(String randomValue) {
 //        System.out.println("orderIDDDDD :"+orderId);
 
         progress.setVisibility(View.VISIBLE);
@@ -132,7 +139,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
 
 
         Call<SalesDetailsModel> call = RetrofitClient
-                .getInstance().getApi().salesDetails("_orderDetails", orderId);
+                .getInstance().getApi().salesDetails("_orderDetails", randomValue);
 
 
         call.enqueue(new Callback<SalesDetailsModel>() {
@@ -155,9 +162,12 @@ public class SalesDetailsActivity extends AppCompatActivity {
                             txt_invoice_details_billed_address.setText(salesBillDetails.getContactName());
                             txt_store_ship.setText(salesStoreDetails.getCompanyName());
                             txt_invoice_details_shipped_address.setText(salesStoreDetails.getAddress());
-//                        txt_inoive_details_total_nos.setText(salesDetailsModel.get());
-//                        txt_inoive_details_total_kgs.setText(salesDetailsModel.getTotalqty());
-//                        txt_inoive_details_total_price.setText("\u20B9 " + salesDetailsModel.getTotalcost());
+                            gst_num.setText("GST: " + salesStoreDetails.getGstNo());
+                            contact_no.setText("Mobile No: " + salesStoreDetails.getMobile());
+                            state_code.setText("State Code: " + salesStoreDetails.getStateCode());
+//                            amount.setText("Amount: " + salesStoreDetails.ge());
+//                            pay_method.setText("Payment Method :"+salesStoreDetails.getpa);
+//                            order_type.setText("Order Type " + salesStoreDetails.get());
 //                        txt_invoice_last_bill.setText(salesDetailsModel.getLastbill());
 //                        txt_invoice_bal_amt.setText("\u20B9 " + salesDetailsModel.getBalance());
 //                            txt_invoice_current_total.setText("\u20B9 " + productDetails.get(0).getPrice());

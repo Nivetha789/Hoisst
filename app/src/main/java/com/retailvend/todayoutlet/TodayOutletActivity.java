@@ -22,6 +22,7 @@ import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
+import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class TodayOutletActivity extends AppCompatActivity {
     ImageView leftArrow;
     List<AssignOutletsDatum> todayOutletsDatum;
     TextView nodata;
+    SessionManagerSP sessionManagerSP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,8 @@ public class TodayOutletActivity extends AppCompatActivity {
         leftArrow=findViewById(R.id.left_arrow);
         nodata=findViewById(R.id.nodata);
 
+        sessionManagerSP=new SessionManagerSP(TodayOutletActivity.this);
+
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,8 +85,8 @@ public class TodayOutletActivity extends AppCompatActivity {
 
     public void todayOutletListApi() {
         CustomProgress.showProgress(activity);
-      String emp_id= SharedPrefManager.getInstance(TodayOutletActivity.this).getUser().getId();
-//        System.out.println("emmmpidd "+emp_id);
+      String emp_id= sessionManagerSP.getEmployeeId();
+        System.out.println("emmmpidd "+emp_id);
 
         Call<AssignOutletsModel> call = RetrofitClient
                 .getInstance().getApi().todayOutletList("_employeeWiseList",emp_id);

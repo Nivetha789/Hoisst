@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class AddProductModel {
 
-    @SerializedName("auto_id")
-    @Expose
-    private int auto_id;
     @SerializedName("product_id")
     @Expose
     private String product_id;
@@ -17,44 +14,24 @@ public class AddProductModel {
     @SerializedName("type_id")
     @Expose
     private String type_id;
-    @SerializedName("unit_id")
-    @Expose
-    private String unit_id;
     @SerializedName("unit_val")
     @Expose
     private String unit_val;
-    @SerializedName("hsn_code")
-    @Expose
-    private String hsn_code;
-    @SerializedName("gst_val")
-    @Expose
-    private String gst_val;
-    @SerializedName("qty")
-    @Expose
-    private String qty;
     @SerializedName("price")
     @Expose
     private String price;
+    @SerializedName("qty")
+    @Expose
+    private String qty;
 
-    public AddProductModel(int autoId, String prodId, String prodName, String typeId,String unitId,String unitVal,String hsn,String gst, String qty,String price) {
-        this.auto_id = autoId;
+
+    public AddProductModel(String prodId, String productName,String typeId, String unitVal, String price, String qty) {
         this.product_id = prodId;
-        this.product_name = prodName;
+        this.product_name = productName;
         this.type_id = typeId;
-        this.unit_id = unitId;
         this.unit_val = unitVal;
-        this.hsn_code = hsn;
-        this.gst_val = gst;
         this.qty = qty;
         this.price = price;
-    }
-
-    public int getAuto_id() {
-        return auto_id;
-    }
-
-    public void setAuto_id(int auto_id) {
-        this.auto_id = auto_id;
     }
 
     public String getProduct_id() {
@@ -64,12 +41,13 @@ public class AddProductModel {
     public void setProduct_id(String product_id) {
         this.product_id = product_id;
     }
+
     public String getProduct_name() {
         return product_name;
     }
 
     public void setProduct_name(String product_name) {
-        this.product_id = product_name;
+        this.product_name = product_name;
     }
 
     public String getType_id() {
@@ -80,36 +58,12 @@ public class AddProductModel {
         this.type_id = type_id;
     }
 
-    public String getUnit_id() {
-        return unit_id;
-    }
-
-    public void setUnit_id(String unit) {
-        this.unit_id = unit;
-    }
-
     public String getUnit() {
         return unit_val;
     }
 
     public void setUnit(String unit) {
         this.unit_val = unit;
-    }
-
-    public String getHsn_code() {
-        return hsn_code;
-    }
-
-    public void setHsn_code(String hsn_code) {
-        this.hsn_code = hsn_code;
-    }
-
-    public String getGst_val() {
-        return gst_val;
-    }
-
-    public void setGst_val(String gst_val) {
-        this.gst_val = gst_val;
     }
 
     public String getQty() {

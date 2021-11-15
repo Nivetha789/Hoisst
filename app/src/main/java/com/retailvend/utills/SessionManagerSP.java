@@ -74,7 +74,6 @@ public class SessionManagerSP {
     }
 
 
-
     public void setSalesName(String authkey) {
 
         editor.putString("salesName", authkey);
@@ -88,6 +87,7 @@ public class SessionManagerSP {
 
         return pref.getString("salesName", "");
     }
+
     public void setSalesNameId(String authkey) {
 
         editor.putString("salesNameId", authkey);
@@ -132,6 +132,17 @@ public class SessionManagerSP {
 
     public void setDistributorId(String authkey) {
         editor.putString("DistributorId", authkey);
+        editor.commit();
+    }
+
+    public String getEmployeeId() {
+
+        return pref.getString("EmployeeId", "");
+    }
+
+
+    public void setEmployeeId(String authkey) {
+        editor.putString("EmployeeId", authkey);
         editor.commit();
     }
 

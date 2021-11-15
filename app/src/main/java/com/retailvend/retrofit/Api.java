@@ -62,8 +62,10 @@ public interface Api {
             @Field("employee_id") String employee_id,
             @Field("store_id") String store_id,
             @Field("bill_type") String bill_type,
+            @Field("due_days") String due_days,
+            @Field("discount") String discount,
             @Field("order_type") String order_type,
-            @Field("salesagents_id") String salesagents_id,
+//            @Field("salesagents_id") String salesagents_id,
             @Field("sales_order") String sales_order);
 
     //update attendance
@@ -124,7 +126,7 @@ public interface Api {
     @POST("order/api/manage_order")
     Call<SalesDetailsModel> salesDetails(
             @Field("method") String method,
-            @Field("order_id") String order_id
+            @Field("random_value") String random_value
     );
 
 

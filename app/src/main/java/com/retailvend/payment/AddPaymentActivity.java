@@ -102,7 +102,6 @@ public class AddPaymentActivity extends AppCompatActivity {
 
         sessionManagerSP = new SessionManagerSP(AddPaymentActivity.this);
 
-        employeeId = SharedPrefManager.getInstance(AddPaymentActivity.this).getUser().getId();
         distributorId=sessionManagerSP.getDistributorId();
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
@@ -217,7 +216,7 @@ public class AddPaymentActivity extends AppCompatActivity {
     }
 
     public void addPayment(String assignId,String distributorID, String outletId,String amt, String discount,String amt_type, String description) {
-
+        employeeId=sessionManagerSP.getEmployeeId();
 
         progress.setVisibility(View.VISIBLE);
         lin_add_payment.setVisibility(View.GONE);

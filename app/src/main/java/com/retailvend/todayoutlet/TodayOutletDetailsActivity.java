@@ -58,7 +58,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     TextView shop_name;
     TextView shop_number;
     TextView contact_name;
-    TextView address,submit_btn;
+    TextView address, submit_btn;
     TextView mail;
     TextView check_in;
     TextView checked;
@@ -68,13 +68,13 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     ButtonTypeAdapter buttonTypeAdapter;
     RecyclerView order_type_recycler;
     LinearLayoutManager mLayoutManager;
-    String store_id="";
-    String attendance_status="";
-    String latitude="";
-    String longitude="";
-    ConstraintLayout order_type_constrain,reason_constrain,location_constrain;
-    String type_id="";
-    String type_val="";
+    String store_id = "";
+    String attendance_status = "";
+    String latitude = "";
+    String longitude = "";
+    ConstraintLayout order_type_constrain, reason_constrain, location_constrain;
+    String type_id = "";
+    String type_val = "";
     SessionManagerSP sessionManagerSP;
     ImageView left_arrow;
     LocationManager locationManager;
@@ -86,7 +86,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_outlet_details);
-        activity=this;
+        activity = this;
         sessionManagerSP = new SessionManagerSP(TodayOutletDetailsActivity.this);
 
         if (Build.VERSION.SDK_INT >= 19) {
@@ -118,10 +118,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         reason = findViewById(R.id.reason);
         submit_btn = findViewById(R.id.submit_btn);
         order_type_constrain = findViewById(R.id.order_type_constrain);
-        order_type_recycler=findViewById(R.id.order_type_recycler);
-        reason_constrain=findViewById(R.id.reason_constrain);
-        location_constrain=findViewById(R.id.location_constrain);
-        left_arrow=findViewById(R.id.left_arrow);
+        order_type_recycler = findViewById(R.id.order_type_recycler);
+        reason_constrain = findViewById(R.id.reason_constrain);
+        location_constrain = findViewById(R.id.location_constrain);
+        left_arrow = findViewById(R.id.left_arrow);
 
         assignOutletsDatum = (AssignOutletsDatum) getIntent().getSerializableExtra("todayOutlet");
         String shop_name1 = assignOutletsDatum.getCompanyName();
@@ -144,8 +144,6 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         mail.setText(mail1);
 //        gst.setText(gst1);
 //        pan.setText(pan1);
-
-        order_type_constrain.setVisibility(View.VISIBLE);
 
         if (Build.VERSION.SDK_INT >= 23) {
             // Marshmallow+
@@ -180,21 +178,21 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             }
         });
 
-//        if(attendance_status.equals("1")){
-//            check_in.setVisibility(View.GONE);
-//            checked.setVisibility(View.VISIBLE);
-//            order_type_constrain.setVisibility(View.VISIBLE);
-//
-//        }else{
-//            check_in.setVisibility(View.VISIBLE);
-//            checked.setVisibility(View.GONE);
-//            order_type_constrain.setVisibility(View.GONE);
-//        }
+        if(attendance_status.equals("1")){
+            check_in.setVisibility(View.GONE);
+            checked.setVisibility(View.VISIBLE);
+            order_type_constrain.setVisibility(View.VISIBLE);
+
+        }else{
+            check_in.setVisibility(View.VISIBLE);
+            checked.setVisibility(View.GONE);
+            order_type_constrain.setVisibility(View.GONE);
+        }
 
         location_constrain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uri =  "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + "Map" + ")";
+                String uri = "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + "Map" + ")";
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 startActivity(intent);
             }
@@ -203,10 +201,9 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!reason.getText().toString().isEmpty())
-                {
-                    updateAttendanceApi(type_id,type_val);
-                }else{
+                if (!reason.getText().toString().isEmpty()) {
+                    updateAttendanceApi(type_id, type_val);
+                } else {
                     CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Enter Reason");
                 }
             }
@@ -221,14 +218,14 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                 }
             }
         });
-//        checked.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                check_in.setVisibility(View.VISIBLE);
-//                checked.setVisibility(View.GONE);
-//                order_type_recycler.setVisibility(View.GONE);
-//            }
-//        });
+        checked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check_in.setVisibility(View.VISIBLE);
+                checked.setVisibility(View.GONE);
+                order_type_recycler.setVisibility(View.GONE);
+            }
+        });
     }
 
     private boolean checkLocation() {
@@ -258,6 +255,14 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 //                });
         dialog.show();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkLocation();
+        getLocation();
+    }
+
 
     void getLocation() {
         try {
@@ -314,6 +319,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -336,12 +342,12 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
                     AttendanceTypeModel attendanceTypeModel = gson.fromJson(json, AttendanceTypeModel.class);
 
-                    if (attendanceTypeModel.getStatus()==1) {
+                    if (attendanceTypeModel.getStatus() == 1) {
 
                         attendanceTypeData = attendanceTypeModel.getData();
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 
-                        buttonTypeAdapter = new ButtonTypeAdapter(activity, attendanceTypeData,store_id, latitude,longitude);
+                        buttonTypeAdapter = new ButtonTypeAdapter(activity, attendanceTypeData, store_id, latitude, longitude);
                         order_type_recycler.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
                         mLayoutManager = new LinearLayoutManager(activity);
                         //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -377,23 +383,24 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         });
     }
 
-    public void showReason(String typeId, String typeVal){
+    public void showReason(String typeId, String typeVal) {
         reason_constrain.setVisibility(View.VISIBLE);
-        type_id=typeId;
-        type_val=typeVal;
+        type_id = typeId;
+        type_val = typeVal;
     }
-    public void hideReason(String typeId, String typeVal){
+
+    public void hideReason(String typeId, String typeVal) {
         reason_constrain.setVisibility(View.GONE);
-        type_id=typeId;
-        type_val=typeVal;
+        type_id = typeId;
+        type_val = typeVal;
     }
 
     public void updateAttendanceApi(String typeId, String typeVal) {
         CustomProgress.showProgress(activity);
-        String emp_id= SharedPrefManager.getInstance(this).getUser().getId();
+        String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance",emp_id,store_id,latitude,longitude,typeVal,reason.getText().toString(),typeId);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude, longitude, typeVal, reason.getText().toString(), typeId);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -406,7 +413,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
                     AddAttendanceModel attendanceTypeModel = gson.fromJson(json, AddAttendanceModel.class);
 
-                    if (attendanceTypeModel.getStatus()==1) {
+                    if (attendanceTypeModel.getStatus() == 1) {
 
                         CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
 
@@ -435,10 +442,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
     public void addAttendanceApi(String latitude, String longitude) {
         CustomProgress.showProgress(activity);
-        String emp_id= SharedPrefManager.getInstance(this).getUser().getId();
+        String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().addAttendance("_addAttendance",emp_id,store_id,latitude,longitude);
+                .getInstance().getApi().addAttendance("_addAttendance", emp_id, store_id, latitude, longitude);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -451,7 +458,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
                     AddAttendanceModel attendanceTypeModel = gson.fromJson(json, AddAttendanceModel.class);
 
-                    if (attendanceTypeModel.getStatus()==1) {
+                    if (attendanceTypeModel.getStatus() == 1) {
 
 //                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
                         check_in.setVisibility(View.GONE);

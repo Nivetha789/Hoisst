@@ -29,8 +29,10 @@ import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.orderList.OrderListActivity;
 import com.retailvend.orderList.OrderListAdapter;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.todayoutlet.CreateOutletOrderActivity;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
+import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
 import java.util.ArrayList;
@@ -62,6 +64,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
     int offset = 0;
     int limit = 10;
     int totalcount = 0;
+    SessionManagerSP sessionManagerSP;
 
 
     @Override
@@ -93,6 +96,8 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
         salesRecycler = findViewById(R.id.sales_recyeclerview);
         progress = findViewById(R.id.progress);
         emptyView = findViewById(R.id.emptyView);
+
+        sessionManagerSP = new SessionManagerSP(SalesActivity.this);
 
         orderListData = new ArrayList<>();
         leftArrow.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +177,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
 
     public void orderListApi(int offset1, int limit1) {
 //        CustomProgress.showProgress(activity);
-        String emp_id = SharedPrefManager.getInstance(SalesActivity.this).getUser().getId();
+        String emp_id = sessionManagerSP.getEmployeeId();
 
         if (isLoading) {
             progress.setVisibility(View.GONE);

@@ -226,39 +226,39 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
             }
         });
 
-        rv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rv.setBackgroundResource(R.drawable.background);
-                sales_agent.setBackgroundResource(R.drawable.lin_storke);
-                rv.setTextColor(Color.parseColor("#ffffff"));
-                sales_agent.setTextColor(Color.parseColor("#000000"));
-                rv_show.setVisibility(View.VISIBLE);
-                sales_agent_show.setVisibility(View.GONE);
-                order_type = "1";
-            }
-        });
+//        rv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                rv.setBackgroundResource(R.drawable.background);
+//                sales_agent.setBackgroundResource(R.drawable.lin_storke);
+//                rv.setTextColor(Color.parseColor("#ffffff"));
+//                sales_agent.setTextColor(Color.parseColor("#000000"));
+//                rv_show.setVisibility(View.VISIBLE);
+//                sales_agent_show.setVisibility(View.GONE);
+//                order_type = "1";
+//            }
+//        });
 
-        sales_agent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sales_agent.setBackgroundResource(R.drawable.background);
-                rv.setBackgroundResource(R.drawable.lin_storke);
-                rv.setTextColor(Color.parseColor("#000000"));
-                sales_agent.setTextColor(Color.parseColor("#ffffff"));
-                rv_show.setVisibility(View.GONE);
-                sales_agent_show.setVisibility(View.VISIBLE);
-                order_type = "2";
-            }
-        });
+//        sales_agent.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sales_agent.setBackgroundResource(R.drawable.background);
+//                rv.setBackgroundResource(R.drawable.lin_storke);
+//                rv.setTextColor(Color.parseColor("#000000"));
+//                sales_agent.setTextColor(Color.parseColor("#ffffff"));
+//                rv_show.setVisibility(View.GONE);
+//                sales_agent_show.setVisibility(View.VISIBLE);
+//                order_type = "2";
+//            }
+//        });
 
-        linSalesAgent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent salesIntent = new Intent(CreateOutletOrderActivity.this, SalesAgentNameActivity.class);
-                startActivityForResult(salesIntent, MY_REQUEST_CODE1);
-            }
-        });
+//        linSalesAgent.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent salesIntent = new Intent(CreateOutletOrderActivity.this, SalesAgentNameActivity.class);
+//                startActivityForResult(salesIntent, MY_REQUEST_CODE1);
+//            }
+//        });
 
         cod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -292,8 +292,8 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 //                System.out.println("billltypeee "+bill_type);
                 if (!TextUtils.isEmpty(bill_type)) {
                     if (bill_type.equals("1")) {
-                        if(!TextUtils.isEmpty(discount.getText().toString())){
-                            if(!TextUtils.isEmpty(dueDays.getText().toString())){
+                        if (!TextUtils.isEmpty(discount.getText().toString())) {
+                            if (!TextUtils.isEmpty(dueDays.getText().toString())) {
                                 if (!TextUtils.isEmpty(product_name.getText().toString())) {
                                     if (spin_name != null) {
                                         if (!TextUtils.isEmpty(txtPrice.getText().toString())) {
@@ -312,10 +312,10 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                                 } else {
                                     CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Product Name should not be empty");
                                 }
-                            }else{
+                            } else {
                                 CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Due Days should not be empty");
                             }
-                        }else{
+                        } else {
                             CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Discount should not be empty");
                         }
                     } else {
@@ -440,13 +440,14 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         datePickerDialog.show();
     }
 
+
     public void createOrderApi() {
         CustomProgress.showProgress(activity);
 
-        String emp_id = SharedPrefManager.getInstance(CreateOutletOrderActivity.this).getUser().getId();
+        String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<CreateOrderModel> call = RetrofitClient
-                .getInstance().getApi().createOrder("_addSalesOrder", emp_id, store_id, bill_type, order_type, sales_agent_id, addProductJson);
+                .getInstance().getApi().createOrder("_addSalesOrder", emp_id, store_id, bill_type, discount.getText().toString(), dueDays.getText().toString(), "1", addProductJson);
 
         call.enqueue(new Callback<CreateOrderModel>() {
             @Override
@@ -504,7 +505,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         totalPriceList = a * b;
 //        System.out.println("parts " + parts[2]);
         System.out.println("totalPriceList " + totalPriceList);
-        addProductModel.add(new AddProductModel(auto_id, prod_id, prod_name, type_id, unitId, unitItem, hsn_code, gst_val, qty.getText().toString(), price));
+        addProductModel.add(new AddProductModel(prod_id, prod_name,type_id, unitId, price, qty.getText().toString()));
         updateAddProductAdapter("add", 0);
         product_name.setText("");
         productTypeData.clear();
@@ -512,6 +513,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         txtPrice.setText("");
         qty.setText("");
     }
+
 
     public void totalPrice(List<AddProductModel> addProductModel1) {
         int price = 0;
@@ -626,7 +628,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
     public void updateAttendanceApi() {
         CustomProgress.showProgress(activity);
-        String emp_id = SharedPrefManager.getInstance(this).getUser().getId();
+        String emp_id =sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
                 .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", btn_Type_id);
