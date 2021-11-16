@@ -103,7 +103,7 @@ public class OutstandingActivity extends AppCompatActivity {
     public void outstandListApi() {
         CustomProgress.showProgress(activity);
         String emp_id= sessionManagerSP.getEmployeeId();
-        System.out.println("emmmpidd "+emp_id);
+//        System.out.println("emmmpidd "+emp_id);
 
         Call<AssignOutletsModel> call = RetrofitClient
                 .getInstance().getApi().todayOutletList("_employeeWiseList",emp_id);

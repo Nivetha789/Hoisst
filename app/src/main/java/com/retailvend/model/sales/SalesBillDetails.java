@@ -20,6 +20,9 @@ public class SalesBillDetails {
     @SerializedName("contact_name")
     @Expose
     private String contactName;
+    @SerializedName("outlet_type")
+    @Expose
+    private String outletType;
     @SerializedName("order_status")
     @Expose
     private String orderStatus;
@@ -38,6 +41,12 @@ public class SalesBillDetails {
     @SerializedName("_delivery")
     @Expose
     private String delivery;
+    @SerializedName("random_value")
+    @Expose
+    private String randomValue;
+    @SerializedName("reason")
+    @Expose
+    private String reason;
     @SerializedName("published")
     @Expose
     private String published;
@@ -88,6 +97,14 @@ public class SalesBillDetails {
         this.contactName = contactName;
     }
 
+    public String getOutletType() {
+        return outletType;
+    }
+
+    public void setOutletType(String outletType) {
+        this.outletType = outletType;
+    }
+
     public String getOrderStatus() {
         return orderStatus;
     }
@@ -134,6 +151,22 @@ public class SalesBillDetails {
 
     public void setDelivery(String delivery) {
         this.delivery = delivery;
+    }
+
+    public String getRandomValue() {
+        return randomValue;
+    }
+
+    public void setRandomValue(String randomValue) {
+        this.randomValue = randomValue;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public String getPublished() {

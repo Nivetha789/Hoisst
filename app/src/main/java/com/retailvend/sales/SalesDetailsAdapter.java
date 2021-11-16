@@ -35,12 +35,15 @@ public class SalesDetailsAdapter extends RecyclerView.Adapter<SalesDetailsAdapte
     @Override
     public void onBindViewHolder(@NonNull SalesDetailsAdapter.MyViewHolder holder, int position) {
         SalesProductDetail salesInvoiceList = productDetails.get(position);
-        holder.txt_invoice_details_sno.setText(salesInvoiceList.getAutoId());
+        holder.txt_invoice_details_sno.setText(String.valueOf(position+1));
         holder.txt_invoice_details_pname.setText(salesInvoiceList.getProductName());
+        double a = Double.parseDouble(salesInvoiceList.getPrice().trim());
+        int b = Integer.parseInt(salesInvoiceList.getOrderQty().trim());
+        double totalPrice=a*b;
         holder.txt_invoice_details_price.setText("\u20B9 " +salesInvoiceList.getPrice());
         holder.txt_invoice_details_nos.setText(salesInvoiceList.getOrderQty());
         holder.txt_invoice_details_kg.setText(salesInvoiceList.getUnitVal());
-        holder.txt_invoice_details_total_price.setText("\u20B9 " +salesInvoiceList.getPrice());
+        holder.txt_invoice_details_total_price.setText("\u20B9 " +totalPrice);
     }
 
     @Override
