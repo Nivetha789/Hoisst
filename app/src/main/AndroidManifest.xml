@@ -24,11 +24,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hoisst">
         <activity
+            android:name=".devliveryman.DeliveryDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Hoisst.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity"  />
+        <activity
             android:name=".payment.AddPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".devliveryman.CollectionDeliveryActivity"
             android:screenOrientation="portrait"
@@ -134,6 +140,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".broadcast.ConnectivityReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

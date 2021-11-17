@@ -1,5 +1,6 @@
 package com.retailvend;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -26,7 +27,7 @@ import com.retailvend.utills.SessionManagerSP;
 public class SplashScreen extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
 
     SessionManagerSP sessionManagerSP;
-    private static final int SPLASH_TIME_OUT = 3500;
+    private static final int SPLASH_TIME_OUT = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,17 +67,25 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
                     // Marshmallow+
                     String writePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
                     String readPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
+                    String accessFineLocation = Manifest.permission.ACCESS_FINE_LOCATION;
+                    String accessCoarseLocation = Manifest.permission.ACCESS_COARSE_LOCATION;
 
                     int hasPermission = 0;
                     int hasreadPermission = 0;
+                    int hasaccessFineLocationPermission = 0;
+                    int hasaccessCoarseLocationPermission = 0;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         hasPermission = ContextCompat.checkSelfPermission(SplashScreen.this, writePermission);
                         hasreadPermission = ContextCompat.checkSelfPermission(SplashScreen.this, readPermission);
+                        hasaccessFineLocationPermission = ContextCompat.checkSelfPermission(SplashScreen.this, accessFineLocation);
+                        hasaccessCoarseLocationPermission = ContextCompat.checkSelfPermission(SplashScreen.this, accessCoarseLocation);
 
                     }
                     String[] permissions = new String[]{writePermission, readPermission};
                     if (hasPermission != PackageManager.PERMISSION_GRANTED
-                            || hasreadPermission != PackageManager.PERMISSION_GRANTED) {
+                            || hasreadPermission != PackageManager.PERMISSION_GRANTED
+                            || hasaccessFineLocationPermission != PackageManager.PERMISSION_GRANTED
+                            || hasaccessCoarseLocationPermission != PackageManager.PERMISSION_GRANTED) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             requestPermissions(permissions, 101);
 
@@ -101,23 +110,6 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
 
                     }
 
-                } else {
-                    if (sessionManagerSP.getPhonelogin().equals("1")) {
-                        Intent i = new Intent(SplashScreen.this, DashboardActivity.class);
-                        startActivity(i);
-
-                        // close this activity
-                        finish();
-                    } else {
-                        sessionManagerSP.setPhonelogin("0");
-                        Intent i = new Intent(SplashScreen.this, LoginActivity.class);
-                        startActivity(i);
-
-                        // close this activity
-                        finish();
-                    }
-
-                    // Pre-Marshmallow
                 }
 
 //                Intent i = new Intent(SplashScreen.this,LoginActivity.class);
@@ -125,6 +117,47 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
 //                finish();
             }
         }, SPLASH_TIME_OUT);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+
+        if (requestCode == 101) {
+            // BEGIN_INCLUDE(permission_result)
+            // Received permission result for camera permission.
+//            Log.i(TAG, "Received response for Camera permission request.");
+
+            // Check if the only required permission has been granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Camera permission has been granted, preview can be displayed
+//                Log.i(TAG, "CAMERA permission has now been granted. Showing preview.");
+//                Toast.makeText(MainActivity.this, "Granded", Toast.LENGTH_SHORT).show();
+
+                if (sessionManagerSP.getPhonelogin().equals("1")) {
+                    Intent i = new Intent(SplashScreen.this, DashboardActivity.class);
+                    startActivity(i);
+
+                    // close this activity
+                    finish();
+                } else {
+                    sessionManagerSP.setPhonelogin("0");
+                    Intent i = new Intent(SplashScreen.this, LoginActivity.class);
+                    startActivity(i);
+
+                    // close this activity
+                    finish();
+                }
+
+            } else {
+//                Log.i(TAG, "CAMERA permission was NOT granted.");
+                CustomToast.getInstance(SplashScreen.this).showSmallCustomToast("Permission Denied");
+            }
+            // END_INCLUDE(permission_result)
+
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     private void checkConnection() {

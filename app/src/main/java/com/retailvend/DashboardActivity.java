@@ -42,9 +42,9 @@ public class DashboardActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navView;
     ImageView menu, close;
-    String login_type="";
+    String login_type = "";
     TextView sales_main_txt;
-    String distributor_id="";
+    String distributor_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,10 +96,10 @@ public class DashboardActivity extends AppCompatActivity {
             setWindowFlag(DashboardActivity.this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-        login_type=sessionManagerSP.getLoginType();
-        distributor_id=sessionManagerSP.getDistributorId();
+        login_type = sessionManagerSP.getLoginType();
+        distributor_id = sessionManagerSP.getDistributorId();
 
-        if(login_type.equals("1")){
+        if (login_type.equals("1")) {
             sales_main_txt.setText("DELIVERY DETAILS");
             sales_main_txt.setTextSize(15);
             Typeface font = Typeface.createFromAsset(
@@ -107,7 +107,7 @@ public class DashboardActivity extends AppCompatActivity {
                     "font/quicksand_medium.ttf");
             sales_main_txt.setTypeface(font);
             sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        }else{
+        } else {
             sales_main_txt.setText("SALES DETAILS");
             sales_main_txt.setTextSize(15);
             Typeface font = Typeface.createFromAsset(
@@ -127,13 +127,12 @@ public class DashboardActivity extends AppCompatActivity {
         collection_main_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("distributoridddd "+distributor_id);
-                if(distributor_id.length()>0){
-                    Intent collectionIntent = new Intent (DashboardActivity.this, CollectionActivity.class);
-                    startActivity(collectionIntent);
-                }
-               else{
-                    Intent collectionIntent = new Intent (DashboardActivity.this, CollectionDeliveryActivity.class);
+                System.out.println("distributoridddd " + distributor_id);
+                if (distributor_id.length() > 0) {
+                    Intent collectionIntent1 = new Intent(DashboardActivity.this, CollectionDeliveryActivity.class);
+                    startActivity(collectionIntent1);
+                } else {
+                    Intent collectionIntent = new Intent(DashboardActivity.this, CollectionActivity.class);
                     startActivity(collectionIntent);
                 }
             }

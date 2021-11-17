@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,24 +25,32 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.retailvend.R;
+import com.retailvend.model.noreasonOutlet.NoReasonMessageDatum;
+import com.retailvend.model.noreasonOutlet.NoReasonMessageModel;
 import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AttendanceTypeDatum;
 import com.retailvend.model.outlets.AttendanceTypeModel;
+import com.retailvend.model.outlets.ProductTypeDatum;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
+import com.retailvend.utills.ProductAdapter;
+import com.retailvend.utills.ReasonBaseAdapter;
 import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
@@ -63,7 +72,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     TextView check_in;
     TextView checked;
     Activity activity;
-    EditText reason;
+    Spinner reason;
     List<AttendanceTypeDatum> attendanceTypeData;
     ButtonTypeAdapter buttonTypeAdapter;
     RecyclerView order_type_recycler;
@@ -78,9 +87,13 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     SessionManagerSP sessionManagerSP;
     ImageView left_arrow;
     LocationManager locationManager;
+    String reasonTxt="";
+    String reasonId="";
 
     private boolean locationget;
 
+    List<NoReasonMessageDatum> noReasonMessageData;
+    ReasonBaseAdapter reasonBaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +120,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
+
         attendanceListApi();
+        getReasonApi();
+
         shop_name = findViewById(R.id.shop_name);
         shop_number = findViewById(R.id.shop_number);
         contact_name = findViewById(R.id.contact_name);
@@ -144,32 +160,14 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         mail.setText(mail1);
 //        gst.setText(gst1);
 //        pan.setText(pan1);
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-        if (Build.VERSION.SDK_INT >= 23) {
-            // Marshmallow+
-            String coarseLocation = Manifest.permission.ACCESS_COARSE_LOCATION;
-            String fineLocation = Manifest.permission.ACCESS_FINE_LOCATION;
-            int hascoarse = 0;
-            int hasfine = 0;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                hascoarse = ContextCompat.checkSelfPermission(TodayOutletDetailsActivity.this, coarseLocation);
-                hasfine = ContextCompat.checkSelfPermission(TodayOutletDetailsActivity.this, fineLocation);
-            }
-            String[] permissions = new String[]{coarseLocation, fineLocation};
-            if (hascoarse != PackageManager.PERMISSION_GRANTED || hasfine != PackageManager.PERMISSION_GRANTED) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(permissions, 777);
-                }
-            } else {
-                checkLocation();
-                getLocation();
-                // Phew - we already have permission!
-            }
-        } else {
-            checkLocation();
-            getLocation();
-            // Pre-Marshmallow
+            ActivityCompat.requestPermissions(TodayOutletDetailsActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+
         }
+
+        checkGPSON();
+        getLocation();
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,10 +196,23 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             }
         });
 
+        reason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                NoReasonMessageDatum reasonMessageDatum = noReasonMessageData.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!reason.getText().toString().isEmpty()) {
+                if (!reasonTxt.isEmpty()) {
                     updateAttendanceApi(type_id, type_val);
                 } else {
                     CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Enter Reason");
@@ -211,7 +222,16 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         check_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (locationget) {
+
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                    ActivityCompat.requestPermissions(TodayOutletDetailsActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+
+                }
+                checkGPSON();
+                getLocation();
+
+                if (!TextUtils.isEmpty(latitude) && !TextUtils.isEmpty(longitude)) {
                     addAttendanceApi(latitude, longitude);
                 } else {
                     Toast.makeText(TodayOutletDetailsActivity.this, "Location is not updated, Try Again", Toast.LENGTH_SHORT).show();
@@ -228,40 +248,47 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         });
     }
 
-    private boolean checkLocation() {
-        if (!isLocationEnabled())
-            showAlert();
-        return isLocationEnabled();
+    public boolean checkGPSON() {
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (manager != null) {
+            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                displayPromptForEnablingGPS(this);
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 
-    private void showAlert() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Enable Location")
-                .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
-                        "use this app")
-                .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+    public void displayPromptForEnablingGPS(final Activity activity) {
 
-                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivity(myIntent);
-                    }
-                });
-//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-//
-//                    }
-//                });
-        dialog.show();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        final String action = Settings.ACTION_LOCATION_SOURCE_SETTINGS;
+        final String message = "Kindly turn ON Location Settings. GPS is required. Do you want open GPS setting?";
+
+        builder.setMessage(message)
+                .setPositiveButton("Location Settings",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface d, int id) {
+                                activity.startActivity(new Intent(action));
+                                d.dismiss();
+                            }
+                        });
+//                .setNegativeButton("Cancel",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface d, int id) {
+//                                d.cancel();
+//                                //saveEntry.setEnabled(false);
+//                                // progressBar.setVisibility(View.INVISIBLE);
+//                            }
+//                        });
+
+        builder.setCancelable(false);
+
+        builder.create().show();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkLocation();
-        getLocation();
-    }
 
 
     void getLocation() {
@@ -400,7 +427,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude, longitude, typeVal, reason.getText().toString(), typeId);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude, longitude, typeVal, reasonTxt, typeId);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -480,6 +507,66 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
             @Override
             public void onFailure(@NonNull Call<AddAttendanceModel> call, @NonNull Throwable t) {
+                Log.d("Failure ", t.getMessage());
+                CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
+                CustomProgress.hideProgress(activity);
+            }
+        });
+    }
+
+    public void getReasonApi() {
+        CustomProgress.showProgress(activity);
+
+        Call<NoReasonMessageModel> call = RetrofitClient
+                .getInstance().getApi().noReason("_listMessage");
+
+        call.enqueue(new Callback<NoReasonMessageModel>() {
+            @Override
+            public void onResponse(@NonNull Call<NoReasonMessageModel> call, @NonNull Response<NoReasonMessageModel> response) {
+
+                try {
+
+                    Gson gson = new Gson();
+                    String json = gson.toJson(response.body());
+
+                    NoReasonMessageModel noReasonMessageModel = gson.fromJson(json, NoReasonMessageModel.class);
+
+                    if (noReasonMessageModel.getStatus() == 1) {
+
+                        noReasonMessageData=noReasonMessageModel.getData();
+                        if (noReasonMessageData != null) {
+//                            ArrayList<String> list = new ArrayList<String>();
+                            for (int i = 0; i < noReasonMessageData.size(); i++) {
+//                                list.add(productTypeData.get(i).getDescription());
+                                reasonTxt = noReasonMessageData.get(i).getMessage();
+                                reasonId = noReasonMessageData.get(i).getMessageId();
+                            }
+
+//                            unitValue = list.toArray(new String[list.size()]);
+
+//                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, unitValue);
+//                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                            spin_name.setAdapter(dataAdapter);
+                            reasonBaseAdapter = new ReasonBaseAdapter(TodayOutletDetailsActivity.this, noReasonMessageData);
+                            reason.setAdapter(reasonBaseAdapter);
+                            reasonBaseAdapter.notifyDataSetChanged();
+                        }
+                        CustomProgress.hideProgress(activity);
+
+                    } else {
+                        CustomProgress.hideProgress(activity);
+                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(noReasonMessageModel.getMessage());
+                    }
+
+                } catch (Exception e) {
+                    Log.d("Exception", e.getMessage());
+                    CustomProgress.hideProgress(activity);
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NoReasonMessageModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
                 CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
                 CustomProgress.hideProgress(activity);

@@ -6,6 +6,7 @@ import com.retailvend.model.delCollection.paymentCollection.PaymentCollectionMod
 import com.retailvend.model.delCollection.paymentCollection.PaymentTypeModel;
 import com.retailvend.model.login.LoginResModel;
 import com.retailvend.model.manageorder.OrderListModel;
+import com.retailvend.model.noreasonOutlet.NoReasonMessageModel;
 import com.retailvend.model.order.CreateOrderModel;
 import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.AssignOutletsModel;
@@ -173,6 +174,13 @@ public interface Api {
             @Field("discount") String discount,
             @Field("amt_type") String amt_type,
             @Field("description") String description
+    );
+
+    //no reason
+    @FormUrlEncoded
+    @POST("master/api/message")
+    Call<NoReasonMessageModel> noReason(
+            @Field("method") String method
     );
 
 }
