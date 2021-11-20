@@ -42,10 +42,10 @@ import retrofit2.Response;
 
 public class AddPaymentActivity extends AppCompatActivity {
 
-    TextView txt_dis_add_pay_toolbar, txt_add_payment_name, txt_add_payment_bal_amt, txt_add_payment_date;
+    TextView txt_dis_add_pay_toolbar, txt_add_payment_name, txt_add_payment_bal_amt, txt_add_payment_date,type_description;
     EditText edt_add_payment_amt, edt_add_payment_descrip;
     Spinner spin_add_payment_type;
-    LinearLayout lin_add_payment, lin_back;
+    LinearLayout lin_add_payment, lin_back,description_linearLayout;
     List<PaymentTypeData> addPaymentTypeList;
     AddPaymentTypeAdapter addPaymentTypeAdapter;
     String payment_type = "";
@@ -99,6 +99,8 @@ public class AddPaymentActivity extends AppCompatActivity {
         lin_add_payment = findViewById(R.id.lin_add_payment);
         lin_back = findViewById(R.id.lin_back);
         progress = findViewById(R.id.progress);
+        description_linearLayout = findViewById(R.id.description_linearLayout);
+        type_description = findViewById(R.id.type_description);
 
         sessionManagerSP = new SessionManagerSP(AddPaymentActivity.this);
 
@@ -111,7 +113,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             balamt = (String) b.get("balamt");
             name = (String) b.get("name");
             outletId = (String) b.get("outletId");
-            System.out.println("balamnt :"+balamt);
+            System.out.println("outletId :"+outletId);
         }
 
         paymentTypeApi();
@@ -120,6 +122,11 @@ public class AddPaymentActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 payment_type = addPaymentTypeList.get(i).getTypeVal();
+                if(payment_type.equals("Cash")){
+                    description_linearLayout.setVisibility(View.GONE);
+                }else{
+                    description_linearLayout.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -186,8 +193,7 @@ public class AddPaymentActivity extends AppCompatActivity {
                                 if (isConnected) {
 
                                     addPayment(assignId,distributorId,outletId,edt_add_payment_amt.getText().toString(),discount,
-                                            payment_type,"");
-
+                                            payment_type,edt_add_payment_descrip.getText().toString());
                                 } else {
                                     CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Please check your internet connection");
                                 }

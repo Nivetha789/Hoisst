@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_payment_details.xml" value="0.3625" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/content_add_payment.xml" value="0.3625" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/item_cust_pay_details.xml" value="0.3625" />
         <entry key="app/src/main/res/drawable/background.xml" value="0.321025641025641" />
         <entry key="app/src/main/res/drawable/background1.xml" value="0.321025641025641" />
         <entry key="app/src/main/res/drawable/background2.xml" value="0.321025641025641" />

@@ -1,7 +1,6 @@
-package com.retailvend.collection;
+package com.retailvend.devliveryman;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,12 +135,12 @@ public class PaymentDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder> 
             }
             txt_pay_describ.setText("Discount : "+item.getDiscount());
 
-            card.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        ((PaymentDetailsActivity) context).sendOutletId(item.getOutletId());
-                }
-            });
+//            card.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                        ((PaymentDetailsActivity) context).sendOutletId(item.getOutletId());
+//                }
+//            });
 
             img_delete.setOnClickListener(new View.OnClickListener() {
                 @Override

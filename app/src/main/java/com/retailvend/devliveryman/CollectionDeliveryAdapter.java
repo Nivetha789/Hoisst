@@ -12,7 +12,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
-import com.retailvend.collection.PaymentDetailsActivity;
 import com.retailvend.model.delCollection.DeliveryCollectionListData;
 import com.retailvend.utills.BaseViewHolder;
 
@@ -135,6 +134,7 @@ public class CollectionDeliveryAdapter extends RecyclerView.Adapter<BaseViewHold
                     paymentIntent.putExtra("assign_id", item.getAssignId());
                     paymentIntent.putExtra("name", item.getOutletName());
                     paymentIntent.putExtra("balamnt", item.getCurBal()+item.getPreBal());
+                    paymentIntent.putExtra("outletId", item.getOutletId());
                     activity.startActivity(paymentIntent);
                 }
             });

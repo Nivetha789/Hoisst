@@ -128,12 +128,12 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("distributoridddd " + distributor_id);
-                if (distributor_id.length() > 0) {
-                    Intent collectionIntent1 = new Intent(DashboardActivity.this, CollectionDeliveryActivity.class);
-                    startActivity(collectionIntent1);
-                } else {
+                if (distributor_id.equals("0")) {
                     Intent collectionIntent = new Intent(DashboardActivity.this, CollectionActivity.class);
                     startActivity(collectionIntent);
+                } else {
+                    Intent collectionIntent1 = new Intent(DashboardActivity.this, CollectionDeliveryActivity.class);
+                    startActivity(collectionIntent1);
                 }
             }
         });

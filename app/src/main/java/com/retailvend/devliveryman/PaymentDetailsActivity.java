@@ -1,4 +1,4 @@
-package com.retailvend.collection;
+package com.retailvend.devliveryman;
 
 import static com.retailvend.utills.PaginationListener.PAGE_START;
 
@@ -107,7 +107,8 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
             name = getIntent().getExtras().getString("name");
             assignId = getIntent().getExtras().getString("assign_id");
             amt = getIntent().getExtras().getString("balamnt");
-            System.out.println("assign_idassign_id " + assignId);
+            outletId = getIntent().getExtras().getString("outletId");
+//            System.out.println("outletIdoutletIdoutletId " + outletId);
         }
 
 //        swipeRefresh.setOnRefreshListener(this);
@@ -161,6 +162,7 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
                 intent.putExtra("balamt", amt);
                 intent.putExtra("name", name);
                 intent.putExtra("outletId", outletId);
+//                System.out.println("outletId1234567 "+outletId);
                 startActivity(intent);
             }
         });
@@ -365,9 +367,4 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
         });
 
     }*/
-
-    public void sendOutletId(String outlet_id){
-        outletId=outlet_id;
-        System.out.println("sendOutletIdsendOutletId "+outletId);
-    }
 }

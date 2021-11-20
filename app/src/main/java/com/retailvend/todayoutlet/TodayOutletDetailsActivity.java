@@ -122,7 +122,6 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         }
 
         attendanceListApi();
-        getReasonApi();
 
         shop_name = findViewById(R.id.shop_name);
         shop_number = findViewById(R.id.shop_number);
@@ -411,6 +410,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     }
 
     public void showReason(String typeId, String typeVal) {
+        getReasonApi();
         reason_constrain.setVisibility(View.VISIBLE);
         type_id = typeId;
         type_val = typeVal;

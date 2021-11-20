@@ -42,7 +42,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".collection.PaymentDetailsActivity"
+            android:name=".devliveryman.PaymentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
