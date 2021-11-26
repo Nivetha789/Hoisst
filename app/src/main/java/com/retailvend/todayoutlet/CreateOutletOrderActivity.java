@@ -505,7 +505,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         totalPriceList = a * b;
 //        System.out.println("parts " + parts[2]);
         System.out.println("totalPriceList " + totalPriceList);
-        addProductModel.add(new AddProductModel(prod_id, prod_name,type_id, unitId, price, qty.getText().toString()));
+        addProductModel.add(new AddProductModel(prod_id, prod_name, type_id, unitId, price, totalPriceList, qty.getText().toString()));
         updateAddProductAdapter("add", 0);
         product_name.setText("");
         productTypeData.clear();
@@ -516,11 +516,11 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
 
     public void totalPrice(List<AddProductModel> addProductModel1) {
-        int price = 0;
+        double price = 0;
         int qty = 0;
 
         for (int j = 0; j < addProductModel1.size(); j++) {
-            price += Double.parseDouble(addProductModel1.get(j).getPrice());
+            price += Double.parseDouble(String.valueOf(addProductModel1.get(j).getTotalPrice()));
         }
 
         for (int i = 0; i < addProductModel1.size(); i++) {
@@ -628,7 +628,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
     public void updateAttendanceApi() {
         CustomProgress.showProgress(activity);
-        String emp_id =sessionManagerSP.getEmployeeId();
+        String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
                 .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", btn_Type_id);

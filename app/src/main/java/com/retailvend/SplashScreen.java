@@ -27,17 +27,13 @@ import com.retailvend.utills.SessionManagerSP;
 public class SplashScreen extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
 
     SessionManagerSP sessionManagerSP;
-    private static final int SPLASH_TIME_OUT = 3000;
+    private static final int SPLASH_TIME_OUT = 3500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //////////////////////network receiver
-        this.registerReceiver(this.mConnReceiver,
-                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        sessionManagerSP = new SessionManagerSP(SplashScreen.this);
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -58,31 +54,43 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
 
+        //////////////////////network receiver
+        this.registerReceiver(this.mConnReceiver,
+                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        sessionManagerSP = new SessionManagerSP(SplashScreen.this);
+
+
+
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
 
+
                 if (Build.VERSION.SDK_INT >= 23) {
                     // Marshmallow+
                     String writePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
                     String readPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
+                    String cameraPermission = Manifest.permission.CAMERA;
                     String accessFineLocation = Manifest.permission.ACCESS_FINE_LOCATION;
                     String accessCoarseLocation = Manifest.permission.ACCESS_COARSE_LOCATION;
-
+//
                     int hasPermission = 0;
+                    int hascamPermission = 0;
                     int hasreadPermission = 0;
                     int hasaccessFineLocationPermission = 0;
                     int hasaccessCoarseLocationPermission = 0;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         hasPermission = ContextCompat.checkSelfPermission(SplashScreen.this, writePermission);
+                        hascamPermission = ContextCompat.checkSelfPermission(SplashScreen.this, cameraPermission);
                         hasreadPermission = ContextCompat.checkSelfPermission(SplashScreen.this, readPermission);
                         hasaccessFineLocationPermission = ContextCompat.checkSelfPermission(SplashScreen.this, accessFineLocation);
                         hasaccessCoarseLocationPermission = ContextCompat.checkSelfPermission(SplashScreen.this, accessCoarseLocation);
 
                     }
-                    String[] permissions = new String[]{writePermission, readPermission};
+                    String[] permissions = new String[]{writePermission, cameraPermission, readPermission, accessFineLocation, accessCoarseLocation};
                     if (hasPermission != PackageManager.PERMISSION_GRANTED
+                            || hascamPermission != PackageManager.PERMISSION_GRANTED
                             || hasreadPermission != PackageManager.PERMISSION_GRANTED
                             || hasaccessFineLocationPermission != PackageManager.PERMISSION_GRANTED
                             || hasaccessCoarseLocationPermission != PackageManager.PERMISSION_GRANTED) {
@@ -110,7 +118,9 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
 
                     }
 
+                    // Pre-Marshmallow
                 }
+
 
 //                Intent i = new Intent(SplashScreen.this,LoginActivity.class);
 //                startActivity(i);
@@ -158,6 +168,7 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
     }
 
     private void checkConnection() {

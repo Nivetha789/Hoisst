@@ -121,7 +121,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
 
-        attendanceListApi();
+
 
         shop_name = findViewById(R.id.shop_name);
         shop_number = findViewById(R.id.shop_number);
@@ -167,6 +167,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
         checkGPSON();
         getLocation();
+
+
+
+        attendanceListApi();
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,16 +297,11 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, (LocationListener) this);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, (LocationListener) this);
         } catch (SecurityException e) {
             e.printStackTrace();
         }
-    }
-
-    private boolean isLocationEnabled() {
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
     @Override
@@ -315,18 +314,18 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         System.out.println("Latitudetttt: " + latitude + " Longitude: " + longitude);
 
 
-        try {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-            String address = addresses.get(0).getAddressLine(0) + ", " +
-                    addresses.get(0).getAddressLine(1);
-
-            System.out.println(" address " + addresses.get(0).getAddressLine(0) + ", " +
-                    addresses.get(0).getAddressLine(1) + ", " + addresses.get(0).getAddressLine(2));
-        } catch (Exception e) {
-
-        }
+//        try {
+//            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+//            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+//
+//            String address = addresses.get(0).getAddressLine(0) + ", " +
+//                    addresses.get(0).getAddressLine(1);
+//
+//            System.out.println(" address " + addresses.get(0).getAddressLine(0) + ", " +
+//                    addresses.get(0).getAddressLine(1) + ", " + addresses.get(0).getAddressLine(2));
+//        } catch (Exception e) {
+//
+//        }
 
     }
 

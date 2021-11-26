@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -46,6 +47,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ProgressBar progress;
     NestedScrollView lin_invoice_details_scrollview;
+    ImageView left_arrow;
 
     SalesBillDetails salesBillDetails;
     SalesStoreDetails salesStoreDetails;
@@ -124,10 +126,18 @@ public class SalesDetailsActivity extends AppCompatActivity {
         order_type = findViewById(R.id.order_type);
         amount = findViewById(R.id.amount);
         bill_date = findViewById(R.id.bill_date);
+        left_arrow = findViewById(R.id.left_arrow);
 
         productDetails = new ArrayList<>();
         taxDetails = new ArrayList<>();
         salesInvoiceDetails(random_value);
+
+        left_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
     }
 
@@ -218,5 +228,11 @@ public class SalesDetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
