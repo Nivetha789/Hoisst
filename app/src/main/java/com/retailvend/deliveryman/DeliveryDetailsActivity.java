@@ -1,4 +1,4 @@
-package com.retailvend.devliveryman;
+package com.retailvend.deliveryman;
 
 import androidx.appcompat.app.AppCompatActivity;
 

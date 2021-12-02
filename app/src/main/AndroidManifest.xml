@@ -24,11 +24,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hoisst">
         <activity
-            android:name=".devliveryman.DeliveryDetailsActivity"
+            android:name=".deliveryman.DelManTodayOutletsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"  />
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".deliveryman.DeliveryDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Hoisst.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".payment.AddPaymentActivity"
             android:screenOrientation="portrait"
@@ -36,13 +42,13 @@
             android:windowSoftInputMode="stateHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".devliveryman.CollectionDeliveryActivity"
+            android:name=".deliveryman.CollectionDeliveryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".devliveryman.PaymentDetailsActivity"
+            android:name=".deliveryman.PaymentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"

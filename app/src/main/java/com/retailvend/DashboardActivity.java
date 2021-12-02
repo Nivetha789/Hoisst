@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,7 +21,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.retailvend.collection.CollectionActivity;
-import com.retailvend.devliveryman.CollectionDeliveryActivity;
+import com.retailvend.deliveryman.CollectionDeliveryActivity;
+import com.retailvend.deliveryman.DelManTodayOutletsActivity;
 import com.retailvend.orderList.OrderListActivity;
 import com.retailvend.outstand.OutstandingActivity;
 import com.retailvend.sales.SalesActivity;
@@ -120,14 +120,19 @@ public class DashboardActivity extends AppCompatActivity {
         outlet_main_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(DashboardActivity.this, TodayOutletActivity.class);
-                startActivity(i);
+                if (distributor_id.equals("0")) {
+                    Intent i = new Intent(DashboardActivity.this, TodayOutletActivity.class);
+                    startActivity(i);
+                } else {
+                    Intent todayOutletIntent1 = new Intent(DashboardActivity.this, DelManTodayOutletsActivity.class);
+                    startActivity(todayOutletIntent1);
+                }
             }
         });
         collection_main_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("distributoridddd " + distributor_id);
+//                System.out.println("distributoridddd " + distributor_id);
                 if (distributor_id.equals("0")) {
                     Intent collectionIntent = new Intent(DashboardActivity.this, CollectionActivity.class);
                     startActivity(collectionIntent);

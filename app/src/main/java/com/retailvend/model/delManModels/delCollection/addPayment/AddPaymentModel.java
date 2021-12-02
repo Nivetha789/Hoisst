@@ -1,4 +1,4 @@
-package com.retailvend.model.delCollection.paymentCollection;
+package com.retailvend.model.delManModels.delCollection.addpayment;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,8 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaymentTypeModel {
-
+public class AddPaymentModel {
     @SerializedName("status")
     @Expose
     private Integer status;
@@ -16,7 +15,7 @@ public class PaymentTypeModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<PaymentTypeData> data = new ArrayList<>();
+    private List<Object> data = new ArrayList<>();
 
     public Integer getStatus() {
         return status;
@@ -34,11 +33,11 @@ public class PaymentTypeModel {
         this.message = message;
     }
 
-    public List<PaymentTypeData> getData() {
+    public List<Object> getData() {
         return data;
     }
 
-    public void setData(List<PaymentTypeData> data) {
+    public void setData(List<Object> data) {
         this.data = data;
     }
 }

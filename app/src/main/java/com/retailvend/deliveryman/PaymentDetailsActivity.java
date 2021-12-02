@@ -1,4 +1,4 @@
-package com.retailvend.devliveryman;
+package com.retailvend.deliveryman;
 
 import static com.retailvend.utills.PaginationListener.PAGE_START;
 
@@ -24,8 +24,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
-import com.retailvend.model.delCollection.paymentCollection.PaymentCollectionDatum;
-import com.retailvend.model.delCollection.paymentCollection.PaymentCollectionModel;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentCollectionDatum;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentCollectionModel;
 import com.retailvend.payment.AddPaymentActivity;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomToast;

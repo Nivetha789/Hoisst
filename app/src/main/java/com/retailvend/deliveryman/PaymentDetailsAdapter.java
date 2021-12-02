@@ -1,4 +1,4 @@
-package com.retailvend.devliveryman;
+package com.retailvend.deliveryman;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.retailvend.R;
-import com.retailvend.model.delCollection.paymentCollection.PaymentCollectionDatum;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentCollectionDatum;
 import com.retailvend.utills.BaseViewHolder;
 
 import java.util.List;

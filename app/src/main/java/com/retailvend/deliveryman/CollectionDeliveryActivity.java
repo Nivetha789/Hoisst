@@ -1,10 +1,9 @@
-package com.retailvend.devliveryman;
+package com.retailvend.deliveryman;
 
 import static com.retailvend.utills.PaginationListener.PAGE_START;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -21,24 +20,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.retailvend.ProfileActivity;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
-import com.retailvend.model.delCollection.DeliveryCollectionListData;
-import com.retailvend.model.delCollection.DeliveryCollectionListModel;
-import com.retailvend.model.outlets.AssignOutletsModel;
-import com.retailvend.model.outlets.ProductNameResData;
-import com.retailvend.model.outlets.ProductNameResModel;
+import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListData;
+import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListModel;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.todayoutlet.ProductNameActivity;
-import com.retailvend.todayoutlet.ProductNameAdapter;
-import com.retailvend.todayoutlet.TodayOutletActivity;
-import com.retailvend.todayoutlet.TodayOutletAdapter;
-import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
 import com.retailvend.utills.SessionManagerSP;
-import com.retailvend.utills.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;

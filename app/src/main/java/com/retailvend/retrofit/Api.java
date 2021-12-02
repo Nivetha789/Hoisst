@@ -1,9 +1,10 @@
 package com.retailvend.retrofit;
 
-import com.retailvend.model.delCollection.DeliveryCollectionListModel;
-import com.retailvend.model.delCollection.addpayment.AddPaymentModel;
-import com.retailvend.model.delCollection.paymentCollection.PaymentCollectionModel;
-import com.retailvend.model.delCollection.paymentCollection.PaymentTypeModel;
+import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsModel;
+import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListModel;
+import com.retailvend.model.delManModels.delCollection.addpayment.AddPaymentModel;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentCollectionModel;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentTypeModel;
 import com.retailvend.model.login.LoginResModel;
 import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageModel;
@@ -132,6 +133,15 @@ public interface Api {
 
 
     /*Delivery man*/
+
+
+    //Today outlets api
+    @FormUrlEncoded
+    @POST("assigninvoice/api/employee_wise_shop")
+    Call<DeliveryTodayOutletsModel> assignDelManShop(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id
+    );
 
     //Collection api
     @FormUrlEncoded

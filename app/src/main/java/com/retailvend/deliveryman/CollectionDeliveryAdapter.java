@@ -1,4 +1,4 @@
-package com.retailvend.devliveryman;
+package com.retailvend.deliveryman;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
-import com.retailvend.model.delCollection.DeliveryCollectionListData;
+import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListData;
 import com.retailvend.utills.BaseViewHolder;
 
 import java.util.List;

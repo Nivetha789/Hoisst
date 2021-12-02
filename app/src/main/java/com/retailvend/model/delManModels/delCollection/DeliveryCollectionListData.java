@@ -1,4 +1,4 @@
-package com.retailvend.model.delCollection;
+package com.retailvend.model.delManModels.delCollection;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

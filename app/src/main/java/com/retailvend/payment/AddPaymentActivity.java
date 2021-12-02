@@ -21,16 +21,12 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
-import com.retailvend.model.delCollection.addpayment.AddPaymentModel;
-import com.retailvend.model.delCollection.paymentCollection.PaymentTypeData;
-import com.retailvend.model.delCollection.paymentCollection.PaymentTypeModel;
+import com.retailvend.model.delManModels.delCollection.addpayment.AddPaymentModel;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentTypeData;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentTypeModel;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.sales.SalesActivity;
-import com.retailvend.todayoutlet.CreateOutletOrderActivity;
-import com.retailvend.utills.AddPaymentType;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
-import com.retailvend.utills.SharedPrefManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -42,8 +38,8 @@ import retrofit2.Response;
 
 public class AddPaymentActivity extends AppCompatActivity {
 
-    TextView txt_dis_add_pay_toolbar, txt_add_payment_name, txt_add_payment_bal_amt, txt_add_payment_date,type_description;
-    EditText edt_add_payment_amt, edt_add_payment_descrip;
+    TextView txt_dis_add_pay_toolbar, txt_add_payment_name, txt_add_payment_bal_amt, txt_add_payment_date;
+    EditText edt_add_payment_amt, edt_add_payment_descrip,type_description;
     Spinner spin_add_payment_type;
     LinearLayout lin_add_payment, lin_back,description_linearLayout;
     List<PaymentTypeData> addPaymentTypeList;
@@ -193,7 +189,7 @@ public class AddPaymentActivity extends AppCompatActivity {
                                 if (isConnected) {
 
                                     addPayment(assignId,distributorId,outletId,edt_add_payment_amt.getText().toString(),discount,
-                                            payment_type,edt_add_payment_descrip.getText().toString());
+                                            payment_type,type_description.getText().toString());
                                 } else {
                                     CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Please check your internet connection");
                                 }
