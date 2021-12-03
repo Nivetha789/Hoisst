@@ -21,8 +21,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.retailvend.collection.CollectionActivity;
-import com.retailvend.deliveryman.CollectionDeliveryActivity;
-import com.retailvend.deliveryman.DelManTodayOutletsActivity;
+import com.retailvend.deliveryman.collection.CollectionDeliveryActivity;
+import com.retailvend.deliveryman.outlet.DelManTodayOutletsActivity;
 import com.retailvend.orderList.OrderListActivity;
 import com.retailvend.outstand.OutstandingActivity;
 import com.retailvend.sales.SalesActivity;

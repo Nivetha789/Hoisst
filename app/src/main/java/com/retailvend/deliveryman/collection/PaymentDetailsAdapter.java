@@ -1,4 +1,4 @@
-package com.retailvend.deliveryman;
+package com.retailvend.deliveryman.collection;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

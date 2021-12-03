@@ -1,4 +1,4 @@
-package com.retailvend.deliveryman;
+package com.retailvend.deliveryman.collection;
 
 import static com.retailvend.utills.PaginationListener.PAGE_START;
 

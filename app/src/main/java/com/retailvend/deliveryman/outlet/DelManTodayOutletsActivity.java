@@ -1,4 +1,4 @@
-package com.retailvend.deliveryman;
+package com.retailvend.deliveryman.outlet;
 
 import android.app.Activity;
 import android.os.Build;
@@ -20,13 +20,9 @@ import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsDatum;
 import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsModel;
-import com.retailvend.model.outlets.AssignOutletsDatum;
-import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.todayoutlet.TodayOutletAdapter;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.SessionManagerSP;
-import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;
 

@@ -1,5 +1,6 @@
 package com.retailvend.retrofit;
 
+import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsModel;
 import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListModel;
 import com.retailvend.model.delManModels.delCollection.addpayment.AddPaymentModel;
@@ -141,6 +142,15 @@ public interface Api {
     Call<DeliveryTodayOutletsModel> assignDelManShop(
             @Field("method") String method,
             @Field("employee_id") String employee_id
+    );
+
+    //Today outlets details api
+    @FormUrlEncoded
+    @POST("assigninvoice/api/employee_wise_shop")
+    Call<TodayOutletDetailsModel> delManOutletInvoice(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id,
+            @Field("random_value") String random_value
     );
 
     //Collection api

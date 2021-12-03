@@ -1,4 +1,4 @@
-package com.retailvend.deliveryman;
+package com.retailvend.deliveryman.outlet;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,9 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
+import com.retailvend.deliveryman.OutletInvoiceDetailsActivity;
 import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsDatum;
-import com.retailvend.model.outlets.AssignOutletsDatum;
-import com.retailvend.todayoutlet.TodayOutletDetailsActivity;
 
 import java.util.List;
 
@@ -44,6 +43,7 @@ public class TodayOutletDelManAdapter extends RecyclerView.Adapter<TodayOutletDe
         String billNo = data.getBillType();
         String invoiceNo = data.getInvoiceNo();
         String date = data.getOrdered();
+        String randomVal = data.getRandomValue();
         holder.compName.setText(companyName);
 
         if(billNo.equals("1")){
@@ -53,15 +53,15 @@ public class TodayOutletDelManAdapter extends RecyclerView.Adapter<TodayOutletDe
         }
         holder.invoice.setText(invoiceNo);
         holder.date.setText(date);
-//
-//        holder.todayOutletCard.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(activity, TodayOutletDetailsActivity.class);
-//                i.putExtra("todayOutlet", data);
-//                activity.startActivity(i);
-//            }
-//        });
+
+        holder.todayOutletCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(activity, OutletInvoiceDetailsActivity.class);
+                i.putExtra("random_value", randomVal);
+                activity.startActivity(i);
+            }
+        });
     }
 
     @Override

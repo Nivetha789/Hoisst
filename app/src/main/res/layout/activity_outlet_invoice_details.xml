@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".deliveryman.collection.PaymentDetailsActivity">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/collection_toolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
@@ -34,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:text="Payment Details"
+                android:text="Invoice Details"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"
                 android:gravity="center"
@@ -53,7 +52,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize">
 
-        <include layout="@layout/content_payment_details" />
+        <include layout="@layout/content_invoice_details_delman" />
     </LinearLayout>
 
 
