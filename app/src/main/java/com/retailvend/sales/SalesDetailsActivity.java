@@ -13,12 +13,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.retailvend.R;
+import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.sales.SalesBillDetails;
 import com.retailvend.model.sales.SalesDetailsModel;
 import com.retailvend.model.sales.SalesProductDetail;
@@ -47,7 +47,6 @@ public class SalesDetailsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ProgressBar progress;
     NestedScrollView lin_invoice_details_scrollview;
-    ImageView left_arrow;
 
     SalesBillDetails salesBillDetails;
     SalesStoreDetails salesStoreDetails;
@@ -126,19 +125,15 @@ public class SalesDetailsActivity extends AppCompatActivity {
         order_type = findViewById(R.id.order_type);
         amount = findViewById(R.id.amount);
         bill_date = findViewById(R.id.bill_date);
-        left_arrow = findViewById(R.id.left_arrow);
 
         productDetails = new ArrayList<>();
         taxDetails = new ArrayList<>();
-        salesInvoiceDetails(random_value);
-
-        left_arrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            salesInvoiceDetails(random_value);
+        } else {
+            CustomToast.getInstance(SalesDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
     }
 
     public void salesInvoiceDetails(String randomValue) {
@@ -228,11 +223,5 @@ public class SalesDetailsActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
     }
 }

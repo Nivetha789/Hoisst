@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.retailvend.R;
-import com.retailvend.model.delCollection.paymentCollection.PaymentTypeData;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentTypeData;
 
 import java.util.List;
 

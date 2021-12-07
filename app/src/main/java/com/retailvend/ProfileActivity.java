@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
+import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.login.LoginDatum;
 import com.retailvend.model.login.LoginResModel;
 import com.retailvend.retrofit.RetrofitClient;
@@ -76,8 +77,16 @@ public class ProfileActivity extends AppCompatActivity {
 
        mobNo= sessionManagerSP.getMobile();
        pass= sessionManagerSP.getPass();
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+//            Intent i = new Intent(LoginActivity.this,DashboardActivity.class);
+//            startActivity(i);
+            profile(mobNo,pass);
 
-        profile(mobNo,pass);
+        } else {
+//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+            CustomToast.getInstance(ProfileActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
     }
 
     @Override

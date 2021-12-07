@@ -1,9 +1,14 @@
 package com.retailvend.retrofit;
 
-import com.retailvend.model.delCollection.DeliveryCollectionListModel;
-import com.retailvend.model.delCollection.addpayment.AddPaymentModel;
-import com.retailvend.model.delCollection.paymentCollection.PaymentCollectionModel;
-import com.retailvend.model.delCollection.paymentCollection.PaymentTypeModel;
+import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHistoryModel;
+import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
+import com.retailvend.model.delManModels.delCollection.paymentHistory.PaymentHistoryModel;
+import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsModel;
+import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsModel;
+import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListModel;
+import com.retailvend.model.delManModels.delCollection.addpayment.AddPaymentModel;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentCollectionModel;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentTypeModel;
 import com.retailvend.model.login.LoginResModel;
 import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageModel;
@@ -131,7 +136,25 @@ public interface Api {
     );
 
 
+
     /*Delivery man*/
+
+    //Today outlets api
+    @FormUrlEncoded
+    @POST("assigninvoice/api/employee_wise_shop")
+    Call<DeliveryTodayOutletsModel> assignDelManShop(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id
+    );
+
+    //Today outlets details api
+    @FormUrlEncoded
+    @POST("assigninvoice/api/employee_wise_shop")
+    Call<TodayOutletDetailsModel> delManOutletInvoice(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id,
+            @Field("random_value") String random_value
+    );
 
     //Collection api
     @FormUrlEncoded
@@ -181,6 +204,26 @@ public interface Api {
     @POST("master/api/message")
     Call<NoReasonMessageModel> noReason(
             @Field("method") String method
+    );
+
+    //Outstand List
+    @FormUrlEncoded
+    @POST("distributors/api/distributor_outlet_list")
+    Call<OutstandModel> outstandList(
+            @Field("method") String method,
+            @Field("distributor_id") String distributor_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit
+    );
+
+    //History List
+    @FormUrlEncoded
+    @POST("payment/api/outlet_payment")
+    Call<PaymentHistoryModel> paymentHistory(
+            @Field("method") String method,
+            @Field("assign_id") String assign_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit
     );
 
 }

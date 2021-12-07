@@ -17,13 +17,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.retailvend.LoginActivity;
 import com.retailvend.R;
+import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.todayoutlet.TodayOutletActivity;
 import com.retailvend.todayoutlet.TodayOutletAdapter;
 import com.retailvend.utills.CustomProgress;
+import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
@@ -83,7 +86,16 @@ public class OutstandingActivity extends AppCompatActivity {
 //        salesRecycler.setHasFixedSize(true);
 //        saleslists = new ArrayList<>();
 
-        outstandListApi();
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+//            Intent i = new Intent(LoginActivity.this,DashboardActivity.class);
+//            startActivity(i);
+            outstandListApi();
+
+        } else {
+//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+            CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
 
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -268,6 +268,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
             }
         });
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

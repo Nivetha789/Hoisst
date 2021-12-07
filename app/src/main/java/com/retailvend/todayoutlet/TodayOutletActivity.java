@@ -18,10 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.retailvend.R;
+import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AssignOutletsModel;
+import com.retailvend.outstand.OutstandingActivity;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
+import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
@@ -80,7 +83,13 @@ public class TodayOutletActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        todayOutletListApi();
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            todayOutletListApi();
+        } else {
+//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+            CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
     }
 
     public void todayOutletListApi() {

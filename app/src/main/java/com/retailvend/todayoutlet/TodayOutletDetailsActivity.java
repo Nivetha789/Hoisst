@@ -39,13 +39,16 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.retailvend.R;
+import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageDatum;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageModel;
+import com.retailvend.model.outlets.AddAttendanceData;
 import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AttendanceTypeDatum;
 import com.retailvend.model.outlets.AttendanceTypeModel;
 import com.retailvend.model.outlets.ProductTypeDatum;
+import com.retailvend.payment.AddPaymentActivity;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
@@ -92,6 +95,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
     private boolean locationget;
 
+    AddAttendanceData addAttendanceData;
+
     List<NoReasonMessageDatum> noReasonMessageData;
     ReasonBaseAdapter reasonBaseAdapter;
 
@@ -120,8 +125,13 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
-
-
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            attendanceListApi();
+        } else {
+//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
 
         shop_name = findViewById(R.id.shop_name);
         shop_number = findViewById(R.id.shop_number);
@@ -168,10 +178,6 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         checkGPSON();
         getLocation();
 
-
-
-        attendanceListApi();
-
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,6 +186,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         });
 
         if(attendance_status.equals("1")){
+            System.out.println("attendance_statusdddss "+attendance_status);
             check_in.setVisibility(View.GONE);
             checked.setVisibility(View.VISIBLE);
             order_type_constrain.setVisibility(View.VISIBLE);
@@ -188,6 +195,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             check_in.setVisibility(View.VISIBLE);
             checked.setVisibility(View.GONE);
             order_type_constrain.setVisibility(View.GONE);
+            System.out.println("attendance_status111 "+attendance_status);
         }
 
         location_constrain.setOnClickListener(new View.OnClickListener() {
@@ -216,6 +224,11 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             @Override
             public void onClick(View v) {
                 if (!reasonTxt.isEmpty()) {
+                    if(type_val.equals("Sales Order")){
+                        type_val="1";
+                    }else{
+                        type_val="2";
+                    }
                     updateAttendanceApi(type_id, type_val);
                 } else {
                     CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Enter Reason");
@@ -235,7 +248,12 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                 getLocation();
 
                 if (!TextUtils.isEmpty(latitude) && !TextUtils.isEmpty(longitude)) {
-                    addAttendanceApi(latitude, longitude);
+                    boolean isConnected = ConnectivityReceiver.isConnected();
+                    if (isConnected) {
+                        addAttendanceApi(latitude, longitude);
+                    } else {
+                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+                    }
                 } else {
                     Toast.makeText(TodayOutletDetailsActivity.this, "Location is not updated, Try Again", Toast.LENGTH_SHORT).show();
                 }
@@ -297,11 +315,16 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, (LocationListener) this);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, (LocationListener) this);
         } catch (SecurityException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean isLocationEnabled() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
     @Override
@@ -309,23 +332,25 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
         latitude = String.valueOf(location.getLatitude());
         longitude = String.valueOf(location.getLongitude());
+        sessionManagerSP.setLat(latitude);
+        sessionManagerSP.setLong(longitude);
         locationget = true;
         //  Toast.makeText(this, "Latitudetttt: " + latitude + "\n Longitude: " + longitude, Toast.LENGTH_SHORT).show();
         System.out.println("Latitudetttt: " + latitude + " Longitude: " + longitude);
 
 
-//        try {
-//            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-//            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-//
-//            String address = addresses.get(0).getAddressLine(0) + ", " +
-//                    addresses.get(0).getAddressLine(1);
-//
-//            System.out.println(" address " + addresses.get(0).getAddressLine(0) + ", " +
-//                    addresses.get(0).getAddressLine(1) + ", " + addresses.get(0).getAddressLine(2));
-//        } catch (Exception e) {
-//
-//        }
+        try {
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+
+            String address = addresses.get(0).getAddressLine(0) + ", " +
+                    addresses.get(0).getAddressLine(1);
+
+            System.out.println(" address " + addresses.get(0).getAddressLine(0) + ", " +
+                    addresses.get(0).getAddressLine(1) + ", " + addresses.get(0).getAddressLine(2));
+        } catch (Exception e) {
+
+        }
 
     }
 
@@ -366,13 +391,13 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                     String json = gson.toJson(response.body());
 
                     AttendanceTypeModel attendanceTypeModel = gson.fromJson(json, AttendanceTypeModel.class);
+                    System.out.println("attadanceecev "+response.body());
 
                     if (attendanceTypeModel.getStatus() == 1) {
-
                         attendanceTypeData = attendanceTypeModel.getData();
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 
-                        buttonTypeAdapter = new ButtonTypeAdapter(activity, attendanceTypeData, store_id, latitude, longitude);
+                        buttonTypeAdapter = new ButtonTypeAdapter(activity, attendanceTypeData, store_id);
                         order_type_recycler.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
                         mLayoutManager = new LinearLayoutManager(activity);
                         //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -409,7 +434,12 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     }
 
     public void showReason(String typeId, String typeVal) {
-        getReasonApi();
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            getReasonApi();
+        } else {
+            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
         reason_constrain.setVisibility(View.VISIBLE);
         type_id = typeId;
         type_val = typeVal;
@@ -485,7 +515,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                     AddAttendanceModel attendanceTypeModel = gson.fromJson(json, AddAttendanceModel.class);
 
                     if (attendanceTypeModel.getStatus() == 1) {
-
+                        addAttendanceData=attendanceTypeModel.getData();
+                            sessionManagerSP.setAttendanceId(attendanceTypeModel.getData().getAttendanceId());
 //                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
                         check_in.setVisibility(View.GONE);
                         checked.setVisibility(View.VISIBLE);
