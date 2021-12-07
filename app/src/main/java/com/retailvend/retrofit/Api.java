@@ -4,6 +4,7 @@ import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHis
 import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
 import com.retailvend.model.delManModels.delCollection.paymentHistory.PaymentHistoryModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsModel;
+import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.UpdateBillModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsModel;
 import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListModel;
 import com.retailvend.model.delManModels.delCollection.addpayment.AddPaymentModel;
@@ -156,6 +157,16 @@ public interface Api {
             @Field("random_value") String random_value
     );
 
+ //update status
+    @FormUrlEncoded
+    @POST("assigninvoice/api/employee_wise_shop")
+    Call<UpdateBillModel> delManOutletInvoiceUpdateStatus(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id,
+            @Field("random_value") String random_value,
+            @Field("progress") String progress
+    );
+
     //Collection api
     @FormUrlEncoded
     @POST("distributors/api/distributor_outlet_list")
@@ -190,13 +201,17 @@ public interface Api {
     Call<AddPaymentModel> addPayment(
             @Field("method") String method,
             @Field("assign_id") String assign_id,
+            @Field("pay_id") String pay_id,
             @Field("employee_id") String employee_id,
             @Field("distributor_id") String distributor_id,
             @Field("outlet_id") String outlet_id,
             @Field("amount") String amount,
             @Field("discount") String discount,
             @Field("amt_type") String amt_type,
-            @Field("description") String description
+            @Field("description") String description,
+            @Field("bank_name") String bank_name,
+            @Field("cheque_no") String cheque_no,
+            @Field("entry_type") String entry_type
     );
 
     //no reason

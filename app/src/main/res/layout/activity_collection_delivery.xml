@@ -55,6 +55,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="10dp"
         app:layout_constraintVertical_chainStyle="spread_inside"

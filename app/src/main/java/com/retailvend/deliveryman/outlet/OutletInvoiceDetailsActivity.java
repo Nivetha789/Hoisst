@@ -27,7 +27,9 @@ import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.Today
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsProductDetail;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsStoreDetails;
+import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.UpdateBillModel;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
 
@@ -172,6 +174,27 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
                 deliveryClick.setVisibility(View.VISIBLE);
             }
         });
+        deliveryClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                invoice.setVisibility(View.GONE);
+                invoiceClick.setVisibility(View.VISIBLE);
+                delivery.setVisibility(View.VISIBLE);
+                deliveryClick.setVisibility(View.GONE);
+            }
+        });
+
+        lin_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isConnected = ConnectivityReceiver.isConnected();
+                if (isConnected) {
+                    updateBillApi(random_value);
+                } else {
+                    CustomToast.getInstance(OutletInvoiceDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+                }
+            }
+        });
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
@@ -260,6 +283,55 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
             public void onFailure(Call<TodayOutletDetailsModel> call, Throwable t) {
                 Log.d("Failure ", t.getMessage());
                 progress.setVisibility(View.GONE);
+                lin_invoice_details_scrollview.setVisibility(View.GONE);
+                txt_empty.setVisibility(View.VISIBLE);
+                txt_empty.setText("Something went wrong try again..");
+                CustomToast.getInstance(OutletInvoiceDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
+
+            }
+        });
+
+    }
+
+    public void updateBillApi(String randomValue) {
+        String emp_id = sessionManagerSP.getEmployeeId();
+        CustomProgress.showProgress(OutletInvoiceDetailsActivity.this);
+
+        Call<UpdateBillModel> call = RetrofitClient
+                .getInstance().getApi().delManOutletInvoiceUpdateStatus("_employeeUpdateBill", emp_id, randomValue,"6");
+
+
+        call.enqueue(new Callback<UpdateBillModel>() {
+            @Override
+            public void onResponse(@NonNull Call<UpdateBillModel> call, @NonNull Response<UpdateBillModel> response) {
+
+                try {
+
+                    Gson gson = new Gson();
+                    String json = gson.toJson(response.body());
+                    UpdateBillModel updateBillModel = gson.fromJson(json, UpdateBillModel.class);
+
+                    if (updateBillModel.getStatus() == 1) {
+                        CustomToast.getInstance(OutletInvoiceDetailsActivity.this).showSmallCustomToast(updateBillModel.getMessage());
+                        CustomProgress.hideProgress(OutletInvoiceDetailsActivity.this);
+                    } else {
+                        progress.setVisibility(View.GONE);
+                        lin_invoice_details_scrollview.setVisibility(View.GONE);
+                        txt_empty.setVisibility(View.VISIBLE);
+                        CustomToast.getInstance(OutletInvoiceDetailsActivity.this).showSmallCustomToast(updateBillModel.getMessage());
+
+                        CustomProgress.hideProgress(OutletInvoiceDetailsActivity.this);
+                    }
+                } catch (Exception e) {
+                    Log.d("Exception", e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateBillModel> call, Throwable t) {
+                Log.d("Failure ", t.getMessage());
+                progress.setVisibility(View.GONE);
+                CustomProgress.hideProgress(OutletInvoiceDetailsActivity.this);
                 lin_invoice_details_scrollview.setVisibility(View.GONE);
                 txt_empty.setVisibility(View.VISIBLE);
                 txt_empty.setText("Something went wrong try again..");

@@ -38,13 +38,14 @@ import retrofit2.Response;
 
 public class AddPaymentActivity extends AppCompatActivity {
 
-    TextView txt_dis_add_pay_toolbar, txt_add_payment_name, txt_add_payment_bal_amt, txt_add_payment_date;
-    EditText edt_add_payment_amt, edt_add_payment_descrip,type_description;
+    TextView txt_dis_add_pay_toolbar, txt_add_payment_name, txt_add_payment_bal_amt, txt_add_payment_date,cheque_date;
+    EditText edt_add_payment_amt, edt_add_payment_descrip,type_description,cheque_no,bank_name;
     Spinner spin_add_payment_type;
-    LinearLayout lin_add_payment, lin_back,description_linearLayout;
+    LinearLayout lin_add_payment, lin_back,description_linearLayout,cheque_linearLayout,bank_linearLayout,cheque_date_linearLayout;
     List<PaymentTypeData> addPaymentTypeList;
     AddPaymentTypeAdapter addPaymentTypeAdapter;
     String payment_type = "";
+    String payment_typeVal = "";
     Calendar c;
     int mYear, mMonth, mDay, mHour, mMinute;
     String assignId = "";
@@ -97,8 +98,16 @@ public class AddPaymentActivity extends AppCompatActivity {
         progress = findViewById(R.id.progress);
         description_linearLayout = findViewById(R.id.description_linearLayout);
         type_description = findViewById(R.id.type_description);
+        cheque_linearLayout = findViewById(R.id.cheque_linearLayout);
+        bank_linearLayout = findViewById(R.id.bank_linearLayout);
+        cheque_date_linearLayout = findViewById(R.id.cheque_date_linearLayout);
+        cheque_no = findViewById(R.id.cheque_no);
+        bank_name = findViewById(R.id.bank_name);
+        cheque_date = findViewById(R.id.cheque_date);
 
         sessionManagerSP = new SessionManagerSP(AddPaymentActivity.this);
+
+        description_linearLayout.setVisibility(View.GONE);
 
         distributorId=sessionManagerSP.getDistributorId();
         Intent iin = getIntent();
@@ -122,11 +131,24 @@ public class AddPaymentActivity extends AppCompatActivity {
         spin_add_payment_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                payment_type = addPaymentTypeList.get(i).getTypeVal();
-                if(payment_type.equals("Cash")){
+                payment_type = addPaymentTypeList.get(i).getTypeId();
+                payment_typeVal = addPaymentTypeList.get(i).getTypeVal();
+                if(payment_typeVal.equals("Cash")){
                     description_linearLayout.setVisibility(View.GONE);
-                }else{
+                    cheque_linearLayout.setVisibility(View.GONE);
+                    bank_linearLayout.setVisibility(View.GONE);
+                    cheque_date_linearLayout.setVisibility(View.GONE);
+                }else if(payment_typeVal.equals("Cheque")){
+                    description_linearLayout.setVisibility(View.GONE);
+                    cheque_linearLayout.setVisibility(View.VISIBLE);
+                    bank_linearLayout.setVisibility(View.VISIBLE);
+                    cheque_date_linearLayout.setVisibility(View.VISIBLE);
+                }
+                else{
                     description_linearLayout.setVisibility(View.VISIBLE);
+                    cheque_linearLayout.setVisibility(View.GONE);
+                    bank_linearLayout.setVisibility(View.GONE);
+                    cheque_date_linearLayout.setVisibility(View.GONE);
                 }
             }
 
@@ -159,6 +181,21 @@ public class AddPaymentActivity extends AppCompatActivity {
                 datePicker();
             }
         });
+        cheque_date.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+            //                c = Calendar.getInstance();
+            //                mYear = c.get(Calendar.YEAR);
+            //                mMonth = c.get(Calendar.MONTH);
+            //                mDay = c.get(Calendar.DAY_OF_MONTH);
+            //
+            //                System.out.println("Current Date  new " + mDay + "-" + mMonth + "-" + mYear);
+
+
+                            datePickerCollectDate();
+                        }
+                    });
 
 
         if (balamt.length() > 0) {
@@ -192,7 +229,7 @@ public class AddPaymentActivity extends AppCompatActivity {
                                 boolean isConnected = ConnectivityReceiver.isConnected();
                                 if (isConnected) {
                                     addPayment(assignId,distributorId,outletId,edt_add_payment_amt.getText().toString(),discount,
-                                            payment_type,type_description.getText().toString());
+                                            payment_type,type_description.getText().toString(),bank_name.getText().toString(),cheque_no.getText().toString());
                                 } else {
                                     CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Please check your internet connection");
                                 }
@@ -218,7 +255,7 @@ public class AddPaymentActivity extends AppCompatActivity {
 
     }
 
-    public void addPayment(String assignId,String distributorID, String outletId,String amt, String discount,String amt_type, String description) {
+    public void addPayment(String assignId,String distributorID, String outletId,String amt, String discount,String amt_type, String description,String bankName,String chequeNo) {
         employeeId=sessionManagerSP.getEmployeeId();
 
         progress.setVisibility(View.VISIBLE);
@@ -226,7 +263,7 @@ public class AddPaymentActivity extends AppCompatActivity {
 
 
         Call<AddPaymentModel> call = RetrofitClient
-                .getInstance().getApi().addPayment("_addOutletPayment",assignId,employeeId, distributorID,outletId, amt, discount,amt_type,description);
+                .getInstance().getApi().addPayment("_addOutletPayment",assignId,"1",employeeId, distributorID,outletId, amt, discount,amt_type,"Test",bankName,chequeNo,"2");
 
 
         call.enqueue(new Callback<AddPaymentModel>() {
@@ -299,7 +336,7 @@ public class AddPaymentActivity extends AppCompatActivity {
                     if (paymentTypeModel.getStatus() == 1) {
 
                         progress.setVisibility(View.GONE);
-                        CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(paymentTypeModel.getMessage());
+//                        CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(paymentTypeModel.getMessage());
 
                         addPaymentTypeList=paymentTypeModel.getData();
                         addPaymentTypeAdapter = new AddPaymentTypeAdapter(AddPaymentActivity.this, addPaymentTypeList);
@@ -362,6 +399,47 @@ public class AddPaymentActivity extends AppCompatActivity {
 
 //                        txt_date.setText(strDate);
                         txt_add_payment_date.setText(formattedDayOfMonth + "-" + formattedMonth + "-" + year);
+                        txt_add_payment_date.setEnabled(false);
+
+//                        select_spin_date = formattedDayOfMonth + "-" + formattedMonth + "-" + year;
+
+//                        System.out.println("dayOfMonth  " + (dayOfMonth));
+//                        System.out.println("monthOfYear " + (monthOfYear + 1));
+//                        System.out.println("currreent " + select_spin_date);
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
+
+    public void datePickerCollectDate() {
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        String formattedDayOfMonth = "";
+                        String formattedMonth = "";
+
+                        if (dayOfMonth < 10) {
+
+                            formattedDayOfMonth = "0" + dayOfMonth;
+                        } else {
+                            formattedDayOfMonth = String.valueOf(dayOfMonth);
+                        }
+                        if ((monthOfYear + 1) < 10) {
+
+                            formattedMonth = "0" + (monthOfYear + 1);
+                        } else {
+                            formattedMonth = String.valueOf((monthOfYear + 1));
+                        }
+
+
+//                        txt_date.setText(strDate);
+                        cheque_date.setText(formattedDayOfMonth + "-" + formattedMonth + "-" + year);
+                        cheque_date.setEnabled(false);
 
 //                        select_spin_date = formattedDayOfMonth + "-" + formattedMonth + "-" + year;
 

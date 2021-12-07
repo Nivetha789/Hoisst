@@ -170,7 +170,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@null"
                                 android:gravity="center|left"
-                                android:hint="Enter Amount"
+                                android:hint="Amount"
                                 android:fontFamily="@font/quicksand_medium"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
@@ -238,7 +238,7 @@
                                     android:layout_height="match_parent"
                                     android:background="@null"
                                     android:gravity="center|left"
-                                    android:hint="Enter Description"
+                                    android:hint="Description"
                                     android:paddingLeft="10dp"
                                     android:paddingRight="10dp"
                                     android:singleLine="true"
@@ -282,7 +282,51 @@
                                     android:layout_height="match_parent"
                                     android:background="@null"
                                     android:gravity="center|left"
-                                    android:hint="Enter Cheque No"
+                                    android:hint="Cheque No"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:singleLine="true"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:inputType="text"
+                                    android:textColor="@color/black"
+                                    android:textColorHint="#40000000"
+                                    android:textSize="15dp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/bank_linearLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:paddingLeft="15dp"
+                                android:text="Bank Name*"
+                                android:fontFamily="@font/quicksand_regular"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="14dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/lin_gray_back">
+
+                                <EditText
+                                    android:id="@+id/bank_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@null"
+                                    android:gravity="center|left"
+                                    android:hint="Bank Name"
                                     android:paddingLeft="10dp"
                                     android:paddingRight="10dp"
                                     android:singleLine="true"
@@ -307,7 +351,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:paddingLeft="15dp"
-                                android:text="Cheque Date*"
+                                android:text="Collect Date*"
                                 android:fontFamily="@font/quicksand_regular"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="14dp" />
@@ -326,12 +370,11 @@
                                     android:layout_height="match_parent"
                                     android:background="@null"
                                     android:gravity="center|left"
-                                    android:hint="Enter Cheque date"
+                                    android:hint="Cheque date"
                                     android:paddingLeft="10dp"
                                     android:paddingRight="10dp"
                                     android:singleLine="true"
                                     android:fontFamily="@font/quicksand_medium"
-                                    android:inputType="text"
                                     android:textColor="@color/black"
                                     android:textColorHint="#40000000"
                                     android:textSize="15dp" />
@@ -401,7 +444,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@null"
                                 android:gravity="center|left"
-                                android:hint="Enter Discount"
+                                android:hint="Discount"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
                                 android:singleLine="true"

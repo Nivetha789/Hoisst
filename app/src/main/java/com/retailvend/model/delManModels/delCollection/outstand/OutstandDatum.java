@@ -3,7 +3,10 @@ package com.retailvend.model.delManModels.delCollection.outstand;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OutstandDatum {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class OutstandDatum implements Serializable {
 
     @SerializedName("assign_id")
     @Expose

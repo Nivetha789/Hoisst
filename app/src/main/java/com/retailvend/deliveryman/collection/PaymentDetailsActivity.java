@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
     Toolbar toolbar;
     Menu menu;
     TextView mTitle, emptyView, txt_dis_pay_details_name, txt_pay_details_name;
+    ImageView left_arrow;
     ProgressBar progress;
     LinearLayout lin_payment_add;
     TextView txt_payment_details_bal_amt;
@@ -99,6 +101,7 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
         progress = findViewById(R.id.progress);
         lin_payment_add = findViewById(R.id.lin_payment_add);
         txt_payment_details_bal_amt = findViewById(R.id.txt_payment_details_bal_amt);
+        left_arrow = findViewById(R.id.left_arrow);
 
 
         Bundle extras = getIntent().getExtras();
@@ -132,14 +135,14 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
             protected void loadMoreItems() {
                 isLoading = true;
 //                currentPage++;
-                    boolean isConnected = ConnectivityReceiver.isConnected();
-                    if (isConnected) {
+                boolean isConnected = ConnectivityReceiver.isConnected();
+                if (isConnected) {
 
-                        payDetailsApi(offset,limit, assignId);
+                    payDetailsApi(offset,limit, assignId);
 
-                    } else {
-                        CustomToast.getInstance(PaymentDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
-                    }
+                } else {
+                    CustomToast.getInstance(PaymentDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+                }
             }
 
             @Override
@@ -166,6 +169,18 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
                 startActivity(intent);
             }
         });
+        left_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -304,67 +319,44 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
     }
 
    /* public void deletePaymentList(String type, String pay_id, String user_id) {
-
-
         progress.setVisibility(View.VISIBLE);
-
-
         Call<AddPaymentModel> call = RetrofitClient
                 .getInstance().getApi().deleteCustomerPayment(type, pay_id, user_id);
-
-
         call.enqueue(new Callback<AddPaymentModel>() {
             @Override
             public void onResponse(Call<AddPaymentModel> call, Response<AddPaymentModel> response) {
-
                 try {
-
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
                     AddPaymentModel addPaymentModel = gson.fromJson(json, AddPaymentModel.class);
 //                LoginModule loginModule = response.body();
-
-
                     if (addPaymentModel.getCode() == 1) {
-
                         itemCount = 0;
                         currentPage = PAGE_START;
                         isLastPage = false;
                         paymentDetailsAdapter.clear();
                         boolean isConnected = ConnectivityReceiver.isConnected();
                         if (isConnected) {
-
                             custPayDetails("2", currentPage, userid);
-
                         } else {
                             CustomToast.getInstance(PaymentDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
                         }
-
                         CustomToast.getInstance(PaymentDetailsActivity.this).showSmallCustomToast(addPaymentModel.getMessage());
-
                         progress.setVisibility(View.GONE);
-
-
                     } else {
-
                         CustomToast.getInstance(PaymentDetailsActivity.this).showSmallCustomToast(addPaymentModel.getMessage());
                         progress.setVisibility(View.GONE);
                     }
-
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
                 }
-
             }
-
             @Override
             public void onFailure(Call<AddPaymentModel> call, Throwable t) {
                 Log.d("Failure ", t.getMessage());
                 CustomToast.getInstance(PaymentDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
                 progress.setVisibility(View.GONE);
-
             }
         });
-
     }*/
 }

@@ -21,7 +21,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.retailvend.collection.CollectionActivity;
-import com.retailvend.deliveryman.collection.CollectionDeliveryActivity;
 import com.retailvend.deliveryman.outlet.DelManTodayOutletsActivity;
 import com.retailvend.deliveryman.outstand.DelManOutstandActivity;
 import com.retailvend.orderList.OrderListActivity;
@@ -138,7 +137,7 @@ public class DashboardActivity extends AppCompatActivity {
                     Intent collectionIntent = new Intent(DashboardActivity.this, CollectionActivity.class);
                     startActivity(collectionIntent);
                 } else {
-                    Intent collectionIntent1 = new Intent(DashboardActivity.this, CollectionDeliveryActivity.class);
+                    Intent collectionIntent1 = new Intent(DashboardActivity.this, CollectionActivity.class);
                     startActivity(collectionIntent1);
                 }
             }

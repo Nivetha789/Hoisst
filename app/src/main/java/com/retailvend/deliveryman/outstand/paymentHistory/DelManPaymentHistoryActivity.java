@@ -2,13 +2,6 @@ package com.retailvend.deliveryman.outstand.paymentHistory;
 
 import static com.retailvend.utills.PaginationListener.PAGE_START;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,11 +14,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.delManModels.delCollection.outstand.OutstandDatum;
-import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
 import com.retailvend.model.delManModels.delCollection.paymentHistory.PaymentHistoryDatum;
 import com.retailvend.model.delManModels.delCollection.paymentHistory.PaymentHistoryModel;
 import com.retailvend.retrofit.RetrofitClient;
@@ -87,13 +86,6 @@ public class DelManPaymentHistoryActivity extends AppCompatActivity implements S
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
-        }
-
-        Bundle extras = getIntent().getExtras();
-
-        if (extras != null) {
-            assign_id = getIntent().getExtras().getString("assign_id");
-            System.out.println("assignidd  " + assign_id);
         }
 
         toolbar = findViewById(R.id.toolbar);

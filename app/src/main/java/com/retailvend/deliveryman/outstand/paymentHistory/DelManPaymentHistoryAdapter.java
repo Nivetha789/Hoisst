@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -102,24 +103,20 @@ public class DelManPaymentHistoryAdapter extends RecyclerView.Adapter<BaseViewHo
     }
 
     public class ViewHolder extends BaseViewHolder {
-        @BindView(R.id.name)
+        @BindView(R.id.employee_name)
         TextView name;
-        @BindView(R.id.invoice_date)
-        TextView invoice_date;
-        @BindView(R.id.invoice_amount)
-        TextView invoice_amount;
-        @BindView(R.id.outstand_cardview_dm)
-        ConstraintLayout cardview;
-        @BindView(R.id.name_frst_ltr)
-        TextView name_txt;
-        @BindView(R.id.history)
-        ImageView history;
-        @BindView(R.id.payment_history)
-        TextView payment_history;
-        @BindView(R.id.collection)
-        ImageView collection;
-        @BindView(R.id.payment_collection)
-        TextView payment_collection;
+        @BindView(R.id.cur_bal)
+        TextView cur_bal;
+        @BindView(R.id.outlet_name)
+        TextView outlet_name;
+        @BindView(R.id.payment_cardview_dm)
+        CardView cardview;
+        @BindView(R.id.pay_type)
+        TextView pay_type;
+        @BindView(R.id.date)
+        TextView date;
+        @BindView(R.id.dist_name)
+        TextView dist_name;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -133,28 +130,12 @@ public class DelManPaymentHistoryAdapter extends RecyclerView.Adapter<BaseViewHo
             super.onBind(position);
             PaymentHistoryDatum item = paymentHistorydata.get(position);
 
-            name.setText(item.getOutletName());
-//            invoice_date.setText(item.getUpdateDate().toString());
-            invoice_amount.setText("₹ "+item.getCurBal().toString());
-            String nameSplit =item.getOutletName();
-            name.setText(nameSplit);
-            char firstLetter = nameSplit.charAt(0);
-            System.out.println("firsrdsrs "+firstLetter);
-            name_txt.setText(String.valueOf(firstLetter));
-
-            payment_history.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-
-            payment_collection.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
+            name.setText(item.getEmployeeName());
+            cur_bal.setText("₹ "+item.getCurBal().toString());
+            outlet_name.setText(item.getOutletName());
+            pay_type.setText(item.getAmountType());
+            date.setText(item.getDate());
+            dist_name.setText("Distributor: "+item.getDistributorName());
 
 //            cardview.setOnClickListener(new View.OnClickListener() {
 //                @Override

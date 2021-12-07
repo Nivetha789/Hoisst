@@ -154,4 +154,3 @@ public class CollectionDeliveryAdapter extends RecyclerView.Adapter<BaseViewHold
         }
     }
 }
-

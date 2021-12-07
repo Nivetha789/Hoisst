@@ -2,6 +2,7 @@ package com.retailvend.deliveryman.outstand;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
+import com.retailvend.deliveryman.collection.CollectionDeliveryActivity;
 import com.retailvend.deliveryman.outstand.paymentHistory.DelManPaymentHistoryActivity;
 import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHistoryDatum;
 import com.retailvend.model.delManModels.delCollection.outstand.OutstandDatum;
@@ -25,6 +27,7 @@ import com.retailvend.utills.BaseViewHolder;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -154,7 +157,6 @@ public class DelManOutstandAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                 @Override
                 public void onClick(View v) {
                     Intent paymentHistoryIntent = new Intent(activity, DelManPaymentHistoryActivity.class);
-                    paymentHistoryIntent.putExtra("assign_id",item.getAssignId());
                     activity.startActivity(paymentHistoryIntent);
                 }
             });
@@ -162,7 +164,8 @@ public class DelManOutstandAdapter extends RecyclerView.Adapter<BaseViewHolder> 
             payment_collection.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent paymentCollectionIntent = new Intent(activity, CollectionDeliveryActivity.class);
+                    activity.startActivity(paymentCollectionIntent);
                 }
             });
 
