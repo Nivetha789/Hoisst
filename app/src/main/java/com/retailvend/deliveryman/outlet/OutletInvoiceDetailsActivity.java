@@ -1,6 +1,7 @@
-package com.retailvend.deliveryman;
+package com.retailvend.deliveryman.outlet;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.retailvend.R;
-import com.retailvend.deliveryman.outlet.OutletInvoiceDetailsAdapter;
+import com.retailvend.broadcast.ConnectivityReceiver;
+import com.retailvend.deliveryman.outstand.DelManOutstandActivity;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsBuyerDetails;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsDistributorDetails;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsModel;
@@ -49,7 +51,7 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ProgressBar progress;
     NestedScrollView lin_invoice_details_scrollview;
-    LinearLayout order_status_layout;
+    LinearLayout order_status_layout,lin_submit;
 
     TodayOutletDetailsStoreDetails todayOutletDetailsStoreDetails;
     TodayOutletDetailsDistributorDetails todayOutletDetailsDistributorDetails;
@@ -139,6 +141,7 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
         invoiceClick = findViewById(R.id.invoiceClick);
         delivery = findViewById(R.id.delivery);
         deliveryClick = findViewById(R.id.deliveryClick);
+        lin_submit = findViewById(R.id.lin_submit);
 
         invoice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,8 +173,12 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
             }
         });
 
-        delManOutletInvoiceApi(random_value);
-
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            delManOutletInvoiceApi(random_value);
+        } else {
+            CustomToast.getInstance(OutletInvoiceDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
     }
 
     public void delManOutletInvoiceApi(String randomValue) {

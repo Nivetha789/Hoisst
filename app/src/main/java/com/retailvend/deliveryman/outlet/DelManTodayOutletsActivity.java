@@ -18,10 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.retailvend.R;
+import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsDatum;
 import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsModel;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.sales.SalesDetailsActivity;
 import com.retailvend.utills.CustomProgress;
+import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
 
 import java.util.List;
@@ -79,7 +82,12 @@ public class DelManTodayOutletsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        delManTodayOutletListApi();
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            delManTodayOutletListApi();
+        } else {
+            CustomToast.getInstance(DelManTodayOutletsActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
     }
 
     public void delManTodayOutletListApi() {

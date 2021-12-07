@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.retailvend.R;
+import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.sales.SalesBillDetails;
 import com.retailvend.model.sales.SalesDetailsModel;
 import com.retailvend.model.sales.SalesProductDetail;
@@ -127,8 +128,12 @@ public class SalesDetailsActivity extends AppCompatActivity {
 
         productDetails = new ArrayList<>();
         taxDetails = new ArrayList<>();
-        salesInvoiceDetails(random_value);
-
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            salesInvoiceDetails(random_value);
+        } else {
+            CustomToast.getInstance(SalesDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
     }
 
     public void salesInvoiceDetails(String randomValue) {

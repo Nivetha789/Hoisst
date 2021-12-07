@@ -139,7 +139,12 @@ public class SalesAgentNameActivity extends AppCompatActivity implements SwipeRe
                 offset = 0;
                 searchTxt = s.toString();
 
-                salesAgentType(offset, limit, "2");
+                boolean isConnected = ConnectivityReceiver.isConnected();
+                if (isConnected) {
+                    salesAgentType(offset, limit, "2");
+                } else {
+                    CustomToast.getInstance(SalesAgentNameActivity.this).showSmallCustomToast("Please check your internet connection");
+                }
 
             }
 

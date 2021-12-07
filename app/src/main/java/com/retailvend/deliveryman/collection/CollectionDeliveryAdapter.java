@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.retailvend.R;
 import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListData;
 import com.retailvend.utills.BaseViewHolder;
+import com.retailvend.utills.SessionManagerSP;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class CollectionDeliveryAdapter extends RecyclerView.Adapter<BaseViewHold
     private static final int VIEW_TYPE_LOADING = 0;
     private static final int VIEW_TYPE_NORMAL = 1;
     private static boolean isLoaderVisible = false;
+    SessionManagerSP sessionManagerSP;
 
     public CollectionDeliveryAdapter(Activity context, List<DeliveryCollectionListData> itemsModelsl) {
         this.deliveryCollectionListData = itemsModelsl;

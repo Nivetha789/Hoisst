@@ -12,7 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
-import com.retailvend.deliveryman.OutletInvoiceDetailsActivity;
 import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsDatum;
 
 import java.util.List;
@@ -43,6 +42,7 @@ public class TodayOutletDelManAdapter extends RecyclerView.Adapter<TodayOutletDe
         String billNo = data.getBillType();
         String invoiceNo = data.getInvoiceNo();
         String date = data.getOrdered();
+//        String assignID = data.geta();
         String randomVal = data.getRandomValue();
         holder.compName.setText(companyName);
 
@@ -58,6 +58,7 @@ public class TodayOutletDelManAdapter extends RecyclerView.Adapter<TodayOutletDe
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(activity, OutletInvoiceDetailsActivity.class);
+//                i.putExtra("assign_id",)
                 i.putExtra("random_value", randomVal);
                 activity.startActivity(i);
             }

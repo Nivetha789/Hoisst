@@ -24,18 +24,14 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
     private Activity activity;
     private List<AttendanceTypeDatum> attendanceTypeDatumList;
     String store_Id = "";
-    String long_val = "";
-    String lat = "";
     private int index = -1;
 
     SessionManagerSP sessionManagerSP;
 
-    ButtonTypeAdapter(Activity activity, List<AttendanceTypeDatum> assignOutletsDatum, String storeId, String lat1, String long_val1) {
+    ButtonTypeAdapter(Activity activity, List<AttendanceTypeDatum> assignOutletsDatum, String storeId) {
         this.activity = activity;
         this.attendanceTypeDatumList = assignOutletsDatum;
         this.store_Id = storeId;
-        this.lat = lat1;
-        this.long_val = long_val1;
         this.sessionManagerSP = new SessionManagerSP(activity);
     }
 
@@ -50,7 +46,7 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         AttendanceTypeDatum data = attendanceTypeDatumList.get(position);
 
-        String typeId = data.getTypeId();
+        String typeId =sessionManagerSP.getAttendanceId();;
         String typeVal = data.getTypeVal();
         holder.typeValue.setText(typeVal);
 
@@ -111,11 +107,8 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
                 sessionManagerSP.setSalesName("");
                 sessionManagerSP.setSalesNameId("");
                 Intent intent = new Intent(activity, CreateOutletOrderActivity.class);
-                intent.putExtra("type_id", typeId);
                 intent.putExtra("store_id", store_Id);
                 intent.putExtra("type", typeVal);
-                intent.putExtra("lat", lat);
-                intent.putExtra("long", long_val);
                 activity.startActivity(intent);
                 ((TodayOutletDetailsActivity) activity).hideReason(typeId, typeVal);
             }

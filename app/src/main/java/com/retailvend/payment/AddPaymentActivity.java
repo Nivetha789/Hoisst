@@ -112,7 +112,12 @@ public class AddPaymentActivity extends AppCompatActivity {
             System.out.println("outletId :"+outletId);
         }
 
-        paymentTypeApi();
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            paymentTypeApi();
+        } else {
+            CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
 
         spin_add_payment_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -184,17 +189,13 @@ public class AddPaymentActivity extends AppCompatActivity {
                             } else {
                                 discount = "0";
                             }
-
                                 boolean isConnected = ConnectivityReceiver.isConnected();
                                 if (isConnected) {
-
                                     addPayment(assignId,distributorId,outletId,edt_add_payment_amt.getText().toString(),discount,
                                             payment_type,type_description.getText().toString());
                                 } else {
                                     CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Please check your internet connection");
                                 }
-
-
                         } else {
                             CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Date missing");
                         }

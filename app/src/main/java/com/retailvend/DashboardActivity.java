@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.retailvend.collection.CollectionActivity;
 import com.retailvend.deliveryman.collection.CollectionDeliveryActivity;
 import com.retailvend.deliveryman.outlet.DelManTodayOutletsActivity;
+import com.retailvend.deliveryman.outstand.DelManOutstandActivity;
 import com.retailvend.orderList.OrderListActivity;
 import com.retailvend.outstand.OutstandingActivity;
 import com.retailvend.sales.SalesActivity;
@@ -146,8 +147,13 @@ public class DashboardActivity extends AppCompatActivity {
         outstand_main_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent outstandIntent = new Intent(DashboardActivity.this, OutstandingActivity.class);
-                startActivity(outstandIntent);
+                if (distributor_id.equals("0")) {
+                    Intent outstandIntent = new Intent(DashboardActivity.this, OutstandingActivity.class);
+                    startActivity(outstandIntent);
+                } else {
+                    Intent outstandIntent1 = new Intent(DashboardActivity.this, DelManOutstandActivity.class);
+                    startActivity(outstandIntent1);
+                }
             }
         });
 
@@ -207,6 +213,9 @@ public class DashboardActivity extends AppCompatActivity {
                             sessionManagerSP.setDistributorId("");
                             sessionManagerSP.setEmployeeId("");
                             sessionManagerSP.setLoginType("");
+                            sessionManagerSP.setLat("");
+                            sessionManagerSP.setLong("");
+                            sessionManagerSP.setAttendanceId("");
                             SharedPrefManager.getInstance(getApplicationContext()).clear();
                             Intent loginIntent = new Intent(DashboardActivity.this, LoginActivity.class);
                             TaskStackBuilder.create(this).addNextIntentWithParentStack(loginIntent).startActivities();

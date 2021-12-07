@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/outstand_cardview_dm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/linear_circle"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/circle_bg"
+                app:tint="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/name_frst_ltr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/quicksand_medium"
+                android:text="N"
+                android:includeFontPadding="false"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/quicksand_semi_bold"
+            android:gravity="center"
+            android:text="Data"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            app:layout_constraintStart_toEndOf="@+id/linear_circle"
+            app:layout_constraintTop_toTopOf="@+id/linear_circle" />
+
+        <TextView
+            android:id="@+id/invoice_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/quicksand_regular"
+            android:gravity="center"
+            android:text="4.12.2021"
+            android:textColor="@color/dark_black"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="@+id/linear_circle"
+            app:layout_constraintStart_toStartOf="@+id/name"
+            app:layout_constraintTop_toBottomOf="@+id/name" />
+
+        <TextView
+            android:id="@+id/invoice_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center"
+            android:text="Rs. 1000"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/name" />
+
+        <ImageView
+            android:id="@+id/history"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/history"
+            app:layout_constraintBottom_toBottomOf="@+id/payment_history"
+            app:layout_constraintStart_toStartOf="@+id/invoice_date"
+            app:layout_constraintTop_toTopOf="@+id/payment_history"
+            app:tint="#F3A83C" />
+
+        <TextView
+            android:id="@+id/payment_history"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center"
+            android:layout_marginStart="5dp"
+            android:text="Payment History"
+            android:textColor="#F3A83C"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/history"
+            app:layout_constraintTop_toBottomOf="@+id/invoice_date" />
+
+
+        <ImageView
+            android:id="@+id/collection"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/collection"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/history"
+            app:layout_constraintEnd_toStartOf="@+id/payment_collection"
+            app:layout_constraintTop_toTopOf="@+id/history" />
+
+        <TextView
+            android:id="@+id/payment_collection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center"
+            android:text="Payment Collection"
+            android:textColor="#0DB645"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="@+id/payment_history"
+            app:layout_constraintEnd_toEndOf="@+id/invoice_amount"
+            app:layout_constraintTop_toTopOf="@+id/payment_history" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey1"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

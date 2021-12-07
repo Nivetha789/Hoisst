@@ -146,6 +146,51 @@ public class SessionManagerSP {
         editor.commit();
     }
 
+    public String getLat() {
+
+        return pref.getString("Lat", "");
+    }
+
+
+    public void setLat(String authkey) {
+        editor.putString("Lat", authkey);
+        editor.commit();
+    }
+
+    public String getLong() {
+
+        return pref.getString("Long", "");
+    }
+
+
+    public void setLong(String authkey) {
+        editor.putString("Long", authkey);
+        editor.commit();
+    }
+
+    public String getAttendanceId() {
+
+        return pref.getString("AttendanceID", "");
+    }
+
+
+    public void setAttendanceId(String authkey) {
+        editor.putString("AttendanceID", authkey);
+        editor.commit();
+    }
+
+    public String getAssignId() {
+
+        return pref.getString("AssignID", "");
+    }
+
+
+    public void setAssignId(String authkey) {
+        editor.putString("AssignID", authkey);
+        editor.commit();
+    }
+
+
 
     //*************** Send to Mosambee Activity(Register Details) ******************
 

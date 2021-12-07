@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.retailvend.R;
+import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.order.CreateOrderModel;
 import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.ProductTypeDatum;
@@ -161,17 +162,22 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
             }
         });
 
+        sessionManagerSP = new SessionManagerSP(CreateOutletOrderActivity.this);
 
         Intent data = getIntent();
         if (data != null) {
-            btn_Type_id = getIntent().getStringExtra("type_id");
             store_id = getIntent().getStringExtra("store_id");
             btn_Type_val = getIntent().getStringExtra("type");
-            lat_val = getIntent().getStringExtra("lat");
-            long_val = getIntent().getStringExtra("long");
+            System.out.println("typejhjhrhj "+btn_Type_val);
+
+            if(btn_Type_val.equals("Sales Order")){
+                btn_Type_val="1";
+            }
         }
 
-        sessionManagerSP = new SessionManagerSP(CreateOutletOrderActivity.this);
+        lat_val = sessionManagerSP.getLat();
+        long_val = sessionManagerSP.getLong();
+        btn_Type_id=sessionManagerSP.getAttendanceId();
 
         rv.setBackgroundResource(R.drawable.background);
         sales_agent.setBackgroundResource(R.drawable.lin_storke);
@@ -185,7 +191,13 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v) {
                 qty.setEnabled(false);
-                createOrderApi();
+                boolean isConnected = ConnectivityReceiver.isConnected();
+                if (isConnected) {
+                    createOrderApi();
+                } else {
+//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                    CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Please check your internet connection");
+                }
             }
         });
         product_name.setOnClickListener(new View.OnClickListener() {
@@ -467,8 +479,13 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                         CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
 
                         CustomProgress.hideProgress(activity);
-                        finish();
-//                        updateAttendanceApi();
+                        boolean isConnected = ConnectivityReceiver.isConnected();
+                        if (isConnected) {
+                            updateAttendanceApi();
+                        } else {
+//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                            CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Please check your internet connection");
+                        }
 
                     } else {
 //                        text_signIn.setVisibility(View.VISIBLE);
@@ -650,7 +667,6 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
                         CustomProgress.hideProgress(activity);
                         onBackPressed();
-
                     } else {
                         CustomProgress.hideProgress(activity);
                         CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
@@ -684,7 +700,12 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                     gst_val = data.getStringExtra("gst");
                     hsn_code = data.getStringExtra("hsn");
                     product_name.setText(prod_name);
-                    productTypeApi(prod_id);
+                    boolean isConnected = ConnectivityReceiver.isConnected();
+                    if (isConnected) {
+                        productTypeApi(prod_id);
+                    } else {
+                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Please check your internet connection");
+                    }
                 }
             }
         }

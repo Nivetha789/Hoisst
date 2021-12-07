@@ -1,5 +1,8 @@
 package com.retailvend.retrofit;
 
+import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHistoryModel;
+import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
+import com.retailvend.model.delManModels.delCollection.paymentHistory.PaymentHistoryModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsModel;
 import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListModel;
@@ -133,8 +136,8 @@ public interface Api {
     );
 
 
-    /*Delivery man*/
 
+    /*Delivery man*/
 
     //Today outlets api
     @FormUrlEncoded
@@ -201,6 +204,26 @@ public interface Api {
     @POST("master/api/message")
     Call<NoReasonMessageModel> noReason(
             @Field("method") String method
+    );
+
+    //Outstand List
+    @FormUrlEncoded
+    @POST("distributors/api/distributor_outlet_list")
+    Call<OutstandModel> outstandList(
+            @Field("method") String method,
+            @Field("distributor_id") String distributor_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit
+    );
+
+    //History List
+    @FormUrlEncoded
+    @POST("payment/api/outlet_payment")
+    Call<PaymentHistoryModel> paymentHistory(
+            @Field("method") String method,
+            @Field("assign_id") String assign_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit
     );
 
 }
