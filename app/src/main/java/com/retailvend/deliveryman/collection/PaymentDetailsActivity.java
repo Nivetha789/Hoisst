@@ -160,13 +160,13 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(PaymentDetailsActivity.this, AddPaymentActivity.class);
-                intent.putExtra("assignId", assignId);
-                intent.putExtra("balamt", amt);
-                intent.putExtra("name", name);
-                intent.putExtra("outletId", outletId);
-//                System.out.println("outletId1234567 "+outletId);
-                startActivity(intent);
+//                Intent intent = new Intent(PaymentDetailsActivity.this, AddPaymentActivity.class);
+//                intent.putExtra("assignId", assignId);
+//                intent.putExtra("balamt", amt);
+//                intent.putExtra("name", name);
+//                intent.putExtra("outletId", outletId);
+////                System.out.println("outletId1234567 "+outletId);
+//                startActivity(intent);
             }
         });
         left_arrow.setOnClickListener(new View.OnClickListener() {

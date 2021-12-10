@@ -1,6 +1,8 @@
 package com.retailvend;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,18 +62,31 @@ public class ProfileActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sessionManagerSP.setPhonelogin("0");
-                SharedPrefManager.getInstance(getApplicationContext()).clear();
-                sessionManagerSP.setPhonelogin("0");
-                sessionManagerSP.setMobile("");
-                sessionManagerSP.setPass("");
-                sessionManagerSP.setSalesNameId("");
-                sessionManagerSP.setSalesName("");
-                sessionManagerSP.setDistributorId("");
-                sessionManagerSP.setEmployeeId("");
-                sessionManagerSP.setLoginType("");
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+                builder.setMessage("Are you sure you want to logout?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            sessionManagerSP.setPhonelogin("0");
+                            SharedPrefManager.getInstance(getApplicationContext()).clear();
+                            sessionManagerSP.setPhonelogin("0");
+                            sessionManagerSP.setMobile("");
+                            sessionManagerSP.setPass("");
+                            sessionManagerSP.setSalesNameId("");
+                            sessionManagerSP.setSalesName("");
+                            sessionManagerSP.setDistributorId("");
+                            sessionManagerSP.setEmployeeId("");
+                            sessionManagerSP.setLoginType("");
+                            sessionManagerSP.setLat("");
+                            sessionManagerSP.setLong("");
+                            sessionManagerSP.setAttendanceId("");
+                            SharedPrefManager.getInstance(getApplicationContext()).clear();
+                            Intent loginIntent = new Intent(ProfileActivity.this, LoginActivity.class);
+                            TaskStackBuilder.create(ProfileActivity.this).addNextIntentWithParentStack(loginIntent).startActivities();
+                        })
+                        .setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+                AlertDialog alert = builder.create();
+                alert.setTitle("Confirm Logout..!!!");
+                alert.show();
             }
         });
 

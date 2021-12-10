@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/payment_cardview_dm"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="15dp"
         android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="2dp"
+        app:cardCornerRadius="15dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:background="@drawable/lin_storke1"
             android:orientation="horizontal"
@@ -30,98 +29,184 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/employee_name"
+                android:id="@+id/credit_by"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
                 android:fontFamily="@font/quicksand_semi_bold"
                 android:gravity="start"
-                android:text="Data"
+                android:text="Credit By"
                 android:textColor="@color/black"
-                android:textSize="14dp"
-                app:layout_constraintEnd_toStartOf="@+id/outlet_name"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/outlet_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="15dp"
-                android:fontFamily="@font/quicksand_medium"
-                android:gravity="end"
-                android:text="Data"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="@+id/employee_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/employee_name"
-                app:layout_constraintTop_toTopOf="@+id/employee_name" />
-
-            <TextView
-                android:id="@+id/cur_bal"
+                android:id="@+id/amount_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
-                android:fontFamily="@font/quicksand_medium"
-                android:gravity="center"
-                android:text="4000"
+                android:fontFamily="@font/quicksand_bold"
+                android:gravity="start"
+                android:text="Rs. 1000"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/credit_by"
+                app:layout_constraintStart_toStartOf="@+id/credit_by"
+                app:layout_constraintTop_toBottomOf="@+id/credit_by" />
+
+            <TextView
+                android:id="@+id/date_payment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/quicksand_regular"
+                android:gravity="start"
+                android:text="09-12-2021"
                 android:textColor="@color/dark_black"
                 android:textSize="13dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/employee_name"
-                app:layout_constraintTop_toBottomOf="@+id/dist_name" />
+                app:layout_constraintEnd_toEndOf="@+id/amount_main"
+                app:layout_constraintStart_toStartOf="@+id/credit_by"
+                app:layout_constraintTop_toBottomOf="@+id/amount_main" />
 
             <TextView
-                android:id="@+id/dist_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/quicksand_medium"
-                android:gravity="end"
-                android:text="Distributor"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15dp"
-                app:layout_constraintBottom_toTopOf="@+id/cur_bal"
-                app:layout_constraintStart_toStartOf="@+id/employee_name"
-                app:layout_constraintTop_toBottomOf="@+id/employee_name" />
-
-            <TextView
-                android:id="@+id/pay_type"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/quicksand_medium"
-                android:gravity="center"
-                android:text="Cash"
-                android:textColor="#0EC315"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@+id/dist_name"
-                app:layout_constraintEnd_toEndOf="@+id/outlet_name"
-                app:layout_constraintTop_toTopOf="@+id/dist_name" />
-
-
-            <TextView
-                android:id="@+id/date"
+                android:id="@+id/payment_details_credit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/quicksand_regular"
-                android:gravity="center"
-                android:text="10.11.2021"
+                android:gravity="end"
+                android:visibility="gone"
+                android:text="Payment Details"
+                android:textColor="@color/grey"
+                android:textSize="11dp"
+                app:layout_constraintBottom_toBottomOf="@+id/credit_arrow"
+                app:layout_constraintEnd_toStartOf="@+id/credit_arrow"
+                app:layout_constraintTop_toTopOf="@+id/credit_arrow" />
+
+            <ImageView
+                android:id="@+id/credit_arrow"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/next_arrow"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/date_payment"
+                app:layout_constraintTop_toBottomOf="@+id/date_payment" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/payment_cardview_debit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="2dp"
+        app:cardCornerRadius="15dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/lin_storke1"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/debit_to"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:fontFamily="@font/quicksand_semi_bold"
+                android:gravity="start"
+                android:text="Payment To"
                 android:textColor="@color/black"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/amount_debit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:gravity="start"
+                android:text="Rs. 1000"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/debit_to"
+                app:layout_constraintStart_toStartOf="@+id/debit_to"
+                app:layout_constraintTop_toBottomOf="@+id/debit_to" />
+
+            <TextView
+                android:id="@+id/date_pay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/quicksand_regular"
+                android:gravity="start"
+                android:text="09-12-2021"
+                android:textColor="@color/dark_black"
                 android:textSize="13dp"
-                app:layout_constraintBottom_toBottomOf="@+id/cur_bal"
-                app:layout_constraintEnd_toEndOf="@+id/pay_type"
-                app:layout_constraintTop_toTopOf="@+id/cur_bal" />
+                app:layout_constraintEnd_toEndOf="@+id/amount_debit"
+                app:layout_constraintStart_toStartOf="@+id/debit_to"
+                app:layout_constraintTop_toBottomOf="@+id/amount_debit" />
+
+            <TextView
+                android:id="@+id/payment_details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/quicksand_regular"
+                android:gravity="end"
+                android:text="Payment Details"
+                android:textColor="@color/grey"
+                android:visibility="gone"
+                android:textSize="11dp"
+                android:layout_marginEnd="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/debit_arrow"
+                app:layout_constraintEnd_toStartOf="@+id/debit_arrow"
+                app:layout_constraintStart_toStartOf="@+id/debit_to"
+                app:layout_constraintTop_toTopOf="@+id/debit_arrow" />
+
+            <ImageView
+                android:id="@+id/debit_arrow"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/next_arrow"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/date_pay"
+                app:layout_constraintTop_toBottomOf="@+id/date_pay" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

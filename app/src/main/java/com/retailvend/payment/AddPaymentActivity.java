@@ -1,5 +1,6 @@
 package com.retailvend.payment;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -21,7 +22,12 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
+import com.retailvend.deliveryman.collection.InvoiceNoSpinAdapter;
+import com.retailvend.model.delManModels.delCollection.DetailOutletInvAmntBillDatum;
+import com.retailvend.model.delManModels.delCollection.DetailOutletInvAmntBillModel;
 import com.retailvend.model.delManModels.delCollection.addpayment.AddPaymentModel;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.InvoiceTypeDatum;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.InvoiceTypeModel;
 import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentTypeData;
 import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentTypeModel;
 import com.retailvend.retrofit.RetrofitClient;
@@ -38,14 +44,19 @@ import retrofit2.Response;
 
 public class AddPaymentActivity extends AppCompatActivity {
 
-    TextView txt_dis_add_pay_toolbar, txt_add_payment_name, txt_add_payment_bal_amt, txt_add_payment_date,cheque_date;
-    EditText edt_add_payment_amt, edt_add_payment_descrip,type_description,cheque_no,bank_name;
-    Spinner spin_add_payment_type;
-    LinearLayout lin_add_payment, lin_back,description_linearLayout,cheque_linearLayout,bank_linearLayout,cheque_date_linearLayout;
+    TextView txt_dis_add_pay_toolbar, txt_add_payment_name, txt_add_payment_bal_amt, txt_add_payment_date, cheque_date;
+    EditText edt_add_payment_amt, edt_add_payment_descrip, type_description, cheque_no, bank_name;
+    Spinner spin_add_payment_type, spin_invoice_num;
+    LinearLayout lin_add_payment, lin_back, description_linearLayout, cheque_linearLayout, bank_linearLayout, cheque_date_linearLayout;
     List<PaymentTypeData> addPaymentTypeList;
+    List<InvoiceTypeDatum> invoiceTypeDatumList;
+    List<DetailOutletInvAmntBillDatum> detailOutletInvAmntBillData;
     AddPaymentTypeAdapter addPaymentTypeAdapter;
+    InvoiceNoSpinAdapter invoiceNoSpinAdapter;
     String payment_type = "";
     String payment_typeVal = "";
+    String invoice_num = "";
+    String invoice_no_id = "";
     Calendar c;
     int mYear, mMonth, mDay, mHour, mMinute;
     String assignId = "";
@@ -92,6 +103,7 @@ public class AddPaymentActivity extends AppCompatActivity {
         edt_add_payment_descrip = findViewById(R.id.edt_add_payment_descrip);
         //Spinner
         spin_add_payment_type = findViewById(R.id.spin_add_payment_type);
+        spin_invoice_num = findViewById(R.id.spin_invoice_num);
         //LinearLayout
         lin_add_payment = findViewById(R.id.lin_add_payment);
         lin_back = findViewById(R.id.lin_back);
@@ -109,20 +121,19 @@ public class AddPaymentActivity extends AppCompatActivity {
 
         description_linearLayout.setVisibility(View.GONE);
 
-        distributorId=sessionManagerSP.getDistributorId();
+        distributorId = sessionManagerSP.getDistributorId();
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
 
         if (b != null) {
-            assignId = (String) b.get("assignId");
-            balamt = (String) b.get("balamt");
+            assignId = (String) b.get("assign_id");
             name = (String) b.get("name");
             outletId = (String) b.get("outletId");
-            System.out.println("outletId :"+outletId);
         }
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
+            listOutletPaymentBillApi();
             paymentTypeApi();
         } else {
             CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Please check your internet connection");
@@ -133,23 +144,36 @@ public class AddPaymentActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 payment_type = addPaymentTypeList.get(i).getTypeId();
                 payment_typeVal = addPaymentTypeList.get(i).getTypeVal();
-                if(payment_typeVal.equals("Cash")){
+                if (payment_typeVal.equals("Cash")) {
                     description_linearLayout.setVisibility(View.GONE);
                     cheque_linearLayout.setVisibility(View.GONE);
                     bank_linearLayout.setVisibility(View.GONE);
                     cheque_date_linearLayout.setVisibility(View.GONE);
-                }else if(payment_typeVal.equals("Cheque")){
+                } else if (payment_typeVal.equals("Cheque")) {
                     description_linearLayout.setVisibility(View.GONE);
                     cheque_linearLayout.setVisibility(View.VISIBLE);
                     bank_linearLayout.setVisibility(View.VISIBLE);
                     cheque_date_linearLayout.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     description_linearLayout.setVisibility(View.VISIBLE);
                     cheque_linearLayout.setVisibility(View.GONE);
                     bank_linearLayout.setVisibility(View.GONE);
                     cheque_date_linearLayout.setVisibility(View.GONE);
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spin_invoice_num.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                invoice_num = invoiceTypeDatumList.get(i).getBillNo();
+                invoice_no_id = invoiceTypeDatumList.get(i).getBillId();
+                detailOutletPaymentBillApi(invoiceTypeDatumList.get(i).getPayId());
             }
 
             @Override
@@ -182,34 +206,20 @@ public class AddPaymentActivity extends AppCompatActivity {
             }
         });
         cheque_date.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
-            //                c = Calendar.getInstance();
-            //                mYear = c.get(Calendar.YEAR);
-            //                mMonth = c.get(Calendar.MONTH);
-            //                mDay = c.get(Calendar.DAY_OF_MONTH);
-            //
-            //                System.out.println("Current Date  new " + mDay + "-" + mMonth + "-" + mYear);
-
-
-                            datePickerCollectDate();
-                        }
-                    });
+                //                c = Calendar.getInstance();
+                //                mYear = c.get(Calendar.YEAR);
+                //                mMonth = c.get(Calendar.MONTH);
+                //                mDay = c.get(Calendar.DAY_OF_MONTH);
+                //
+                //                System.out.println("Current Date  new " + mDay + "-" + mMonth + "-" + mYear);
 
 
-        if (balamt.length() > 0) {
-            if (balamt.equals("0")) {
-                lin_add_payment.setVisibility(View.GONE);
-                txt_add_payment_bal_amt.setText("0");
-            } else {
-                lin_add_payment.setVisibility(View.VISIBLE);
-                txt_add_payment_bal_amt.setText(balamt);
+                datePickerCollectDate();
             }
-        } else {
-            lin_add_payment.setVisibility(View.GONE);
-            txt_add_payment_bal_amt.setText("0");
-        }
+        });
 
 
         lin_add_payment.setOnClickListener(new View.OnClickListener() {
@@ -226,13 +236,13 @@ public class AddPaymentActivity extends AppCompatActivity {
                             } else {
                                 discount = "0";
                             }
-                                boolean isConnected = ConnectivityReceiver.isConnected();
-                                if (isConnected) {
-                                    addPayment(assignId,distributorId,outletId,edt_add_payment_amt.getText().toString(),discount,
-                                            payment_type,type_description.getText().toString(),bank_name.getText().toString(),cheque_no.getText().toString());
-                                } else {
-                                    CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Please check your internet connection");
-                                }
+                            boolean isConnected = ConnectivityReceiver.isConnected();
+                            if (isConnected) {
+                                addPayment(assignId, distributorId, outletId, edt_add_payment_amt.getText().toString(), discount,
+                                        payment_type, type_description.getText().toString(), bank_name.getText().toString(), cheque_no.getText().toString());
+                            } else {
+                                CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Please check your internet connection");
+                            }
                         } else {
                             CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Date missing");
                         }
@@ -255,15 +265,14 @@ public class AddPaymentActivity extends AppCompatActivity {
 
     }
 
-    public void addPayment(String assignId,String distributorID, String outletId,String amt, String discount,String amt_type, String description,String bankName,String chequeNo) {
-        employeeId=sessionManagerSP.getEmployeeId();
+    public void addPayment(String assignId, String distributorID, String outletId, String amt, String discount, String amt_type, String description, String bankName, String chequeNo) {
+        employeeId = sessionManagerSP.getEmployeeId();
 
         progress.setVisibility(View.VISIBLE);
-        lin_add_payment.setVisibility(View.GONE);
 
 
         Call<AddPaymentModel> call = RetrofitClient
-                .getInstance().getApi().addPayment("_addOutletPayment",assignId,"1",employeeId, distributorID,outletId, amt, discount,amt_type,"Test",bankName,chequeNo,"2");
+                .getInstance().getApi().addPayment("_addOutletPayment", assignId, payment_type, employeeId, distributorID, outletId, amt, discount, amt_type, "Test", bankName, chequeNo, "2");
 
 
         call.enqueue(new Callback<AddPaymentModel>() {
@@ -279,17 +288,63 @@ public class AddPaymentActivity extends AppCompatActivity {
 
 
                     if (addPaymentModel.getStatus() == 1) {
-
                         progress.setVisibility(View.GONE);
-                        lin_add_payment.setVisibility(View.GONE);
-                        onBackPressed();
                         CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(addPaymentModel.getMessage());
-
+                        onBackPressed();
 
                     } else {
                         progress.setVisibility(View.GONE);
-                        lin_add_payment.setVisibility(View.VISIBLE);
                         CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(addPaymentModel.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.d("Exception", e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddPaymentModel> call, Throwable t) {
+                Log.d("Failure ", t.getMessage());
+                progress.setVisibility(View.GONE);
+                CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Something went wrong try again..");
+            }
+        });
+
+    }
+
+    public void listOutletPaymentBillApi() {
+
+
+        progress.setVisibility(View.VISIBLE);
+
+
+        Call<InvoiceTypeModel> call = RetrofitClient
+                .getInstance().getApi().listOutletPaymentBill("_listOutletPaymentBill", assignId);
+
+
+        call.enqueue(new Callback<InvoiceTypeModel>() {
+            @Override
+            public void onResponse(Call<InvoiceTypeModel> call, Response<InvoiceTypeModel> response) {
+
+                try {
+
+                    Gson gson = new Gson();
+                    String json = gson.toJson(response.body());
+                    InvoiceTypeModel invoiceTypeModel = gson.fromJson(json, InvoiceTypeModel.class);
+//                LoginModule loginModule = response.body();
+
+
+                    if (invoiceTypeModel.getStatus() == 1) {
+
+                        progress.setVisibility(View.GONE);
+//                        CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(paymentTypeModel.getMessage());
+
+                        invoiceTypeDatumList = invoiceTypeModel.getData();
+                        invoiceNoSpinAdapter = new InvoiceNoSpinAdapter(AddPaymentActivity.this, invoiceTypeDatumList);
+                        spin_invoice_num.setAdapter(invoiceNoSpinAdapter);
+                        invoiceNoSpinAdapter.notifyDataSetChanged();
+                    } else {
+                        progress.setVisibility(View.GONE);
+//                        CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(invoiceTypeModel.getMessage());
                     }
 
                 } catch (Exception e) {
@@ -299,10 +354,57 @@ public class AddPaymentActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AddPaymentModel> call, Throwable t) {
+            public void onFailure(Call<InvoiceTypeModel> call, Throwable t) {
                 Log.d("Failure ", t.getMessage());
                 progress.setVisibility(View.GONE);
-                lin_add_payment.setVisibility(View.VISIBLE);
+                CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Something went wrong try again..");
+
+            }
+        });
+
+    }
+
+    public void detailOutletPaymentBillApi(String payId) {
+        progress.setVisibility(View.VISIBLE);
+
+        Call<DetailOutletInvAmntBillModel> call = RetrofitClient
+                .getInstance().getApi().detailOutletPaymentBill("_detailOutletPaymentBill", payId);
+
+
+        call.enqueue(new Callback<DetailOutletInvAmntBillModel>() {
+            @Override
+            public void onResponse(@NonNull Call<DetailOutletInvAmntBillModel> call, @NonNull Response<DetailOutletInvAmntBillModel> response) {
+
+                try {
+
+                    Gson gson = new Gson();
+                    String json = gson.toJson(response.body());
+                    DetailOutletInvAmntBillModel detailOutletInvAmntBillModel = gson.fromJson(json, DetailOutletInvAmntBillModel.class);
+
+                    if (detailOutletInvAmntBillModel.getStatus() == 1) {
+                        if (detailOutletInvAmntBillModel.getData() != null) {
+                            detailOutletInvAmntBillData = detailOutletInvAmntBillModel.getData();
+                            for (int i = 0; i < detailOutletInvAmntBillData.size(); i++) {
+                                txt_add_payment_bal_amt.setText(detailOutletInvAmntBillData.get(i).getCurBal());
+                            }
+                            progress.setVisibility(View.GONE);
+                        } else {
+                            progress.setVisibility(View.GONE);
+                            CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(detailOutletInvAmntBillModel.getMessage());
+                        }
+                    } else {
+                        progress.setVisibility(View.GONE);
+                        CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(detailOutletInvAmntBillModel.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.d("Exception", e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DetailOutletInvAmntBillModel> call, Throwable t) {
+                Log.d("Failure ", t.getMessage());
+                progress.setVisibility(View.GONE);
                 CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Something went wrong try again..");
 
             }
@@ -311,11 +413,7 @@ public class AddPaymentActivity extends AppCompatActivity {
     }
 
     public void paymentTypeApi() {
-
-
         progress.setVisibility(View.VISIBLE);
-        lin_add_payment.setVisibility(View.GONE);
-
 
         Call<PaymentTypeModel> call = RetrofitClient
                 .getInstance().getApi().paymentTypeGet("_collectionType");
@@ -323,7 +421,7 @@ public class AddPaymentActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<PaymentTypeModel>() {
             @Override
-            public void onResponse(Call<PaymentTypeModel> call, Response<PaymentTypeModel> response) {
+            public void onResponse(@NonNull Call<PaymentTypeModel> call, @NonNull Response<PaymentTypeModel> response) {
 
                 try {
 
@@ -338,18 +436,15 @@ public class AddPaymentActivity extends AppCompatActivity {
                         progress.setVisibility(View.GONE);
 //                        CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(paymentTypeModel.getMessage());
 
-                        addPaymentTypeList=paymentTypeModel.getData();
+                        addPaymentTypeList = paymentTypeModel.getData();
                         addPaymentTypeAdapter = new AddPaymentTypeAdapter(AddPaymentActivity.this, addPaymentTypeList);
                         spin_add_payment_type.setAdapter(addPaymentTypeAdapter);
                         addPaymentTypeAdapter.notifyDataSetChanged();
-
-//                        lin_add_payment.setVisibility(View.GONE);
-//                        onBackPressed();
+                        //                        onBackPressed();
 
 
                     } else {
                         progress.setVisibility(View.GONE);
-//                        lin_add_payment.setVisibility(View.VISIBLE);
                         CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(paymentTypeModel.getMessage());
                     }
 
@@ -360,10 +455,9 @@ public class AddPaymentActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PaymentTypeModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<PaymentTypeModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
                 progress.setVisibility(View.GONE);
-//                lin_add_payment.setVisibility(View.VISIBLE);
                 CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast("Something went wrong try again..");
 
             }

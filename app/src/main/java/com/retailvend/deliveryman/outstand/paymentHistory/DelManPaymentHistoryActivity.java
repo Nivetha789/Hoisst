@@ -43,11 +43,9 @@ public class DelManPaymentHistoryActivity extends AppCompatActivity implements S
 
     RecyclerView payment_history_recyecler;
     Activity activity;
-    LinearLayoutManager mLayoutManager;
     DelManPaymentHistoryAdapter delManPaymentHistoryAdapter;
     ImageView leftArrow;
     Toolbar toolbar;
-    Menu menu;
     TextView emptyView;
     List<PaymentHistoryDatum> paymentHistoryListData;
 
@@ -86,6 +84,12 @@ public class DelManPaymentHistoryActivity extends AppCompatActivity implements S
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            assign_id = getIntent().getExtras().getString("assign_id");
         }
 
         toolbar = findViewById(R.id.toolbar);
@@ -198,10 +202,6 @@ public class DelManPaymentHistoryActivity extends AppCompatActivity implements S
 
                     if (productNameResModel.getStatus() == 1) {
 
-                        payment_history_recyecler.setVisibility(View.VISIBLE);
-                        progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.GONE);
-
                         paymentHistoryListData = productNameResModel.getData();
 
                         offset = productNameResModel.getOffset();
@@ -223,16 +223,18 @@ public class DelManPaymentHistoryActivity extends AppCompatActivity implements S
 
                         if (currentPage != PAGE_START)
                             delManPaymentHistoryAdapter.removeLoading();
+//                        deliveryManHistoryDebitAdapter.removeLoading();
 
                         delManPaymentHistoryAdapter.addItems(paymentHistoryListData);
+//                        deliveryManHistoryDebitAdapter.addItems(paymentHistoryListData);
 
                         if (currentPage < totalPage) {
                             delManPaymentHistoryAdapter.addLoading();
+//                            deliveryManHistoryDebitAdapter.addLoading();
                         } else {
                             isLastPage = true;
                         }
                         isLoading = false;
-
 
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);

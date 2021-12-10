@@ -1,4 +1,4 @@
-package com.retailvend.deliveryman.outstand;
+package com.retailvend.deliveryman.deliveryDetails;
 
 import static com.retailvend.utills.PaginationListener.PAGE_START;
 
@@ -24,11 +24,10 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
-import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHistoryDatum;
-import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHistoryModel;
-import com.retailvend.model.delManModels.delCollection.outstand.OutstandDatum;
-import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
+import com.retailvend.model.manageorder.OrderListDatum;
+import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.sales.SalesAdapter;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
 import com.retailvend.utills.SessionManagerSP;
@@ -40,17 +39,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DelManOutstandActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener  {
+public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    RecyclerView invoice_history_recycler;
+    RecyclerView delivery_recyeclerview;
     Activity activity;
     LinearLayoutManager mLayoutManager;
-    DelManOutstandAdapter delManOutstandAdapter;
+    SalesAdapter salesAdapter;
     ImageView leftArrow;
     Toolbar toolbar;
     Menu menu;
     TextView emptyView;
-    List<OutstandDatum> outstandListData;
+    List<OrderListDatum> orderListData;
 
     private int currentPage = PAGE_START;
     private boolean isLastPage = false;
@@ -63,12 +62,12 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
     int limit = 10;
     int totalcount = 0;
     SessionManagerSP sessionManagerSP;
-    String assignId="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_del_man_outstand);
+        setContentView(R.layout.activity_delivery_details);
         activity = this;
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -91,13 +90,13 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
 
         toolbar = findViewById(R.id.toolbar);
         leftArrow = findViewById(R.id.left_arrow);
-        invoice_history_recycler = findViewById(R.id.invoice_history_recyecler);
+        delivery_recyeclerview = findViewById(R.id.delivery_recyeclerview);
         progress = findViewById(R.id.progress);
         emptyView = findViewById(R.id.emptyView);
 
-        sessionManagerSP = new SessionManagerSP(DelManOutstandActivity.this);
+        sessionManagerSP = new SessionManagerSP(DeliveryDetailsActivity.this);
 
-        outstandListData = new ArrayList<>();
+        orderListData = new ArrayList<>();
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,15 +104,15 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
             }
         });
 
-        invoice_history_recycler.setHasFixedSize(true);
+        delivery_recyeclerview.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
-        invoice_history_recycler.setLayoutManager(layoutManager);
+        delivery_recyeclerview.setLayoutManager(layoutManager);
 
-        delManOutstandAdapter = new DelManOutstandAdapter(DelManOutstandActivity.this, outstandListData);
-        invoice_history_recycler.setAdapter(delManOutstandAdapter);
+        salesAdapter = new SalesAdapter(DeliveryDetailsActivity.this, orderListData);
+        delivery_recyeclerview.setAdapter(salesAdapter);
 
-        invoice_history_recycler.addOnScrollListener(new PaginationListener(layoutManager, totalPage) {
+        delivery_recyeclerview.addOnScrollListener(new PaginationListener(layoutManager, totalPage) {
             @Override
             protected void loadMoreItems() {
                 isLoading = true;
@@ -121,10 +120,10 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    outstandListApi(offset, limit);
+                    orderListApi(offset, limit);
 
                 } else {
-                    CustomToast.getInstance(DelManOutstandActivity.this).showSmallCustomToast("Please check your internet connection");
+                    CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
                 }
 
             }
@@ -147,13 +146,13 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
         offset = 0;
         currentPage = PAGE_START;
         isLastPage = false;
-        delManOutstandAdapter.clear();
+        salesAdapter.clear();
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            outstandListApi(offset, limit);
+            orderListApi(offset, limit);
         } else {
-            CustomToast.getInstance(DelManOutstandActivity.this).showSmallCustomToast("Please check your internet connection");
+            CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 
@@ -164,18 +163,18 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
         offset = 0;
         currentPage = PAGE_START;
         isLastPage = false;
-        delManOutstandAdapter.clear();
+        salesAdapter.clear();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            outstandListApi(offset, limit);
+            orderListApi(offset, limit);
         } else {
-            CustomToast.getInstance(DelManOutstandActivity.this).showSmallCustomToast("Please check your internet connection");
+            CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 
-    public void outstandListApi(int offset1, int limit1) {
+    public void orderListApi(int offset1, int limit1) {
 //        CustomProgress.showProgress(activity);
-        String distributorId = sessionManagerSP.getDistributorId();
+        String emp_id = sessionManagerSP.getEmployeeId();
 
         if (isLoading) {
             progress.setVisibility(View.GONE);
@@ -185,26 +184,26 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
             emptyView.setVisibility(View.GONE);
         }
 
-        Call<OutstandModel> call = RetrofitClient
-                .getInstance().getApi().outstandList("_distributorOutletList", distributorId, offset1, limit1);
+        Call<OrderListModel> call = RetrofitClient
+                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1);
 
-        call.enqueue(new Callback<OutstandModel>() {
+        call.enqueue(new Callback<OrderListModel>() {
             @Override
-            public void onResponse(@NonNull Call<OutstandModel> call, @NonNull Response<OutstandModel> response) {
+            public void onResponse(@NonNull Call<OrderListModel> call, @NonNull Response<OrderListModel> response) {
 
                 try {
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    OutstandModel productNameResModel = gson.fromJson(json, OutstandModel.class);
+                    OrderListModel productNameResModel = gson.fromJson(json, OrderListModel.class);
 
                     if (productNameResModel.getStatus() == 1) {
 
-                        invoice_history_recycler.setVisibility(View.VISIBLE);
+                        delivery_recyeclerview.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
 
-                        outstandListData = productNameResModel.getData();
+                        orderListData = productNameResModel.getData();
 
                         offset = productNameResModel.getOffset();
                         limit = productNameResModel.getLimit();
@@ -224,12 +223,12 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
 
 
                         if (currentPage != PAGE_START)
-                            delManOutstandAdapter.removeLoading();
+                            salesAdapter.removeLoading();
 
-                        delManOutstandAdapter.addItems(outstandListData);
+                        salesAdapter.addItems(orderListData);
 
                         if (currentPage < totalPage) {
-                            delManOutstandAdapter.addLoading();
+                            salesAdapter.addLoading();
                         } else {
                             isLastPage = true;
                         }
@@ -241,13 +240,13 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
                         emptyView.setVisibility(View.GONE);
 
                     } else {
-                        invoice_history_recycler.setVisibility(View.GONE);
+                        delivery_recyeclerview.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.VISIBLE);
                         emptyView.setText("No Record Found");
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(DelManOutstandActivity.this).showSmallCustomToast("No Record Found");
+                        CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("No Record Found");
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
@@ -258,8 +257,8 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
             }
 
             @Override
-            public void onFailure(@NonNull Call<OutstandModel> call, @NonNull Throwable t) {
-                invoice_history_recycler.setVisibility(View.GONE);
+            public void onFailure(@NonNull Call<OrderListModel> call, @NonNull Throwable t) {
+                delivery_recyeclerview.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
                 emptyView.setText("Something went wrong try again..");

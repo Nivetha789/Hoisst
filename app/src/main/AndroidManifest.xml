@@ -24,6 +24,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hoisst">
         <activity
+            android:name=".deliveryman.deliveryDetails.DeliveryDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Hoisst.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity"  />
+        <activity
             android:name=".deliveryman.outstand.paymentHistory.DelManPaymentHistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"

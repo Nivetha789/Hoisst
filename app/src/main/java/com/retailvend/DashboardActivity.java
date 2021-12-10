@@ -21,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.retailvend.collection.CollectionActivity;
+import com.retailvend.deliveryman.deliveryDetails.DeliveryDetailsActivity;
 import com.retailvend.deliveryman.outlet.DelManTodayOutletsActivity;
 import com.retailvend.deliveryman.outstand.DelManOutstandActivity;
 import com.retailvend.orderList.OrderListActivity;
@@ -146,6 +147,7 @@ public class DashboardActivity extends AppCompatActivity {
         outstand_main_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("distributor_id "+distributor_id);
                 if (distributor_id.equals("0")) {
                     Intent outstandIntent = new Intent(DashboardActivity.this, OutstandingActivity.class);
                     startActivity(outstandIntent);
@@ -159,8 +161,13 @@ public class DashboardActivity extends AppCompatActivity {
         sales_main_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent salesIntent = new Intent(DashboardActivity.this, SalesActivity.class);
-                startActivity(salesIntent);
+                if (distributor_id.equals("0")) {
+                    Intent salesIntent = new Intent(DashboardActivity.this, SalesActivity.class);
+                    startActivity(salesIntent);
+                } else {
+                    Intent delIntent = new Intent(DashboardActivity.this, DeliveryDetailsActivity.class);
+                    startActivity(delIntent);
+                }
             }
         });
 

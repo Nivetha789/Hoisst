@@ -103,20 +103,28 @@ public class DelManPaymentHistoryAdapter extends RecyclerView.Adapter<BaseViewHo
     }
 
     public class ViewHolder extends BaseViewHolder {
-        @BindView(R.id.employee_name)
-        TextView name;
-        @BindView(R.id.cur_bal)
-        TextView cur_bal;
-        @BindView(R.id.outlet_name)
-        TextView outlet_name;
+        @BindView(R.id.credit_by)
+        TextView credit_by;
+        @BindView(R.id.debit_to)
+        TextView debit_to;
+        @BindView(R.id.amount_main)
+        TextView amount_main;
+        @BindView(R.id.amount_debit)
+        TextView amount_debit;
+        @BindView(R.id.date_payment)
+        TextView date_payment;
+        @BindView(R.id.date_pay)
+        TextView date_pay;
         @BindView(R.id.payment_cardview_dm)
         CardView cardview;
-        @BindView(R.id.pay_type)
-        TextView pay_type;
-        @BindView(R.id.date)
-        TextView date;
-        @BindView(R.id.dist_name)
-        TextView dist_name;
+        @BindView(R.id.payment_cardview_debit)
+        CardView payment_cardview_debit;
+        @BindView(R.id.credit_arrow)
+        ImageView credit_arrow;
+        @BindView(R.id.debit_arrow)
+        ImageView debit_arrow;
+        @BindView(R.id.payment_details)
+        TextView payment_details;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -130,12 +138,19 @@ public class DelManPaymentHistoryAdapter extends RecyclerView.Adapter<BaseViewHo
             super.onBind(position);
             PaymentHistoryDatum item = paymentHistorydata.get(position);
 
-            name.setText(item.getEmployeeName());
-            cur_bal.setText("₹ "+item.getCurBal().toString());
-            outlet_name.setText(item.getOutletName());
-            pay_type.setText(item.getAmountType());
-            date.setText(item.getDate());
-            dist_name.setText("Distributor: "+item.getDistributorName());
+            if(item.getPaymentType().equals("Credit")){
+                cardview.setVisibility(View.VISIBLE);
+                payment_cardview_debit.setVisibility(View.GONE);
+                credit_by.setText("Received From "+item.getDistributorName());
+                amount_main.setText("₹ "+item.getAmount().toString());
+                date_payment.setText(item.getDate());
+            }else if(item.getPaymentType().equals("Debit")) {
+                cardview.setVisibility(View.GONE);
+                payment_cardview_debit.setVisibility(View.VISIBLE);
+                debit_to.setText("Payment To "+item.getDistributorName());
+                amount_debit.setText("₹ "+item.getAmount().toString());
+                date_pay.setText(item.getDate());
+            }
 
 //            cardview.setOnClickListener(new View.OnClickListener() {
 //                @Override

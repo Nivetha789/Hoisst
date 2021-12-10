@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
 import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListData;
+import com.retailvend.payment.AddPaymentActivity;
 import com.retailvend.utills.BaseViewHolder;
 import com.retailvend.utills.SessionManagerSP;
 
@@ -132,10 +133,9 @@ public class CollectionDeliveryAdapter extends RecyclerView.Adapter<BaseViewHold
             cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent paymentIntent = new Intent(activity, PaymentDetailsActivity.class);
+                    Intent paymentIntent = new Intent(activity, AddPaymentActivity.class);
                     paymentIntent.putExtra("assign_id", item.getAssignId());
                     paymentIntent.putExtra("name", item.getOutletName());
-                    paymentIntent.putExtra("balamnt", item.getCurBal()+item.getPreBal());
                     paymentIntent.putExtra("outletId", item.getOutletId());
                     activity.startActivity(paymentIntent);
                 }

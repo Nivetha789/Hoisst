@@ -157,6 +157,7 @@ public class DelManOutstandAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                 @Override
                 public void onClick(View v) {
                     Intent paymentHistoryIntent = new Intent(activity, DelManPaymentHistoryActivity.class);
+                    paymentHistoryIntent.putExtra("assign_id", item.getAssignId());
                     activity.startActivity(paymentHistoryIntent);
                 }
             });

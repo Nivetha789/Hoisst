@@ -1,7 +1,9 @@
 package com.retailvend.retrofit;
 
+import com.retailvend.model.delManModels.delCollection.DetailOutletInvAmntBillModel;
 import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHistoryModel;
 import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.InvoiceTypeModel;
 import com.retailvend.model.delManModels.delCollection.paymentHistory.PaymentHistoryModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.UpdateBillModel;
@@ -136,6 +138,12 @@ public interface Api {
             @Field("random_value") String random_value
     );
 
+    //no reason
+    @FormUrlEncoded
+    @POST("master/api/message")
+    Call<NoReasonMessageModel> noReason(
+            @Field("method") String method
+    );
 
 
     /*Delivery man*/
@@ -195,6 +203,22 @@ public interface Api {
             @Field("method") String method
     );
 
+    //get Invoice
+    @FormUrlEncoded
+    @POST("payment/api/outlet_payment")
+    Call<InvoiceTypeModel> listOutletPaymentBill(
+            @Field("method") String method,
+            @Field("assign_id") String assign_id
+    );
+
+    //get Invoice base amount
+    @FormUrlEncoded
+    @POST("payment/api/outlet_payment")
+    Call<DetailOutletInvAmntBillModel> detailOutletPaymentBill(
+            @Field("method") String method,
+            @Field("payment_id") String payment_id
+    );
+
     //add payment
     @FormUrlEncoded
     @POST("payment/api/outlet_payment")
@@ -212,13 +236,6 @@ public interface Api {
             @Field("bank_name") String bank_name,
             @Field("cheque_no") String cheque_no,
             @Field("entry_type") String entry_type
-    );
-
-    //no reason
-    @FormUrlEncoded
-    @POST("master/api/message")
-    Call<NoReasonMessageModel> noReason(
-            @Field("method") String method
     );
 
     //Outstand List
