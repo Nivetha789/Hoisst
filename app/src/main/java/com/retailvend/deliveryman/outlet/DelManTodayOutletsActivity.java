@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +42,8 @@ public class DelManTodayOutletsActivity extends AppCompatActivity {
     TodayOutletDelManAdapter todayOutletAdapter;
     ImageView leftArrow;
     List<DeliveryTodayOutletsDatum> todayOutletsDatum;
-    TextView nodata;
+    TextView nodata_txt;
+    ConstraintLayout no_data_constrain;
     SessionManagerSP sessionManagerSP;
 
     @Override
@@ -72,7 +74,8 @@ public class DelManTodayOutletsActivity extends AppCompatActivity {
 
         todayOutletRecycler=findViewById(R.id.today_outlet_recycler);
         leftArrow=findViewById(R.id.left_arrow);
-        nodata=findViewById(R.id.nodata);
+        nodata_txt=findViewById(R.id.nodata_txt);
+        no_data_constrain=findViewById(R.id.no_data_constrain);
 
         sessionManagerSP=new SessionManagerSP(DelManTodayOutletsActivity.this);
 
@@ -112,9 +115,9 @@ public class DelManTodayOutletsActivity extends AppCompatActivity {
                     String s = todayOutletList.getMessage();
 
                     if (todayOutletList.getStatus()==1) {
-                        nodata.setVisibility(View.GONE);
+                        no_data_constrain.setVisibility(View.GONE);
                         todayOutletRecycler.setVisibility(View.VISIBLE);
-                        nodata.setText("");
+                        nodata_txt.setText("");
                         todayOutletsDatum = todayOutletList.getData();
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 
@@ -131,17 +134,17 @@ public class DelManTodayOutletsActivity extends AppCompatActivity {
                     } else {
                         CustomProgress.hideProgress(activity);
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
-                        nodata.setVisibility(View.VISIBLE);
+                        no_data_constrain.setVisibility(View.VISIBLE);
                         todayOutletRecycler.setVisibility(View.GONE);
-                        nodata.setText(todayOutletList.getMessage());
+                        nodata_txt.setText(todayOutletList.getMessage());
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
                     CustomProgress.hideProgress(activity);
-                    nodata.setVisibility(View.VISIBLE);
+                    no_data_constrain.setVisibility(View.VISIBLE);
                     todayOutletRecycler.setVisibility(View.GONE);
-                    nodata.setText("");
+                    nodata_txt.setText("");
                 }
 
             }
@@ -152,8 +155,8 @@ public class DelManTodayOutletsActivity extends AppCompatActivity {
 //                CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
                 CustomProgress.hideProgress(activity);
-                nodata.setVisibility(View.VISIBLE);
-                nodata.setText("Something went wrong try again..");
+                no_data_constrain.setVisibility(View.VISIBLE);
+                nodata_txt.setText("Something went wrong try again..");
                 todayOutletRecycler.setVisibility(View.GONE);
             }
         });

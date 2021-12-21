@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,12 +22,10 @@ import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AssignOutletsModel;
-import com.retailvend.outstand.OutstandingActivity;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
-import com.retailvend.utills.SharedPrefManager;
 
 import java.util.List;
 
@@ -42,7 +41,8 @@ public class TodayOutletActivity extends AppCompatActivity {
     TodayOutletAdapter todayOutletAdapter;
     ImageView leftArrow;
     List<AssignOutletsDatum> todayOutletsDatum;
-    TextView nodata;
+    TextView nodata_txt;
+    ConstraintLayout no_data_constrain;
     SessionManagerSP sessionManagerSP;
 
     @Override
@@ -73,7 +73,8 @@ public class TodayOutletActivity extends AppCompatActivity {
 
         todayOutletRecycler=findViewById(R.id.today_outlet_recycler);
         leftArrow=findViewById(R.id.left_arrow);
-        nodata=findViewById(R.id.nodata);
+        nodata_txt=findViewById(R.id.nodata_txt);
+        no_data_constrain=findViewById(R.id.no_data_constrain);
 
         sessionManagerSP=new SessionManagerSP(TodayOutletActivity.this);
 
@@ -114,9 +115,9 @@ public class TodayOutletActivity extends AppCompatActivity {
                     String s = todayOutletList.getMessage();
 
                     if (todayOutletList.getStatus()==1) {
-                        nodata.setVisibility(View.GONE);
+                        no_data_constrain.setVisibility(View.GONE);
                         todayOutletRecycler.setVisibility(View.VISIBLE);
-                        nodata.setText("");
+                        nodata_txt.setText("");
                         todayOutletsDatum = todayOutletList.getData();
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 
@@ -133,17 +134,18 @@ public class TodayOutletActivity extends AppCompatActivity {
                     } else {
                       CustomProgress.hideProgress(activity);
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
-                        nodata.setVisibility(View.VISIBLE);
                         todayOutletRecycler.setVisibility(View.GONE);
-                        nodata.setText(todayOutletList.getMessage());
+                        no_data_constrain.setVisibility(View.VISIBLE);
+                        nodata_txt.setText(todayOutletList.getMessage());
+                        System.out.println("nodata "+todayOutletList.getMessage());
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
                     CustomProgress.hideProgress(activity);
-                    nodata.setVisibility(View.VISIBLE);
+                    no_data_constrain.setVisibility(View.VISIBLE);
                     todayOutletRecycler.setVisibility(View.GONE);
-                    nodata.setText("");
+                    nodata_txt.setText("");
                 }
 
             }
@@ -154,8 +156,8 @@ public class TodayOutletActivity extends AppCompatActivity {
 //                CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
                 CustomProgress.hideProgress(activity);
-                nodata.setVisibility(View.VISIBLE);
-                nodata.setText("Something went wrong try again..");
+                no_data_constrain.setVisibility(View.VISIBLE);
+                nodata_txt.setText("Something went wrong try again..");
                 todayOutletRecycler.setVisibility(View.GONE);
             }
         });

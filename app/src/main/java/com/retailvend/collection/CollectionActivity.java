@@ -1,6 +1,7 @@
 package com.retailvend.collection;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +26,8 @@ public class CollectionActivity extends AppCompatActivity {
     CollectionAdapter collectionAdapter;
     ImageView leftArrow;
     Toolbar toolbar;
-    TextView nodata;
+    TextView nodata_txt;
+    ConstraintLayout no_data_constrain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,8 @@ public class CollectionActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.collection_toolbar);
         collectionRecycler = findViewById(R.id.total_recyclerView);
         leftArrow = findViewById(R.id.left_arrow);
-        nodata=findViewById(R.id.nodata);
+        nodata_txt=findViewById(R.id.nodata_txt);
+        no_data_constrain=findViewById(R.id.no_data_constrain);
 
 //        swipeRefresh.setOnRefreshListener(this);
 //        salesRecycler.setHasFixedSize(true);

@@ -44,7 +44,7 @@ public class DashboardActivity extends AppCompatActivity {
     NavigationView navView;
     ImageView menu, close;
     String login_type = "";
-    TextView sales_main_txt;
+    TextView sales_main_txt, sales_list;
     String distributor_id = "";
 
     @Override
@@ -63,6 +63,7 @@ public class DashboardActivity extends AppCompatActivity {
         menu = findViewById(R.id.menu);
         close = findViewById(R.id.close);
         sales_main_txt = findViewById(R.id.sales_main_txt);
+        sales_list = findViewById(R.id.sales_list);
 
         sessionManagerSP = new SessionManagerSP(DashboardActivity.this);
 
@@ -108,6 +109,11 @@ public class DashboardActivity extends AppCompatActivity {
                     "font/quicksand_medium.ttf");
             sales_main_txt.setTypeface(font);
             sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            Typeface font1 = Typeface.createFromAsset(
+                    this.getAssets(),
+                    "font/quicksand_bold.ttf");
+            sales_list.setTypeface(font1);
+            sales_list.setText("DELIVERY LIST");
         } else {
             sales_main_txt.setText("SALES DETAILS");
             sales_main_txt.setTextSize(15);
@@ -116,6 +122,11 @@ public class DashboardActivity extends AppCompatActivity {
                     "font/quicksand_medium.ttf");
             sales_main_txt.setTypeface(font);
             sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            Typeface font1 = Typeface.createFromAsset(
+                    this.getAssets(),
+                    "font/quicksand_bold.ttf");
+            sales_list.setTypeface(font1);
+            sales_list.setText("SALES LIST");
         }
 
         outlet_main_cardview.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +158,7 @@ public class DashboardActivity extends AppCompatActivity {
         outstand_main_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("distributor_id "+distributor_id);
+                System.out.println("distributor_id " + distributor_id);
                 if (distributor_id.equals("0")) {
                     Intent outstandIntent = new Intent(DashboardActivity.this, OutstandingActivity.class);
                     startActivity(outstandIntent);
@@ -190,12 +201,48 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.order_list_constrain, R.id.menu, R.id.logout_constrain, R.id.logout_txt})
+    @OnClick({R.id.order_list_constrain, R.id.menu, R.id.logout_constrain, R.id.logout_txt, R.id.collection_menu, R.id.today_outlet_menu, R.id.sales_menu, R.id.outstand_menu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.order_list_constrain:
                 Intent orderIntent = new Intent(this, OrderListActivity.class);
                 startActivity(orderIntent);
+                break;
+            case R.id.collection_menu:
+                if (distributor_id.equals("0")) {
+                    Intent collectionIntent = new Intent(DashboardActivity.this, CollectionActivity.class);
+                    startActivity(collectionIntent);
+                } else {
+                    Intent collectionIntent1 = new Intent(DashboardActivity.this, CollectionActivity.class);
+                    startActivity(collectionIntent1);
+                }
+                break;
+            case R.id.today_outlet_menu:
+                if (distributor_id.equals("0")) {
+                    Intent i = new Intent(DashboardActivity.this, TodayOutletActivity.class);
+                    startActivity(i);
+                } else {
+                    Intent todayOutletIntent1 = new Intent(DashboardActivity.this, DelManTodayOutletsActivity.class);
+                    startActivity(todayOutletIntent1);
+                }
+                break;
+            case R.id.sales_menu:
+                if (distributor_id.equals("0")) {
+                    Intent salesIntent = new Intent(DashboardActivity.this, SalesActivity.class);
+                    startActivity(salesIntent);
+                } else {
+                    Intent delIntent = new Intent(DashboardActivity.this, DeliveryDetailsActivity.class);
+                    startActivity(delIntent);
+                }
+                break;
+            case R.id.outstand_menu:
+                if (distributor_id.equals("0")) {
+                    Intent outstandIntent = new Intent(DashboardActivity.this, OutstandingActivity.class);
+                    startActivity(outstandIntent);
+                } else {
+                    Intent outstandIntent1 = new Intent(DashboardActivity.this, DelManOutstandActivity.class);
+                    startActivity(outstandIntent1);
+                }
                 break;
             case R.id.menu:
                 drawerLayout.openDrawer(GravityCompat.START);

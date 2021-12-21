@@ -4,6 +4,7 @@ import static com.retailvend.utills.PaginationListener.PAGE_START;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -45,7 +46,8 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
     private boolean isLoading = false;
     int itemCount = 0;
     ProgressBar progress;
-    TextView emptyView;
+    TextView nodata_txt;
+    ConstraintLayout no_data_constrain;
 
 
     SessionManagerSP sessionManagerSP;
@@ -89,7 +91,8 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
         }
 
         left_arrow=findViewById(R.id.left_arrow);
-        emptyView=findViewById(R.id.emptyView);
+        nodata_txt=findViewById(R.id.nodata_txt);
+        no_data_constrain=findViewById(R.id.no_data_constrain);
         collection_recyclerView=findViewById(R.id.collection_recyclerView);
         progress = findViewById(R.id.progress);
 
@@ -187,10 +190,10 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
 
         if (isLoading) {
             progress.setVisibility(View.GONE);
-            emptyView.setVisibility(View.GONE);
+            no_data_constrain.setVisibility(View.GONE);
         } else {
             progress.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
+            no_data_constrain.setVisibility(View.GONE);
         }
 
         Call<DeliveryCollectionListModel> call = RetrofitClient
@@ -210,7 +213,7 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
 
                         collection_recyclerView.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.GONE);
+                        no_data_constrain.setVisibility(View.GONE);
 
                         deliveryCollectionListData = deliveryCollectionListModel.getData();
 
@@ -246,13 +249,13 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
 
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.GONE);
+                        no_data_constrain.setVisibility(View.GONE);
 
                     } else {
                         collection_recyclerView.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.VISIBLE);
-                        emptyView.setText("No Record Found");
+                        no_data_constrain.setVisibility(View.VISIBLE);
+                        nodata_txt.setText("No Record Found");
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                         CustomToast.getInstance(CollectionDeliveryActivity.this).showSmallCustomToast("No Record Found");
@@ -269,8 +272,8 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
             public void onFailure(@NonNull Call<DeliveryCollectionListModel> call, @NonNull Throwable t) {
                 collection_recyclerView.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
-                emptyView.setVisibility(View.VISIBLE);
-                emptyView.setText("Something went wrong try again..");
+                no_data_constrain.setVisibility(View.VISIBLE);
+                nodata_txt.setText("Something went wrong try again..");
             }
         });
     }

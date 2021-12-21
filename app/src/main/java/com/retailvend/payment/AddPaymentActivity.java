@@ -2,6 +2,7 @@ package com.retailvend.payment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -130,6 +131,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             name = (String) b.get("name");
             outletId = (String) b.get("outletId");
         }
+        spin_invoice_num.setPrompt("Select Invoice");
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
@@ -171,9 +173,9 @@ public class AddPaymentActivity extends AppCompatActivity {
         spin_invoice_num.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                invoice_num = invoiceTypeDatumList.get(i).getBillNo();
-                invoice_no_id = invoiceTypeDatumList.get(i).getBillId();
-                detailOutletPaymentBillApi(invoiceTypeDatumList.get(i).getPayId());
+                    invoice_num = invoiceTypeDatumList.get(i).getBillNo();
+                    invoice_no_id = invoiceTypeDatumList.get(i).getBillId();
+                    detailOutletPaymentBillApi(invoiceTypeDatumList.get(i).getPayId());
             }
 
             @Override

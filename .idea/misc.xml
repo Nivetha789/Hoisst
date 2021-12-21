@@ -16,6 +16,7 @@
         <entry key="..\:/RetailVend/app/src/main/res/drawable/lin_stroke2.xml" value="0.3828125" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_add_payment.xml" value="0.36666666666666664" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_collection.xml" value="0.36666666666666664" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_collection_delivery.xml" value="0.3625" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_delMan_outstand.xml" value="0.3625" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_del_man_outstand.xml" value="0.3625" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_del_man_payment_history.xml" value="0.3625" />
@@ -24,13 +25,15 @@
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_invoice_details.xml" value="0.36666666666666664" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_outlet_invoice_details.xml" value="0.3972911963882618" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_outstanding.xml" value="0.3625" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_payment_details.xml" value="0.3625" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_profile.xml" value="0.3625" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_sales.xml" value="0.36666666666666664" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/activity_sales_details.xml" value="0.36666666666666664" />
-        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_today_outlet.xml" value="0.2" />
-        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_today_outlet_details.xml" value="0.36666666666666664" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_today_outlet.xml" value="0.33" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/activity_today_outlet_details.xml" value="0.5" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/button_type_adapter.xml" value="0.36666666666666664" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/collection_delivery_adapter.xml" value="0.3625" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/content_add_payment.xml" value="0.5" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/content_invoice_details.xml" value="0.36666666666666664" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/content_invoice_details_delman.xml" value="0.25" />
@@ -40,6 +43,8 @@
         <entry key="..\:/RetailVend/app/src/main/res/layout/layout_add_payment_type.xml" value="0.3625" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/layout_invoice_no_adapter_spin.xml" value="0.3625" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/loader.xml" value="0.203125" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/navigation_view.xml" value="0.5" />
+        <entry key="..\:/RetailVend/app/src/main/res/layout/nodata_layout.xml" value="0.33" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/outlet_invoice_details_adapter.xml" value="0.35260416666666666" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/payment_history_adapter.xml" value="0.5" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/product_table.xml" value="0.36666666666666664" />

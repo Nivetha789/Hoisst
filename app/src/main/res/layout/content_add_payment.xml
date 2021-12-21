@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -96,12 +97,14 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginRight="10dp"
-                            android:background="@drawable/lin_gray_back">
+                            android:background="@drawable/lin_gray_back"
+                            android:orientation="vertical">
 
                             <Spinner
                                 android:id="@+id/spin_invoice_num"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                />
 
                         </LinearLayout>
 
