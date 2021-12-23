@@ -1,6 +1,8 @@
 package com.retailvend.outstand;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.retailvend.DashboardActivity;
 import com.retailvend.R;
 import com.retailvend.collection.CollectionAdapter;
 import com.retailvend.model.outlets.AssignOutletsDatum;
@@ -41,14 +44,24 @@ public class OutstandingAdapter extends RecyclerView.Adapter<OutstandingAdapter.
         AssignOutletsDatum data = todayOutletsDatum.get(position);
         holder.outstandingCardview.setTag(data);
 //        String value = "$ " + data.getEsPrice();
-        if (position == 0) {
-            holder.txt_avai_no.setText("₹ " + "1000");
-        } else {
+        if(data.getAvailableLimit()!=null && !TextUtils.isEmpty(data.getAvailableLimit())){
             holder.txt_avai_no.setText("₹ " + data.getAvailableLimit());
+        }else{
+            holder.txt_avai_no.setText("₹ 0" );
         }
         holder.txt_name.setText(data.getCompanyName());
         holder.contact_name.setText(data.getContactName());
         holder.contact_number.setText(data.getMobile());
+        holder.bal_amnt.setText("₹ 0");
+
+        holder.outstandingCardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent outstandIntent = new Intent(activity, OutstandingDetailsActivity.class);
+                outstandIntent.putExtra("sales_outstand", data);
+                activity.startActivity(outstandIntent);
+            }
+        });
     }
 
     @Override
@@ -60,10 +73,10 @@ public class OutstandingAdapter extends RecyclerView.Adapter<OutstandingAdapter.
 //        this.onClickListener = onClickListener;
 //    }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         CardView outstandingCardview;
-        TextView txt_name, txt_avai_no, contact_name, contact_number;
+        TextView txt_name, txt_avai_no, contact_name, contact_number,bal_amnt;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -71,7 +84,8 @@ public class OutstandingAdapter extends RecyclerView.Adapter<OutstandingAdapter.
             txt_name = itemView.findViewById(R.id.txt_name);
             txt_avai_no = itemView.findViewById(R.id.txt_avai_no);
             contact_name = itemView.findViewById(R.id.contact_name);
-            contact_number = itemView.findViewById(R.id.contact_number);
+            contact_number = itemView.findViewById(R.id.mob_no);
+            bal_amnt = itemView.findViewById(R.id.bal_amnt);
         }
     }
 }

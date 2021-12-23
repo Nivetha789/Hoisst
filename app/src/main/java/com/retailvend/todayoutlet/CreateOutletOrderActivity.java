@@ -87,7 +87,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     String bill_type = "";
     String order_type = "";
     String price = "";
-    String btn_Type_id = "";
+    String assign_id = "";
     String btn_Type_val = "";
     String type_id = "";
     String unitItem = "";
@@ -177,7 +177,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
         lat_val = sessionManagerSP.getLat();
         long_val = sessionManagerSP.getLong();
-        btn_Type_id=sessionManagerSP.getAttendanceId();
+        assign_id=sessionManagerSP.getAttendanceId();
 
         rv.setBackgroundResource(R.drawable.background);
         sales_agent.setBackgroundResource(R.drawable.lin_storke);
@@ -648,7 +648,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", btn_Type_id);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", assign_id);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override

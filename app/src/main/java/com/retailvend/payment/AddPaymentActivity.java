@@ -45,7 +45,7 @@ import retrofit2.Response;
 
 public class AddPaymentActivity extends AppCompatActivity {
 
-    TextView txt_dis_add_pay_toolbar, txt_add_payment_name, txt_add_payment_bal_amt, txt_add_payment_date, cheque_date;
+    TextView txt_dis_add_pay_toolbar,txt_add_payment_name, txt_add_payment_date, cheque_date;
     EditText edt_add_payment_amt, edt_add_payment_descrip, type_description, cheque_no, bank_name;
     Spinner spin_add_payment_type, spin_invoice_num;
     LinearLayout lin_add_payment, lin_back, description_linearLayout, cheque_linearLayout, bank_linearLayout, cheque_date_linearLayout;
@@ -97,7 +97,7 @@ public class AddPaymentActivity extends AppCompatActivity {
 
         txt_dis_add_pay_toolbar = findViewById(R.id.txt_dis_add_pay_toolbar);
         txt_add_payment_name = findViewById(R.id.txt_add_payment_name);
-        txt_add_payment_bal_amt = findViewById(R.id.txt_add_payment_bal_amt);
+//        txt_add_payment_bal_amt = findViewById(R.id.txt_add_payment_bal_amt);
         txt_add_payment_date = findViewById(R.id.txt_add_payment_date);
         //EditText
         edt_add_payment_amt = findViewById(R.id.edt_add_payment_amt);
@@ -172,13 +172,9 @@ public class AddPaymentActivity extends AppCompatActivity {
         spin_invoice_num.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i==0){
-                    spin_invoice_num.setPrompt("Select Invoice");
-                }else{
-                    invoice_num = invoiceTypeDatumList.get(i).getBillNo();
-                    invoice_no_id = invoiceTypeDatumList.get(i).getBillId();
-                    detailOutletPaymentBillApi(invoiceTypeDatumList.get(i).getPayId());
-                }
+                invoice_num = invoiceTypeDatumList.get(i).getBillNo();
+                invoice_no_id = invoiceTypeDatumList.get(i).getBillId();
+                detailOutletPaymentBillApi(invoiceTypeDatumList.get(i).getPayId());
             }
 
             @Override
@@ -390,7 +386,8 @@ public class AddPaymentActivity extends AppCompatActivity {
                         if (detailOutletInvAmntBillModel.getData() != null) {
                             detailOutletInvAmntBillData = detailOutletInvAmntBillModel.getData();
                             for (int i = 0; i < detailOutletInvAmntBillData.size(); i++) {
-                                txt_add_payment_bal_amt.setText(detailOutletInvAmntBillData.get(i).getCurBal());
+                                System.out.println("edt_add_payment_amt "+detailOutletInvAmntBillData.get(i).getCurBal());
+                                edt_add_payment_amt.setText(detailOutletInvAmntBillData.get(i).getCurBal());
                             }
                             progress.setVisibility(View.GONE);
                         } else {

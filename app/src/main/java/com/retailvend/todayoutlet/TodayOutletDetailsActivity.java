@@ -1,5 +1,6 @@
 package com.retailvend.todayoutlet;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -89,7 +90,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
     private boolean locationget;
 
-    AddAttendanceData addAttendanceData;
+    List<AddAttendanceData> addAttendanceData;
 
     List<NoReasonMessageDatum> noReasonMessageData;
     ReasonBaseAdapter reasonBaseAdapter;
@@ -306,6 +307,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
 
 
+    @SuppressLint("MissingPermission")
     void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -510,7 +512,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
                     if (attendanceTypeModel.getStatus() == 1) {
                         addAttendanceData=attendanceTypeModel.getData();
-                            sessionManagerSP.setAttendanceId(attendanceTypeModel.getData().getAttendanceId());
+                            sessionManagerSP.setAttendanceId(attendanceTypeModel.getData().get(0).getAttendanceId());
 //                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
                         check_in.setVisibility(View.GONE);
                         checked.setVisibility(View.VISIBLE);
