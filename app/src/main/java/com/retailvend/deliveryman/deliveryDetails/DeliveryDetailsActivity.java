@@ -5,6 +5,7 @@ import static com.retailvend.utills.PaginationListener.PAGE_START;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -48,7 +49,8 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
     ImageView leftArrow;
     Toolbar toolbar;
     Menu menu;
-    TextView emptyView;
+    TextView nodata_txt;
+    ConstraintLayout no_data_constrain;
     List<OrderListDatum> orderListData;
 
     private int currentPage = PAGE_START;
@@ -92,7 +94,8 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
         leftArrow = findViewById(R.id.left_arrow);
         delivery_recyeclerview = findViewById(R.id.delivery_recyeclerview);
         progress = findViewById(R.id.progress);
-        emptyView = findViewById(R.id.emptyView);
+        nodata_txt=findViewById(R.id.nodata_txt);
+        no_data_constrain=findViewById(R.id.no_data_constrain);
 
         sessionManagerSP = new SessionManagerSP(DeliveryDetailsActivity.this);
 
@@ -178,10 +181,10 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
 
         if (isLoading) {
             progress.setVisibility(View.GONE);
-            emptyView.setVisibility(View.GONE);
+            no_data_constrain.setVisibility(View.GONE);
         } else {
             progress.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
+            no_data_constrain.setVisibility(View.GONE);
         }
 
         Call<OrderListModel> call = RetrofitClient
@@ -201,7 +204,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
 
                         delivery_recyeclerview.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.GONE);
+                        no_data_constrain.setVisibility(View.GONE);
 
                         orderListData = productNameResModel.getData();
 
@@ -237,13 +240,13 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
 
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.GONE);
+                        no_data_constrain.setVisibility(View.GONE);
 
                     } else {
                         delivery_recyeclerview.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.VISIBLE);
-                        emptyView.setText("No Record Found");
+                        no_data_constrain.setVisibility(View.VISIBLE);
+                        nodata_txt.setText("No Record Found");
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                         CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("No Record Found");
@@ -260,8 +263,8 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
             public void onFailure(@NonNull Call<OrderListModel> call, @NonNull Throwable t) {
                 delivery_recyeclerview.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
-                emptyView.setVisibility(View.VISIBLE);
-                emptyView.setText("Something went wrong try again..");
+                no_data_constrain.setVisibility(View.VISIBLE);
+                nodata_txt.setText("Something went wrong try again..");
             }
         });
     }

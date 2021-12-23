@@ -2,7 +2,6 @@ package com.retailvend.deliveryman.outstand;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
 import com.retailvend.deliveryman.collection.CollectionDeliveryActivity;
 import com.retailvend.deliveryman.outstand.paymentHistory.DelManPaymentHistoryActivity;
-import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHistoryDatum;
 import com.retailvend.model.delManModels.delCollection.outstand.OutstandDatum;
-import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
-import com.retailvend.model.manageorder.OrderListDatum;
-import com.retailvend.sales.SalesAdapter;
-import com.retailvend.sales.SalesDetailsActivity;
+import com.retailvend.payment.AddPaymentActivity;
 import com.retailvend.utills.BaseViewHolder;
 
-import org.w3c.dom.Text;
-
-import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -146,8 +137,8 @@ public class DelManOutstandAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
             name.setText(item.getOutletName());
             invoice_date.setText(item.getUpdateDate().toString());
-            invoice_amount.setText("₹ "+item.getCurBal().toString());
-            String nameSplit =item.getOutletName();
+            invoice_amount.setText("₹ " + item.getCurBal().toString());
+            String nameSplit = item.getOutletName();
             name.setText(nameSplit);
             char firstLetter = nameSplit.charAt(0);
 //            System.out.println("firsrdsrs "+firstLetter);
@@ -165,7 +156,10 @@ public class DelManOutstandAdapter extends RecyclerView.Adapter<BaseViewHolder> 
             payment_collection.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent paymentCollectionIntent = new Intent(activity, CollectionDeliveryActivity.class);
+                    Intent paymentCollectionIntent = new Intent(activity, AddPaymentActivity.class);
+                    paymentCollectionIntent.putExtra("assign_id", item.getAssignId());
+                    paymentCollectionIntent.putExtra("name", item.getOutletName());
+                    paymentCollectionIntent.putExtra("outletId", item.getOutletId());
                     activity.startActivity(paymentCollectionIntent);
                 }
             });
