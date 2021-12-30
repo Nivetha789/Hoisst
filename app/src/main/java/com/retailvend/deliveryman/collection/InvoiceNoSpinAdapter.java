@@ -1,6 +1,8 @@
 package com.retailvend.deliveryman.collection;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +51,13 @@ public class InvoiceNoSpinAdapter extends BaseAdapter {
 
         InvoiceTypeDatum invoiceTypeDatum = invoiceTypeDataList.get(i);
         TextView txt_type = view.findViewById(R.id.txt_inv_no);
-        txt_type.setText(invoiceTypeDatum.getBillNo());
 
+        if (i == 0) {
+            txt_type.setTextColor(Color.GRAY);
+        } else {
+            txt_type.setTextColor(Color.BLACK);
+        }
+        txt_type.setText(invoiceTypeDatum.getBillNo());
 
         return view;
     }

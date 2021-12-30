@@ -2,9 +2,12 @@ package com.retailvend.payment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -34,7 +38,10 @@ import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -44,7 +51,7 @@ import retrofit2.Response;
 
 public class AddPaymentActivity extends AppCompatActivity {
 
-    TextView txt_dis_add_pay_toolbar, txt_add_payment_name, txt_add_payment_bal_amt, txt_add_payment_date, cheque_date;
+    TextView txt_dis_add_pay_toolbar, txt_add_payment_name, txt_add_payment_date, cheque_date;
     EditText edt_add_payment_amt, edt_add_payment_descrip, type_description, cheque_no, bank_name;
     Spinner spin_add_payment_type, spin_invoice_num;
     LinearLayout lin_add_payment, lin_back, description_linearLayout, cheque_linearLayout, bank_linearLayout, cheque_date_linearLayout;
@@ -57,6 +64,7 @@ public class AddPaymentActivity extends AppCompatActivity {
     String payment_typeVal = "";
     String invoice_num = "";
     String invoice_no_id = "";
+    String pay_id = "";
     Calendar c;
     int mYear, mMonth, mDay, mHour, mMinute;
     String assignId = "";
@@ -69,6 +77,7 @@ public class AddPaymentActivity extends AppCompatActivity {
     String outletId = "";
 
     SessionManagerSP sessionManagerSP;
+    Typeface font;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +105,6 @@ public class AddPaymentActivity extends AppCompatActivity {
 
         txt_dis_add_pay_toolbar = findViewById(R.id.txt_dis_add_pay_toolbar);
         txt_add_payment_name = findViewById(R.id.txt_add_payment_name);
-        txt_add_payment_bal_amt = findViewById(R.id.txt_add_payment_bal_amt);
         txt_add_payment_date = findViewById(R.id.txt_add_payment_date);
         //EditText
         edt_add_payment_amt = findViewById(R.id.edt_add_payment_amt);
@@ -120,6 +128,7 @@ public class AddPaymentActivity extends AppCompatActivity {
         sessionManagerSP = new SessionManagerSP(AddPaymentActivity.this);
 
         description_linearLayout.setVisibility(View.GONE);
+        invoiceTypeDatumList=new ArrayList<>();
 
         distributorId = sessionManagerSP.getDistributorId();
         Intent iin = getIntent();
@@ -171,9 +180,14 @@ public class AddPaymentActivity extends AppCompatActivity {
         spin_invoice_num.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                invoice_num = invoiceTypeDatumList.get(i).getBillNo();
-                invoice_no_id = invoiceTypeDatumList.get(i).getBillId();
-                detailOutletPaymentBillApi(invoiceTypeDatumList.get(i).getPayId());
+
+                if(i!=0){
+                    invoice_num = invoiceTypeDatumList.get(i).getBillNo();
+                    invoice_no_id = invoiceTypeDatumList.get(i).getBillId();
+                    pay_id = invoiceTypeDatumList.get(i).getPayId();
+                    detailOutletPaymentBillApi(invoiceTypeDatumList.get(i).getPayId());
+                }
+
             }
 
             @Override
@@ -272,7 +286,7 @@ public class AddPaymentActivity extends AppCompatActivity {
 
 
         Call<AddPaymentModel> call = RetrofitClient
-                .getInstance().getApi().addPayment("_addOutletPayment", assignId, payment_type, employeeId, distributorID, outletId, amt, discount, amt_type, "Test", bankName, chequeNo, "2");
+                .getInstance().getApi().addPayment("_addOutletPayment", assignId, pay_id, employeeId, distributorID, outletId, amt, discount, amt_type, "", bankName, chequeNo, "2");
 
 
         call.enqueue(new Callback<AddPaymentModel>() {
@@ -334,11 +348,14 @@ public class AddPaymentActivity extends AppCompatActivity {
 
 
                     if (invoiceTypeModel.getStatus() == 1) {
-
                         progress.setVisibility(View.GONE);
-//                        CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(paymentTypeModel.getMessage());
 
-                        invoiceTypeDatumList = invoiceTypeModel.getData();
+                        InvoiceTypeDatum invoiceTypeDatum = new InvoiceTypeDatum();
+                        invoiceTypeDatum.setBillNo("Select Invoice");
+                        invoiceTypeDatumList.add(invoiceTypeDatum);
+
+                        invoiceTypeDatumList.addAll(invoiceTypeModel.getData()) ;
+
                         invoiceNoSpinAdapter = new InvoiceNoSpinAdapter(AddPaymentActivity.this, invoiceTypeDatumList);
                         spin_invoice_num.setAdapter(invoiceNoSpinAdapter);
                         invoiceNoSpinAdapter.notifyDataSetChanged();
@@ -348,7 +365,7 @@ public class AddPaymentActivity extends AppCompatActivity {
                     }
 
                 } catch (Exception e) {
-                    Log.d("Exception", e.getMessage());
+                    Log.d("ExceptionInvoice", e.getMessage());
                 }
 
             }
@@ -385,7 +402,7 @@ public class AddPaymentActivity extends AppCompatActivity {
                         if (detailOutletInvAmntBillModel.getData() != null) {
                             detailOutletInvAmntBillData = detailOutletInvAmntBillModel.getData();
                             for (int i = 0; i < detailOutletInvAmntBillData.size(); i++) {
-                                txt_add_payment_bal_amt.setText(detailOutletInvAmntBillData.get(i).getCurBal());
+                                edt_add_payment_amt.setText(detailOutletInvAmntBillData.get(i).getBalAmt());
                             }
                             progress.setVisibility(View.GONE);
                         } else {

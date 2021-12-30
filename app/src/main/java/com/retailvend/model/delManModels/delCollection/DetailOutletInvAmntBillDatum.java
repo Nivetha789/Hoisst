@@ -22,6 +22,9 @@ public class DetailOutletInvAmntBillDatum {
     @SerializedName("amount")
     @Expose
     private String amount;
+    @SerializedName("bal_amt")
+    @Expose
+    private String balAmt;
 
     public String getPayId() {
         return payId;
@@ -71,4 +74,11 @@ public class DetailOutletInvAmntBillDatum {
         this.amount = amount;
     }
 
+    public String getBalAmt() {
+        return balAmt;
+    }
+
+    public void setBalAmt(String balAmt) {
+        this.balAmt = balAmt;
+    }
 }

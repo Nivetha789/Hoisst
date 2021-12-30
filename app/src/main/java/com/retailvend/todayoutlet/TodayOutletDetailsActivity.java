@@ -89,7 +89,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
     private boolean locationget;
 
-    AddAttendanceData addAttendanceData;
+    List<AddAttendanceData> addAttendanceData;
 
     List<NoReasonMessageDatum> noReasonMessageData;
     ReasonBaseAdapter reasonBaseAdapter;
@@ -309,6 +309,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, (LocationListener) this);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, (LocationListener) this);
         } catch (SecurityException e) {
             e.printStackTrace();
@@ -333,18 +334,18 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         System.out.println("Latitudetttt: " + latitude + " Longitude: " + longitude);
 
 
-        try {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-            String address = addresses.get(0).getAddressLine(0) + ", " +
-                    addresses.get(0).getAddressLine(1);
-
-            System.out.println(" address " + addresses.get(0).getAddressLine(0) + ", " +
-                    addresses.get(0).getAddressLine(1) + ", " + addresses.get(0).getAddressLine(2));
-        } catch (Exception e) {
-
-        }
+//        try {
+//            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+//            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+//
+//            String address = addresses.get(0).getAddressLine(0) + ", " +
+//                    addresses.get(0).getAddressLine(1);
+//
+//            System.out.println(" address " + addresses.get(0).getAddressLine(0) + ", " +
+//                    addresses.get(0).getAddressLine(1) + ", " + addresses.get(0).getAddressLine(2));
+//        } catch (Exception e) {
+//
+//        }
 
     }
 
@@ -510,7 +511,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
                     if (attendanceTypeModel.getStatus() == 1) {
                         addAttendanceData=attendanceTypeModel.getData();
-                            sessionManagerSP.setAttendanceId(attendanceTypeModel.getData().getAttendanceId());
+                            sessionManagerSP.setAttendanceId(addAttendanceData.get(0).getAttendanceId());
 //                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
                         check_in.setVisibility(View.GONE);
                         checked.setVisibility(View.VISIBLE);
