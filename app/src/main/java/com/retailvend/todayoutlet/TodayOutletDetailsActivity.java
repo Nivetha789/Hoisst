@@ -1,6 +1,5 @@
 package com.retailvend.todayoutlet;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -307,10 +306,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
 
 
-    @SuppressLint("MissingPermission")
     void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, (LocationListener) this);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, (LocationListener) this);
         } catch (SecurityException e) {
             e.printStackTrace();
@@ -335,18 +334,18 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         System.out.println("Latitudetttt: " + latitude + " Longitude: " + longitude);
 
 
-        try {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-            String address = addresses.get(0).getAddressLine(0) + ", " +
-                    addresses.get(0).getAddressLine(1);
-
-            System.out.println(" address " + addresses.get(0).getAddressLine(0) + ", " +
-                    addresses.get(0).getAddressLine(1) + ", " + addresses.get(0).getAddressLine(2));
-        } catch (Exception e) {
-
-        }
+//        try {
+//            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+//            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+//
+//            String address = addresses.get(0).getAddressLine(0) + ", " +
+//                    addresses.get(0).getAddressLine(1);
+//
+//            System.out.println(" address " + addresses.get(0).getAddressLine(0) + ", " +
+//                    addresses.get(0).getAddressLine(1) + ", " + addresses.get(0).getAddressLine(2));
+//        } catch (Exception e) {
+//
+//        }
 
     }
 
@@ -452,7 +451,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude, longitude, typeVal, reasonTxt, typeId);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, "11.0212571","77.0705126", typeVal, reasonTxt, typeId);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -497,7 +496,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().addAttendance("_addAttendance", emp_id, store_id, latitude, longitude);
+                .getInstance().getApi().addAttendance("_addAttendance", emp_id, store_id, "11.0212571","77.0705126");
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -512,7 +511,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
                     if (attendanceTypeModel.getStatus() == 1) {
                         addAttendanceData=attendanceTypeModel.getData();
-                            sessionManagerSP.setAttendanceId(attendanceTypeModel.getData().get(0).getAttendanceId());
+                            sessionManagerSP.setAttendanceId(addAttendanceData.get(0).getAttendanceId());
 //                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
                         check_in.setVisibility(View.GONE);
                         checked.setVisibility(View.VISIBLE);

@@ -6,22 +6,23 @@ import com.google.gson.annotations.SerializedName;
 public class InvoiceTypeDatum {
     @SerializedName("pay_id")
     @Expose
-    private String payId;
+    private String payId="";
     @SerializedName("bill_id")
     @Expose
-    private String billId;
+    private String billId="";
     @SerializedName("bill_no")
     @Expose
-    private String billNo;
+    private String billNo="";
     @SerializedName("pre_bal")
     @Expose
-    private String preBal;
+    private String preBal="";
     @SerializedName("cur_bal")
     @Expose
-    private String curBal;
+    private String curBal="";
     @SerializedName("amount")
     @Expose
-    private String amount;
+    private String amount="";
+
 
     public String getPayId() {
         return payId;
