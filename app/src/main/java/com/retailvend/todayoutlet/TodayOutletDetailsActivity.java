@@ -451,7 +451,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude, longitude, typeVal, reasonTxt, typeId);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, "11.0212571","77.0705126", typeVal, reasonTxt, typeId);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -496,7 +496,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().addAttendance("_addAttendance", emp_id, store_id, latitude, longitude);
+                .getInstance().getApi().addAttendance("_addAttendance", emp_id, store_id, "11.0212571","77.0705126");
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
