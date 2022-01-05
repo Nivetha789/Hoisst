@@ -648,7 +648,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", assign_id);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, "11.0212571", "77.0705126", btn_Type_val, "", "18");
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
