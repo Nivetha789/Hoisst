@@ -169,7 +169,6 @@ public class LoginActivity extends AppCompatActivity {
                             sessionManagerSP.setPhonelogin("1");
                             sessionManagerSP.setMobile(mobNo);
                             sessionManagerSP.setPass(pass);
-                            sessionManagerSP.setPhonelogin("1");
                             sessionManagerSP.setEmployeeId(loginDataModel.getId());
                             sessionManagerSP.setDistributorId(loginDataModel.getCompanyId());
 
