@@ -1,5 +1,6 @@
 package com.retailvend.todayoutlet;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -87,6 +88,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     String reasonTxt="";
     String reasonId="";
 
+    String assign_id="";
+
     private boolean locationget;
 
     List<AddAttendanceData> addAttendanceData;
@@ -119,13 +122,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
-        boolean isConnected = ConnectivityReceiver.isConnected();
-        if (isConnected) {
-            attendanceListApi();
-        } else {
-//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
-            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
-        }
+
 
         shop_name = findViewById(R.id.shop_name);
         shop_number = findViewById(R.id.shop_number);
@@ -169,8 +166,25 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
         }
 
+
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            attendanceListApi();
+        } else {
+//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(TodayOutletDetailsActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+        }
+
         checkGPSON();
         getLocation();
+
+
+
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,7 +237,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                     }else{
                         type_val="2";
                     }
-                    updateAttendanceApi(type_id, type_val);
+                    updateAttendanceApi(type_val);
                 } else {
                     CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Enter Reason");
                 }
@@ -240,7 +254,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                 }
                 checkGPSON();
                 getLocation();
-
+                System.out.println("latitudenewww "+latitude);
+                System.out.println("longitudenewww "+longitude);
                 if (!TextUtils.isEmpty(latitude) && !TextUtils.isEmpty(longitude)) {
                     boolean isConnected = ConnectivityReceiver.isConnected();
                     if (isConnected) {
@@ -306,6 +321,11 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
 
 
+    private boolean isLocationEnabled() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
     void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -316,11 +336,6 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         }
     }
 
-    private boolean isLocationEnabled() {
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -446,12 +461,12 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         type_val = typeVal;
     }
 
-    public void updateAttendanceApi(String typeId, String typeVal) {
+    public void updateAttendanceApi(String typeVal) {
         CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, "11.0212571","77.0705126", typeVal, reasonTxt, typeId);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude,longitude, typeVal, reasonTxt, assign_id);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -496,7 +511,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().addAttendance("_addAttendance", emp_id, store_id, "11.0212571","77.0705126");
+                .getInstance().getApi().addAttendance("_addAttendance", emp_id, store_id, latitude,longitude);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -511,7 +526,9 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
                     if (attendanceTypeModel.getStatus() == 1) {
                         addAttendanceData=attendanceTypeModel.getData();
-                            sessionManagerSP.setAttendanceId(addAttendanceData.get(0).getAttendanceId());
+                        assign_id=addAttendanceData.get(0).getAttendanceId();
+                        System.out.println("attandaceID "+assign_id);
+                            sessionManagerSP.setAssignId(assign_id);
 //                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
                         check_in.setVisibility(View.GONE);
                         checked.setVisibility(View.VISIBLE);
