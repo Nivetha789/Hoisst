@@ -397,22 +397,45 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:id="@+id/constrain_check"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mob_constrain">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/checkInConstrain"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/outlet_his_Constrain"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/outlet_history"
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/button_shape1"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:text="Outlet History"
+                        android:textColor="@color/white"
+                        android:textSize="14dp"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/checkInConstrain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -421,7 +444,7 @@
 
                     <TextView
                         android:id="@+id/check_in"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="37dp"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/button_shape1"
@@ -438,7 +461,7 @@
 
                     <TextView
                         android:id="@+id/checked"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="37dp"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/button_shape1"
@@ -454,9 +477,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/order_type_constrain"

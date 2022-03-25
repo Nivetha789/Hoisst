@@ -1,7 +1,6 @@
 package com.retailvend.collection;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +8,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
-import com.retailvend.model.outlets.AssignOutletsDatum;
-import com.retailvend.todayoutlet.TodayOutletDetailsActivity;
+import com.retailvend.model.collectionmodel.CollectionDetailsListDatum;
+import com.retailvend.model.manageorder.OrderListDatum;
+import com.retailvend.orderList.OrderListAdapter;
 import com.retailvend.utills.BaseViewHolder;
 
 import java.util.List;
@@ -22,16 +21,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CollectionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class CollectionDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<AssignOutletsDatum> todayOutletsDatum;
+    List<CollectionDetailsListDatum> collectionDetailsListData;
     Activity activity;
     private static final int VIEW_TYPE_LOADING = 0;
     private static final int VIEW_TYPE_NORMAL = 1;
     private static boolean isLoaderVisible = false;
 
-    public CollectionAdapter(Activity context, List<AssignOutletsDatum> itemsModelsl) {
-        this.todayOutletsDatum = itemsModelsl;
+    public CollectionDetailsAdapter(Activity context, List<CollectionDetailsListDatum> itemsModelsl) {
+        this.collectionDetailsListData = itemsModelsl;
         this.activity = context;
     }
 
@@ -41,7 +40,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
                 return new ViewHolder(
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.collection_adapter, parent, false));
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.collection_details_adapter, parent, false));
             case VIEW_TYPE_LOADING:
                 return new ProgressHolder(
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false));
@@ -58,7 +57,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public int getItemViewType(int position) {
         if (isLoaderVisible) {
-            return position == todayOutletsDatum.size() - 1 ? VIEW_TYPE_LOADING : VIEW_TYPE_NORMAL;
+            return position == collectionDetailsListData.size() - 1 ? VIEW_TYPE_LOADING : VIEW_TYPE_NORMAL;
         } else {
             return VIEW_TYPE_NORMAL;
         }
@@ -66,11 +65,11 @@ public class CollectionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemCount() {
-        return todayOutletsDatum == null ? 0 : todayOutletsDatum.size();
+        return collectionDetailsListData == null ? 0 : collectionDetailsListData.size();
     }
 
-    public void addItems(List<AssignOutletsDatum> postItems) {
-        todayOutletsDatum.addAll(postItems);
+    public void addItems(List<CollectionDetailsListDatum> postItems) {
+        collectionDetailsListData.addAll(postItems);
         notifyDataSetChanged();
 
 
@@ -78,35 +77,39 @@ public class CollectionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void addLoading() {
         isLoaderVisible = true;
-        todayOutletsDatum.add(new AssignOutletsDatum());
-        notifyItemInserted(todayOutletsDatum.size() - 1);
+        collectionDetailsListData.add(new CollectionDetailsListDatum());
+        notifyItemInserted(collectionDetailsListData.size() - 1);
     }
 
     public void removeLoading() {
         isLoaderVisible = false;
-        int position = todayOutletsDatum.size() - 1;
-        AssignOutletsDatum item = getItem(position);
+        int position = collectionDetailsListData.size() - 1;
+        CollectionDetailsListDatum item = getItem(position);
         if (item != null) {
-            todayOutletsDatum.remove(position);
+            collectionDetailsListData.remove(position);
             notifyItemRemoved(position);
         }
     }
 
     public void clear() {
-        todayOutletsDatum.clear();
+        collectionDetailsListData.clear();
         notifyDataSetChanged();
     }
 
-    AssignOutletsDatum getItem(int position) {
-        return todayOutletsDatum.get(position);
+    CollectionDetailsListDatum getItem(int position) {
+        return collectionDetailsListData.get(position);
     }
 
     public class ViewHolder extends BaseViewHolder {
-        @BindView(R.id.txt_name)
-        TextView storeName;
-        @BindView(R.id.txt_store_address)
-        TextView storeAddress;
-        @BindView(R.id.collection_cardview)
+        @BindView(R.id.dist_name)
+        TextView distName;
+        @BindView(R.id.amount)
+        TextView amount;
+        @BindView(R.id.date)
+        TextView date;
+        @BindView(R.id.amount_type)
+        TextView amount_type;
+        @BindView(R.id.cardview)
         CardView cardview;
 
         ViewHolder(View itemView) {
@@ -119,25 +122,22 @@ public class CollectionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         public void onBind(int position) {
             super.onBind(position);
-            AssignOutletsDatum item = todayOutletsDatum.get(position);
+            CollectionDetailsListDatum item = collectionDetailsListData.get(position);
 
 //            System.out.println("tesgsg "+salesAgentDataList.get(position));
 
-            String storeName1 = item.getCompanyName();
-            String storeAddress1 = item.getAddress();
+//            order_status.setText(item.getOrderStatus());
+            distName.setText(item.getDistributorName());
+            date.setText(item.getPaymentDate());
+            amount.setText(item.getAmount());
+            amount_type.setText(item.getAmountType());
 
-            storeName.setText(storeName1);
-            storeAddress.setText(storeAddress1);
-
-            cardview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(activity, CollectionDetailsActivity.class);
-                    i.putExtra("outlet_id", item.getStoreId());
-                    i.putExtra("shop_name", item.getCompanyName());
-                    activity.startActivity(i);
-                }
-            });
+//            cardview.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    ((ProductNameActivity) activity).updateProdName(item.getProductName(), item.getProductId(), item.getGstVal(), item.getHsnCode());
+//                }
+//            });
         }
     }
 

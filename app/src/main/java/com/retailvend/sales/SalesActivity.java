@@ -13,18 +13,23 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
+import com.retailvend.collection.CollectionActivity;
 import com.retailvend.model.manageorder.OrderListDatum;
 import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.orderList.OrderListActivity;
@@ -68,6 +73,11 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
     int totalcount = 0;
     SessionManagerSP sessionManagerSP;
 
+    LinearLayout searchLayout;
+    ImageView search_icon,nodata;
+    EditText search;
+
+    String searchTxt = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +109,9 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
         progress = findViewById(R.id.progress);
         nodata_txt=findViewById(R.id.nodata_txt);
         no_data_constrain=findViewById(R.id.no_data_constrain);
+        search = findViewById(R.id.search);
+        search_icon = findViewById(R.id.search_icon);
+        searchLayout = findViewById(R.id.searchLayout);
 
         sessionManagerSP = new SessionManagerSP(SalesActivity.this);
 
@@ -107,6 +120,30 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                offset = 0;
+                searchTxt = s.toString();
+
+                boolean isConnected = ConnectivityReceiver.isConnected();
+                if (isConnected) {
+                    orderListApi(offset, limit, "2");
+                } else {
+                    CustomToast.getInstance(SalesActivity.this).showSmallCustomToast("Please check your internet connection");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
 
@@ -126,7 +163,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    orderListApi(offset, limit);
+                    orderListApi(offset, limit,"1");
 
                 } else {
                     CustomToast.getInstance(SalesActivity.this).showSmallCustomToast("Please check your internet connection");
@@ -156,7 +193,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            orderListApi(offset, limit);
+            orderListApi(offset, limit,"1");
         } else {
             CustomToast.getInstance(SalesActivity.this).showSmallCustomToast("Please check your internet connection");
         }
@@ -172,13 +209,13 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
         salesAdapter.clear();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            orderListApi(offset, limit);
+            orderListApi(offset, limit,"1");
         } else {
             CustomToast.getInstance(SalesActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 
-    public void orderListApi(int offset1, int limit1) {
+    public void orderListApi(int offset1, int limit1,String searchType) {
 //        CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
 
@@ -191,7 +228,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
         }
 
         Call<OrderListModel> call = RetrofitClient
-                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1);
+                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1,searchTxt);
 
         call.enqueue(new Callback<OrderListModel>() {
             @Override
@@ -204,6 +241,12 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
                     OrderListModel productNameResModel = gson.fromJson(json, OrderListModel.class);
 
                     if (productNameResModel.getStatus() == 1) {
+
+                        if (searchType.equals("2")) {
+                            if (orderListData.size() > 0) {
+                                salesAdapter.clear();
+                            }
+                        }
 
                         salesRecycler.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);

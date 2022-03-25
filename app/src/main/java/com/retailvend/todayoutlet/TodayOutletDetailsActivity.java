@@ -1,13 +1,10 @@
 package com.retailvend.todayoutlet;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,13 +45,13 @@ import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AttendanceTypeDatum;
 import com.retailvend.model.outlets.AttendanceTypeModel;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.sales.SalesDetailsActivity;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.ReasonBaseAdapter;
 import com.retailvend.utills.SessionManagerSP;
 
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,6 +73,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     ButtonTypeAdapter buttonTypeAdapter;
     RecyclerView order_type_recycler;
     LinearLayoutManager mLayoutManager;
+    LinearLayout outlet_his_Constrain;
     String store_id = "";
     String attendance_status = "";
     String latitude = "";
@@ -138,6 +137,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         reason_constrain = findViewById(R.id.reason_constrain);
         location_constrain = findViewById(R.id.location_constrain);
         left_arrow = findViewById(R.id.left_arrow);
+        outlet_his_Constrain = findViewById(R.id.outlet_his_Constrain);
 
         assignOutletsDatum = (AssignOutletsDatum) getIntent().getSerializableExtra("todayOutlet");
         String shop_name1 = assignOutletsDatum.getCompanyName();
@@ -274,6 +274,15 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                 check_in.setVisibility(View.VISIBLE);
                 checked.setVisibility(View.GONE);
                 order_type_recycler.setVisibility(View.GONE);
+            }
+        });
+
+        outlet_his_Constrain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent outletIntent = new Intent(activity, OutletHistoryActivity.class);
+                outletIntent.putExtra("outlet_id",store_id);
+                activity.startActivity(outletIntent);
             }
         });
     }

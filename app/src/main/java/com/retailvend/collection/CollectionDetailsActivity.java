@@ -1,4 +1,4 @@
-package com.retailvend.orderList;
+package com.retailvend.collection;
 
 import static com.retailvend.utills.PaginationListener.PAGE_START;
 
@@ -12,33 +12,30 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
-import com.retailvend.model.manageorder.OrderListDatum;
-import com.retailvend.model.manageorder.OrderListModel;
-import com.retailvend.outstand.OutstandingActivity;
+import com.retailvend.model.collectionmodel.CollectionDetailsListDatum;
+import com.retailvend.model.collectionmodel.CollectionDetailsListModel;
+import com.retailvend.model.outlets.AssignOutletsModel;
+import com.retailvend.model.sales.SalesDetailsModel;
+import com.retailvend.orderList.OrderListActivity;
+import com.retailvend.orderList.OrderListAdapter;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.sales.SalesActivity;
-import com.retailvend.todayoutlet.CreateOutletOrderActivity;
-import com.retailvend.todayoutlet.ProductNameActivity;
-import com.retailvend.todayoutlet.ProductNameAdapter;
+import com.retailvend.sales.SalesDetailsActivity;
+import com.retailvend.sales.SalesDetailsAdapter;
+import com.retailvend.todayoutlet.TodayOutletActivity;
+import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
-import com.retailvend.utills.SessionManagerSP;
-import com.retailvend.utills.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,41 +44,40 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrderListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class CollectionDetailsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
-    OrderListAdapter orderListAdapter;
-    RecyclerView order_list_recycler;
-    List<OrderListDatum> orderListData;
-    TextView mTitle, emptyView;
-    private Toolbar toolbar;
-    String order_type = "";
-    ImageView left_arrow;
+    TextView shop_name, distributor_name, amount, date, amount_type;
+    ImageView leftArrow, nodata;
+    Toolbar toolbar;
     Activity activity;
+    TextView emptyView;
+    ProgressBar progress;
+    RecyclerView collection_recyclerView;
+    CollectionDetailsAdapter collectionDetailsAdapter;
 
+    //    SwipeRefreshLayout swipeRefresh;
     private int currentPage = PAGE_START;
     private boolean isLastPage = false;
     private int totalPage = 0;
     private boolean isLoading = false;
     int itemCount = 0;
-    ProgressBar progress;
+
+    List<CollectionDetailsListDatum> collectionDetailsListData;
 
     int offset = 0;
     int limit = 10;
     int totalcount = 0;
 
-    LinearLayout searchLayout;
-    ImageView search_icon,nodata;
-    EditText search;
-
-    String searchTxt = "";
-
-    SessionManagerSP sessionManagerSP;
+    String outlet_id="";
+    String shopName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_list);
+        setContentView(R.layout.activity_collection_details);
         activity = this;
+
+
         if (Build.VERSION.SDK_INT >= 19) {
 
             Window window = getWindow();
@@ -101,62 +97,36 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
 
-        order_list_recycler = findViewById(R.id.order_recycler);
-        toolbar = findViewById(R.id.toolbar);
-        mTitle = toolbar.findViewById(R.id.toolbar_title);
-        left_arrow = findViewById(R.id.left_arrow);
+        toolbar = findViewById(R.id.collection_toolbar);
+        leftArrow = findViewById(R.id.left_arrow);
         progress = findViewById(R.id.progress);
         emptyView = findViewById(R.id.emptyView);
-        search = findViewById(R.id.search);
-        search_icon = findViewById(R.id.search_icon);
-        searchLayout = findViewById(R.id.searchLayout);
+        nodata = findViewById(R.id.nodata);
+        shop_name = findViewById(R.id.shop_name);
+        collection_recyclerView = findViewById(R.id.collection_recyclerView);
 
-        sessionManagerSP=new SessionManagerSP(OrderListActivity.this);
-
-        orderListData = new ArrayList<>();
-
-        left_arrow.setOnClickListener(new View.OnClickListener() {
+        collectionDetailsListData = new ArrayList<>();
+        leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 onBackPressed();
             }
         });
 
-        search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        outlet_id = getIntent().getExtras().getString("outlet_id");
+        shopName = getIntent().getExtras().getString("shop_name");
+        shop_name.setText(shopName);
+//        System.out.println("outletIDDDD "+outlet_id);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                offset = 0;
-                searchTxt = s.toString();
-
-                boolean isConnected = ConnectivityReceiver.isConnected();
-                if (isConnected) {
-                    orderListApi(offset, limit, "2");
-                } else {
-                    CustomToast.getInstance(OrderListActivity.this).showSmallCustomToast("Please check your internet connection");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-
-//        swipeRefresh.setOnRefreshListener(this);
-        order_list_recycler.setHasFixedSize(true);
+        collection_recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        order_list_recycler.setLayoutManager(layoutManager);
+        collection_recyclerView.setLayoutManager(layoutManager);
 
-        orderListAdapter = new OrderListAdapter(OrderListActivity.this, orderListData);
-        order_list_recycler.setAdapter(orderListAdapter);
+        collectionDetailsAdapter = new CollectionDetailsAdapter(CollectionDetailsActivity.this, collectionDetailsListData);
+        collection_recyclerView.setAdapter(collectionDetailsAdapter);
 
-        order_list_recycler.addOnScrollListener(new PaginationListener(layoutManager, totalPage) {
+        collection_recyclerView.addOnScrollListener(new PaginationListener(layoutManager, totalPage) {
             @Override
             protected void loadMoreItems() {
                 isLoading = true;
@@ -164,10 +134,10 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    orderListApi(offset, limit,"1");
+                    collectionDetailsListApi(offset, limit);
 
                 } else {
-                    CustomToast.getInstance(OrderListActivity.this).showSmallCustomToast("Please check your internet connection");
+                    CustomToast.getInstance(CollectionDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
                 }
 
             }
@@ -190,13 +160,13 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
         offset = 0;
         currentPage = PAGE_START;
         isLastPage = false;
-        orderListAdapter.clear();
+        collectionDetailsAdapter.clear();
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            orderListApi(offset, limit,"1");
+            collectionDetailsListApi(offset, limit);
         } else {
-            CustomToast.getInstance(OrderListActivity.this).showSmallCustomToast("Please check your internet connection");
+            CustomToast.getInstance(CollectionDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 
@@ -207,51 +177,55 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
         offset = 0;
         currentPage = PAGE_START;
         isLastPage = false;
-        orderListAdapter.clear();
+        collectionDetailsAdapter.clear();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            orderListApi(offset, limit,"1");
+            collectionDetailsListApi(offset, limit);
         } else {
-            CustomToast.getInstance(OrderListActivity.this).showSmallCustomToast("Please check your internet connection");
+            CustomToast.getInstance(CollectionDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 
-    public void orderListApi(int offset1, int limit1,String searchType) {
+    public void collectionDetailsListApi(int offset1, int limit1) {
 //        CustomProgress.showProgress(activity);
-        String emp_id = sessionManagerSP.getEmployeeId();
 
         if (isLoading) {
             progress.setVisibility(View.GONE);
             emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
         } else {
             progress.setVisibility(View.VISIBLE);
             emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
         }
 
-        Call<OrderListModel> call = RetrofitClient
-                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1,searchType);
 
-        call.enqueue(new Callback<OrderListModel>() {
+        Call<CollectionDetailsListModel> call = RetrofitClient
+                .getInstance().getApi().getCollectionDetails("_outletCollectionReport",outlet_id,offset1, limit1);
+
+        call.enqueue(new Callback<CollectionDetailsListModel>() {
             @Override
-            public void onResponse(@NonNull Call<OrderListModel> call, @NonNull Response<OrderListModel> response) {
+            public void onResponse(@NonNull Call<CollectionDetailsListModel> call, @NonNull Response<CollectionDetailsListModel> response) {
 
                 try {
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    OrderListModel productNameResModel = gson.fromJson(json, OrderListModel.class);
+                    CollectionDetailsListModel collectionDetailsListModel = gson.fromJson(json, CollectionDetailsListModel.class);
 
-                    if (productNameResModel.getStatus() == 1) {
+                    if (collectionDetailsListModel.getStatus() == 1) {
+                        System.out.println("2131333333 ");
 
-                        order_list_recycler.setVisibility(View.VISIBLE);
+                        collection_recyclerView.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
 
-                        orderListData = productNameResModel.getData();
+                        collectionDetailsListData = collectionDetailsListModel.getData();
 
-                        offset = productNameResModel.getOffset();
-                        limit = productNameResModel.getLimit();
-                        totalcount = productNameResModel.getTotalRecord();
+                        offset = collectionDetailsListModel.getOffset();
+                        limit = collectionDetailsListModel.getLimit();
+                        totalcount = collectionDetailsListModel.getTotalRecord();
 
                         int offest1 = offset;
                         int totalcount1;
@@ -267,12 +241,12 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
 
 
                         if (currentPage != PAGE_START)
-                            orderListAdapter.removeLoading();
+                            collectionDetailsAdapter.removeLoading();
 
-                        orderListAdapter.addItems(orderListData);
+                        collectionDetailsAdapter.addItems(collectionDetailsListData);
 
                         if (currentPage < totalPage) {
-                            orderListAdapter.addLoading();
+                            collectionDetailsAdapter.addLoading();
                         } else {
                             isLastPage = true;
                         }
@@ -282,15 +256,18 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
 
                     } else {
-                        order_list_recycler.setVisibility(View.GONE);
+                        System.out.println("66666666666");
+                        collection_recyclerView.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
                         emptyView.setVisibility(View.VISIBLE);
                         emptyView.setText("No Record Found");
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(OrderListActivity.this).showSmallCustomToast("No Record Found");
+                        CustomToast.getInstance(CollectionDetailsActivity.this).showSmallCustomToast("No Record Found");
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
@@ -301,18 +278,13 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
             }
 
             @Override
-            public void onFailure(@NonNull Call<OrderListModel> call, @NonNull Throwable t) {
-                order_list_recycler.setVisibility(View.GONE);
+            public void onFailure(@NonNull Call<CollectionDetailsListModel> call, @NonNull Throwable t) {
+                collection_recyclerView.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
+                nodata.setVisibility(View.VISIBLE);
                 emptyView.setText("Something went wrong try again..");
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
     }
 }

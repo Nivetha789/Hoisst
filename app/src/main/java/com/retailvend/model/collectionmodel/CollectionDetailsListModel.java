@@ -1,12 +1,12 @@
-package com.retailvend.model.outlets;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.retailvend.model.collectionmodel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AssignOutletsModel {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CollectionDetailsListModel {
     @SerializedName("status")
     @Expose
     private Integer status;
@@ -24,7 +24,7 @@ public class AssignOutletsModel {
     private Integer limit;
     @SerializedName("data")
     @Expose
-    private List<AssignOutletsDatum> data = new ArrayList<>();
+    private List<CollectionDetailsListDatum> data = new ArrayList<>();
 
     public Integer getStatus() {
         return status;
@@ -66,11 +66,11 @@ public class AssignOutletsModel {
         this.limit = limit;
     }
 
-    public List<AssignOutletsDatum> getData() {
+    public List<CollectionDetailsListDatum> getData() {
         return data;
     }
 
-    public void setData(List<AssignOutletsDatum> data) {
+    public void setData(List<CollectionDetailsListDatum> data) {
         this.data = data;
     }
 }

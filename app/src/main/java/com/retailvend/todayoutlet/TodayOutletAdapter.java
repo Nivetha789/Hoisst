@@ -8,74 +8,152 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
 import com.retailvend.model.outlets.AssignOutletsDatum;
+import com.retailvend.model.outlets.ProductNameResData;
+import com.retailvend.model.outlets.SalesAgentData;
+import com.retailvend.utills.BaseViewHolder;
 
 import java.util.List;
 
-public class TodayOutletAdapter extends RecyclerView.Adapter<TodayOutletAdapter.MyViewHolder> {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private Activity activity;
+public class TodayOutletAdapter extends RecyclerView.Adapter<BaseViewHolder>  {
+
     private List<AssignOutletsDatum> todayOutletsDatum;
+    Activity activity;
+    private static final int VIEW_TYPE_LOADING = 0;
+    private static final int VIEW_TYPE_NORMAL = 1;
+    private static boolean isLoaderVisible = false;
 
-
-    TodayOutletAdapter(Activity activity, List<AssignOutletsDatum> assignOutletsDatum) {
-        this.activity = activity;
-        this.todayOutletsDatum=assignOutletsDatum;
+    public TodayOutletAdapter(Activity context, List<AssignOutletsDatum> itemsModelsl) {
+        this.todayOutletsDatum = itemsModelsl;
+        this.activity = context;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.today_outlet_adapter, viewGroup, false);
-        return new MyViewHolder(view);
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        switch (viewType) {
+            case VIEW_TYPE_NORMAL:
+                return new ViewHolder(
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.today_outlet_adapter, parent, false));
+            case VIEW_TYPE_LOADING:
+                return new ProgressHolder(
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false));
+            default:
+                return null;
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        AssignOutletsDatum data = todayOutletsDatum.get(position);
-        holder.todayOutletCard.setTag(data);
-        String companyName = data.getCompanyName();
-        String contactName = data.getContactName();
-        String companyNumber = data.getMobile();
-        holder.compName.setText(companyName);
-        holder.contactName.setText(contactName);
-        holder.contactNum.setText(companyNumber);
-//
-        holder.todayOutletCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(activity, TodayOutletDetailsActivity.class);
-                i.putExtra("todayOutlet", data);
-                activity.startActivity(i);
-            }
-        });
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+        holder.onBind(position);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (isLoaderVisible) {
+            return position == todayOutletsDatum.size() - 1 ? VIEW_TYPE_LOADING : VIEW_TYPE_NORMAL;
+        } else {
+            return VIEW_TYPE_NORMAL;
+        }
     }
 
     @Override
     public int getItemCount() {
-        return todayOutletsDatum.size();
+        return todayOutletsDatum == null ? 0 : todayOutletsDatum.size();
     }
 
-//    void setOnClickListener(OnClickListener onClickListener) {
-//        this.onClickListener = onClickListener;
-//    }
+    public void addItems(List<AssignOutletsDatum> postItems) {
+        todayOutletsDatum.addAll(postItems);
+        notifyDataSetChanged();
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        ConstraintLayout todayOutletCard;
-        TextView compName;
-        TextView contactName;
+
+    }
+
+    public void addLoading() {
+        isLoaderVisible = true;
+        todayOutletsDatum.add(new AssignOutletsDatum());
+        notifyItemInserted(todayOutletsDatum.size() - 1);
+    }
+
+    public void removeLoading() {
+        isLoaderVisible = false;
+        int position = todayOutletsDatum.size() - 1;
+        AssignOutletsDatum item = getItem(position);
+        if (item != null) {
+            todayOutletsDatum.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public void clear() {
+        todayOutletsDatum.clear();
+        notifyDataSetChanged();
+    }
+
+    AssignOutletsDatum getItem(int position) {
+        return todayOutletsDatum.get(position);
+    }
+
+    public class ViewHolder extends BaseViewHolder {
+        @BindView(R.id.shop_title)
+        TextView shopName;
+        @BindView(R.id.contact_name)
+        TextView contactNamee;
+        @BindView(R.id.contact_number)
         TextView contactNum;
+        @BindView(R.id.today_outlet)
+        ConstraintLayout cardview;
 
-        MyViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
-            todayOutletCard=itemView.findViewById(R.id.today_outlet);
-            compName=itemView.findViewById(R.id.shop_title);
-            contactName=itemView.findViewById(R.id.contact_name);
-            contactNum=itemView.findViewById(R.id.contact_number);
+            ButterKnife.bind(this, itemView);
+        }
+
+        protected void clear() {
+        }
+
+        public void onBind(int position) {
+            super.onBind(position);
+            AssignOutletsDatum item = todayOutletsDatum.get(position);
+
+//            System.out.println("tesgsg "+salesAgentDataList.get(position));
+
+            String companyName = item.getCompanyName();
+            String contactName = item.getContactName();
+            String companyNumber = item.getMobile();
+
+            System.out.println("tesgsg "+companyName);
+            shopName.setText(companyName);
+            contactNamee.setText(contactName);
+            contactNum.setText(companyNumber);
+
+            cardview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(activity, TodayOutletDetailsActivity.class);
+                    i.putExtra("todayOutlet", item);
+                    activity.startActivity(i);
+                }
+            });
+        }
+    }
+
+    public static class ProgressHolder extends BaseViewHolder {
+        ProgressHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        protected void clear() {
         }
     }
 }

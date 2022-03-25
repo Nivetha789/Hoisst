@@ -13,12 +13,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -29,6 +33,7 @@ import com.retailvend.model.manageorder.OrderListDatum;
 import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.sales.SalesAdapter;
+import com.retailvend.todayoutlet.TodayOutletActivity;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
 import com.retailvend.utills.SessionManagerSP;
@@ -64,6 +69,11 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
     int limit = 10;
     int totalcount = 0;
     SessionManagerSP sessionManagerSP;
+    LinearLayout searchLayout;
+    ImageView search_icon,nodata;
+    EditText search;
+    TextView emptyView;
+    String searchTxt = "";
 
 
     @Override
@@ -95,7 +105,12 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
         delivery_recyeclerview = findViewById(R.id.delivery_recyeclerview);
         progress = findViewById(R.id.progress);
         nodata_txt=findViewById(R.id.nodata_txt);
-        no_data_constrain=findViewById(R.id.no_data_constrain);
+        progress = findViewById(R.id.progress);
+        search = findViewById(R.id.search);
+        search_icon = findViewById(R.id.search_icon);
+        searchLayout = findViewById(R.id.searchLayout);
+        emptyView = findViewById(R.id.emptyView);
+        nodata = findViewById(R.id.nodata);
 
         sessionManagerSP = new SessionManagerSP(DeliveryDetailsActivity.this);
 
@@ -108,6 +123,29 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
         });
 
         delivery_recyeclerview.setHasFixedSize(true);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                offset = 0;
+                searchTxt = s.toString();
+
+                boolean isConnected = ConnectivityReceiver.isConnected();
+                if (isConnected) {
+                    orderListApi(offset, limit,"2");
+                } else {
+                    CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         delivery_recyeclerview.setLayoutManager(layoutManager);
@@ -123,7 +161,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    orderListApi(offset, limit);
+                    orderListApi(offset, limit,"1");
 
                 } else {
                     CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
@@ -153,7 +191,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            orderListApi(offset, limit);
+            orderListApi(offset, limit,"1");
         } else {
             CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
         }
@@ -169,13 +207,13 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
         salesAdapter.clear();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            orderListApi(offset, limit);
+            orderListApi(offset, limit,"1");
         } else {
             CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 
-    public void orderListApi(int offset1, int limit1) {
+    public void orderListApi(int offset1, int limit1,String searchType) {
 //        CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
 
@@ -188,7 +226,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
         }
 
         Call<OrderListModel> call = RetrofitClient
-                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1);
+                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1,searchType);
 
         call.enqueue(new Callback<OrderListModel>() {
             @Override

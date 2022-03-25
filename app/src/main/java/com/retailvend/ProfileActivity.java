@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
         left_arrow=findViewById(R.id.back);
         profiler_name=findViewById(R.id.profiler_name);
         email=findViewById(R.id.email);
-        mobile_no=findViewById(R.id.mobile_no);
+        mobile_no=findViewById(R.id.mob_no);
         address=findViewById(R.id.address);
         logout=findViewById(R.id.logout);
 

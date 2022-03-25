@@ -1,20 +1,28 @@
 package com.retailvend.outstand;
 
+import static com.retailvend.utills.PaginationListener.PAGE_START;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -28,16 +36,18 @@ import com.retailvend.todayoutlet.TodayOutletActivity;
 import com.retailvend.todayoutlet.TodayOutletAdapter;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
+import com.retailvend.utills.PaginationListener;
 import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OutstandingActivity extends AppCompatActivity {
+public class OutstandingActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     RecyclerView outstandingRecycler;
     Activity activity;
@@ -50,6 +60,24 @@ public class OutstandingActivity extends AppCompatActivity {
     SessionManagerSP sessionManagerSP;
     TextView nodata_txt;
     ConstraintLayout no_data_constrain;
+    LinearLayout searchLayout;
+    ImageView search_icon,nodata;
+    EditText search;
+    ProgressBar progress;
+    TextView emptyView;
+
+    private int currentPage = PAGE_START;
+    private boolean isLastPage = false;
+    private int totalPage = 0;
+    private boolean isLoading = false;
+    int itemCount = 0;
+
+    int offset = 0;
+    int limit = 10;
+    int totalcount = 0;
+
+    String searchTxt = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,24 +109,19 @@ public class OutstandingActivity extends AppCompatActivity {
         leftArrow = findViewById(R.id.left_arrow);
         total_amount=findViewById(R.id.total_amount);
         nodata_txt=findViewById(R.id.nodata_txt);
-        no_data_constrain=findViewById(R.id.no_data_constrain);
-        sessionManagerSP=new SessionManagerSP(OutstandingActivity.this);
+        progress = findViewById(R.id.progress);
+        search = findViewById(R.id.search);
+        search_icon = findViewById(R.id.search_icon);
+        searchLayout = findViewById(R.id.searchLayout);
+        emptyView = findViewById(R.id.emptyView);
+        nodata = findViewById(R.id.nodata);
 
+        sessionManagerSP=new SessionManagerSP(OutstandingActivity.this);
+        todayOutletsDatum=new ArrayList<>();
 
 //        swipeRefresh.setOnRefreshListener(this);
 //        salesRecycler.setHasFixedSize(true);
 //        saleslists = new ArrayList<>();
-
-        boolean isConnected = ConnectivityReceiver.isConnected();
-        if (isConnected) {
-//            Intent i = new Intent(LoginActivity.this,DashboardActivity.class);
-//            startActivity(i);
-            outstandListApi();
-
-        } else {
-//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
-            CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast("Please check your internet connection");
-        }
 
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +129,97 @@ public class OutstandingActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                offset = 0;
+                searchTxt = s.toString();
+
+                boolean isConnected = ConnectivityReceiver.isConnected();
+                if (isConnected) {
+                    outstandListApi(offset, limit, "2");
+                } else {
+                    CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast("Please check your internet connection");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        outstandingRecycler.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        outstandingRecycler.setLayoutManager(layoutManager);
+
+        outstandingAdapter = new OutstandingAdapter(OutstandingActivity.this, todayOutletsDatum);
+        outstandingRecycler.setAdapter(outstandingAdapter);
+
+        outstandingRecycler.addOnScrollListener(new PaginationListener(layoutManager, totalPage) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+//                currentPage++;
+
+                boolean isConnected = ConnectivityReceiver.isConnected();
+                if (isConnected) {
+                    outstandListApi(offset, limit, "1");
+
+                } else {
+                    CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast("Please check your internet connection");
+                }
+
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+        });
+    }
+
+    @Override
+    public void onRefresh() {
+        itemCount = 0;
+        offset = 0;
+        currentPage = PAGE_START;
+        isLastPage = false;
+        outstandingAdapter.clear();
+
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            outstandListApi(offset, limit, "1");
+        } else {
+            CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        itemCount = 0;
+        offset = 0;
+        currentPage = PAGE_START;
+        isLastPage = false;
+        outstandingAdapter.clear();
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            outstandListApi(offset, limit, "1");
+        } else {
+            CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
     }
 
     @Override
@@ -115,13 +229,23 @@ public class OutstandingActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void outstandListApi() {
-        CustomProgress.showProgress(activity);
+    public void outstandListApi(int offset1, int limit1, String searchType) {
+//        CustomProgress.showProgress(activity);
         String emp_id= sessionManagerSP.getEmployeeId();
 //        System.out.println("emmmpidd "+emp_id);
 
+        if (isLoading) {
+            progress.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
+        } else {
+            progress.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
+        }
+
         Call<AssignOutletsModel> call = RetrofitClient
-                .getInstance().getApi().todayOutletList("_employeeWiseList",emp_id);
+                .getInstance().getApi().todayOutletList("_employeeWiseList",offset1, limit1,emp_id, searchTxt);
 
         call.enqueue(new Callback<AssignOutletsModel>() {
             @Override
@@ -131,58 +255,87 @@ public class OutstandingActivity extends AppCompatActivity {
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    System.out.println("responseOutletsss "+response.body());
+                    AssignOutletsModel assignOutletsModel = gson.fromJson(json, AssignOutletsModel.class);
 
-                    AssignOutletsModel todayOutletList = gson.fromJson(json, AssignOutletsModel.class);
-                    String s = todayOutletList.getMessage();
+                    if (assignOutletsModel.getStatus() == 1) {
 
-                    if (todayOutletList.getStatus()==1) {
-                        no_data_constrain.setVisibility(View.GONE);
+                        if (searchType.equals("2")) {
+                            if (todayOutletsDatum.size() > 0) {
+                                outstandingAdapter.clear();
+                            }
+                        }
+
                         outstandingRecycler.setVisibility(View.VISIBLE);
-                        nodata_txt.setText("");
-                        todayOutletsDatum = todayOutletList.getData();
-//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
+                        progress.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
+                        searchLayout.setVisibility(View.VISIBLE);
+                        todayOutletsDatum = assignOutletsModel.getData();
 
-                        String total=todayOutletsDatum.get(1).getAvailableLimit();
-                        total_amount.setText(total);
-                        outstandingAdapter = new OutstandingAdapter(activity,todayOutletsDatum);
-                        mLayoutManager = new LinearLayoutManager(activity);
-                        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
-                        outstandingRecycler.setLayoutManager(mLayoutManager);
-                        outstandingRecycler.setItemAnimator(new DefaultItemAnimator());
-                        outstandingRecycler.setAdapter(outstandingAdapter);
+                        offset = assignOutletsModel.getOffset();
+                        limit = assignOutletsModel.getLimit();
+                        totalcount = assignOutletsModel.getTotalRecord();
 
-                        CustomProgress.hideProgress(activity);
+                        int offest1 = offset;
+                        int totalcount1;
+                        if (totalcount > offset) {
+                            totalcount1 = offset + limit;
+                        } else {
+                            totalcount1 = offset;
+                        }
+
+
+                        currentPage = offest1;
+                        totalPage = totalcount1;
+
+
+                        if (currentPage != PAGE_START)
+                            outstandingAdapter.removeLoading();
+
+                        outstandingAdapter.addItems(todayOutletsDatum);
+
+                        if (currentPage < totalPage) {
+                            outstandingAdapter.addLoading();
+                        } else {
+                            isLastPage = true;
+                        }
+                        isLoading = false;
+
+
+//                        offset = siteListModel.getOffset();
+                        progress.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
+                        searchLayout.setVisibility(View.VISIBLE);
 
                     } else {
-                        CustomProgress.hideProgress(activity);
-//                        CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast(todayOutletList.getMessage());
-//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        no_data_constrain.setVisibility(View.VISIBLE);
                         outstandingRecycler.setVisibility(View.GONE);
-                        nodata_txt.setText(todayOutletList.getMessage());
+                        progress.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.VISIBLE);
+                        emptyView.setText(assignOutletsModel.getMessage());
+                        searchLayout.setVisibility(View.GONE);
+//                        siteListDataModelList.clear();
+//                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                        CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast("No Record Found");
+//                    Toast.makeText(TodayOutletActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
-                    Log.d("Exception", e.getMessage());
-                    CustomProgress.hideProgress(activity);
-                    no_data_constrain.setVisibility(View.VISIBLE);
-                    outstandingRecycler.setVisibility(View.GONE);
-                    nodata_txt.setText("");
+                    progress.setVisibility(View.GONE);
+                    Log.d("Exceptionnnn", e.getMessage());
                 }
 
             }
 
             @Override
             public void onFailure(Call<AssignOutletsModel> call, Throwable t) {
-                Log.d("Failure ", t.getMessage());
-//                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-//                CustomToast.getInstance(OutstandingActivity.this).showSmallCustomToast("Something went wrong try again..");
-//                text_signIn.setVisibility(View.VISIBLE);
-                CustomProgress.hideProgress(activity);
-                no_data_constrain.setVisibility(View.VISIBLE);
-                nodata_txt.setText("Something went wrong try again..");
                 outstandingRecycler.setVisibility(View.GONE);
+                progress.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+                nodata.setVisibility(View.VISIBLE);
+                searchLayout.setVisibility(View.GONE);
+                emptyView.setText("Something went wrong try again..");
             }
         });
     }

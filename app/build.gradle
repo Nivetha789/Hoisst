@@ -64,4 +64,7 @@ dependencies {
     //circle profile
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    //bar chart
+    implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
+
 }

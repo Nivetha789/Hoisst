@@ -8,31 +8,47 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.retailvend.changePass.ChangePasswordActivity;
 import com.retailvend.collection.CollectionActivity;
 import com.retailvend.deliveryman.deliveryDetails.DeliveryDetailsActivity;
 import com.retailvend.deliveryman.outlet.DelManTodayOutletsActivity;
 import com.retailvend.deliveryman.outstand.DelManOutstandActivity;
+import com.retailvend.model.dashboard.SalesDashboardCountDatum;
+import com.retailvend.model.dashboard.SalesDashboardCountModel;
 import com.retailvend.orderList.OrderListActivity;
 import com.retailvend.outstand.OutstandingActivity;
+import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.sales.SalesActivity;
 import com.retailvend.todayoutlet.TodayOutletActivity;
+import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -46,12 +62,20 @@ public class DashboardActivity extends AppCompatActivity {
     String login_type = "";
     TextView sales_main_txt, sales_list;
     String distributor_id = "";
+    LinearLayout sales_man_count_details,del_man_cnt_details;
+    Activity activity;
+    TextView nodata_txt;
+    TextView tot_outlet_del_count,visit_outlet_del_count,pending_del_count,tot_outlet_count,visit_outlet_count,
+            pending_count,target_count,achievements_count,order_count,order_tot_count;
+    ConstraintLayout no_data_constrain;
+    List<SalesDashboardCountDatum> salesDashboardCountData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_drawer);
         ButterKnife.bind(this);
+        activity=this;
 
         outlet_main_cardview = findViewById(R.id.outlet_main_cardview);
         collection_main_cardview = findViewById(R.id.collection_main_cardview);
@@ -63,9 +87,24 @@ public class DashboardActivity extends AppCompatActivity {
         menu = findViewById(R.id.menu);
         close = findViewById(R.id.close);
         sales_main_txt = findViewById(R.id.sales_main_txt);
-        sales_list = findViewById(R.id.sales_list);
+        sales_man_count_details = findViewById(R.id.sales_man_count_details);
+        del_man_cnt_details = findViewById(R.id.del_man_cnt_details);
+        nodata_txt=findViewById(R.id.nodata_txt);
+        no_data_constrain=findViewById(R.id.no_data_constrain);
+        tot_outlet_del_count=findViewById(R.id.tot_outlet_del_count);
+        visit_outlet_del_count=findViewById(R.id.visit_outlet_del_count);
+        pending_del_count=findViewById(R.id.pending_del_count);
+        tot_outlet_count=findViewById(R.id.tot_outlet_count);
+        visit_outlet_count=findViewById(R.id.visit_outlet_count);
+        pending_count=findViewById(R.id.pending_count);
+        target_count=findViewById(R.id.target_count);
+//        achievements_count=findViewById(R.id.achievements_count);
+        order_count=findViewById(R.id.order_count);
+        order_tot_count=findViewById(R.id.order_tot_count);
 
         sessionManagerSP = new SessionManagerSP(DashboardActivity.this);
+
+        salesDashboardCountData=new ArrayList<>();
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -102,6 +141,8 @@ public class DashboardActivity extends AppCompatActivity {
         distributor_id = sessionManagerSP.getDistributorId();
 
         if (login_type.equals("1")) {
+            sales_man_count_details.setVisibility(View.GONE);
+            del_man_cnt_details.setVisibility(View.VISIBLE);
             sales_main_txt.setText("DELIVERY DETAILS");
             sales_main_txt.setTextSize(15);
             Typeface font = Typeface.createFromAsset(
@@ -114,20 +155,23 @@ public class DashboardActivity extends AppCompatActivity {
                     "font/quicksand_bold.ttf");
             sales_list.setTypeface(font1);
             sales_list.setText("DELIVERY LIST");
-        } else {
-            sales_main_txt.setText("SALES DETAILS");
-            sales_main_txt.setTextSize(15);
-            Typeface font = Typeface.createFromAsset(
-                    this.getAssets(),
-                    "font/quicksand_medium.ttf");
-            sales_main_txt.setTypeface(font);
-            sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            Typeface font1 = Typeface.createFromAsset(
-                    this.getAssets(),
-                    "font/quicksand_bold.ttf");
-            sales_list.setTypeface(font1);
-            sales_list.setText("SALES LIST");
         }
+//        } else {
+//            sales_man_count_details.setVisibility(View.VISIBLE);
+//            del_man_cnt_details.setVisibility(View.GONE);
+//            sales_main_txt.setText("SALES DETAILS");
+//            sales_main_txt.setTextSize(15);
+//            Typeface font = Typeface.createFromAsset(
+//                    this.getAssets(),
+//                    "font/quicksand_medium.ttf");
+//            sales_main_txt.setTypeface(font);
+//            sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+//            Typeface font1 = Typeface.createFromAsset(
+//                    this.getAssets(),
+//                    "font/quicksand_bold.ttf");
+//            sales_list.setTypeface(font1);
+//            sales_list.setText("SALES LIST");
+//        }
 
         outlet_main_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,7 +245,8 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.order_list_constrain, R.id.menu, R.id.logout_constrain, R.id.logout_txt, R.id.collection_menu, R.id.today_outlet_menu, R.id.sales_menu, R.id.outstand_menu})
+    @OnClick({R.id.order_list_constrain, R.id.menu, R.id.logout_constrain, R.id.logout_txt, R.id.collection_menu, R.id.today_outlet_menu,
+            R.id.outstand_menu,R.id.target_menu,R.id.start_temp_menu,R.id.end_temp_menu,R.id.change_pass_menu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.order_list_constrain:
@@ -226,15 +271,6 @@ public class DashboardActivity extends AppCompatActivity {
                     startActivity(todayOutletIntent1);
                 }
                 break;
-            case R.id.sales_menu:
-                if (distributor_id.equals("0")) {
-                    Intent salesIntent = new Intent(DashboardActivity.this, SalesActivity.class);
-                    startActivity(salesIntent);
-                } else {
-                    Intent delIntent = new Intent(DashboardActivity.this, DeliveryDetailsActivity.class);
-                    startActivity(delIntent);
-                }
-                break;
             case R.id.outstand_menu:
                 if (distributor_id.equals("0")) {
                     Intent outstandIntent = new Intent(DashboardActivity.this, OutstandingActivity.class);
@@ -250,6 +286,28 @@ public class DashboardActivity extends AppCompatActivity {
 //            case R.id.close:
 //                drawerLayout.closeDrawer(GravityCompat.START);
 //                break;
+            case R.id.target_menu:
+                if (distributor_id.equals("0")) {
+                    Intent salesIntent = new Intent(DashboardActivity.this, SalesActivity.class);
+                    startActivity(salesIntent);
+                } else {
+                    Intent delIntent = new Intent(DashboardActivity.this, DeliveryDetailsActivity.class);
+                    startActivity(delIntent);
+                }
+                break;
+
+                case R.id.start_temp_menu:
+
+                break;
+
+                case R.id.end_temp_menu:
+
+                break;
+
+            case R.id.change_pass_menu:
+                    Intent delIntent = new Intent(DashboardActivity.this, ChangePasswordActivity.class);
+                    startActivity(delIntent);
+                break;
             case R.id.logout_constrain:
             case R.id.logout_txt:
                 AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
@@ -298,5 +356,76 @@ public class DashboardActivity extends AppCompatActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
+    }
+
+    public void countDetailsApi() {
+        CustomProgress.showProgress(activity);
+        String emp_id= sessionManagerSP.getEmployeeId();
+        System.out.println("emmmpidd "+emp_id);
+
+        Call<SalesDashboardCountModel> call = RetrofitClient
+                .getInstance().getApi().dashboardCount("_employeeDashboard",emp_id);
+
+        call.enqueue(new Callback<SalesDashboardCountModel>() {
+            @Override
+            public void onResponse(@NonNull Call<SalesDashboardCountModel> call, @NonNull Response<SalesDashboardCountModel> response) {
+
+                try {
+
+                    Gson gson = new Gson();
+                    String json = gson.toJson(response.body());
+//                    System.out.println("responseOutletsss "+response.body());
+
+                    SalesDashboardCountModel salesDashboardCountModel = gson.fromJson(json, SalesDashboardCountModel.class);
+                    String s = salesDashboardCountModel.getMessage();
+
+                    if (salesDashboardCountModel.getStatus()==1) {
+                        no_data_constrain.setVisibility(View.GONE);
+                        nodata_txt.setText("");
+                        salesDashboardCountData = salesDashboardCountModel.getData();
+
+                        //del man
+                        tot_outlet_del_count.setText(salesDashboardCountData.get(0).getTotalInvoice());
+                        visit_outlet_del_count.setText(salesDashboardCountData.get(0).getVisitInvoice());
+                        pending_del_count.setText(salesDashboardCountData.get(0).getPendingInvoice());
+
+                        //sales man
+                        tot_outlet_count.setText(salesDashboardCountData.get(0).getTotalOutlet());
+                        visit_outlet_count.setText(salesDashboardCountData.get(0).getVisitOutlet());
+                        pending_count.setText(salesDashboardCountData.get(0).getPendingOutlet());
+                        target_count.setText(salesDashboardCountData.get(0).getTargetValue());
+                        achievements_count.setText(salesDashboardCountData.get(0).getAchievement());
+                        order_count.setText(salesDashboardCountData.get(0).getOrderCount());
+                        order_tot_count.setText(salesDashboardCountData.get(0).getOrderTotal());
+
+                        CustomProgress.hideProgress(activity);
+
+                    } else {
+                        CustomProgress.hideProgress(activity);
+//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
+                        no_data_constrain.setVisibility(View.VISIBLE);
+                        nodata_txt.setText(salesDashboardCountModel.getMessage());
+                        System.out.println("nodata "+salesDashboardCountModel.getMessage());
+                    }
+
+                } catch (Exception e) {
+                    Log.d("Exception", e.getMessage());
+                    CustomProgress.hideProgress(activity);
+                    no_data_constrain.setVisibility(View.VISIBLE);
+                    nodata_txt.setText("");
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SalesDashboardCountModel> call, @NonNull Throwable t) {
+                Log.d("Failure ", t.getMessage());
+//                CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Something went wrong try again..");
+//                text_signIn.setVisibility(View.VISIBLE);
+                CustomProgress.hideProgress(activity);
+                no_data_constrain.setVisibility(View.VISIBLE);
+                nodata_txt.setText("Something went wrong try again..");
+            }
+        });
     }
 }

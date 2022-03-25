@@ -1,5 +1,8 @@
 package com.retailvend.retrofit;
 
+import com.retailvend.model.changePassword.ChangePasswordModel;
+import com.retailvend.model.collectionmodel.CollectionDetailsListModel;
+import com.retailvend.model.dashboard.SalesDashboardCountModel;
 import com.retailvend.model.delManModels.delCollection.DetailOutletInvAmntBillModel;
 import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHistoryModel;
 import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
@@ -22,6 +25,7 @@ import com.retailvend.model.outlets.AttendanceTypeModel;
 import com.retailvend.model.outlets.ProductNameResModel;
 import com.retailvend.model.outlets.ProductTypeModel;
 import com.retailvend.model.outlets.SalesAgentsListModel;
+import com.retailvend.model.outlets.outletHistory.OutletHistoryModel;
 import com.retailvend.model.sales.SalesDetailsModel;
 
 import retrofit2.Call;
@@ -44,7 +48,10 @@ public interface Api {
     @POST("assignshop/api/employee_wise_shop")
     Call<AssignOutletsModel> todayOutletList(
             @Field("method") String method,
-            @Field("employee_id") String emp_id);
+            @Field("offset") int offset,
+            @Field("limit") int limit,
+            @Field("employee_id") String emp_id,
+            @Field("search") String search);
 
     //attendance list
     @FormUrlEncoded
@@ -127,7 +134,8 @@ public interface Api {
             @Field("method") String method,
             @Field("employee_id") String employee_id,
             @Field("offset") int offset,
-            @Field("limit") int limit
+            @Field("limit") int limit,
+            @Field("search") String search
     );
 
     //sales details
@@ -144,6 +152,34 @@ public interface Api {
     Call<NoReasonMessageModel> noReason(
             @Field("method") String method
     );
+
+    //dashboard count
+    @FormUrlEncoded
+    @POST("login/api/employee_login")
+    Call<SalesDashboardCountModel> dashboardCount(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id
+    );
+
+    //change password
+    @FormUrlEncoded
+    @POST("login/api/employee_login")
+    Call<ChangePasswordModel> changePassword(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id,
+            @Field("new_pword") String new_pword,
+            @Field("c_pword") String c_pword
+    );
+
+    //outlet history
+    @FormUrlEncoded
+    @POST("attendance/api/outlet_history")
+    Call<OutletHistoryModel> getOutletHistory(
+            @Field("method") String method,
+            @Field("outlet_id") String outlet_id
+    );
+
+
 
 
     /*Delivery man*/
@@ -254,6 +290,16 @@ public interface Api {
     Call<PaymentHistoryModel> paymentHistory(
             @Field("method") String method,
             @Field("assign_id") String assign_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit
+    );
+
+    //Collection Details
+    @FormUrlEncoded
+    @POST("login/api/employee_login")
+    Call<CollectionDetailsListModel> getCollectionDetails(
+            @Field("method") String method,
+            @Field("outlet_id") String outlet_id,
             @Field("offset") int offset,
             @Field("limit") int limit
     );

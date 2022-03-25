@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -55,6 +56,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
     List<SalesTaxDetail> taxDetails;
     String random_value = "";
     Activity activity;
+    ImageView left_arrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +127,14 @@ public class SalesDetailsActivity extends AppCompatActivity {
         order_type = findViewById(R.id.order_type);
         amount = findViewById(R.id.amount);
         bill_date = findViewById(R.id.bill_date);
+        left_arrow = findViewById(R.id.left_arrow);
+
+        left_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         productDetails = new ArrayList<>();
         taxDetails = new ArrayList<>();

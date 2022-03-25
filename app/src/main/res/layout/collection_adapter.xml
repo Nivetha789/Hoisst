@@ -10,7 +10,7 @@
         android:layout_height="120dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/sales_cardview"
+            android:id="@+id/collection_cardview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="10dp"
@@ -85,12 +85,12 @@
                             android:singleLine="true"
                             android:textFontWeight="600"
                             android:fontFamily="@font/quicksand_medium"
-                            android:text="Sales code "
+                            android:text="Store Address"
                             android:textColor="#802F3145"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:id="@+id/txt_sales_no"
+                            android:id="@+id/txt_store_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center|left"
@@ -110,43 +110,24 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
                     android:orientation="vertical"
-                    android:weightSum="2">
+                    android:weightSum="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:layout_weight="1">
 
-                        <TextView
-                            android:id="@+id/txt_amt"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:fontFamily="@font/quicksand_bold"
-                            android:text="₹ 5000"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/txt_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:text="15-Aug-2021"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                        <ImageView
+                            android:id="@+id/arrow"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/right_arrow"
+                            android:backgroundTint="@color/colorPrimary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/shop_title" />
 
                     </LinearLayout>
 
