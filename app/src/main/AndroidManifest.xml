@@ -26,6 +26,9 @@
         android:theme="@style/Theme.Hoisst"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".startTemp.StartTempActivity"
+            android:exported="true" />
+        <activity
             android:name=".targetDetails.TargetDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"

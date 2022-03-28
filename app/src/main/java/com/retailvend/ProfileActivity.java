@@ -138,7 +138,7 @@ public class ProfileActivity extends AppCompatActivity {
                         CustomProgress.hideProgress(activity);
                     } else {
                         CustomProgress.hideProgress(activity);
-                        CustomToast.getInstance(ProfileActivity.this).showSmallCustomToast("Invalid User Name or Password");
+//                        CustomToast.getInstance(ProfileActivity.this).showSmallCustomToast();
                     }
 
                 } catch (Exception e) {

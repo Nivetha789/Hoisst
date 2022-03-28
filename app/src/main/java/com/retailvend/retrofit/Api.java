@@ -27,6 +27,8 @@ import com.retailvend.model.outlets.ProductTypeModel;
 import com.retailvend.model.outlets.SalesAgentsListModel;
 import com.retailvend.model.outlets.outletHistory.OutletHistoryModel;
 import com.retailvend.model.sales.SalesDetailsModel;
+import com.retailvend.model.startTempSales.StartTempModel;
+import com.retailvend.model.targetDetailssales.TargetDetailsModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -177,6 +179,22 @@ public interface Api {
     Call<OutletHistoryModel> getOutletHistory(
             @Field("method") String method,
             @Field("outlet_id") String outlet_id
+    );
+
+    //target details
+    @FormUrlEncoded
+    @POST("login/api/employee_login")
+    Call<TargetDetailsModel> targetDetails(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id
+    );
+
+    //start temp
+    @FormUrlEncoded
+    @POST("login/api/employee_login")
+    Call<StartTempModel> startTemp(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id
     );
 
 

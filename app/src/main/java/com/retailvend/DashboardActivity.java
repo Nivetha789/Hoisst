@@ -25,6 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
+import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.changePass.ChangePasswordActivity;
 import com.retailvend.collection.CollectionActivity;
 import com.retailvend.deliveryman.deliveryDetails.DeliveryDetailsActivity;
@@ -36,8 +37,10 @@ import com.retailvend.orderList.OrderListActivity;
 import com.retailvend.outstand.OutstandingActivity;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.sales.SalesActivity;
+import com.retailvend.targetDetails.TargetDetailsActivity;
 import com.retailvend.todayoutlet.TodayOutletActivity;
 import com.retailvend.utills.CustomProgress;
+import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
 import com.retailvend.utills.SharedPrefManager;
 
@@ -233,6 +236,13 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(profileIntent);
             }
         });
+
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            countDetailsApi();
+        } else {
+            CustomToast.getInstance(DashboardActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
     }
 
 
@@ -288,11 +298,11 @@ public class DashboardActivity extends AppCompatActivity {
 //                break;
             case R.id.target_menu:
                 if (distributor_id.equals("0")) {
-                    Intent salesIntent = new Intent(DashboardActivity.this, SalesActivity.class);
+                    Intent salesIntent = new Intent(DashboardActivity.this, TargetDetailsActivity.class);
                     startActivity(salesIntent);
                 } else {
-                    Intent delIntent = new Intent(DashboardActivity.this, DeliveryDetailsActivity.class);
-                    startActivity(delIntent);
+//                    Intent delIntent = new Intent(DashboardActivity.this, TargetDetailsActivity.class);
+//                    startActivity(delIntent);
                 }
                 break;
 
@@ -380,8 +390,8 @@ public class DashboardActivity extends AppCompatActivity {
                     String s = salesDashboardCountModel.getMessage();
 
                     if (salesDashboardCountModel.getStatus()==1) {
-                        no_data_constrain.setVisibility(View.GONE);
-                        nodata_txt.setText("");
+//                        no_data_constrain.setVisibility(View.GONE);
+//                        nodata_txt.setText("");
                         salesDashboardCountData = salesDashboardCountModel.getData();
 
                         //del man
@@ -393,8 +403,8 @@ public class DashboardActivity extends AppCompatActivity {
                         tot_outlet_count.setText(salesDashboardCountData.get(0).getTotalOutlet());
                         visit_outlet_count.setText(salesDashboardCountData.get(0).getVisitOutlet());
                         pending_count.setText(salesDashboardCountData.get(0).getPendingOutlet());
-                        target_count.setText(salesDashboardCountData.get(0).getTargetValue());
-                        achievements_count.setText(salesDashboardCountData.get(0).getAchievement());
+                        target_count.setText(salesDashboardCountData.get(0).getTargetValue()+" / "+salesDashboardCountData.get(0).getAchievement());
+//                        achievements_count.setText(salesDashboardCountData.get(0).getAchievement());
                         order_count.setText(salesDashboardCountData.get(0).getOrderCount());
                         order_tot_count.setText(salesDashboardCountData.get(0).getOrderTotal());
 
@@ -403,16 +413,16 @@ public class DashboardActivity extends AppCompatActivity {
                     } else {
                         CustomProgress.hideProgress(activity);
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
-                        no_data_constrain.setVisibility(View.VISIBLE);
-                        nodata_txt.setText(salesDashboardCountModel.getMessage());
-                        System.out.println("nodata "+salesDashboardCountModel.getMessage());
+//                        no_data_constrain.setVisibility(View.VISIBLE);
+//                        nodata_txt.setText(salesDashboardCountModel.getMessage());
+//                        System.out.println("nodata "+salesDashboardCountModel.getMessage());
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
                     CustomProgress.hideProgress(activity);
-                    no_data_constrain.setVisibility(View.VISIBLE);
-                    nodata_txt.setText("");
+//                    no_data_constrain.setVisibility(View.VISIBLE);
+//                    nodata_txt.setText("");
                 }
 
             }
@@ -423,8 +433,8 @@ public class DashboardActivity extends AppCompatActivity {
 //                CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("Something went wrong try again..");
 //                text_signIn.setVisibility(View.VISIBLE);
                 CustomProgress.hideProgress(activity);
-                no_data_constrain.setVisibility(View.VISIBLE);
-                nodata_txt.setText("Something went wrong try again..");
+//                no_data_constrain.setVisibility(View.VISIBLE);
+//                nodata_txt.setText("Something went wrong try again..");
             }
         });
     }
