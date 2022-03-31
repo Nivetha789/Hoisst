@@ -127,6 +127,7 @@ public class OutletHistoryActivity extends AppCompatActivity {
                         outletHisPaymentData=outletHistoryModel.getData().getPaymentData();
                         emp_name.setText(outletHisAttendanceData.get(0).getEmployeeName());
                         order_no.setText(outletHisOrderData.get(0).getOrderNo());
+                        order_date.setText(outletHisAttendanceData.get(0).getAttendanceDate());
                         dist_name.setText(outletHisPaymentData.get(0).getDistributorName());
                         bill_no.setText(outletHisPaymentData.get(0).getBillNo());
                         amount.setText(outletHisPaymentData.get(0).getAmount());

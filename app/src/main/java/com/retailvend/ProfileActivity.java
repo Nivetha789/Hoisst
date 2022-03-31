@@ -112,7 +112,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void profile(String mobNo, String pass) {
 
-        CustomProgress.showProgress(this);
+        CustomProgress.showProgress(activity);
 
         Call<LoginResModel> call = RetrofitClient
                 .getInstance().getApi().userlogin("_employeeLogin",mobNo, pass);
@@ -138,7 +138,7 @@ public class ProfileActivity extends AppCompatActivity {
                         CustomProgress.hideProgress(activity);
                     } else {
                         CustomProgress.hideProgress(activity);
-//                        CustomToast.getInstance(ProfileActivity.this).showSmallCustomToast();
+                        CustomToast.getInstance(ProfileActivity.this).showSmallCustomToast(loginModule.getMessage());
                     }
 
                 } catch (Exception e) {

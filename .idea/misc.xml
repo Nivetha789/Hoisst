@@ -45,44 +45,67 @@
         <entry key="..\:/RetailVend/app/src/main/res/layout/product_table.xml" value="0.36666666666666664" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/today_outlet_adapter.xml" value="0.36666666666666664" />
         <entry key="..\:/RetailVend/app/src/main/res/layout/today_outlet_del_man_adapter.xml" value="0.25" />
-        <entry key="..\:/RetailVend/app/src/main/res/menu/main.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/drawable/background.xml" value="0.321025641025641" />
         <entry key="app/src/main/res/drawable/background1.xml" value="0.321025641025641" />
         <entry key="app/src/main/res/drawable/background2.xml" value="0.321025641025641" />
+        <entry key="app/src/main/res/drawable/button_design_plus.xml" value="0.24427083333333333" />
         <entry key="app/src/main/res/drawable/button_shape1.xml" value="0.321025641025641" />
+        <entry key="app/src/main/res/drawable/card_bg.xml" value="0.24427083333333333" />
+        <entry key="app/src/main/res/drawable/curve_bg.xml" value="0.23953013278855975" />
+        <entry key="app/src/main/res/drawable/curve_bg3.xml" value="0.23953013278855975" />
+        <entry key="app/src/main/res/drawable/curve_bg4.xml" value="0.23953013278855975" />
         <entry key="app/src/main/res/drawable/dash_shape.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/drawable/date_border.xml" value="0.26875" />
+        <entry key="app/src/main/res/drawable/gradient_bg.xml" value="0.23953013278855975" />
         <entry key="app/src/main/res/drawable/ic_phone.xml" value="0.26875" />
+        <entry key="app/src/main/res/drawable/profile_circle_bg.xml" value="0.24427083333333333" />
         <entry key="app/src/main/res/drawable/profile_top_bg.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/activity_add_payment.xml" value="0.2526041666666667" />
-        <entry key="app/src/main/res/layout/activity_collection.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.28950542822677927" />
+        <entry key="app/src/main/res/layout/activity_collection.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_collection_details.xml" value="0.4428424304840371" />
         <entry key="app/src/main/res/layout/activity_create_sales_order.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_order_list.xml" value="0.22395833333333334" />
+        <entry key="app/src/main/res/layout/activity_outlet_history.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_outlet_invoice_details.xml" value="0.20462962962962963" />
         <entry key="app/src/main/res/layout/activity_outstanding.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/activity_outstanding_details.xml" value="0.4650047938638543" />
         <entry key="app/src/main/res/layout/activity_payment_details.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/activity_product_name.xml" value="0.23854166666666668" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_sales.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_sales_agent_name.xml" value="0.21961184882533197" />
         <entry key="app/src/main/res/layout/activity_sales_details.xml" value="0.2526041666666667" />
-        <entry key="app/src/main/res/layout/activity_today_outlet.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_start_temp.xml" value="0.18981481481481483" />
+        <entry key="app/src/main/res/layout/activity_start_temp_details.xml" value="0.18981481481481483" />
+        <entry key="app/src/main/res/layout/activity_target_details.xml" value="0.4345991561181435" />
+        <entry key="app/src/main/res/layout/activity_today_outlet.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_today_outlet_details.xml" value="0.4123354123354123" />
         <entry key="app/src/main/res/layout/button_type_adapter.xml" value="0.30512820512820515" />
-        <entry key="app/src/main/res/layout/collection_adapter.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/collection_adapter.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/collection_details_adapter.xml" value="0.37352674524025387" />
         <entry key="app/src/main/res/layout/content_add_payment.xml" value="0.2526041666666667" />
-        <entry key="app/src/main/res/layout/content_invoice_details.xml" value="0.4087117701575533" />
+        <entry key="app/src/main/res/layout/content_invoice_details.xml" value="0.29666254635352285" />
+        <entry key="app/src/main/res/layout/content_invoice_details_delman.xml" value="0.20462962962962963" />
         <entry key="app/src/main/res/layout/content_payment_details.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/content_purchase_invoice.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/dashboard_new.xml" value="0.2526041666666667" />
+        <entry key="app/src/main/res/layout/content_start_temp.xml" value="0.4853273137697517" />
+        <entry key="app/src/main/res/layout/curve_bg.xml" value="0.175" />
+        <entry key="app/src/main/res/layout/dashboard_drawer.xml" value="0.21961184882533197" />
+        <entry key="app/src/main/res/layout/dashboard_new.xml" value="0.3632538569424965" />
         <entry key="app/src/main/res/layout/item_cust_pay_details.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/item_sales_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_add_payment_type.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/loader.xml" value="0.2526041666666667" />
+        <entry key="app/src/main/res/layout/navigation_view.xml" value="0.3804878048780488" />
+        <entry key="app/src/main/res/layout/order_list_adapter.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/outlet_details_include.xml" value="0.21851851851851853" />
         <entry key="app/src/main/res/layout/outstanding_adapter.xml" value="0.33" />
         <entry key="app/src/main/res/layout/product_name_adapter.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/product_table.xml" value="0.2526041666666667" />
-        <entry key="app/src/main/res/layout/profile_details_include.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/profile_details_include.xml" value="0.33" />
         <entry key="app/src/main/res/layout/row_main_list.xml" value="0.33" />
         <entry key="app/src/main/res/layout/today_outlet_adapter.xml" value="0.25" />
       </map>

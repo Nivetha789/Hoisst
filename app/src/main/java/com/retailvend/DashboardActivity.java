@@ -37,6 +37,7 @@ import com.retailvend.orderList.OrderListActivity;
 import com.retailvend.outstand.OutstandingActivity;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.sales.SalesActivity;
+import com.retailvend.startTemp.StartTempActivity;
 import com.retailvend.targetDetails.TargetDetailsActivity;
 import com.retailvend.todayoutlet.TodayOutletActivity;
 import com.retailvend.utills.CustomProgress;
@@ -101,7 +102,7 @@ public class DashboardActivity extends AppCompatActivity {
         visit_outlet_count=findViewById(R.id.visit_outlet_count);
         pending_count=findViewById(R.id.pending_count);
         target_count=findViewById(R.id.target_count);
-//        achievements_count=findViewById(R.id.achievements_count);
+        achievements_count=findViewById(R.id.achievements_count);
         order_count=findViewById(R.id.order_count);
         order_tot_count=findViewById(R.id.order_tot_count);
 
@@ -307,7 +308,8 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
 
                 case R.id.start_temp_menu:
-
+                    Intent startIntent = new Intent(DashboardActivity.this, StartTempActivity.class);
+                    startActivity(startIntent);
                 break;
 
                 case R.id.end_temp_menu:
@@ -403,8 +405,8 @@ public class DashboardActivity extends AppCompatActivity {
                         tot_outlet_count.setText(salesDashboardCountData.get(0).getTotalOutlet());
                         visit_outlet_count.setText(salesDashboardCountData.get(0).getVisitOutlet());
                         pending_count.setText(salesDashboardCountData.get(0).getPendingOutlet());
-                        target_count.setText(salesDashboardCountData.get(0).getTargetValue()+" / "+salesDashboardCountData.get(0).getAchievement());
-//                        achievements_count.setText(salesDashboardCountData.get(0).getAchievement());
+                        target_count.setText(salesDashboardCountData.get(0).getTargetValue());
+                        achievements_count.setText(salesDashboardCountData.get(0).getAchievement());
                         order_count.setText(salesDashboardCountData.get(0).getOrderCount());
                         order_tot_count.setText(salesDashboardCountData.get(0).getOrderTotal());
 

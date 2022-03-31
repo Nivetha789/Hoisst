@@ -56,8 +56,6 @@ public class TargetDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_target_details);
         activity=this;
 
-        sessionManagerSP = new SessionManagerSP(TargetDetailsActivity.this);
-
         if (Build.VERSION.SDK_INT >= 19) {
 
             Window window = getWindow();
@@ -76,6 +74,8 @@ public class TargetDetailsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
+
+        sessionManagerSP = new SessionManagerSP(TargetDetailsActivity.this);
 
         left_arrow=findViewById(R.id.left_arrow);
 

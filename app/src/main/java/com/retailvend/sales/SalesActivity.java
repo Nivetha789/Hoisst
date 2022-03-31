@@ -57,8 +57,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
     ImageView leftArrow;
     Toolbar toolbar;
     Menu menu;
-    TextView nodata_txt;
-    ConstraintLayout no_data_constrain;
+    TextView nodata_txt,emptyView;
     List<OrderListDatum> orderListData;
 
     private int currentPage = PAGE_START;
@@ -108,10 +107,11 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
         salesRecycler = findViewById(R.id.sales_recyeclerview);
         progress = findViewById(R.id.progress);
         nodata_txt=findViewById(R.id.nodata_txt);
-        no_data_constrain=findViewById(R.id.no_data_constrain);
         search = findViewById(R.id.search);
         search_icon = findViewById(R.id.search_icon);
         searchLayout = findViewById(R.id.searchLayout);
+        emptyView = findViewById(R.id.emptyView);
+        nodata = findViewById(R.id.nodata);
 
         sessionManagerSP = new SessionManagerSP(SalesActivity.this);
 
@@ -221,10 +221,12 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
 
         if (isLoading) {
             progress.setVisibility(View.GONE);
-            no_data_constrain.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
         } else {
             progress.setVisibility(View.VISIBLE);
-            no_data_constrain.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
         }
 
         Call<OrderListModel> call = RetrofitClient
@@ -250,7 +252,9 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
 
                         salesRecycler.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
+                        searchLayout.setVisibility(View.VISIBLE);
 
                         orderListData = productNameResModel.getData();
 
@@ -286,13 +290,17 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
 
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
+                        searchLayout.setVisibility(View.VISIBLE);
 
                     } else {
                         salesRecycler.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.VISIBLE);
-                        nodata_txt.setText("No Record Found");
+                        nodata.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.VISIBLE);
+                        emptyView.setText(productNameResModel.getMessage());
+                        searchLayout.setVisibility(View.GONE);
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                         CustomToast.getInstance(SalesActivity.this).showSmallCustomToast("No Record Found");
@@ -309,8 +317,10 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
             public void onFailure(@NonNull Call<OrderListModel> call, @NonNull Throwable t) {
                 salesRecycler.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
-                no_data_constrain.setVisibility(View.VISIBLE);
-                nodata_txt.setText("Something went wrong try again..");
+                emptyView.setVisibility(View.VISIBLE);
+                nodata.setVisibility(View.VISIBLE);
+                searchLayout.setVisibility(View.GONE);
+                emptyView.setText("Something went wrong try again..");
             }
         });
     }

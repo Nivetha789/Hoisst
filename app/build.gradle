@@ -69,4 +69,6 @@ dependencies {
 
     // Upload Image And Read Internal or External Storage
     implementation 'com.sromku:simple-storage:1.2.1'
+
+    implementation 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
 }

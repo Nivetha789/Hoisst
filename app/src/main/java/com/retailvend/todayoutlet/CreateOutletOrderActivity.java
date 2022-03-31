@@ -1,7 +1,9 @@
 package com.retailvend.todayoutlet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -193,7 +195,29 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                 qty.setEnabled(false);
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    createOrderApi();
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+                    builder1.setMessage("Confirm your Order!!!");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    createOrderApi();
+                                }
+                            });
+
+                    builder1.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
                 } else {
 //            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Please check your internet connection");

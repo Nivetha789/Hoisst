@@ -67,7 +67,6 @@
         android:paddingRight="8dp"
         android:textColor="@color/white"
         android:textSize="25sp"
-        android:text="Nive"
         app:layout_constraintBottom_toTopOf="@+id/profiler_user_id"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
