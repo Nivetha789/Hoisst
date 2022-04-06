@@ -3,6 +3,9 @@ package com.retailvend.model.targetDetailssales;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TargetDetailsModel {
     @SerializedName("status")
     @Expose
@@ -12,7 +15,7 @@ public class TargetDetailsModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private TargetDetailsData data;
+    private List<TargetDetailsData> data=new ArrayList<>();
 
     public Integer getStatus() {
         return status;
@@ -30,11 +33,11 @@ public class TargetDetailsModel {
         this.message = message;
     }
 
-    public TargetDetailsData getData() {
+    public List<TargetDetailsData> getData() {
         return data;
     }
 
-    public void setData(TargetDetailsData data) {
+    public void setData(List<TargetDetailsData> data) {
         this.data = data;
     }
 }

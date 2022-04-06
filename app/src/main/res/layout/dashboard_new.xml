@@ -765,7 +765,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
                                     android:fontFamily="@font/quicksand_medium"
-                                    android:text="SALES DETAILS"
+                                    android:text="ORDER DETAILS"
                                     android:textColor="@color/black"
                                     android:textSize="15dp"
                                     app:layout_constraintBottom_toBottomOf="parent"

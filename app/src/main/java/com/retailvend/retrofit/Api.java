@@ -4,6 +4,7 @@ import com.retailvend.model.changePassword.ChangePasswordModel;
 import com.retailvend.model.collectionmodel.CollectionDetailsListModel;
 import com.retailvend.model.dashboard.SalesDashboardCountModel;
 import com.retailvend.model.delManModels.delCollection.DetailOutletInvAmntBillModel;
+import com.retailvend.model.delManModels.delCollection.delManDeliDetails.DelManDelDetailsModel;
 import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHistoryModel;
 import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
 import com.retailvend.model.delManModels.delCollection.paymentCollection.InvoiceTypeModel;
@@ -15,6 +16,7 @@ import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListMod
 import com.retailvend.model.delManModels.delCollection.addpayment.AddPaymentModel;
 import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentCollectionModel;
 import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentTypeModel;
+import com.retailvend.model.endTempSales.EndTempModel;
 import com.retailvend.model.login.LoginResModel;
 import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageModel;
@@ -28,6 +30,7 @@ import com.retailvend.model.outlets.SalesAgentsListModel;
 import com.retailvend.model.outlets.outletHistory.OutletHistoryModel;
 import com.retailvend.model.sales.SalesDetailsModel;
 import com.retailvend.model.startTempSales.StartTempModel;
+import com.retailvend.model.targetDetailssales.EmployeeTargetDetailsData.EmployeeTargetDetailsModel;
 import com.retailvend.model.targetDetailssales.TargetDetailsModel;
 
 import retrofit2.Call;
@@ -189,10 +192,27 @@ public interface Api {
             @Field("employee_id") String employee_id
     );
 
+    //target details Data
+    @FormUrlEncoded
+    @POST("login/api/employee_login")
+    Call<EmployeeTargetDetailsModel> employeeTargetDetails(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id
+    );
+
+
     //start temp
     @FormUrlEncoded
     @POST("login/api/employee_login")
     Call<StartTempModel> startTemp(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id
+    );
+
+    //end temp
+    @FormUrlEncoded
+    @POST("login/api/employee_login")
+    Call<EndTempModel> endTemp(
             @Field("method") String method,
             @Field("employee_id") String employee_id
     );
@@ -204,15 +224,18 @@ public interface Api {
 
     //Today outlets api
     @FormUrlEncoded
-    @POST("assigninvoice/api/employee_wise_shop")
+    @POST("order/api/invoice_manage_order")
     Call<DeliveryTodayOutletsModel> assignDelManShop(
             @Field("method") String method,
-            @Field("employee_id") String employee_id
+            @Field("employee_id") String employee_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit,
+            @Field("search") String search
     );
 
     //Today outlets details api
     @FormUrlEncoded
-    @POST("assigninvoice/api/employee_wise_shop")
+    @POST("order/api/invoice_manage_order")
     Call<TodayOutletDetailsModel> delManOutletInvoice(
             @Field("method") String method,
             @Field("employee_id") String employee_id,
@@ -237,6 +260,17 @@ public interface Api {
             @Field("distributor_id") String distributor_id,
             @Field("offset") int offset,
             @Field("limit") int limit
+    );
+
+    //Delivery details
+    @FormUrlEncoded
+    @POST("assigninvoice/api/employee_wise_shop")
+    Call<DelManDelDetailsModel> deliveryManDelList(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit,
+            @Field("search") String search
     );
 
     //Collection payment

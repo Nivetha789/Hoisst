@@ -1,7 +1,15 @@
-package com.retailvend.startTemp;
+package com.retailvend.endTemp;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,19 +37,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
-import com.retailvend.model.startTempSales.StartTempData;
-import com.retailvend.model.startTempSales.StartTempModel;
+import com.retailvend.model.endTempSales.EndTempData;
+import com.retailvend.model.endTempSales.EndTempModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
@@ -57,13 +57,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StartTempActivity extends AppCompatActivity {
+public class EndTempActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     Menu menu;
     TextView mTitle, name, date, beat, total_outlet, new_outlet, start_time;
     ConstraintLayout main_constrain;
-    List<StartTempData> startTempData;
+    List<EndTempData> endTempData;
     SessionManagerSP sessionManagerSP;
     ImageView back_arrow;
 
@@ -96,7 +96,7 @@ public class StartTempActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_temp);
+        setContentView(R.layout.activity_end_temp);
         activity = this;
 
         if (android.os.Build.VERSION.SDK_INT >= 19) {
@@ -124,10 +124,10 @@ public class StartTempActivity extends AppCompatActivity {
             view_pdf = findViewById(R.id.view_pdf);
             start_time = findViewById(R.id.start_time);
 
-            sessionManagerSP = new SessionManagerSP(StartTempActivity.this);
-            startTempData = new ArrayList<>();
+            sessionManagerSP = new SessionManagerSP(EndTempActivity.this);
+            endTempData=new ArrayList<>();
 
-            mTitle.setText("Day Start Details");
+            mTitle.setText("Day End Details");
 
             view_pdf.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -149,10 +149,10 @@ public class StartTempActivity extends AppCompatActivity {
 
             boolean isConnected = ConnectivityReceiver.isConnected();
             if (isConnected) {
-                startTempApi();
+                endTempApi();
             } else {
 //            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
-                CustomToast.getInstance(StartTempActivity.this).showSmallCustomToast("Please check your internet connection");
+                CustomToast.getInstance(EndTempActivity.this).showSmallCustomToast("Please check your internet connection");
             }
         }
     }
@@ -414,17 +414,17 @@ public class StartTempActivity extends AppCompatActivity {
         }
     }
 
-    public void startTempApi() {
+    public void endTempApi() {
         CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
         System.out.println("emmmpidd " + emp_id);
 
-        Call<StartTempModel> call = RetrofitClient
-                .getInstance().getApi().startTemp("_dayStartReport", emp_id);
+        Call<EndTempModel> call = RetrofitClient
+                .getInstance().getApi().endTemp("_dayEndReport", emp_id);
 
-        call.enqueue(new Callback<StartTempModel>() {
+        call.enqueue(new Callback<EndTempModel>() {
             @Override
-            public void onResponse(@NonNull Call<StartTempModel> call, @NonNull Response<StartTempModel> response) {
+            public void onResponse(@NonNull Call<EndTempModel> call, @NonNull Response<EndTempModel> response) {
 
                 try {
 
@@ -432,27 +432,27 @@ public class StartTempActivity extends AppCompatActivity {
                     String json = gson.toJson(response.body());
 //                    System.out.println("responseOutletsss "+response.body());
 
-                    StartTempModel detailsModel = gson.fromJson(json, StartTempModel.class);
+                    EndTempModel detailsModel = gson.fromJson(json, EndTempModel.class);
                     String s = detailsModel.getMessage();
 
                     if (detailsModel.getStatus() == 1) {
 //                        no_data_constrain.setVisibility(View.GONE);
 //                        nodata_txt.setText("");
 
-                        startTempData = detailsModel.getData();
-                        empname = startTempData.get(0).getName();
-                        dateRes = startTempData.get(0).getDate();
+                        endTempData = detailsModel.getData();
+                        empname = endTempData.get(0).getName();
+                        dateRes = endTempData.get(0).getDate();
                         name.setText(empname);
                         date.setText(dateRes);
-                        beat.setText(startTempData.get(0).getBeat());
-                        total_outlet.setText(startTempData.get(0).getTotalOutlet());
-                        new_outlet.setText(startTempData.get(0).getNewOutlet());
-                        start_time.setText(startTempData.get(0).getStartTime());
+                        beat.setText(endTempData.get(0).getBeat());
+                        total_outlet.setText(endTempData.get(0).getTotalOutlet());
+                        new_outlet.setText(endTempData.get(0).getNewOutlet());
+                        start_time.setText(endTempData.get(0).getCloseTime());
 
                         CustomProgress.hideProgress(activity);
 
                     } else {
-                        CustomToast.getInstance(StartTempActivity.this).showSmallCustomToast(s);
+                        CustomToast.getInstance(EndTempActivity.this).showSmallCustomToast(s);
                         CustomProgress.hideProgress(activity);
                     }
 
@@ -465,9 +465,9 @@ public class StartTempActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<StartTempModel> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<EndTempModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
-                CustomToast.getInstance(StartTempActivity.this).showSmallCustomToast("Something went wrong try again..");
+                CustomToast.getInstance(EndTempActivity.this).showSmallCustomToast("Something went wrong try again..");
                 CustomProgress.hideProgress(activity);
             }
         });
@@ -556,7 +556,7 @@ public class StartTempActivity extends AppCompatActivity {
 
             // below line is to print toast message
             // on completion of PDF generation.
-            Toast.makeText(StartTempActivity.this, "PDF file generated successfully.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EndTempActivity.this, "PDF file generated successfully.", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             // below line is used
             // to handle error

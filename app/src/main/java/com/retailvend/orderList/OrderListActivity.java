@@ -55,7 +55,7 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
     TextView mTitle, emptyView;
     private Toolbar toolbar;
     String order_type = "";
-    ImageView left_arrow;
+    ImageView left_arrow,nodata;
     Activity activity;
 
     private int currentPage = PAGE_START;
@@ -70,7 +70,7 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
     int totalcount = 0;
 
     LinearLayout searchLayout;
-    ImageView search_icon,nodata;
+    ImageView search_icon;
     EditText search;
 
     String searchTxt = "";
@@ -110,6 +110,7 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
         search = findViewById(R.id.search);
         search_icon = findViewById(R.id.search_icon);
         searchLayout = findViewById(R.id.searchLayout);
+        nodata = findViewById(R.id.nodata);
 
         sessionManagerSP=new SessionManagerSP(OrderListActivity.this);
 
@@ -246,6 +247,7 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
                         order_list_recycler.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
 
                         orderListData = productNameResModel.getData();
 
@@ -282,10 +284,12 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
 
                     } else {
                         order_list_recycler.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
                         emptyView.setVisibility(View.VISIBLE);
                         emptyView.setText("No Record Found");
 //                        siteListDataModelList.clear();
@@ -305,6 +309,7 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
                 order_list_recycler.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
+                nodata.setVisibility(View.VISIBLE);
                 emptyView.setText("Something went wrong try again..");
             }
         });

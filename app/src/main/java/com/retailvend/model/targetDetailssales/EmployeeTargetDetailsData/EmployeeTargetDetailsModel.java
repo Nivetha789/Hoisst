@@ -1,4 +1,4 @@
-package com.retailvend.model.startTempSales;
+package com.retailvend.model.targetDetailssales.EmployeeTargetDetailsData;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StartTempModel {
+public class EmployeeTargetDetailsModel {
     @SerializedName("status")
     @Expose
     private Integer status;
@@ -15,7 +15,7 @@ public class StartTempModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<StartTempData> data=new ArrayList<>();
+    private List<EmployeeTargetDetailsDatum> data = new ArrayList<>();
 
     public Integer getStatus() {
         return status;
@@ -33,11 +33,11 @@ public class StartTempModel {
         this.message = message;
     }
 
-    public List<StartTempData> getData() {
+    public List<EmployeeTargetDetailsDatum> getData() {
         return data;
     }
 
-    public void setData(List<StartTempData> data) {
+    public void setData(List<EmployeeTargetDetailsDatum> data) {
         this.data = data;
     }
 }

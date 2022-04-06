@@ -84,7 +84,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -98,19 +98,37 @@
             android:id="@+id/order_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_marginTop="15dp"
             />
 
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/nodata"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/nodata_found"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/emptyView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
+            android:fontFamily="@font/quicksand_bold"
             android:gravity="center"
-            android:text="No Results"
-            android:textSize="20sp"
-            android:visibility="gone" />
+            android:layout_marginTop="-50dp"
+            android:text="No Data Found"
+            android:visibility="gone"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nodata" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -119,8 +137,12 @@
             android:progressTint="@color/colorAccent"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

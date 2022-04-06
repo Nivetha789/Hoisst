@@ -27,6 +27,8 @@ import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.Today
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsProductDetail;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsStoreDetails;
+import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletReturnDetails;
+import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletTotalDetails;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.UpdateBillModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
@@ -49,20 +51,26 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
             txt_store_ship, hsnCode, tax_val, central_tax_rate, central_tax_amount, state_tax_rate, state_tax_amount,
             tax_val_total, central_total, state_total, final_hsn_total, amount_in_words, invoice_num, comp_name, comp_address,
             gst_num, contact_no, state_code, pay_method, order_type, amount, bill_date, txt_invoice_details_dist_address,
-            txt_invoice_qty,invoice,invoiceClick,delivery,deliveryClick;
+            txt_invoice_qty, invoice, invoiceClick, delivery, deliveryClick, txt_invoice_sub_total, txt_invoice_current_total;
     RecyclerView recyclerView;
     ProgressBar progress;
     NestedScrollView lin_invoice_details_scrollview;
-    LinearLayout order_status_layout,lin_submit;
+    LinearLayout order_status_layout, lin_submit;
 
     TodayOutletDetailsStoreDetails todayOutletDetailsStoreDetails;
     TodayOutletDetailsDistributorDetails todayOutletDetailsDistributorDetails;
     TodayOutletDetailsBuyerDetails todayOutletDetailsBuyerDetails;
     OutletInvoiceDetailsAdapter outletInvoiceDetailsAdapter;
     List<TodayOutletDetailsProductDetail> productDetails;
+    TodayOutletTotalDetails todayOutletTotalDetails;
+    TodayOutletReturnDetails todayOutletReturnDetails;
     String random_value = "";
     Activity activity;
     SessionManagerSP sessionManagerSP;
+
+    int qty;
+    double totalPrice;
+    double grandTotalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +152,8 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
         delivery = findViewById(R.id.delivery);
         deliveryClick = findViewById(R.id.deliveryClick);
         lin_submit = findViewById(R.id.lin_submit);
+        txt_invoice_sub_total = findViewById(R.id.txt_invoice_sub_total);
+        txt_invoice_current_total = findViewById(R.id.txt_invoice_current_total);
 
         invoice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,7 +222,7 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
 
 
         Call<TodayOutletDetailsModel> call = RetrofitClient
-                .getInstance().getApi().delManOutletInvoice("_employeeBillDetail", emp_id, randomValue);
+                .getInstance().getApi().delManOutletInvoice("_detailInvoice", emp_id, randomValue);
 
 
         call.enqueue(new Callback<TodayOutletDetailsModel>() {
@@ -228,14 +238,38 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
                     if (todayOutletDetailsModel.getStatus() == 1) {
                         if (todayOutletDetailsModel.getData() != null) {
                             todayOutletDetailsStoreDetails = todayOutletDetailsModel.getData().getStoreDetails();
+                            productDetails = todayOutletDetailsModel.getData().getProductDetails();
                             todayOutletDetailsDistributorDetails = todayOutletDetailsModel.getData().getDistributorDetails();
                             todayOutletDetailsBuyerDetails = todayOutletDetailsModel.getData().getBuyerDetails();
+                            todayOutletTotalDetails = todayOutletDetailsModel.getData().getTotalDetails();
+                            todayOutletReturnDetails = todayOutletDetailsModel.getData().getReturnDetails();
+
                             txt_invoice_details_order.setText(todayOutletDetailsBuyerDetails.getOrderNo());
                             txt_inovoice_details_store.setText(todayOutletDetailsStoreDetails.getCompanyName());
                             txt_invoice_details_address.setText(todayOutletDetailsStoreDetails.getAddress());
                             txt_invoice_details_dist.setText(todayOutletDetailsDistributorDetails.getCompanyName());
                             txt_invoice_details_dist_address.setText(todayOutletDetailsDistributorDetails.getAddress());
-//                            txt_invoice_qty.setText(todayOutletDetailsDistributorDetails.getq());
+//                            txt_invoice_qty.setText(todayOutletTotalDetails.getTotalQty());
+                            txt_invoice_sub_total.setText(todayOutletTotalDetails.getSubTotal());
+                            int b = 0;
+                            double a;
+                            for (int i = 0; i < productDetails.size(); i++) {
+                                a = Double.parseDouble(productDetails.get(i).getPrice().trim());
+                                b = Integer.parseInt(productDetails.get(i).getOrderQty().trim());
+                                totalPrice = a * b;
+                                grandTotalPrice+=totalPrice;
+//                                System.out.println("totalPrice " + totalPrice);
+                            }
+
+
+                            for (int k = 0; k < productDetails.size(); k++) {
+                                qty += Integer.valueOf(productDetails.get(k).getOrderQty());
+//                                System.out.println("qtyyyyyyyy " + qty);
+                            }
+
+                            txt_invoice_current_total.setText("\u20B9 " + grandTotalPrice);
+                            txt_invoice_qty.setText(String.valueOf(qty));
+
 //                            gst_num.setText("GST: " + todayOutletDetailsDistributorDetails.getGstNo());
 //                            contact_no.setText("Mobile No: " + todayOutletDetailsDistributorDetails.getMobile());
 //                            state_code.setText("State Code: " + todayOutletDetailsDistributorDetails.getStateCode());
@@ -245,13 +279,12 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
 //                            order_type.setText("Order Type " + todayOutletDetailsDistributorDetails.get());
 //                        txt_invoice_last_bill.setText(salesDetailsModel.getLastbill());
 //                        txt_invoice_bal_amt.setText("\u20B9 " + salesDetailsModel.getBalance());
-//                            txt_invoice_current_total.setText("\u20B9 " + productDetails.get(0).getPrice());
+//
 //                            for(int i=0; i<taxDetails.size(); i++){
 //                                String hsnCode1 = taxDetails.get(i).getHsnCode();
 //                                hsnCode.setText(hsnCode1);
 //                            }
 
-                            productDetails = todayOutletDetailsModel.getData().getProductDetails();
 
                             outletInvoiceDetailsAdapter = new OutletInvoiceDetailsAdapter(activity, productDetails);
                             // use a linear layout manager
@@ -298,7 +331,7 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
         CustomProgress.showProgress(OutletInvoiceDetailsActivity.this);
 
         Call<UpdateBillModel> call = RetrofitClient
-                .getInstance().getApi().delManOutletInvoiceUpdateStatus("_employeeUpdateBill", emp_id, randomValue,"6");
+                .getInstance().getApi().delManOutletInvoiceUpdateStatus("_employeeUpdateBill", emp_id, randomValue, "6");
 
 
         call.enqueue(new Callback<UpdateBillModel>() {

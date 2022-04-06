@@ -96,6 +96,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     List<NoReasonMessageDatum> noReasonMessageData;
     ReasonBaseAdapter reasonBaseAdapter;
 
+    AlertDialog.Builder builder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +140,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         location_constrain = findViewById(R.id.location_constrain);
         left_arrow = findViewById(R.id.left_arrow);
         outlet_his_Constrain = findViewById(R.id.outlet_his_Constrain);
+
+        builder = new AlertDialog.Builder(this);
 
         assignOutletsDatum = (AssignOutletsDatum) getIntent().getSerializableExtra("todayOutlet");
         String shop_name1 = assignOutletsDatum.getCompanyName();
@@ -182,8 +186,6 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
         checkGPSON();
         getLocation();
-
-
 
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
@@ -246,26 +248,48 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         check_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                android.app.AlertDialog.Builder builder1 = new android.app.AlertDialog.Builder(activity);
+                builder1.setMessage("Check In") .setTitle("Check In");
+                builder1.setMessage("Are you sure you want to Check In?");
+                builder1.setCancelable(true);
 
-                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-                    ActivityCompat.requestPermissions(TodayOutletDetailsActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+                                    ActivityCompat.requestPermissions(TodayOutletDetailsActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
 
-                }
-                checkGPSON();
-                getLocation();
-                System.out.println("latitudenewww "+latitude);
-                System.out.println("longitudenewww "+longitude);
-                if (!TextUtils.isEmpty(latitude) && !TextUtils.isEmpty(longitude)) {
-                    boolean isConnected = ConnectivityReceiver.isConnected();
-                    if (isConnected) {
-                        addAttendanceApi(latitude, longitude);
-                    } else {
-                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
-                    }
-                } else {
-                    Toast.makeText(TodayOutletDetailsActivity.this, "Location is not updated, Try Again", Toast.LENGTH_SHORT).show();
-                }
+                                }
+                                checkGPSON();
+                                getLocation();
+                                System.out.println("latitudenewww "+latitude);
+                                System.out.println("longitudenewww "+longitude);
+                                if (!TextUtils.isEmpty(latitude) && !TextUtils.isEmpty(longitude)) {
+                                    boolean isConnected = ConnectivityReceiver.isConnected();
+                                    if (isConnected) {
+                                        addAttendanceApi(latitude, longitude);
+                                    } else {
+                                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+                                    }
+                                } else {
+                                    Toast.makeText(TodayOutletDetailsActivity.this, "Location is not updated, Try Again", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                android.app.AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
         checked.setOnClickListener(new View.OnClickListener() {
@@ -566,7 +590,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     }
 
     public void getReasonApi() {
-        CustomProgress.showProgress(activity);
+//        CustomProgress.showProgress(activity);
 
         Call<NoReasonMessageModel> call = RetrofitClient
                 .getInstance().getApi().noReason("_listMessage");
@@ -602,16 +626,16 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                             reason.setAdapter(reasonBaseAdapter);
                             reasonBaseAdapter.notifyDataSetChanged();
                         }
-                        CustomProgress.hideProgress(activity);
+//                        CustomProgress.hideProgress(activity);
 
                     } else {
-                        CustomProgress.hideProgress(activity);
+//                        CustomProgress.hideProgress(activity);
                         CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(noReasonMessageModel.getMessage());
                     }
 
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
-                    CustomProgress.hideProgress(activity);
+//                    CustomProgress.hideProgress(activity);
                 }
 
             }
@@ -620,7 +644,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             public void onFailure(@NonNull Call<NoReasonMessageModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
                 CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
-                CustomProgress.hideProgress(activity);
+//                CustomProgress.hideProgress(activity);
             }
         });
     }

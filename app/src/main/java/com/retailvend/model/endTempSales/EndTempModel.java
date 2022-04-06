@@ -3,6 +3,9 @@ package com.retailvend.model.endTempSales;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EndTempModel {
     @SerializedName("status")
     @Expose
@@ -12,7 +15,7 @@ public class EndTempModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private EndTempData data;
+    private List<EndTempData> data=new ArrayList<>();
 
     public Integer getStatus() {
         return status;
@@ -30,11 +33,11 @@ public class EndTempModel {
         this.message = message;
     }
 
-    public EndTempData getData() {
+    public List<EndTempData> getData() {
         return data;
     }
 
-    public void setData(EndTempData data) {
+    public void setData(List<EndTempData> data) {
         this.data = data;
     }
 

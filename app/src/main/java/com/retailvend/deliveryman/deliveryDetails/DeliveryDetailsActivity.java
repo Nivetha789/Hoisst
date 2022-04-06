@@ -29,6 +29,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
+import com.retailvend.model.delManModels.delCollection.delManDeliDetails.DelManDelDetailsDatum;
+import com.retailvend.model.delManModels.delCollection.delManDeliDetails.DelManDelDetailsModel;
 import com.retailvend.model.manageorder.OrderListDatum;
 import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.retrofit.RetrofitClient;
@@ -50,13 +52,13 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
     RecyclerView delivery_recyeclerview;
     Activity activity;
     LinearLayoutManager mLayoutManager;
-    SalesAdapter salesAdapter;
+    DelDetailsAdapter delDetailsAdapter;
     ImageView leftArrow;
     Toolbar toolbar;
     Menu menu;
     TextView nodata_txt;
     ConstraintLayout no_data_constrain;
-    List<OrderListDatum> orderListData;
+    List<DelManDelDetailsDatum> orderListData;
 
     private int currentPage = PAGE_START;
     private boolean isLastPage = false;
@@ -70,7 +72,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
     int totalcount = 0;
     SessionManagerSP sessionManagerSP;
     LinearLayout searchLayout;
-    ImageView search_icon,nodata;
+    ImageView search_icon, nodata;
     EditText search;
     TextView emptyView;
     String searchTxt = "";
@@ -104,7 +106,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
         leftArrow = findViewById(R.id.left_arrow);
         delivery_recyeclerview = findViewById(R.id.delivery_recyeclerview);
         progress = findViewById(R.id.progress);
-        nodata_txt=findViewById(R.id.nodata_txt);
+        nodata_txt = findViewById(R.id.nodata_txt);
         progress = findViewById(R.id.progress);
         search = findViewById(R.id.search);
         search_icon = findViewById(R.id.search_icon);
@@ -136,7 +138,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    orderListApi(offset, limit,"2");
+                    orderListApi(offset, limit, "2");
                 } else {
                     CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
                 }
@@ -150,8 +152,8 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         delivery_recyeclerview.setLayoutManager(layoutManager);
 
-        salesAdapter = new SalesAdapter(DeliveryDetailsActivity.this, orderListData);
-        delivery_recyeclerview.setAdapter(salesAdapter);
+        delDetailsAdapter = new DelDetailsAdapter(DeliveryDetailsActivity.this, orderListData);
+        delivery_recyeclerview.setAdapter(delDetailsAdapter);
 
         delivery_recyeclerview.addOnScrollListener(new PaginationListener(layoutManager, totalPage) {
             @Override
@@ -161,7 +163,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    orderListApi(offset, limit,"1");
+                    orderListApi(offset, limit, "1");
 
                 } else {
                     CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
@@ -187,11 +189,11 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
         offset = 0;
         currentPage = PAGE_START;
         isLastPage = false;
-        salesAdapter.clear();
+        delDetailsAdapter.clear();
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            orderListApi(offset, limit,"1");
+            orderListApi(offset, limit, "1");
         } else {
             CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
         }
@@ -204,45 +206,50 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
         offset = 0;
         currentPage = PAGE_START;
         isLastPage = false;
-        salesAdapter.clear();
+        delDetailsAdapter.clear();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            orderListApi(offset, limit,"1");
+            orderListApi(offset, limit, "1");
         } else {
             CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 
-    public void orderListApi(int offset1, int limit1,String searchType) {
+    public void orderListApi(int offset1, int limit1, String searchType) {
 //        CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
 
         if (isLoading) {
             progress.setVisibility(View.GONE);
-            no_data_constrain.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
         } else {
             progress.setVisibility(View.VISIBLE);
-            no_data_constrain.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
         }
 
-        Call<OrderListModel> call = RetrofitClient
-                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1,searchType);
+        Call<DelManDelDetailsModel> call = RetrofitClient
+                .getInstance().getApi().deliveryManDelList("_employeeWiseList", emp_id, offset1, limit1,searchType);
 
-        call.enqueue(new Callback<OrderListModel>() {
+        call.enqueue(new Callback<DelManDelDetailsModel>() {
             @Override
-            public void onResponse(@NonNull Call<OrderListModel> call, @NonNull Response<OrderListModel> response) {
+            public void onResponse(@NonNull Call<DelManDelDetailsModel> call, @NonNull Response<DelManDelDetailsModel> response) {
 
                 try {
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    OrderListModel productNameResModel = gson.fromJson(json, OrderListModel.class);
+                    DelManDelDetailsModel productNameResModel = gson.fromJson(json, DelManDelDetailsModel.class);
 
                     if (productNameResModel.getStatus() == 1) {
 
                         delivery_recyeclerview.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
+                        searchLayout.setVisibility(View.VISIBLE);
+
 
                         orderListData = productNameResModel.getData();
 
@@ -264,12 +271,12 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
 
 
                         if (currentPage != PAGE_START)
-                            salesAdapter.removeLoading();
+                            delDetailsAdapter.removeLoading();
 
-                        salesAdapter.addItems(orderListData);
+                        delDetailsAdapter.addItems(orderListData);
 
                         if (currentPage < totalPage) {
-                            salesAdapter.addLoading();
+                            delDetailsAdapter.addLoading();
                         } else {
                             isLastPage = true;
                         }
@@ -278,13 +285,17 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
 
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
+                        searchLayout.setVisibility(View.VISIBLE);
 
                     } else {
                         delivery_recyeclerview.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.VISIBLE);
-                        nodata_txt.setText("No Record Found");
+                        nodata.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.VISIBLE);
+                        emptyView.setText(productNameResModel.getMessage());
+                        searchLayout.setVisibility(View.GONE);
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                         CustomToast.getInstance(DeliveryDetailsActivity.this).showSmallCustomToast("No Record Found");
@@ -298,11 +309,13 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements SwipeR
             }
 
             @Override
-            public void onFailure(@NonNull Call<OrderListModel> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<DelManDelDetailsModel> call, @NonNull Throwable t) {
                 delivery_recyeclerview.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
-                no_data_constrain.setVisibility(View.VISIBLE);
-                nodata_txt.setText("Something went wrong try again..");
+                emptyView.setVisibility(View.VISIBLE);
+                nodata.setVisibility(View.VISIBLE);
+                searchLayout.setVisibility(View.GONE);
+                emptyView.setText("Something went wrong try again..");
             }
         });
     }

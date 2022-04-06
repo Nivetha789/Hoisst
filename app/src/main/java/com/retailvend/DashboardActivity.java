@@ -31,6 +31,7 @@ import com.retailvend.collection.CollectionActivity;
 import com.retailvend.deliveryman.deliveryDetails.DeliveryDetailsActivity;
 import com.retailvend.deliveryman.outlet.DelManTodayOutletsActivity;
 import com.retailvend.deliveryman.outstand.DelManOutstandActivity;
+import com.retailvend.endTemp.EndTempActivity;
 import com.retailvend.model.dashboard.SalesDashboardCountDatum;
 import com.retailvend.model.dashboard.SalesDashboardCountModel;
 import com.retailvend.orderList.OrderListActivity;
@@ -154,11 +155,11 @@ public class DashboardActivity extends AppCompatActivity {
                     "font/quicksand_medium.ttf");
             sales_main_txt.setTypeface(font);
             sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            Typeface font1 = Typeface.createFromAsset(
-                    this.getAssets(),
-                    "font/quicksand_bold.ttf");
-            sales_list.setTypeface(font1);
-            sales_list.setText("DELIVERY LIST");
+//            Typeface font1 = Typeface.createFromAsset(
+//                    this.getAssets(),
+//                    "font/quicksand_medium.ttf");
+//            sales_main_txt.setTypeface(font);
+//            sales_main_txt.setText("DELIVERY LIST");
         }
 //        } else {
 //            sales_man_count_details.setVisibility(View.VISIBLE);
@@ -274,6 +275,7 @@ public class DashboardActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.today_outlet_menu:
+                System.out.println("iddddd idjdj "+distributor_id);
                 if (distributor_id.equals("0")) {
                     Intent i = new Intent(DashboardActivity.this, TodayOutletActivity.class);
                     startActivity(i);
@@ -302,8 +304,8 @@ public class DashboardActivity extends AppCompatActivity {
                     Intent salesIntent = new Intent(DashboardActivity.this, TargetDetailsActivity.class);
                     startActivity(salesIntent);
                 } else {
-//                    Intent delIntent = new Intent(DashboardActivity.this, TargetDetailsActivity.class);
-//                    startActivity(delIntent);
+                    Intent delIntent = new Intent(DashboardActivity.this, TargetDetailsActivity.class);
+                    startActivity(delIntent);
                 }
                 break;
 
@@ -313,7 +315,8 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
 
                 case R.id.end_temp_menu:
-
+                    Intent endIntent = new Intent(DashboardActivity.this, EndTempActivity.class);
+                    startActivity(endIntent);
                 break;
 
             case R.id.change_pass_menu:

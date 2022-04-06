@@ -25,6 +25,12 @@ public class TodayOutletDetailsData {
     @SerializedName("tax_details")
     @Expose
     private List<TodayOutletDetailsTaxDetail> taxDetails = new ArrayList<>();
+    @SerializedName("total_details")
+    @Expose
+    private TodayOutletTotalDetails totalDetails;
+    @SerializedName("return_details")
+    @Expose
+    private TodayOutletReturnDetails returnDetails;
 
     public TodayOutletDetailsBillDetails getBillDetails() {
         return billDetails;
@@ -72,5 +78,21 @@ public class TodayOutletDetailsData {
 
     public void setTaxDetails(List<TodayOutletDetailsTaxDetail> taxDetails) {
         this.taxDetails = taxDetails;
+    }
+
+    public TodayOutletTotalDetails getTotalDetails() {
+        return totalDetails;
+    }
+
+    public void setTotalDetails(TodayOutletTotalDetails totalDetails) {
+        this.totalDetails = totalDetails;
+    }
+
+    public TodayOutletReturnDetails getReturnDetails() {
+        return returnDetails;
+    }
+
+    public void setReturnDetails(TodayOutletReturnDetails returnDetails) {
+        this.returnDetails = returnDetails;
     }
 }
