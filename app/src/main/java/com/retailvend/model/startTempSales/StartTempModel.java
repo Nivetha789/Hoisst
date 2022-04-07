@@ -15,7 +15,7 @@ public class StartTempModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<StartTempData> data=new ArrayList<>();
+    private List<StartTempData> data = new ArrayList<>();
 
     public Integer getStatus() {
         return status;

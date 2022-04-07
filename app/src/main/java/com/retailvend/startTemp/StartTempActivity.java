@@ -51,6 +51,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -184,7 +185,7 @@ public class StartTempActivity extends AppCompatActivity {
         this.menu = menu;
 //        menu.findItem(R.id.action_profile).setVisible(false);
 //        menu.findItem(R.id.action_search).setVisible(false);
-//        menu.findItem(R.id.action_download).setVisible(true);
+        menu.findItem(R.id.action_download).setVisible(true);
 
         return true;
     }
@@ -201,20 +202,20 @@ public class StartTempActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
         }
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_download) {
+//        noinspection SimplifiableIfStatement
+        if (id == R.id.action_download) {
 //
-//            bitScroll = getBitmapFromView(main_constrain, main_constrain.getChildAt(0).getHeight(), main_constrain.getChildAt(0).getWidth());
+            bitScroll = getBitmapFromView(main_constrain, main_constrain.getChildAt(0).getHeight(), main_constrain.getChildAt(0).getWidth());
 ////            createPdf(name.getText().toString(),date.getText().toString(),beat.getText().toString(),
 ////                    total_outlet.getText().toString(),new_outlet.getText().toString(),start_time.getText().toString());
 //            System.out.println("shdsghgsghdghs");
 ////            generatePDF();
 //            createPdf(name.getText().toString(), date.getText().toString(), beat.getText().toString(),
 //                    total_outlet.getText().toString(), new_outlet.getText().toString(), start_time.getText().toString());
-//
-//
-//            return true;
-//        }
+
+            takeScreenshot();
+            return true;
+        }
 //        else if (id == R.id.action_clock_out) {
 ////            showSusscesDialog();
 //
@@ -244,143 +245,6 @@ public class StartTempActivity extends AppCompatActivity {
         return bitmap;
     }
 
-    /*private void createPdf() {
-        System.out.println("starttttt");
-        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        float hight = displaymetrics.heightPixels;
-        float width = displaymetrics.widthPixels;
-
-        int convertHighet = (int) hight, convertWidth = (int) width;
-
-//        Resources mResources = getResources();
-//        Bitmap bitmap = BitmapFactory.decodeResource(mResources, R.drawable.screenshot);
-
-        PdfDocument document = new PdfDocument();
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(bitScroll.getWidth(), bitScroll.getHeight(), 1).create();
-        PdfDocument.Page page = document.startPage(pageInfo);
-
-        Canvas canvas = page.getCanvas();
-
-
-        Paint paint = new Paint();
-        paint.setColor(Color.parseColor("#ffffff"));
-        canvas.drawPaint(paint);
-
-
-        bitScroll = Bitmap.createScaledBitmap(bitScroll, bitScroll.getWidth(), bitScroll.getHeight(), true);
-
-        paint.setColor(Color.BLUE);
-        canvas.drawBitmap(bitScroll, 0, 0, null);
-        document.finishPage(page);
-
-
-        // write the document content
-//        String targetPdf = "/sdcard/test.pdf";
-        Date now = new Date();
-        android.text.format.DateFormat.format("dd-MM-yyyy", now);
-        String mPath = "";
-//        filePath = new File(Environment.getExternalStorageDirectory().toString() + "/" + "NoorTrader");
-
-            mPath = "/" + empname+ " " +dateRes + " Start Temp "  + " " + now + ".pdf";
-        String root = (Environment.getExternalStorageDirectory().toString() + "/Hoisst/");
-//        File myDir = new File(root + TESS_DATA);
-        File myDir = new File(root);
-        myDir.mkdirs();
-
-        String fname = mPath;
-        filePath = new File(myDir, fname);
-        if (filePath.exists()) filePath.delete();
-        System.out.println("fileeeeeee "+filePath);
-
-//        filePath = new File(mPath);
-        try {
-            FileOutputStream out = new FileOutputStream(filePath);
-            document.writeTo(new FileOutputStream(filePath));
-            out.flush();
-            out.close();
-            CustomToast.getInstance(StartTempActivity.this).showSmallCustomToast("Pdf Files saved on Hoisst Folder");
-        } catch (IOException e) {
-            e.printStackTrace();
-//            Toast.makeText(this, "Something wrong: " + e.toString(), Toast.LENGTH_LONG).show();
-            CustomToast.getInstance(StartTempActivity.this).showSmallCustomToast("Something wrong: " + e.toString());
-            System.out.println("errorfilenot "+e.toString());
-        }
-
-        // close the document
-        document.close();
-    }*/
-
-    /*private void createPdf(String name,String date, String beat,String tot_outlet,String new_outlet,String start_time){
-        // create a new document
-        PdfDocument document = new PdfDocument();
-        // crate a page description
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 1).create();
-        // start a page
-        PdfDocument.Page page = document.startPage(pageInfo);
-        Canvas canvas = page.getCanvas();
-        Paint paint = new Paint();
-        paint.setColor(Color.RED);
-        canvas.drawCircle(50, 50, 30, paint);
-        paint.setColor(Color.BLACK);
-        canvas.drawText(name, 80, 50, paint);
-        canvas.drawText(date, 80, 50, paint);
-        canvas.drawText(beat, 80, 50, paint);
-        canvas.drawText(tot_outlet, 80, 50, paint);
-        canvas.drawText(new_outlet, 80, 50, paint);
-        canvas.drawText(start_time, 80, 50, paint);
-        //canvas.drawt
-        // finish the page
-        document.finishPage(page);
-// draw text on the graphics object of the page
-        // Create Page 2
-        pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 2).create();
-        page = document.startPage(pageInfo);
-        canvas = page.getCanvas();
-        paint = new Paint();
-        paint.setColor(Color.BLUE);
-        canvas.drawCircle(100, 100, 100, paint);
-        document.finishPage(page);
-        // write the document content
-        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/mypdf/";
-        File file = new File(directory_path);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        String targetPdf = directory_path+"test-2.pdf";
-        File filePath = new File(targetPdf);
-        try {
-            document.writeTo(new FileOutputStream(filePath));
-            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            Log.e("main", "error "+e.toString());
-            Toast.makeText(this, "Something wrong: " + e.toString(),  Toast.LENGTH_LONG).show();
-        }
-        // close the document
-        document.close();
-    }
-
-    // Method for opening a pdf file
-    private void viewPdf(String file, String directory) {
-
-        File pdfFile = new File(Environment.getExternalStorageDirectory() + "/" + directory + "/" + file);
-        Uri path = Uri.fromFile(pdfFile);
-
-        // Setting the intent for pdf reader
-        Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
-        pdfIntent.setDataAndType(path, "application/pdf");
-        pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        try {
-            startActivity(pdfIntent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(StartTempActivity.this, "Can't read pdf file", Toast.LENGTH_SHORT).show();
-        }
-    }
-*/
-
     private boolean checkPermission() {
         // checking of permissions.
         int permission1 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
@@ -407,7 +271,7 @@ public class StartTempActivity extends AppCompatActivity {
                 if (writeStorage && readStorage) {
                     Toast.makeText(this, "Permission Granted..", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Permission Denined.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission Denied.", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
@@ -417,7 +281,7 @@ public class StartTempActivity extends AppCompatActivity {
     public void startTempApi() {
         CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
-        System.out.println("emmmpidd " + emp_id);
+        System.out.println("_dayStartReport " + emp_id);
 
         Call<StartTempModel> call = RetrofitClient
                 .getInstance().getApi().startTemp("_dayStartReport", emp_id);
@@ -473,7 +337,7 @@ public class StartTempActivity extends AppCompatActivity {
         });
     }
 
-    private void generatePDF() {
+   /* private void generatePDF() {
         // creating an object variable
         // for our PDF document.
         PdfDocument pdfDocument = new PdfDocument();
@@ -618,5 +482,42 @@ public class StartTempActivity extends AppCompatActivity {
         }
         // close the document
         document.close();
+    }*/
+
+    private void takeScreenshot() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+            // create bitmap screen capture
+            View v1 = getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            int quality = 100;
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+            outputStream.flush();
+            outputStream.close();
+            CustomToast.getInstance(StartTempActivity.this).showSmallCustomToast("File generated successfully. "+mPath);
+            openScreenshot(imageFile);
+        } catch (Throwable e) {
+            // Several error may come out with file handling or DOM
+            e.printStackTrace();
+        }
+    }
+
+    private void openScreenshot(File imageFile) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        Uri uri = Uri.fromFile(imageFile);
+        intent.setDataAndType(uri, "image/*");
+        startActivity(intent);
     }
 }
