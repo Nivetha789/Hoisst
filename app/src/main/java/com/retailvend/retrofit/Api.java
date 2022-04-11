@@ -86,7 +86,7 @@ public interface Api {
             @Field("due_days") String due_days,
             @Field("discount") String discount,
             @Field("order_type") String order_type,
-//            @Field("salesagents_id") String salesagents_id,
+            @Field("att_id") String att_id,
             @Field("sales_order") String sales_order);
 
     //update attendance

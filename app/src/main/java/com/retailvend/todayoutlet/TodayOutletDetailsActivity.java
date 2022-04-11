@@ -241,7 +241,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                     }
                     updateAttendanceApi(type_val);
                 } else {
-                    CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Enter Reason");
+                    CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Select Reason");
                 }
             }
         });
@@ -497,9 +497,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     public void updateAttendanceApi(String typeVal) {
         CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
+        String assign_ID=sessionManagerSP.getAssignId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude,longitude, typeVal, reasonTxt, assign_id);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude,longitude, typeVal, reasonTxt, assign_ID);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override

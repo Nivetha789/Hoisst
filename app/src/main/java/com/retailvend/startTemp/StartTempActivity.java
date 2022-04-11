@@ -489,7 +489,7 @@ public class StartTempActivity extends AppCompatActivity {
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
 
         try {
-            // image naming and path  to include sd card  appending name you choose for file
+            // image naming and path  to include sd card  a6rrgppending name you choose for file
             String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
 
             // create bitmap screen capture

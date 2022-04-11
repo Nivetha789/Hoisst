@@ -413,7 +413,6 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -481,9 +480,10 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         CustomProgress.showProgress(activity);
 
         String emp_id = sessionManagerSP.getEmployeeId();
+        String attandance_id = sessionManagerSP.getAssignId();
 
         Call<CreateOrderModel> call = RetrofitClient
-                .getInstance().getApi().createOrder("_addSalesOrder", emp_id, store_id, bill_type, discount.getText().toString(), dueDays.getText().toString(), "1", addProductJson);
+                .getInstance().getApi().createOrder("_addSalesOrder", emp_id, store_id, bill_type, discount.getText().toString(), dueDays.getText().toString(), "1", attandance_id,addProductJson);
 
         call.enqueue(new Callback<CreateOrderModel>() {
             @Override
