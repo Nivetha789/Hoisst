@@ -2,13 +2,6 @@ package com.retailvend.collection;
 
 import static com.retailvend.utills.PaginationListener.PAGE_START;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,20 +13,19 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.collectionmodel.CollectionDetailsListDatum;
 import com.retailvend.model.collectionmodel.CollectionDetailsListModel;
-import com.retailvend.model.outlets.AssignOutletsModel;
-import com.retailvend.model.sales.SalesDetailsModel;
-import com.retailvend.orderList.OrderListActivity;
-import com.retailvend.orderList.OrderListAdapter;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.sales.SalesDetailsActivity;
-import com.retailvend.sales.SalesDetailsAdapter;
-import com.retailvend.todayoutlet.TodayOutletActivity;
-import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
 
@@ -44,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CollectionDetailsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class CollectionDetailsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     TextView shop_name, distributor_name, amount, date, amount_type;
     ImageView leftArrow, nodata;
@@ -68,8 +60,8 @@ public class CollectionDetailsActivity extends AppCompatActivity implements Swip
     int limit = 10;
     int totalcount = 0;
 
-    String outlet_id="";
-    String shopName="";
+    String outlet_id = "";
+    String shopName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,7 +193,7 @@ public class CollectionDetailsActivity extends AppCompatActivity implements Swip
 
 
         Call<CollectionDetailsListModel> call = RetrofitClient
-                .getInstance().getApi().getCollectionDetails("_outletCollectionReport",outlet_id,offset1, limit1);
+                .getInstance().getApi().getCollectionDetails("_outletCollectionReport", outlet_id, offset1, limit1);
 
         call.enqueue(new Callback<CollectionDetailsListModel>() {
             @Override

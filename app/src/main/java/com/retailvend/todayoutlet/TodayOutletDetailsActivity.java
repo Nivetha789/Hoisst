@@ -311,6 +311,21 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(attendance_status.equals("1")){
+            check_in.setVisibility(View.GONE);
+            checked.setVisibility(View.VISIBLE);
+            order_type_constrain.setVisibility(View.VISIBLE);
+
+        }else{
+            check_in.setVisibility(View.VISIBLE);
+            checked.setVisibility(View.GONE);
+            order_type_constrain.setVisibility(View.GONE);
+        }
+    }
+
     public boolean checkGPSON() {
         final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (manager != null) {

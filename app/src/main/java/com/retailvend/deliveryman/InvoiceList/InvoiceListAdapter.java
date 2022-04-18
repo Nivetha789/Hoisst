@@ -1,7 +1,6 @@
-package com.retailvend.deliveryman.deliveryDetails;
+package com.retailvend.deliveryman.InvoiceList;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,25 +11,25 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
-import com.retailvend.model.delManModels.delCollection.delManDeliDetails.DelManDelDetailsDatum;
+import com.retailvend.model.invoiceListModel.InvoiceListDatum;
+import com.retailvend.model.manageorder.OrderListDatum;
 import com.retailvend.utills.BaseViewHolder;
-
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DelDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class InvoiceListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    List<DelManDelDetailsDatum> orderListData;
+    List<InvoiceListDatum> invoiceListDatum;
     Activity activity;
     private static final int VIEW_TYPE_LOADING = 0;
     private static final int VIEW_TYPE_NORMAL = 1;
     private static boolean isLoaderVisible = false;
 
-    public DelDetailsAdapter(Activity context, List<DelManDelDetailsDatum> itemsModelsl) {
-        this.orderListData = itemsModelsl;
+    public InvoiceListAdapter(Activity context, List<InvoiceListDatum> itemsModelsl) {
+        this.invoiceListDatum = itemsModelsl;
         this.activity = context;
     }
 
@@ -40,7 +39,7 @@ public class DelDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
                 return new ViewHolder(
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_del_details_list, parent, false));
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.invoice_list_adapter, parent, false));
             case VIEW_TYPE_LOADING:
                 return new ProgressHolder(
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false));
@@ -57,7 +56,7 @@ public class DelDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public int getItemViewType(int position) {
         if (isLoaderVisible) {
-            return position == orderListData.size() - 1 ? VIEW_TYPE_LOADING : VIEW_TYPE_NORMAL;
+            return position == invoiceListDatum.size() - 1 ? VIEW_TYPE_LOADING : VIEW_TYPE_NORMAL;
         } else {
             return VIEW_TYPE_NORMAL;
         }
@@ -65,11 +64,11 @@ public class DelDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemCount() {
-        return orderListData == null ? 0 : orderListData.size();
+        return invoiceListDatum == null ? 0 : invoiceListDatum.size();
     }
 
-    public void addItems(List<DelManDelDetailsDatum> postItems) {
-        orderListData.addAll(postItems);
+    public void addItems(List<InvoiceListDatum> postItems) {
+        invoiceListDatum.addAll(postItems);
         notifyDataSetChanged();
 
 
@@ -77,42 +76,40 @@ public class DelDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void addLoading() {
         isLoaderVisible = true;
-        orderListData.add(new DelManDelDetailsDatum());
-        notifyItemInserted(orderListData.size() - 1);
+        invoiceListDatum.add(new InvoiceListDatum());
+        notifyItemInserted(invoiceListDatum.size() - 1);
     }
 
     public void removeLoading() {
         isLoaderVisible = false;
-        int position = orderListData.size() - 1;
-        DelManDelDetailsDatum item = getItem(position);
+        int position = invoiceListDatum.size() - 1;
+        InvoiceListDatum item = getItem(position);
         if (item != null) {
-            orderListData.remove(position);
+            invoiceListDatum.remove(position);
             notifyItemRemoved(position);
         }
     }
 
     public void clear() {
-        orderListData.clear();
+        invoiceListDatum.clear();
         notifyDataSetChanged();
     }
 
-    DelManDelDetailsDatum getItem(int position) {
-        return orderListData.get(position);
+    InvoiceListDatum getItem(int position) {
+        return invoiceListDatum.get(position);
     }
 
     public class ViewHolder extends BaseViewHolder {
-        @BindView(R.id.store_name)
-        TextView store_name;
-        @BindView(R.id.invoice_no)
-        TextView invoice_no;
-        @BindView(R.id.dueDays)
-        TextView dueDays;
-        @BindView(R.id.discount)
-        TextView discount;
-        @BindView(R.id.del_details_cardview)
-        CardView cardview;
+        @BindView(R.id.com_name)
+        TextView com_name;
+        @BindView(R.id.invoice_num)
+        TextView invoice_num;
+        @BindView(R.id.date)
+        TextView date;
         @BindView(R.id.address)
         TextView address;
+        @BindView(R.id.cardview)
+        CardView cardview;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -124,22 +121,20 @@ public class DelDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         public void onBind(int position) {
             super.onBind(position);
-            DelManDelDetailsDatum item = orderListData.get(position);
+            InvoiceListDatum item = invoiceListDatum.get(position);
 
 //            System.out.println("tesgsg "+salesAgentDataList.get(position));
 
 //            order_status.setText(item.getOrderStatus());
-            invoice_no.setText(item.getInvoiceNo());
-            dueDays.setText(item.getDueDays());
-            store_name.setText(item.getStoreName());
+            com_name.setText(item.getCompanyName());
+            invoice_num.setText(item.getInvoiceNo());
+            date.setText(item.getCreatedate());
             address.setText(item.getAddress());
 
 //            cardview.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
-//                    Intent salesDetailsIntent = new Intent(activity, SalesDetailsActivity.class);
-//                    salesDetailsIntent.putExtra("random_value",item.getRandomValue());
-//                    activity.startActivity(salesDetailsIntent);
+//                    ((ProductNameActivity) activity).updateProdName(item.getProductName(), item.getProductId(), item.getGstVal(), item.getHsnCode());
 //                }
 //            });
         }

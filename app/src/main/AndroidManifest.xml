@@ -33,6 +33,12 @@
         android:theme="@style/Theme.Hoisst"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".deliveryman.InvoiceList.InvoiceListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Hoisst.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".endTemp.EndTempActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"

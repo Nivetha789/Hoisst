@@ -19,6 +19,18 @@ public class DelManDelDetailsDatum {
     @SerializedName("store_name")
     @Expose
     private String storeName;
+    @SerializedName("contact_no")
+    @Expose
+    private String contactNo;
+    @SerializedName("address")
+    @Expose
+    private String address;
+    @SerializedName("latitude")
+    @Expose
+    private String latitude;
+    @SerializedName("longitude")
+    @Expose
+    private String longitude;
     @SerializedName("zone_id")
     @Expose
     private String zoneId;
@@ -73,6 +85,38 @@ public class DelManDelDetailsDatum {
 
     public void setStoreName(String storeName) {
         this.storeName = storeName;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
     public String getZoneId() {

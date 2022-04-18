@@ -10,6 +10,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -42,8 +44,11 @@ import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.endTempSales.EndTempData;
 import com.retailvend.model.endTempSales.EndTempModel;
+import com.retailvend.model.endTempSales.EndTempOutletList;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.startTemp.StartTempActivity;
+import com.retailvend.targetDetails.BeatTargetAdapter;
+import com.retailvend.targetDetails.TargetDetailsActivity;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
@@ -63,11 +68,18 @@ public class EndTempActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     Menu menu;
-    TextView mTitle, name, date, beat, total_outlet, new_outlet, start_time;
+    TextView mTitle, name, date, old_outlet, beat_name, total_outlet, new_outlet, start_time,
+                outlet_order,count_order,order_total;
     ConstraintLayout main_constrain;
     List<EndTempData> endTempData;
+    List<EndTempOutletList> endTempOutletList;
     SessionManagerSP sessionManagerSP;
     ImageView back_arrow;
+    RecyclerView outlet_list_recycler;
+    TextView emptyView;
+    ImageView nodata;
+
+    EndTempDetailsAdapter endTempDetailsAdapter;
 
     String which = "";
     String bill_no = "";
@@ -78,6 +90,14 @@ public class EndTempActivity extends AppCompatActivity {
     public static final String TESS_DATA = "/Hoisst";
     String empname = "";
     String dateRes = "";
+    String beatRes="";
+    String totalOutlet="";
+    String oldOutletRes="";
+    String newOutletRes="";
+    String closeTimeRes="";
+    String orderOutletRes="";
+    String orderCountRes="";
+    String orderTotalRes="";
     Activity activity;
     TextView view_pdf;
     Bitmap bmp, scaledbmp;
@@ -118,16 +138,24 @@ public class EndTempActivity extends AppCompatActivity {
 
             name = findViewById(R.id.name);
             date = findViewById(R.id.date);
-            beat = findViewById(R.id.beat);
-            total_outlet = findViewById(R.id.total_outlet);
+            beat_name = findViewById(R.id.beat_name);
+            total_outlet = findViewById(R.id.total_outlet_end);
+            old_outlet =findViewById(R.id.old_outlet);
             new_outlet = findViewById(R.id.new_outlet);
             mTitle = findViewById(R.id.toolbar_title);
             main_constrain = findViewById(R.id.main_constrain);
             view_pdf = findViewById(R.id.view_pdf);
             start_time = findViewById(R.id.start_time);
+            outlet_order = findViewById(R.id.outlet_order);
+            count_order = findViewById(R.id.count_order);
+            order_total = findViewById(R.id.order_total);
+            outlet_list_recycler = findViewById(R.id.outlet_list_recycler);
+            nodata = findViewById(R.id.no_data);
+            emptyView = findViewById(R.id.emptyView);
 
             sessionManagerSP = new SessionManagerSP(EndTempActivity.this);
             endTempData = new ArrayList<>();
+            endTempOutletList = new ArrayList<>();
 
             mTitle.setText("Day End Details");
 
@@ -302,26 +330,52 @@ public class EndTempActivity extends AppCompatActivity {
                     if (detailsModel.getStatus() == 1) {
 //                        no_data_constrain.setVisibility(View.GONE);
 //                        nodata_txt.setText("");
-
+                        emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
+                        outlet_list_recycler.setVisibility(View.VISIBLE);
                         endTempData = detailsModel.getData();
+                        endTempOutletList=endTempData.get(0).getOutletList();
                         empname = endTempData.get(0).getName();
                         dateRes = endTempData.get(0).getDate();
+                        totalOutlet = endTempData.get(0).getTotalOutlet();
+                        oldOutletRes = endTempData.get(0).getOldOutlet();
+                        newOutletRes = endTempData.get(0).getNewOutlet();
+                        closeTimeRes = endTempData.get(0).getCloseTime();
+                        orderOutletRes = endTempData.get(0).getOrderOutlet();
+                        orderCountRes = endTempData.get(0).getOrderCount();
+                        orderTotalRes = endTempData.get(0).getOrderTotal();
+                        beatRes = endTempData.get(0).getBeat();
                         name.setText(empname);
                         date.setText(dateRes);
-                        beat.setText(endTempData.get(0).getBeat());
-                        total_outlet.setText(endTempData.get(0).getTotalOutlet());
-                        new_outlet.setText(endTempData.get(0).getNewOutlet());
-                        start_time.setText(endTempData.get(0).getCloseTime());
+                        beat_name.setText(beatRes);
+                        total_outlet.setText(totalOutlet);
+                        old_outlet.setText(oldOutletRes);
+                        new_outlet.setText(newOutletRes);
+                        start_time.setText(closeTimeRes);
+                        outlet_order.setText(orderOutletRes);
+                        count_order.setText(orderCountRes);
+                        order_total.setText(orderTotalRes);
+
+                        LinearLayoutManager layoutManager1 = new LinearLayoutManager(activity);
+                        outlet_list_recycler.setLayoutManager(layoutManager1);
+
+                        endTempDetailsAdapter = new EndTempDetailsAdapter(EndTempActivity.this, endTempOutletList);
+                        outlet_list_recycler.setAdapter(endTempDetailsAdapter);
+                        endTempDetailsAdapter.notifyDataSetChanged();
 
                         CustomProgress.hideProgress(activity);
 
                     } else {
                         CustomToast.getInstance(EndTempActivity.this).showSmallCustomToast(s);
                         CustomProgress.hideProgress(activity);
+                        nodata.setVisibility(View.VISIBLE);
+                        emptyView.setText(detailsModel.getMessage());
+                        emptyView.setVisibility(View.VISIBLE);
+                        outlet_list_recycler.setVisibility(View.GONE);
                     }
 
                 } catch (Exception e) {
-                    Log.d("Exception", e.getMessage());
+                    Log.d("Exceptionmmmssmmsmsm", e.getMessage());
                     CustomProgress.hideProgress(activity);
                     CustomProgress.hideProgress(activity);
                 }
@@ -333,17 +387,30 @@ public class EndTempActivity extends AppCompatActivity {
                 Log.d("Failure ", t.getMessage());
                 CustomToast.getInstance(EndTempActivity.this).showSmallCustomToast("Something went wrong try again..");
                 CustomProgress.hideProgress(activity);
+                nodata.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.VISIBLE);
+                outlet_list_recycler.setVisibility(View.GONE);
+                emptyView.setText("Something went wrong try again..");
             }
         });
     }
 
     private void takeScreenshot() {
+        String  mPath="";
         Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
 
         try {
             // image naming and path  to include sd card  appending name you choose for file
-            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+//            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
+                mPath= getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DCIM) + "/" + now + "DayEnd.jpeg";
+            }
+            else
+            {
+                mPath= Environment.getExternalStorageDirectory().toString() + "/" + now + "DayEnd.jpeg";
+            }
 
             // create bitmap screen capture
             View v1 = getWindow().getDecorView().getRootView();

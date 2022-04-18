@@ -17,6 +17,7 @@ import com.retailvend.model.delManModels.delCollection.addpayment.AddPaymentMode
 import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentCollectionModel;
 import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentTypeModel;
 import com.retailvend.model.endTempSales.EndTempModel;
+import com.retailvend.model.invoiceListModel.InvoiceListModel;
 import com.retailvend.model.login.LoginResModel;
 import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageModel;
@@ -143,6 +144,17 @@ public interface Api {
             @Field("search") String search
     );
 
+    //orderList
+    @FormUrlEncoded
+    @POST("order/api/invoice_manage_order")
+    Call<InvoiceListModel> delManOrderList(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit,
+            @Field("search") String search
+    );
+
     //sales details
     @FormUrlEncoded
     @POST("order/api/manage_order")
@@ -224,7 +236,7 @@ public interface Api {
 
     //Today outlets api
     @FormUrlEncoded
-    @POST("order/api/invoice_manage_order")
+    @POST("assigninvoice/api/employee_wise_shop")
     Call<DeliveryTodayOutletsModel> assignDelManShop(
             @Field("method") String method,
             @Field("employee_id") String employee_id,

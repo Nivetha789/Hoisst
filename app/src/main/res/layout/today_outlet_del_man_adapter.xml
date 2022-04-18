@@ -89,7 +89,7 @@
                 app:layout_constraintTop_toTopOf="@+id/circle_bg" />
 
             <TextView
-                android:id="@+id/store_name"
+                android:id="@+id/address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -108,29 +108,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="15dp"
                 android:fontFamily="@font/quicksand_medium"
                 android:gravity="center"
                 android:text="123"
+                android:layout_marginBottom="18dp"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/company_name"
-                app:layout_constraintTop_toBottomOf="@+id/store_name" />
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="15dp"
-                android:fontFamily="@font/quicksand_medium"
-                android:gravity="center"
-                android:text="123"
-                android:textColor="@color/grey"
-                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/arrow"
-                app:layout_constraintTop_toBottomOf="@+id/invoice" />
+                app:layout_constraintStart_toStartOf="@+id/company_name"
+                app:layout_constraintTop_toBottomOf="@+id/address" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

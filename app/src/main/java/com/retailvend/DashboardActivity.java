@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.changePass.ChangePasswordActivity;
 import com.retailvend.collection.CollectionActivity;
+import com.retailvend.deliveryman.InvoiceList.InvoiceListActivity;
 import com.retailvend.deliveryman.deliveryDetails.DeliveryDetailsActivity;
 import com.retailvend.deliveryman.outlet.DelManTodayOutletsActivity;
 import com.retailvend.deliveryman.outstand.DelManOutstandActivity;
@@ -71,8 +72,8 @@ public class DashboardActivity extends AppCompatActivity {
     Activity activity;
     TextView nodata_txt;
     TextView tot_outlet_del_count,visit_outlet_del_count,pending_del_count,tot_outlet_count,visit_outlet_count,
-            pending_count,target_count,achievements_count,order_count,order_tot_count;
-    ConstraintLayout no_data_constrain;
+            pending_count,target_count,achievements_count,order_count,order_tot_count,order_list;
+    ConstraintLayout no_data_constrain,today_outlet_menu,target_menu,start_temp_menu,end_temp_menu,collection_menu;
     List<SalesDashboardCountDatum> salesDashboardCountData;
 
     @Override
@@ -106,6 +107,12 @@ public class DashboardActivity extends AppCompatActivity {
         achievements_count=findViewById(R.id.achievements_count);
         order_count=findViewById(R.id.order_count);
         order_tot_count=findViewById(R.id.order_tot_count);
+        order_list=findViewById(R.id.order_list);
+        today_outlet_menu=findViewById(R.id.today_outlet_menu);
+        target_menu=findViewById(R.id.target_menu);
+        start_temp_menu=findViewById(R.id.start_temp_menu);
+        end_temp_menu=findViewById(R.id.end_temp_menu);
+        collection_menu=findViewById(R.id.collection_menu);
 
         sessionManagerSP = new SessionManagerSP(DashboardActivity.this);
 
@@ -155,11 +162,21 @@ public class DashboardActivity extends AppCompatActivity {
                     "font/quicksand_medium.ttf");
             sales_main_txt.setTypeface(font);
             sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+            order_list.setText("INVOICE LIST");
+            
+            today_outlet_menu.setVisibility(View.GONE);
+            target_menu.setVisibility(View.GONE);
+            start_temp_menu.setVisibility(View.GONE);
+            end_temp_menu.setVisibility(View.GONE);
+
 //            Typeface font1 = Typeface.createFromAsset(
 //                    this.getAssets(),
 //                    "font/quicksand_medium.ttf");
 //            sales_main_txt.setTypeface(font);
 //            sales_main_txt.setText("DELIVERY LIST");
+        }else{
+            collection_menu.setVisibility(View.GONE);
         }
 //        } else {
 //            sales_man_count_details.setVisibility(View.VISIBLE);
@@ -262,8 +279,13 @@ public class DashboardActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.order_list_constrain:
-                Intent orderIntent = new Intent(this, OrderListActivity.class);
-                startActivity(orderIntent);
+                if(distributor_id.equals("0")){
+                    Intent orderIntent = new Intent(this, OrderListActivity.class);
+                    startActivity(orderIntent);
+                }else{
+                    Intent orderIntent = new Intent(this, InvoiceListActivity.class);
+                    startActivity(orderIntent);
+                }
                 break;
             case R.id.collection_menu:
                 if (distributor_id.equals("0")) {

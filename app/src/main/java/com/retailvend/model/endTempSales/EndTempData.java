@@ -26,6 +26,9 @@ public class EndTempData {
     @SerializedName("old_outlet")
     @Expose
     private String oldOutlet;
+    @SerializedName("order_outlet")
+    @Expose
+    private String orderOutlet;
     @SerializedName("order_count")
     @Expose
     private String orderCount;
@@ -37,7 +40,7 @@ public class EndTempData {
     private String closeTime;
     @SerializedName("outlet_list")
     @Expose
-    private List<Object> outletList = new ArrayList<>();
+    private List<EndTempOutletList> outletList = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -87,6 +90,14 @@ public class EndTempData {
         this.oldOutlet = oldOutlet;
     }
 
+    public String getOrderOutlet() {
+        return orderOutlet;
+    }
+
+    public void setOrderOutlet(String orderOutlet) {
+        this.orderOutlet = orderOutlet;
+    }
+
     public String getOrderCount() {
         return orderCount;
     }
@@ -111,11 +122,11 @@ public class EndTempData {
         this.closeTime = closeTime;
     }
 
-    public List<Object> getOutletList() {
+    public List<EndTempOutletList> getOutletList() {
         return outletList;
     }
 
-    public void setOutletList(List<Object> outletList) {
+    public void setOutletList(List<EndTempOutletList> outletList) {
         this.outletList = outletList;
     }
 }

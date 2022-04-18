@@ -1,6 +1,8 @@
 package com.retailvend.deliveryman.outlet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.deliveryman.outstand.DelManOutstandActivity;
+import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsBillDetails;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsBuyerDetails;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsDistributorDetails;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsModel;
@@ -56,7 +60,9 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
     ProgressBar progress;
     NestedScrollView lin_invoice_details_scrollview;
     LinearLayout order_status_layout, lin_submit;
+    ImageView left_arrow;
 
+    TodayOutletDetailsBillDetails todayOutletDetailsBillDetails;
     TodayOutletDetailsStoreDetails todayOutletDetailsStoreDetails;
     TodayOutletDetailsDistributorDetails todayOutletDetailsDistributorDetails;
     TodayOutletDetailsBuyerDetails todayOutletDetailsBuyerDetails;
@@ -154,6 +160,14 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
         lin_submit = findViewById(R.id.lin_submit);
         txt_invoice_sub_total = findViewById(R.id.txt_invoice_sub_total);
         txt_invoice_current_total = findViewById(R.id.txt_invoice_current_total);
+        left_arrow = findViewById(R.id.left_arrow);
+
+        left_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         invoice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,12 +211,34 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
         lin_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isConnected = ConnectivityReceiver.isConnected();
-                if (isConnected) {
-                    updateBillApi(random_value);
-                } else {
-                    CustomToast.getInstance(OutletInvoiceDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
-                }
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+                builder1.setMessage("Are you sure you want to change order status?");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                boolean isConnected = ConnectivityReceiver.isConnected();
+                                if (isConnected) {
+                                    updateBillApi(random_value);
+                                } else {
+                                    CustomToast.getInstance(OutletInvoiceDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+                                }
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
 
@@ -237,6 +273,7 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
 
                     if (todayOutletDetailsModel.getStatus() == 1) {
                         if (todayOutletDetailsModel.getData() != null) {
+                            todayOutletDetailsBillDetails = todayOutletDetailsModel.getData().getBillDetails();
                             todayOutletDetailsStoreDetails = todayOutletDetailsModel.getData().getStoreDetails();
                             productDetails = todayOutletDetailsModel.getData().getProductDetails();
                             todayOutletDetailsDistributorDetails = todayOutletDetailsModel.getData().getDistributorDetails();
@@ -244,7 +281,7 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
                             todayOutletTotalDetails = todayOutletDetailsModel.getData().getTotalDetails();
                             todayOutletReturnDetails = todayOutletDetailsModel.getData().getReturnDetails();
 
-                            txt_invoice_details_order.setText(todayOutletDetailsBuyerDetails.getOrderNo());
+                            txt_invoice_details_order.setText(todayOutletDetailsBillDetails.getInvoiceNo());
                             txt_inovoice_details_store.setText(todayOutletDetailsStoreDetails.getCompanyName());
                             txt_invoice_details_address.setText(todayOutletDetailsStoreDetails.getAddress());
                             txt_invoice_details_dist.setText(todayOutletDetailsDistributorDetails.getCompanyName());

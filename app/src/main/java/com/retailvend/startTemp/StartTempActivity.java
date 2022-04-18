@@ -337,160 +337,22 @@ public class StartTempActivity extends AppCompatActivity {
         });
     }
 
-   /* private void generatePDF() {
-        // creating an object variable
-        // for our PDF document.
-        PdfDocument pdfDocument = new PdfDocument();
-
-        // two variables for paint "paint" is used
-        // for drawing shapes and we will use "title"
-        // for adding text in our PDF file.
-        Paint paint = new Paint();
-        Paint title = new Paint();
-
-        // we are adding page info to our PDF file
-        // in which we will be passing our pageWidth,
-        // pageHeight and number of pages and after that
-        // we are calling it to create our PDF.
-        PdfDocument.PageInfo mypageInfo = new PdfDocument.PageInfo.Builder(pagewidth, pageHeight, 1).create();
-
-        // below line is used for setting
-        // start page for our PDF file.
-        PdfDocument.Page myPage = pdfDocument.startPage(mypageInfo);
-
-        // creating a variable for canvas
-        // from our page of PDF.
-        Canvas canvas = myPage.getCanvas();
-
-        // below line is used to draw our image on our PDF file.
-        // the first parameter of our drawbitmap method is
-        // our bitmap
-        // second parameter is position from left
-        // third parameter is position from top and last
-        // one is our variable for paint.
-        canvas.drawBitmap(scaledbmp, 100, 100, paint);
-
-        // below line is used for adding typeface for
-        // our text which we will be adding in our PDF file.
-        title.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-
-        // below line is used for setting text size
-        // which we will be displaying in our PDF file.
-        title.setTextSize(15);
-
-        // below line is sued for setting color
-        // of our text inside our PDF file.
-        title.setColor(ContextCompat.getColor(this, R.color.black));
-
-        // below line is used to draw text in our PDF file.
-        // the first parameter is our text, second parameter
-        // is position from start, third parameter is position from top
-        // and then we are passing our variable of paint which is title.
-        canvas.drawText("Day Start Report", 209, 100, title);
-        canvas.drawText("", 209, 80, title);
-
-        // similarly we are creating another text and in this
-        // we are aligning this text to center of our PDF file.
-        title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        title.setColor(ContextCompat.getColor(this, R.color.black));
-        title.setTextSize(20);
-
-        // below line is used for setting
-        // our text to center of PDF.
-        title.setTextAlign(Paint.Align.LEFT);
-        canvas.drawText("Name : " + name.getText().toString(), 396, 560, title);
-        canvas.drawText("Date : " + date.getText().toString(), 396, 560, title);
-        canvas.drawText("Beat : " + beat.getText().toString(), 396, 560, title);
-        canvas.drawText("Total Outlet : " + total_outlet.getText().toString(), 396, 560, title);
-        canvas.drawText("New Outlet : " + new_outlet.getText().toString(), 396, 560, title);
-        canvas.drawText("Start Time : " + start_time.getText().toString(), 396, 560, title);
-
-        // after adding all attributes to our
-        // PDF file we will be finishing our page.
-        pdfDocument.finishPage(myPage);
-
-        // below line is used to set the name of
-        // our PDF file and its path.
-        File file = new File(Environment.getExternalStorageDirectory(), "DayStart.pdf");
-
-        try {
-            // after creating a file name we will
-            // write our PDF file to that location.
-            pdfDocument.writeTo(new FileOutputStream(file));
-
-            // below line is to print toast message
-            // on completion of PDF generation.
-            Toast.makeText(StartTempActivity.this, "PDF file generated successfully.", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            // below line is used
-            // to handle error
-            e.printStackTrace();
-        }
-        // after storing our pdf to that
-        // location we are closing our PDF file.
-        pdfDocument.close();
-    }
-
-    private void createPdf(String name, String date, String beat, String tot_outlet, String new_outlet, String start_time) {
-        // create a new document
-        PdfDocument document = new PdfDocument();
-        // crate a page description
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 1).create();
-        // start a page
-        PdfDocument.Page page = document.startPage(pageInfo);
-        Canvas name1 = page.getCanvas();
-        Canvas date1 = page.getCanvas();
-        Canvas beat1 = page.getCanvas();
-        Paint paint = new Paint();
-        paint.setColor(R.drawable.logo_main);
-        name1.drawCircle(50, 50, 30, paint);
-        date1.drawCircle(50, 50, 30, paint);
-        paint.setColor(Color.BLACK);
-        name1.drawText(name, 80, 50, paint);
-        date1.drawText(date, 80, 50, paint);
-        beat1.drawText(beat, 80, 50, paint);
-        //canvas.drawt
-        // finish the page
-        document.finishPage(page);
-// draw text on the graphics object of the page
-        // Create Page 2
-        pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 2).create();
-        page = document.startPage(pageInfo);
-        name1 = page.getCanvas();
-        date1 = page.getCanvas();
-        beat1 = page.getCanvas();
-        paint = new Paint();
-        paint.setColor(Color.BLUE);
-        name1.drawCircle(100, 100, 100, paint);
-        date1.drawCircle(100, 100, 100, paint);
-        beat1.drawCircle(100, 100, 100, paint);
-        document.finishPage(page);
-        // write the document content
-        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/mypdf/";
-        File file = new File(directory_path);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        String targetPdf = directory_path + "day_start_report.pdf";
-        File filePath = new File(targetPdf);
-        try {
-            document.writeTo(new FileOutputStream(filePath));
-            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            Log.e("main", "error " + e.toString());
-            Toast.makeText(this, "Something wrong: " + e.toString(), Toast.LENGTH_LONG).show();
-        }
-        // close the document
-        document.close();
-    }*/
-
     private void takeScreenshot() {
+        String mPath="";
         Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
 
         try {
             // image naming and path  to include sd card  a6rrgppending name you choose for file
-            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+//            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
+                mPath= getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DCIM) + "/" + now + "DayStart.jpeg";
+            }
+            else
+            {
+                mPath= Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpeg";
+            }
 
             // create bitmap screen capture
             View v1 = getWindow().getDecorView().getRootView();

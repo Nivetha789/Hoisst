@@ -1,15 +1,9 @@
 package com.retailvend.targetDetails;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -17,26 +11,24 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
-import com.retailvend.DashboardActivity;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
-import com.retailvend.model.dashboard.SalesDashboardCountModel;
 import com.retailvend.model.targetDetailssales.EmployeeTargetDetailsData.EmployeeTargetBeatTarget;
 import com.retailvend.model.targetDetailssales.EmployeeTargetDetailsData.EmployeeTargetDetailsDatum;
 import com.retailvend.model.targetDetailssales.EmployeeTargetDetailsData.EmployeeTargetDetailsModel;
 import com.retailvend.model.targetDetailssales.EmployeeTargetDetailsData.EmployeeTargetProductTarget;
-import com.retailvend.model.targetDetailssales.TargetDetailsData;
 import com.retailvend.model.targetDetailssales.TargetDetailsModel;
 import com.retailvend.model.targetDetailssales.TargetDetailsTarget;
-import com.retailvend.orderList.OrderListActivity;
-import com.retailvend.orderList.OrderListAdapter;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
@@ -51,18 +43,18 @@ import retrofit2.Response;
 
 public class TargetDetailsActivity extends AppCompatActivity {
 
-    ImageView left_arrow,nodata1,nodata;
+    ImageView left_arrow, nodata1, nodata;
     Activity activity;
     SessionManagerSP sessionManagerSP;
     BarChart barChart;
     List<TargetDetailsTarget> targetDetailsDataList;
-    TextView target,achieve,emptyView,emptyView1;
-    String year="";
+    TextView target, achieve, emptyView, emptyView1;
+    String year = "";
     ArrayList<TargetDetailsTarget> data = new ArrayList<>();
     ArrayList<BarEntry> values = new ArrayList<>();
     ProductTargetAdapter productTargetAdapter;
     BeatTargetAdapter beatTargetAdapter;
-    RecyclerView prod_target_recycler,beat_target_recycler;
+    RecyclerView prod_target_recycler, beat_target_recycler;
     List<EmployeeTargetDetailsDatum> employeeTargetDetailsData;
     List<EmployeeTargetProductTarget> employeeTargetProductTargetList;
     List<EmployeeTargetBeatTarget> employeeTargetBeatTargets;
@@ -71,7 +63,7 @@ public class TargetDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_target_details);
-        activity=this;
+        activity = this;
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -93,21 +85,21 @@ public class TargetDetailsActivity extends AppCompatActivity {
         }
 
         sessionManagerSP = new SessionManagerSP(TargetDetailsActivity.this);
-        targetDetailsDataList=new ArrayList<>();
-        employeeTargetDetailsData=new ArrayList<>();
-        employeeTargetProductTargetList=new ArrayList<>();
-        employeeTargetBeatTargets=new ArrayList<>();
+        targetDetailsDataList = new ArrayList<>();
+        employeeTargetDetailsData = new ArrayList<>();
+        employeeTargetProductTargetList = new ArrayList<>();
+        employeeTargetBeatTargets = new ArrayList<>();
 
-        left_arrow=findViewById(R.id.left_arrow);
-        prod_target_recycler=findViewById(R.id.prod_target_recycler);
-        beat_target_recycler=findViewById(R.id.beat_target_recycler);
-        barChart=findViewById(R.id.chart);
-        target=findViewById(R.id.target);
-        achieve=findViewById(R.id.achieve);
-        emptyView=findViewById(R.id.emptyView);
-        emptyView1=findViewById(R.id.emptyView1);
-        nodata1=findViewById(R.id.nodata1);
-        nodata=findViewById(R.id.nodata);
+        left_arrow = findViewById(R.id.left_arrow);
+        prod_target_recycler = findViewById(R.id.prod_target_recycler);
+        beat_target_recycler = findViewById(R.id.beat_target_recycler);
+        barChart = findViewById(R.id.chart);
+        target = findViewById(R.id.target);
+        achieve = findViewById(R.id.achieve);
+        emptyView = findViewById(R.id.emptyView);
+        emptyView1 = findViewById(R.id.emptyView1);
+        nodata1 = findViewById(R.id.nodata1);
+        nodata = findViewById(R.id.nodata);
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,11 +119,11 @@ public class TargetDetailsActivity extends AppCompatActivity {
 
     public void targetDetailsApi() {
         CustomProgress.showProgress(activity);
-        String emp_id= sessionManagerSP.getEmployeeId();
-        System.out.println("emmmpidd "+emp_id);
+        String emp_id = sessionManagerSP.getEmployeeId();
+        System.out.println("emmmpidd " + emp_id);
 
         Call<TargetDetailsModel> call = RetrofitClient
-                .getInstance().getApi().targetDetails("_targetDetails",emp_id);
+                .getInstance().getApi().targetDetails("_targetDetails", emp_id);
 
         call.enqueue(new Callback<TargetDetailsModel>() {
             @Override
@@ -146,7 +138,7 @@ public class TargetDetailsActivity extends AppCompatActivity {
                     TargetDetailsModel detailsModel = gson.fromJson(json, TargetDetailsModel.class);
                     String s = detailsModel.getMessage();
 
-                    if (detailsModel.getStatus()==1) {
+                    if (detailsModel.getStatus() == 1) {
 //                        no_data_constrain.setVisibility(View.GONE);
 //                        nodata_txt.setText("");
                         target.setText(detailsModel.getData().get(0).getTargetVal());
@@ -155,11 +147,11 @@ public class TargetDetailsActivity extends AppCompatActivity {
 
                         for (int i = 0; i < targetDetailsDataList.size(); i++) {
                             TargetDetailsTarget dataObject = targetDetailsDataList.get(i);
-                            if(dataObject.getValue()!=0){
+                            if (dataObject.getValue() != 0) {
                                 String[] separated = dataObject.getDate().split("-");
-                                String separate=separated[0];
-                                String separate1=separated[1];
-                                String separate2=separated[2];
+                                String separate = separated[0];
+                                String separate1 = separated[1];
+                                String separate2 = separated[2];
 //                                System.out.println("separate2 "+separate2);
                                 values.add(new BarEntry(Float.parseFloat(separate2), Float.parseFloat(dataObject.getValue().toString())));
                             }
@@ -170,12 +162,12 @@ public class TargetDetailsActivity extends AppCompatActivity {
 //                        targets.add(new BarEntry(2016, 508));
 //                        targets.add(new BarEntry(2017, 660));
 //                        targets.add(new BarEntry(2018, 550));
-                        BarDataSet barDataSet=new BarDataSet(values,"Achievements");
+                        BarDataSet barDataSet = new BarDataSet(values, "Achievements");
                         barDataSet.setColors(Color.GREEN);
                         barDataSet.setValueTextColor(Color.BLACK);
                         barDataSet.setValueTextSize(16f);
 
-                        BarData barData= new BarData(barDataSet);
+                        BarData barData = new BarData(barDataSet);
 
                         barChart.setFitBars(false);
                         barChart.setData(barData);
@@ -216,11 +208,11 @@ public class TargetDetailsActivity extends AppCompatActivity {
 
     public void targetDetailsDataApi() {
 //        CustomProgress.showProgress(activity);
-        String emp_id= sessionManagerSP.getEmployeeId();
-        System.out.println("_employeeTargetData "+emp_id);
+        String emp_id = sessionManagerSP.getEmployeeId();
+        System.out.println("_employeeTargetData " + emp_id);
 
         Call<EmployeeTargetDetailsModel> call = RetrofitClient
-                .getInstance().getApi().employeeTargetDetails("_employeeTargetData",emp_id);
+                .getInstance().getApi().employeeTargetDetails("_employeeTargetData", emp_id);
 
         call.enqueue(new Callback<EmployeeTargetDetailsModel>() {
             @Override
@@ -234,13 +226,13 @@ public class TargetDetailsActivity extends AppCompatActivity {
                     EmployeeTargetDetailsModel detailsModel = gson.fromJson(json, EmployeeTargetDetailsModel.class);
                     String s = detailsModel.getMessage();
 
-                    if (detailsModel.getStatus()==1) {
+                    if (detailsModel.getStatus() == 1) {
 //                        System.out.println("_employeeTargetData_employeeTargetData "+response.body());
 
 //                        CustomProgress.hideProgress(activity);
 
-                        employeeTargetDetailsData=detailsModel.getData();
-                        if(employeeTargetDetailsData!=null){
+                        employeeTargetDetailsData = detailsModel.getData();
+                        if (employeeTargetDetailsData != null) {
 //                            System.out.println("xxxxxxxffffffff "+employeeTargetDetailsData.toString());
 
 //                            emptyView.setText(detailsModel.getMessage());
@@ -249,24 +241,24 @@ public class TargetDetailsActivity extends AppCompatActivity {
                             nodata1.setVisibility(View.GONE);
                             prod_target_recycler.setVisibility(View.VISIBLE);
                             beat_target_recycler.setVisibility(View.VISIBLE);
-                            employeeTargetProductTargetList=employeeTargetDetailsData.get(0).getProductTarget();
-                            employeeTargetBeatTargets=employeeTargetDetailsData.get(0).getBeatTarget();
-                                emptyView.setVisibility(View.GONE);
-                                prod_target_recycler.setVisibility(View.VISIBLE);
-                                LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
-                                prod_target_recycler.setLayoutManager(layoutManager);
+                            employeeTargetProductTargetList = employeeTargetDetailsData.get(0).getProductTarget();
+                            employeeTargetBeatTargets = employeeTargetDetailsData.get(0).getBeatTarget();
+                            emptyView.setVisibility(View.GONE);
+                            prod_target_recycler.setVisibility(View.VISIBLE);
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+                            prod_target_recycler.setLayoutManager(layoutManager);
 
-                                productTargetAdapter = new ProductTargetAdapter(TargetDetailsActivity.this, employeeTargetProductTargetList);
-                                prod_target_recycler.setAdapter(productTargetAdapter);
+                            productTargetAdapter = new ProductTargetAdapter(TargetDetailsActivity.this, employeeTargetProductTargetList);
+                            prod_target_recycler.setAdapter(productTargetAdapter);
 
-                                LinearLayoutManager layoutManager1 = new LinearLayoutManager(activity);
-                                beat_target_recycler.setLayoutManager(layoutManager1);
+                            LinearLayoutManager layoutManager1 = new LinearLayoutManager(activity);
+                            beat_target_recycler.setLayoutManager(layoutManager1);
 
-                                beatTargetAdapter = new BeatTargetAdapter(TargetDetailsActivity.this, employeeTargetBeatTargets);
-                                beat_target_recycler.setAdapter(beatTargetAdapter);
-                                beatTargetAdapter.notifyDataSetChanged();
+                            beatTargetAdapter = new BeatTargetAdapter(TargetDetailsActivity.this, employeeTargetBeatTargets);
+                            beat_target_recycler.setAdapter(beatTargetAdapter);
+                            beatTargetAdapter.notifyDataSetChanged();
 
-                        }else {
+                        } else {
 //                            CustomProgress.hideProgress(activity);
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 //                        no_data_constrain.setVisibility(View.VISIBLE);
@@ -292,7 +284,7 @@ public class TargetDetailsActivity extends AppCompatActivity {
                         emptyView1.setVisibility(View.VISIBLE);
                         prod_target_recycler.setVisibility(View.GONE);
                         beat_target_recycler.setVisibility(View.GONE);
-                        System.out.println("nodata "+detailsModel.getMessage());
+                        System.out.println("nodata " + detailsModel.getMessage());
 //                        CustomProgress.hideProgress(activity);
 
                     }

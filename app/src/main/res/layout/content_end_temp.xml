@@ -34,8 +34,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_constrain"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,304 +42,557 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_constrain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/email_view"
+                app:layout_constraintEnd_toStartOf="@+id/name"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4"
+                app:layout_constraintVertical_chainStyle="spread"
+                tools:layout_editor_absoluteY="30dp" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/quicksand_semi_bold"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/name_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/name_txt"
+                app:layout_constraintTop_toTopOf="@+id/name_txt" />
+
+            <View
+                android:id="@+id/email_view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_dark"
+                app:layout_constraintLeft_toLeftOf="@+id/name_txt"
+                app:layout_constraintRight_toRightOf="@+id/name"
+                app:layout_constraintTop_toBottomOf="@+id/name_txt" />
+
+            <TextView
+                android:id="@+id/date_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="Date"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/mobile_no_view"
+                app:layout_constraintEnd_toStartOf="@+id/date"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email_view"
+                tools:layout_editor_absoluteY="30dp" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/quicksand_semi_bold"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/date_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/date_txt"
+                app:layout_constraintTop_toTopOf="@+id/date_txt" />
+
+            <View
+                android:id="@+id/mobile_no_view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_dark"
+                app:layout_constraintBottom_toTopOf="@+id/old_outlet_txt"
+                app:layout_constraintLeft_toLeftOf="@+id/date_txt"
+                app:layout_constraintRight_toRightOf="@+id/date"
+                app:layout_constraintTop_toBottomOf="@+id/date" />
+
+            <TextView
+                android:id="@+id/old_outlet_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="Old Outlet"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/beat_view"
+                app:layout_constraintEnd_toStartOf="@+id/old_outlet"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mobile_no_view"
+                tools:layout_editor_absoluteY="30dp" />
+
+            <TextView
+                android:id="@+id/old_outlet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/quicksand_semi_bold"
+                android:gravity="end"
+                android:maxLines="3"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/old_outlet_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/old_outlet_txt"
+                app:layout_constraintTop_toTopOf="@+id/old_outlet_txt" />
+
+            <View
+                android:id="@+id/beat_view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_dark"
+                app:layout_constraintLeft_toLeftOf="@+id/old_outlet_txt"
+                app:layout_constraintRight_toRightOf="@+id/old_outlet"
+                app:layout_constraintTop_toBottomOf="@+id/old_outlet_txt" />
+
+            <TextView
+                android:id="@+id/total_outlet_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="Total Outlet"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/total_outlet"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/beat_view" />
+
+            <TextView
+                android:id="@+id/total_outlet_end"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/quicksand_semi_bold"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/total_outlet_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/total_outlet_txt"
+                app:layout_constraintTop_toTopOf="@+id/total_outlet_txt" />
+
+            <View
+                android:id="@+id/tot_outlet_view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_dark"
+                app:layout_constraintLeft_toLeftOf="@+id/total_outlet_txt"
+                app:layout_constraintRight_toRightOf="@+id/total_outlet"
+                app:layout_constraintTop_toBottomOf="@+id/total_outlet_txt" />
+
+            <TextView
+                android:id="@+id/new_outlet_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="New Outlet"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tot_outlet_view" />
+
+            <TextView
+                android:id="@+id/new_outlet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/quicksand_semi_bold"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/new_outlet_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/new_outlet_txt"
+                app:layout_constraintTop_toTopOf="@+id/new_outlet_txt" />
+
+            <View
+                android:id="@+id/new_outlet_view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_dark"
+                app:layout_constraintLeft_toLeftOf="@+id/new_outlet_txt"
+                app:layout_constraintRight_toRightOf="@+id/new_outlet"
+                app:layout_constraintTop_toBottomOf="@+id/new_outlet_txt" />
+
+            <TextView
+                android:id="@+id/start_time_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="Start Time"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/start_time"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/new_outlet_view" />
+
+            <TextView
+                android:id="@+id/start_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/quicksand_semi_bold"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/start_time_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/start_time_txt"
+                app:layout_constraintTop_toTopOf="@+id/start_time_txt" />
+
+            <View
+                android:id="@+id/start_time_view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_dark"
+                app:layout_constraintLeft_toLeftOf="@+id/start_time_txt"
+                app:layout_constraintRight_toRightOf="@+id/start_time"
+                app:layout_constraintTop_toBottomOf="@+id/start_time_txt" />
+
+            <TextView
+                android:id="@+id/outlet_order_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="Order Outlet"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/start_time"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/start_time_view" />
+
+            <TextView
+                android:id="@+id/outlet_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/quicksand_semi_bold"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/outlet_order_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/outlet_order_txt"
+                app:layout_constraintTop_toTopOf="@+id/outlet_order_txt" />
+
+            <View
+                android:id="@+id/outlet_order_view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_dark"
+                app:layout_constraintLeft_toLeftOf="@+id/outlet_order_txt"
+                app:layout_constraintRight_toRightOf="@+id/outlet_order"
+                app:layout_constraintTop_toBottomOf="@+id/outlet_order_txt" />
+
+            <TextView
+                android:id="@+id/count_order_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="Order Count"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/start_time"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/outlet_order_view" />
+
+            <TextView
+                android:id="@+id/count_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/quicksand_semi_bold"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/count_order_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/count_order_txt"
+                app:layout_constraintTop_toTopOf="@+id/count_order_txt" />
+
+            <View
+                android:id="@+id/count_order_view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_dark"
+                app:layout_constraintLeft_toLeftOf="@+id/count_order_txt"
+                app:layout_constraintRight_toRightOf="@+id/count_order"
+                app:layout_constraintTop_toBottomOf="@+id/count_order_txt" />
+
+            <TextView
+                android:id="@+id/order_total_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="Total Order"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/start_time"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/count_order_view" />
+
+            <TextView
+                android:id="@+id/order_total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/quicksand_semi_bold"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/order_total_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/order_total_txt"
+                app:layout_constraintTop_toTopOf="@+id/order_total_txt" />
+
+            <View
+                android:id="@+id/order_total_view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_dark"
+                app:layout_constraintLeft_toLeftOf="@+id/order_total_txt"
+                app:layout_constraintRight_toRightOf="@+id/order_total"
+                app:layout_constraintTop_toBottomOf="@+id/order_total_txt" />
 
         <TextView
-            android:id="@+id/name_txt"
+            android:id="@+id/beat_name_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="4dp"
-            android:fontFamily="@font/quicksand_medium"
-            android:gravity="start"
-            android:text="Name"
-            android:textColor="@color/colorPrimary"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toTopOf="@+id/email_view"
-            app:layout_constraintEnd_toStartOf="@+id/name"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4"
-            app:layout_constraintVertical_chainStyle="spread"
-            tools:layout_editor_absoluteY="30dp" />
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/quicksand_semi_bold"
-            android:gravity="end"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/name_txt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/name_txt"
-            app:layout_constraintTop_toTopOf="@+id/name_txt" />
-
-        <View
-            android:id="@+id/email_view"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
+            android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:background="@color/light_dark"
-            app:layout_constraintLeft_toLeftOf="@+id/name_txt"
-            app:layout_constraintRight_toRightOf="@+id/name"
-            app:layout_constraintTop_toBottomOf="@+id/name_txt" />
-
-        <TextView
-            android:id="@+id/date_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="4dp"
-            android:fontFamily="@font/quicksand_medium"
-            android:gravity="start"
-            android:text="Date"
-            android:textColor="@color/colorPrimary"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toTopOf="@+id/mobile_no_view"
-            app:layout_constraintEnd_toStartOf="@+id/date"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_view"
-            tools:layout_editor_absoluteY="30dp" />
-
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/quicksand_semi_bold"
-            android:gravity="end"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/date_txt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/date_txt"
-            app:layout_constraintTop_toTopOf="@+id/date_txt" />
-
-        <View
-            android:id="@+id/mobile_no_view"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/light_dark"
-            app:layout_constraintBottom_toTopOf="@+id/beat_txt"
-            app:layout_constraintLeft_toLeftOf="@+id/date_txt"
-            app:layout_constraintRight_toRightOf="@+id/date"
-            app:layout_constraintTop_toBottomOf="@+id/date" />
-
-        <TextView
-            android:id="@+id/beat_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="4dp"
-            android:fontFamily="@font/quicksand_medium"
-            android:gravity="start"
-            android:text="Beat"
-            android:textColor="@color/colorPrimary"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toTopOf="@+id/beat_view"
-            app:layout_constraintEnd_toStartOf="@+id/beat"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mobile_no_view"
-            tools:layout_editor_absoluteY="30dp" />
-
-        <TextView
-            android:id="@+id/beat"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/quicksand_semi_bold"
-            android:gravity="end"
-            android:maxLines="3"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/beat_txt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/beat_txt"
-            app:layout_constraintTop_toTopOf="@+id/beat_txt" />
-
-        <View
-            android:id="@+id/beat_view"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/light_dark"
-            app:layout_constraintLeft_toLeftOf="@+id/beat_txt"
-            app:layout_constraintRight_toRightOf="@+id/beat"
-            app:layout_constraintTop_toBottomOf="@+id/beat_txt" />
-
-        <TextView
-            android:id="@+id/total_outlet_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="4dp"
-            android:fontFamily="@font/quicksand_medium"
-            android:gravity="start"
-            android:text="Total Outlet"
-            android:textColor="@color/colorPrimary"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toStartOf="@+id/total_outlet"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/beat_view" />
-
-        <TextView
-            android:id="@+id/total_outlet"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/quicksand_semi_bold"
-            android:gravity="end"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/total_outlet_txt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/total_outlet_txt"
-            app:layout_constraintTop_toTopOf="@+id/total_outlet_txt" />
-
-        <View
-            android:id="@+id/tot_outlet_view"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/light_dark"
-            app:layout_constraintLeft_toLeftOf="@+id/total_outlet_txt"
-            app:layout_constraintRight_toRightOf="@+id/total_outlet"
-            app:layout_constraintTop_toBottomOf="@+id/total_outlet_txt" />
-
-        <TextView
-            android:id="@+id/new_outlet_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/quicksand_medium"
-            android:gravity="start"
-            android:text="New Outlet"
-            android:textColor="@color/colorPrimary"
-            android:textSize="13sp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tot_outlet_view" />
-
-        <TextView
-            android:id="@+id/new_outlet"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/quicksand_semi_bold"
-            android:gravity="end"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/new_outlet_txt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/new_outlet_txt"
-            app:layout_constraintTop_toTopOf="@+id/new_outlet_txt" />
-
-        <View
-            android:id="@+id/new_outlet_view"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/light_dark"
-            app:layout_constraintLeft_toLeftOf="@+id/new_outlet_txt"
-            app:layout_constraintRight_toRightOf="@+id/new_outlet"
-            app:layout_constraintTop_toBottomOf="@+id/new_outlet_txt" />
-
-        <TextView
-            android:id="@+id/start_time_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="4dp"
-            android:fontFamily="@font/quicksand_medium"
-            android:gravity="start"
-            android:text="Start Time"
-            android:textColor="@color/colorPrimary"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toStartOf="@+id/start_time"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_outlet_view" />
-
-        <TextView
-            android:id="@+id/start_time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/quicksand_semi_bold"
-            android:gravity="end"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/start_time_txt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/start_time_txt"
-            app:layout_constraintTop_toTopOf="@+id/start_time_txt" />
-
-        <View
-            android:id="@+id/start_time_view"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/light_dark"
-            app:layout_constraintLeft_toLeftOf="@+id/start_time_txt"
-            app:layout_constraintRight_toRightOf="@+id/start_time"
-            app:layout_constraintTop_toBottomOf="@+id/start_time_txt" />
-
-        <TextView
-            android:background="@drawable/button_shape1"
-            android:id="@+id/view_pdf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:fontFamily="@font/quicksand_bold"
-            android:text="View PDF"
-            android:visibility="gone"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:textColor="@color/white"
+            android:gravity="start"
+            android:text="Beat "
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@+id/count_order_txt"
+            app:layout_constraintTop_toBottomOf="@+id/order_total_view" />
+
+        <TextView
+            android:id="@+id/beat_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="start"
+            android:text="Beat "
+            android:textColor="@color/colorPrimary"
             android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/beat_name_txt"
+            app:layout_constraintEnd_toEndOf="@+id/order_total"
+            app:layout_constraintStart_toEndOf="@+id/beat_name_txt"
+            app:layout_constraintTop_toTopOf="@+id/beat_name_txt" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/prod_target_cons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/start_time_view" />
+            app:layout_constraintTop_toBottomOf="@+id/beat_name_txt" >
+
+            <TextView
+                android:id="@+id/outlet_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:gravity="start"
+                android:text="Outlet List"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/outlet_list_recycler"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:visibility="visible"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/outlet_list" />
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/no_data"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/nodata_found"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/outlet_list"
+                app:layout_constraintStart_toStartOf="@+id/outlet_list"
+                app:layout_constraintTop_toBottomOf="@+id/outlet_list" />
+
+            <TextView
+                android:id="@+id/emptyView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="No Results"
+                android:textSize="17dp"
+                android:visibility="gone"
+                android:layout_marginTop="-50dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintTop_toBottomOf="@+id/nodata"
+                app:layout_constraintStart_toStartOf="@+id/outlet_list" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/grey1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:background="@drawable/button_shape1"
+                android:id="@+id/view_pdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="View PDF"
+                android:visibility="gone"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/start_time_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

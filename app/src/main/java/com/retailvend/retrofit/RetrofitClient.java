@@ -20,7 +20,6 @@ public class RetrofitClient {
     private Retrofit retrofit;
 
 
-
     private RetrofitClient() {
 //
 //        OkHttpClient okHttpClient = new OkHttpClient();
@@ -28,7 +27,6 @@ public class RetrofitClient {
 //                .newBuilder()
 //                .followRedirects(false)
 //                .build();
-
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(TEST_URL)

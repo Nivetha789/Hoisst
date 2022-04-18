@@ -179,12 +179,10 @@ public class TodayOutletDelManAdapter extends RecyclerView.Adapter<BaseViewHolde
         public class ViewHolder extends BaseViewHolder {
             @BindView(R.id.company_name)
             TextView company_name;
-            @BindView(R.id.store_name)
-            TextView store_name;
+            @BindView(R.id.address)
+            TextView address;
             @BindView(R.id.invoice)
             TextView invoice;
-            @BindView(R.id.date)
-            TextView date;
             @BindView(R.id.today_outlet)
             ConstraintLayout cardview;
 
@@ -202,16 +200,16 @@ public class TodayOutletDelManAdapter extends RecyclerView.Adapter<BaseViewHolde
 
 //            System.out.println("tesgsg "+salesAgentDataList.get(position));
 
-                String companyName = item.getCompanyName();
-                String storename = item.getStoreName();
+                String companyName = item.getStoreName();
+                String address1 = item.getAddress();
                 String invoice1 = item.getInvoiceNo();
-                String createdate = item.getCreatedate();
+//                String createdate = item.();
                 String randomVal = item.getRandomValue();
 
                 company_name.setText(companyName);
-                store_name.setText(storename);
+                address.setText(address1);
                 invoice.setText( invoice1);
-                date.setText(createdate);
+//                date.setText(createdate);
 
                 cardview.setOnClickListener(new View.OnClickListener() {
                     @Override

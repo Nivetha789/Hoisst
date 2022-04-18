@@ -2,14 +2,6 @@ package com.retailvend.sales;
 
 import static com.retailvend.utills.PaginationListener.PAGE_START;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,20 +18,22 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
-import com.retailvend.collection.CollectionActivity;
 import com.retailvend.model.manageorder.OrderListDatum;
 import com.retailvend.model.manageorder.OrderListModel;
-import com.retailvend.orderList.OrderListActivity;
-import com.retailvend.orderList.OrderListAdapter;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.todayoutlet.CreateOutletOrderActivity;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
 import com.retailvend.utills.SessionManagerSP;
-import com.retailvend.utills.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +51,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
     ImageView leftArrow;
     Toolbar toolbar;
     Menu menu;
-    TextView nodata_txt,emptyView;
+    TextView nodata_txt, emptyView;
     List<OrderListDatum> orderListData;
 
     private int currentPage = PAGE_START;
@@ -73,7 +67,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
     SessionManagerSP sessionManagerSP;
 
     LinearLayout searchLayout;
-    ImageView search_icon,nodata;
+    ImageView search_icon, nodata;
     EditText search;
 
     String searchTxt = "";
@@ -106,7 +100,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
         leftArrow = findViewById(R.id.left_arrow);
         salesRecycler = findViewById(R.id.sales_recyeclerview);
         progress = findViewById(R.id.progress);
-        nodata_txt=findViewById(R.id.nodata_txt);
+        nodata_txt = findViewById(R.id.nodata_txt);
         search = findViewById(R.id.search);
         search_icon = findViewById(R.id.search_icon);
         searchLayout = findViewById(R.id.searchLayout);
@@ -163,7 +157,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    orderListApi(offset, limit,"1");
+                    orderListApi(offset, limit, "1");
 
                 } else {
                     CustomToast.getInstance(SalesActivity.this).showSmallCustomToast("Please check your internet connection");
@@ -193,7 +187,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            orderListApi(offset, limit,"1");
+            orderListApi(offset, limit, "1");
         } else {
             CustomToast.getInstance(SalesActivity.this).showSmallCustomToast("Please check your internet connection");
         }
@@ -209,13 +203,13 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
         salesAdapter.clear();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            orderListApi(offset, limit,"1");
+            orderListApi(offset, limit, "1");
         } else {
             CustomToast.getInstance(SalesActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 
-    public void orderListApi(int offset1, int limit1,String searchType) {
+    public void orderListApi(int offset1, int limit1, String searchType) {
 //        CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
 
@@ -230,7 +224,7 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
         }
 
         Call<OrderListModel> call = RetrofitClient
-                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1,searchTxt);
+                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1, searchTxt);
 
         call.enqueue(new Callback<OrderListModel>() {
             @Override
