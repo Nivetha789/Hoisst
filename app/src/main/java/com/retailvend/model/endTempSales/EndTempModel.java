@@ -15,7 +15,7 @@ public class EndTempModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<EndTempData> data=new ArrayList<>();
+    private List<EndTempData> data = new ArrayList<>();
 
     public Integer getStatus() {
         return status;

@@ -45,7 +45,7 @@ public class BeatTargetAdapter extends RecyclerView.Adapter<BeatTargetAdapter.My
         holder.zone_name.setText(productDataModel.getZoneName());
         holder.target_val.setText(productDataModel.getBeatTargetVal());
         holder.achieve_val.setText(productDataModel.getBeatAchieveVal());
-        holder.achieve_percent_beat_val.setText(productDataModel.getBeatAchievePer().toString());
+        holder.achieve_percent_beat_val.setText(productDataModel.getBeatAchievePer().toString()+"%");
 
 
 //        holder.txt_add_to_cart.setOnClickListener(new View.OnClickListener() {

@@ -1,11 +1,5 @@
 package com.retailvend.sales;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +10,12 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.retailvend.R;
@@ -38,13 +38,11 @@ import retrofit2.Response;
 public class SalesDetailsActivity extends AppCompatActivity {
 
     TextView txt_empty, txt_invoice_details_order, txt_inovoice_details_billed,
-            txt_invoice_details_billed_address, txt_invoice_details_shipped,
-            txt_invoice_details_shipped_address, txt_inoive_details_total_nos,
-            txt_inoive_details_total_kgs, txt_inoive_details_total_price, txt_dis_invoice,
-            txt_invoice_last_bill, txt_invoice_bal_amt, txt_invoice_current_total, txt_store_name,
-            txt_store_ship, hsnCode, tax_val, central_tax_rate, central_tax_amount, state_tax_rate, state_tax_amount,
-            tax_val_total, central_total, state_total, final_hsn_total, amount_in_words, invoice_num, comp_name, comp_address,
-            gst_num, contact_no, state_code, pay_method,order_type,amount,bill_date;
+            txt_invoice_details_billed_address,
+            txt_invoice_details_shipped_address,  txt_dis_invoice,
+            txt_invoice_last_bill, txt_invoice_qty_total, txt_store_name,
+            txt_store_ship,  invoice_num, comp_name, comp_address,
+            gst_num, contact_no, state_code, pay_method, order_type, amount, bill_date,txt_invoice_current_total;
     RecyclerView recyclerView;
     ProgressBar progress;
     NestedScrollView lin_invoice_details_scrollview;
@@ -57,6 +55,10 @@ public class SalesDetailsActivity extends AppCompatActivity {
     String random_value = "";
     Activity activity;
     ImageView left_arrow;
+
+    int qty;
+    double totalPrice;
+    double grandTotalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,27 +99,12 @@ public class SalesDetailsActivity extends AppCompatActivity {
         txt_inovoice_details_billed = findViewById(R.id.txt_inovoice_details_billed);
         txt_invoice_details_billed_address = findViewById(R.id.txt_invoice_details_billed_address);
         txt_invoice_details_shipped_address = findViewById(R.id.txt_invoice_details_shipped_address);
-        txt_inoive_details_total_nos = findViewById(R.id.txt_inoive_details_total_nos);
-        txt_inoive_details_total_kgs = findViewById(R.id.txt_inoive_details_total_kgs);
-        txt_inoive_details_total_price = findViewById(R.id.txt_inoive_details_total_price);
         txt_dis_invoice = findViewById(R.id.txt_dis_invoice);
         txt_invoice_last_bill = findViewById(R.id.txt_invoice_last_bill);
-        txt_invoice_bal_amt = findViewById(R.id.txt_invoice_bal_amt);
         lin_invoice_details_scrollview = findViewById(R.id.lin_invoice_details_scrollview);
         txt_store_name = findViewById(R.id.txt_store_name);
         txt_store_ship = findViewById(R.id.txt_store_ship);
         gst_num = findViewById(R.id.gst_num);
-        hsnCode = findViewById(R.id.hsnCode);
-        tax_val = findViewById(R.id.tax_val);
-        central_tax_rate = findViewById(R.id.central_tax_rate);
-        central_tax_amount = findViewById(R.id.central_tax_amount);
-        state_tax_rate = findViewById(R.id.state_tax_rate);
-        state_tax_amount = findViewById(R.id.state_tax_amount);
-        tax_val_total = findViewById(R.id.tax_val_total);
-        central_total = findViewById(R.id.central_total);
-        state_total = findViewById(R.id.state_total);
-        final_hsn_total = findViewById(R.id.final_hsn_total);
-//        amount_in_words = findViewById(R.id.amount_in_words);
         invoice_num = findViewById(R.id.invoice_num);
         comp_name = findViewById(R.id.comp_name);
         comp_address = findViewById(R.id.comp_address);
@@ -128,6 +115,8 @@ public class SalesDetailsActivity extends AppCompatActivity {
         amount = findViewById(R.id.amount);
         bill_date = findViewById(R.id.bill_date);
         left_arrow = findViewById(R.id.left_arrow);
+        txt_invoice_qty_total = findViewById(R.id.txt_invoice_qty_total);
+        txt_invoice_current_total = findViewById(R.id.txt_invoice_current_total);
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +162,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
                             salesBillDetails = salesDetailsModel.getData().getBillDetails();
                             salesStoreDetails = salesDetailsModel.getData().getStoreDetails();
                             taxDetails = salesDetailsModel.getData().getTaxDetails();
+                            productDetails=salesDetailsModel.getData().getProductDetails();
                             txt_invoice_details_order.setText(salesBillDetails.getOrderNo());
                             txt_store_name.setText(salesBillDetails.getStoreName());
                             txt_invoice_details_billed_address.setText(salesBillDetails.getContactName());
@@ -182,16 +172,29 @@ public class SalesDetailsActivity extends AppCompatActivity {
                             contact_no.setText("Mobile No: " + salesStoreDetails.getMobile());
                             state_code.setText("State Code: " + salesStoreDetails.getStateCode());
                             bill_date.setText("Bill Date: " + salesBillDetails.getCreatedate());
-//                            amount.setText("Amount: " + salesStoreDetails.ge());
-//                            pay_method.setText("Payment Method :"+salesStoreDetails.getpa);
-//                            order_type.setText("Order Type " + salesStoreDetails.get());
-//                        txt_invoice_last_bill.setText(salesDetailsModel.getLastbill());
-//                        txt_invoice_bal_amt.setText("\u20B9 " + salesDetailsModel.getBalance());
-//                            txt_invoice_current_total.setText("\u20B9 " + productDetails.get(0).getPrice());
-//                            for(int i=0; i<taxDetails.size(); i++){
-//                                String hsnCode1 = taxDetails.get(i).getHsnCode();
-//                                hsnCode.setText(hsnCode1);
-//                            }
+
+                            int b = 0;
+                            double a;
+                            for (int i = 0; i < productDetails.size(); i++) {
+                                a = Double.parseDouble(productDetails.get(i).getPrice().trim());
+                                b = Integer.parseInt(productDetails.get(i).getOrderQty().trim());
+                                totalPrice = a * b;
+                                grandTotalPrice += totalPrice;
+                                String units = productDetails.get(i).getUnitVal();
+                                System.out.println("unitsssss " + units);
+//                                txt_inoive_details_total_units.setText(productDetails.ge);
+
+                                System.out.println("totalPrice " + totalPrice);
+                            }
+
+
+                            for (int k = 0; k < productDetails.size(); k++) {
+                                qty += Integer.valueOf(productDetails.get(k).getOrderQty());
+                                System.out.println("qtyyyyyyyy " + qty);
+                            }
+
+                            txt_invoice_current_total.setText("\u20B9 " + grandTotalPrice);
+                            txt_invoice_qty_total.setText(String.valueOf(qty));
 
                             productDetails = salesDetailsModel.getData().getProductDetails();
 

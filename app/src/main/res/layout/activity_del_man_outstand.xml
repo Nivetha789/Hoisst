@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:text="Outstand"
+                android:text="Outstand Details"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"
                 android:gravity="center"

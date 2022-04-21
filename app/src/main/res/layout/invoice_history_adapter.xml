@@ -51,11 +51,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="@font/quicksand_semi_bold"
-            android:gravity="center"
+            android:gravity="start"
             android:text="Data"
+            android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@+id/invoice_amount"
             app:layout_constraintStart_toEndOf="@+id/linear_circle"
             app:layout_constraintTop_toTopOf="@+id/linear_circle" />
 

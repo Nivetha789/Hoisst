@@ -29,7 +29,6 @@ import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.changePass.ChangePasswordActivity;
 import com.retailvend.collection.CollectionActivity;
 import com.retailvend.deliveryman.InvoiceList.InvoiceListActivity;
-import com.retailvend.deliveryman.deliveryDetails.DeliveryDetailsActivity;
 import com.retailvend.deliveryman.outlet.DelManTodayOutletsActivity;
 import com.retailvend.deliveryman.outstand.DelManOutstandActivity;
 import com.retailvend.endTemp.EndTempActivity;
@@ -38,7 +37,6 @@ import com.retailvend.model.dashboard.SalesDashboardCountModel;
 import com.retailvend.orderList.OrderListActivity;
 import com.retailvend.outstand.OutstandingActivity;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.sales.SalesActivity;
 import com.retailvend.startTemp.StartTempActivity;
 import com.retailvend.targetDetails.TargetDetailsActivity;
 import com.retailvend.todayoutlet.TodayOutletActivity;
@@ -239,10 +237,10 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (distributor_id.equals("0")) {
-                    Intent salesIntent = new Intent(DashboardActivity.this, SalesActivity.class);
+                    Intent salesIntent = new Intent(DashboardActivity.this, OrderListActivity.class);
                     startActivity(salesIntent);
                 } else {
-                    Intent delIntent = new Intent(DashboardActivity.this, DeliveryDetailsActivity.class);
+                    Intent delIntent = new Intent(DashboardActivity.this, InvoiceListActivity.class);
                     startActivity(delIntent);
                 }
             }
@@ -392,6 +390,18 @@ public class DashboardActivity extends AppCompatActivity {
         super.onResume();
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            countDetailsApi();
+        } else {
+            CustomToast.getInstance(DashboardActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 

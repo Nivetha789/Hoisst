@@ -3,16 +3,6 @@ package com.retailvend.endTemp;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,10 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,23 +26,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.endTempSales.EndTempData;
 import com.retailvend.model.endTempSales.EndTempModel;
-import com.retailvend.model.endTempSales.EndTempOutletList;
+import com.retailvend.model.endTempSales.EndTempOutlet;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.startTemp.StartTempActivity;
-import com.retailvend.targetDetails.BeatTargetAdapter;
-import com.retailvend.targetDetails.TargetDetailsActivity;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.SessionManagerSP;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,11 +61,11 @@ public class EndTempActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     Menu menu;
-    TextView mTitle, name, date, old_outlet, beat_name, total_outlet, new_outlet, start_time,
-                outlet_order,count_order,order_total;
+    TextView mTitle, name, date, beat_name, total_outlet, new_outlet, start_time,
+            outlet_order, count_order, order_total, close_time;
     ConstraintLayout main_constrain;
     List<EndTempData> endTempData;
-    List<EndTempOutletList> endTempOutletList;
+    List<EndTempOutlet> endTempOutletList;
     SessionManagerSP sessionManagerSP;
     ImageView back_arrow;
     RecyclerView outlet_list_recycler;
@@ -90,14 +83,14 @@ public class EndTempActivity extends AppCompatActivity {
     public static final String TESS_DATA = "/Hoisst";
     String empname = "";
     String dateRes = "";
-    String beatRes="";
-    String totalOutlet="";
-    String oldOutletRes="";
-    String newOutletRes="";
-    String closeTimeRes="";
-    String orderOutletRes="";
-    String orderCountRes="";
-    String orderTotalRes="";
+    String beatRes = "";
+    String totalOutlet = "";
+    String startTime1 = "";
+    String newOutletRes = "";
+    String closeTimeRes = "";
+    String orderOutletRes = "";
+    String orderCountRes = "";
+    String orderTotalRes = "";
     Activity activity;
     TextView view_pdf;
     Bitmap bmp, scaledbmp;
@@ -140,7 +133,7 @@ public class EndTempActivity extends AppCompatActivity {
             date = findViewById(R.id.date);
             beat_name = findViewById(R.id.beat_name);
             total_outlet = findViewById(R.id.total_outlet_end);
-            old_outlet =findViewById(R.id.old_outlet);
+            close_time = findViewById(R.id.close_time);
             new_outlet = findViewById(R.id.new_outlet);
             mTitle = findViewById(R.id.toolbar_title);
             main_constrain = findViewById(R.id.main_constrain);
@@ -157,7 +150,7 @@ public class EndTempActivity extends AppCompatActivity {
             endTempData = new ArrayList<>();
             endTempOutletList = new ArrayList<>();
 
-            mTitle.setText("Day End Details");
+            mTitle.setText("End Temp Details");
 
             view_pdf.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -334,11 +327,11 @@ public class EndTempActivity extends AppCompatActivity {
                         nodata.setVisibility(View.GONE);
                         outlet_list_recycler.setVisibility(View.VISIBLE);
                         endTempData = detailsModel.getData();
-                        endTempOutletList=endTempData.get(0).getOutletList();
+                        endTempOutletList = endTempData.get(0).getOutletList();
                         empname = endTempData.get(0).getName();
                         dateRes = endTempData.get(0).getDate();
                         totalOutlet = endTempData.get(0).getTotalOutlet();
-                        oldOutletRes = endTempData.get(0).getOldOutlet();
+//                        startTime1 = endTempData.get(0).ti();
                         newOutletRes = endTempData.get(0).getNewOutlet();
                         closeTimeRes = endTempData.get(0).getCloseTime();
                         orderOutletRes = endTempData.get(0).getOrderOutlet();
@@ -349,7 +342,7 @@ public class EndTempActivity extends AppCompatActivity {
                         date.setText(dateRes);
                         beat_name.setText(beatRes);
                         total_outlet.setText(totalOutlet);
-                        old_outlet.setText(oldOutletRes);
+                        close_time.setText(startTime1);
                         new_outlet.setText(newOutletRes);
                         start_time.setText(closeTimeRes);
                         outlet_order.setText(orderOutletRes);
@@ -396,7 +389,7 @@ public class EndTempActivity extends AppCompatActivity {
     }
 
     private void takeScreenshot() {
-        String  mPath="";
+        String mPath = "";
         Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
 
@@ -405,11 +398,9 @@ public class EndTempActivity extends AppCompatActivity {
 //            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
-                mPath= getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DCIM) + "/" + now + "DayEnd.jpeg";
-            }
-            else
-            {
-                mPath= Environment.getExternalStorageDirectory().toString() + "/" + now + "DayEnd.jpeg";
+                mPath = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DCIM) + "/" + now + "DayEnd.jpeg";
+            } else {
+                mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + "DayEnd.jpeg";
             }
 
             // create bitmap screen capture

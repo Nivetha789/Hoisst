@@ -117,7 +117,7 @@ public class StartTempActivity extends AppCompatActivity {
 
             name = findViewById(R.id.name);
             date = findViewById(R.id.date);
-            beat = findViewById(R.id.beat);
+            beat = findViewById(R.id.beat_name);
             total_outlet = findViewById(R.id.total_outlet);
             new_outlet = findViewById(R.id.new_outlet);
             mTitle = findViewById(R.id.toolbar_title);
@@ -128,7 +128,7 @@ public class StartTempActivity extends AppCompatActivity {
             sessionManagerSP = new SessionManagerSP(StartTempActivity.this);
             startTempData = new ArrayList<>();
 
-            mTitle.setText("Day Start Details");
+            mTitle.setText("Start Temp Details");
 
             view_pdf.setOnClickListener(new View.OnClickListener() {
                 @Override

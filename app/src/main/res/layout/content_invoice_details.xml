@@ -678,205 +678,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_weight="6"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3.2">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:gravity="center|right"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="Total"
-                            android:textColor="@color/black"
-                            android:textSize="13dp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.8">
-
-                        <TextView
-                            android:id="@+id/txt_inoive_details_total_nos"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="0"
-                            android:textColor="@color/black"
-                            android:textSize="13dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.8">
-
-                        <TextView
-                            android:id="@+id/txt_inoive_details_total_kgs"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="0"
-                            android:textColor="@color/black"
-                            android:textSize="13dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.2">
-
-                        <TextView
-                            android:id="@+id/txt_inoive_details_total_price"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="0"
-                            android:textColor="@color/black"
-                            android:textSize="13dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="#40000000"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_weight="6"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4.8">
-
-                        <TextView
-                            android:id="@+id/txt_invoice_last_bill"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:gravity="center|right"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="last bill"
-                            android:textColor="@color/black"
-                            android:textSize="13dp" />
-
-                    </LinearLayout>
-
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.2">
-
-                        <TextView
-                            android:id="@+id/txt_invoice_bal_amt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="0"
-                            android:textColor="@color/black"
-                            android:textSize="13dp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="#40000000" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_weight="8"
+                    android:visibility="visible"
+                    android:layout_weight="15"
                     android:orientation="horizontal">
 
                     <View
@@ -884,8 +687,61 @@
                         android:layout_height="match_parent"
                         android:background="#40000000" />
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="13">
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="center|right"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="Qty"
+                            android:fontFamily="@font/quicksand_semi_bold"
+                            android:textColor="@color/black"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#40000000" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:id="@+id/txt_invoice_qty_total"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="0"
+                            android:fontFamily="@font/quicksand_regular"
+                            android:textColor="@color/black"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#40000000" />
+
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -896,533 +752,37 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_weight="8"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="#40000000" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="20dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:gravity="center|left"
-                        android:paddingLeft="15dp"
-                        android:text="Tax Details :"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/lin_box"
-                        android:orientation="horizontal"
-                        android:weightSum="13">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="3">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingTop="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="HSN/SAC"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="14dp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="#40000000" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="2">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingTop="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="Taxable Value"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="13dp" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="#40000000" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="3"
-                            android:orientation="vertical"
-                            android:weightSum="2">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingTop="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="Central Tax"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="13dp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="#40000000" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/quicksand_medium"
-                                    android:gravity="center"
-                                    android:paddingLeft="5dp"
-                                    android:paddingRight="5dp"
-                                    android:text="Rate"
-                                    android:textColor="@color/black"
-                                    android:textSize="11dp" />
-
-                                <View
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="#40000000" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/quicksand_medium"
-                                    android:gravity="center"
-                                    android:paddingLeft="5dp"
-                                    android:paddingTop="5dp"
-                                    android:paddingRight="5dp"
-                                    android:paddingBottom="5dp"
-                                    android:text="Amount"
-                                    android:textColor="@color/black"
-                                    android:textSize="11dp" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="#40000000" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="3"
-                            android:orientation="vertical"
-                            android:weightSum="2">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingTop="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="State Tax"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="13dp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="#40000000" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/quicksand_medium"
-                                    android:gravity="center"
-                                    android:paddingLeft="5dp"
-                                    android:paddingRight="5dp"
-                                    android:text="Rate"
-                                    android:textColor="@color/black"
-                                    android:textSize="11dp" />
-
-                                <View
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="#40000000" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/quicksand_medium"
-                                    android:gravity="center"
-                                    android:paddingLeft="5dp"
-                                    android:paddingTop="5dp"
-                                    android:paddingRight="5dp"
-                                    android:paddingBottom="5dp"
-                                    android:text="Amount"
-                                    android:textColor="@color/black"
-                                    android:textSize="11dp" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="#40000000" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="2">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingTop="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="Total Tax Amount"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="13dp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    android:weightSum="13">
+                    android:layout_weight="15"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#40000000" />
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3">
+                        android:layout_height="match_parent"
+                        android:layout_weight="13">
 
-                        <View
-                            android:layout_width="1dp"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#40000000" />
-
-                        <TextView
-                            android:id="@+id/hsnCode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="123"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2">
-
-                        <TextView
-                            android:id="@+id/tax_val"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="123"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <TextView
-                                android:id="@+id/central_tax_rate"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:text="2.50%"
-                                android:textColor="@color/black"
-                                android:textSize="11dp" />
-
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="#40000000" />
-
-                            <TextView
-                                android:id="@+id/central_tax_amount"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingTop="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="15.69"
-                                android:textColor="@color/black"
-                                android:textSize="11dp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <TextView
-                                android:id="@+id/state_tax_rate"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:text="2.50%"
-                                android:textColor="@color/black"
-                                android:textSize="11dp" />
-
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="#40000000" />
-
-                            <TextView
-                                android:id="@+id/state_tax_amount"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingTop="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="15.96"
-                                android:textColor="@color/black"
-                                android:textSize="11dp" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#40000000" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tax_amount_total"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="31.92"
-                            android:textColor="@color/black"
-                            android:textSize="10dp" />
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="#40000000" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/lin_box"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    android:weightSum="13">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="end"
+                            android:gravity="center|right"
                             android:paddingLeft="5dp"
                             android:paddingTop="5dp"
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
                             android:text="Total"
                             android:textColor="@color/black"
-                            android:textSize="12dp" />
+                            android:fontFamily="@font/quicksand_semi_bold"
+                            android:textSize="13dp" />
+
                     </LinearLayout>
+
 
                     <View
                         android:layout_width="1dp"
@@ -1432,163 +792,37 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="2">
 
                         <TextView
-                            android:id="@+id/tax_val_total"
+                            android:id="@+id/txt_invoice_current_total"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:fontFamily="@font/quicksand_bold"
                             android:gravity="center"
                             android:paddingLeft="5dp"
                             android:paddingTop="5dp"
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
-                            android:text="123"
+                            android:text="0"
+                            android:fontFamily="@font/quicksand_regular"
                             android:textColor="@color/black"
-                            android:textSize="12dp" />
-
+                            android:textSize="13dp" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:text=""
-                                android:textColor="@color/black"
-                                android:textSize="11dp" />
-
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="#40000000" />
-
-                            <TextView
-                                android:id="@+id/central_total"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/quicksand_bold"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingTop="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="15.69"
-                                android:textColor="@color/black"
-                                android:textSize="12dp" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:text=""
-                                android:textColor="@color/black"
-                                android:textSize="11dp" />
-
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="#40000000" />
-
-                            <TextView
-                                android:id="@+id/state_total"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/quicksand_bold"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingTop="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="15.96"
-                                android:textColor="@color/black"
-                                android:textSize="12dp" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#40000000" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#40000000" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_weight="2">
-
-                        <TextView
-                            android:id="@+id/final_hsn_total"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/quicksand_bold"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="31.92"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
-                    </LinearLayout>
 
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="#40000000" />
 
             </LinearLayout>
 

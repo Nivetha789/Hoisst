@@ -335,7 +335,8 @@ public interface Api {
             @Field("description") String description,
             @Field("bank_name") String bank_name,
             @Field("cheque_no") String cheque_no,
-            @Field("entry_type") String entry_type
+            @Field("entry_type") String entry_type,
+            @Field("entry_date") String entry_date
     );
 
     //Outstand List

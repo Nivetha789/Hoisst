@@ -1,6 +1,8 @@
 package com.retailvend.deliveryman.InvoiceList;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.retailvend.R;
 import com.retailvend.model.invoiceListModel.InvoiceListDatum;
 import com.retailvend.model.manageorder.OrderListDatum;
+import com.retailvend.sales.SalesDetailsActivity;
 import com.retailvend.utills.BaseViewHolder;
 
 import java.util.List;
@@ -108,6 +111,8 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         TextView date;
         @BindView(R.id.address)
         TextView address;
+        @BindView(R.id.order_status)
+        TextView order_status;
         @BindView(R.id.cardview)
         CardView cardview;
 
@@ -125,18 +130,33 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
 //            System.out.println("tesgsg "+salesAgentDataList.get(position));
 
-//            order_status.setText(item.getOrderStatus());
-            com_name.setText(item.getCompanyName());
+//            String order_status1=item.();
+//            if(order_status1.equals("1")){
+//                order_status.setText("Success");
+//                order_status.setTextColor(Color.parseColor("#37AC06"));
+//            }else if(order_status1.equals("2")){
+//                order_status.setText("Processing");
+//                order_status.setTextColor(Color.parseColor("#E0B70C"));
+//            }else if(order_status1.equals("8")){
+//                order_status.setText("Cancel");
+//                order_status.setTextColor(Color.parseColor("#CC1212"));
+//            }else if(order_status1.equals("7")){
+//                order_status.setText("Completed");
+//                order_status.setTextColor(Color.parseColor("#309306"));
+//            }
+            com_name.setText(item.getStoreName());
             invoice_num.setText(item.getInvoiceNo());
             date.setText(item.getCreatedate());
             address.setText(item.getAddress());
 
-//            cardview.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    ((ProductNameActivity) activity).updateProdName(item.getProductName(), item.getProductId(), item.getGstVal(), item.getHsnCode());
-//                }
-//            });
+            cardview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Intent salesDetailsIntent = new Intent(activity, SalesDetailsActivity.class);
+//                    salesDetailsIntent.putExtra("random_value",item.getRandomValue());
+//                    activity.startActivity(salesDetailsIntent);
+                    }
+            });
         }
     }
 

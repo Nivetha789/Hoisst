@@ -44,7 +44,7 @@ public class ProductTargetAdapter extends RecyclerView.Adapter<ProductTargetAdap
         holder.prod_name.setText(productDataModel.getDescription());
         holder.target_val.setText(productDataModel.getPdtTargetVal());
         holder.achieve_val.setText(productDataModel.getPdtAchieveVal());
-        holder.achieve_percent_val.setText(productDataModel.getPdtAchievePer().toString());
+        holder.achieve_percent_val.setText(productDataModel.getPdtAchievePer().toString()+"%");
 
 
 //        holder.txt_add_to_cart.setOnClickListener(new View.OnClickListener() {

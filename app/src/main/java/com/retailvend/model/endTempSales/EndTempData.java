@@ -40,7 +40,7 @@ public class EndTempData {
     private String closeTime;
     @SerializedName("outlet_list")
     @Expose
-    private List<EndTempOutletList> outletList = new ArrayList<>();
+    private List<EndTempOutlet> outletList = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -122,11 +122,11 @@ public class EndTempData {
         this.closeTime = closeTime;
     }
 
-    public List<EndTempOutletList> getOutletList() {
+    public List<EndTempOutlet> getOutletList() {
         return outletList;
     }
 
-    public void setOutletList(List<EndTempOutletList> outletList) {
+    public void setOutletList(List<EndTempOutlet> outletList) {
         this.outletList = outletList;
     }
 }

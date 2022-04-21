@@ -105,8 +105,8 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<BaseViewHolder>  {
     public class ViewHolder extends BaseViewHolder {
         @BindView(R.id.shop_title)
         TextView shopName;
-        @BindView(R.id.contact_name)
-        TextView contactNamee;
+        @BindView(R.id.address)
+        TextView address;
         @BindView(R.id.contact_number)
         TextView contactNum;
         @BindView(R.id.today_outlet)
@@ -127,12 +127,12 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<BaseViewHolder>  {
 //            System.out.println("tesgsg "+salesAgentDataList.get(position));
 
             String companyName = item.getCompanyName();
-            String contactName = item.getContactName();
+            String address1 = item.getAddress();
             String companyNumber = item.getMobile();
 
             System.out.println("tesgsg "+companyName);
             shopName.setText(companyName);
-            contactNamee.setText(contactName);
+            address.setText(address1);
             contactNum.setText(companyNumber);
 
             cardview.setOnClickListener(new View.OnClickListener() {

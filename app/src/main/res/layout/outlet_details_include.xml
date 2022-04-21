@@ -1,375 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/order_no_txt"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/order_data_cons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="Order No"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/email_view"
-        app:layout_constraintEnd_toStartOf="@+id/order_no"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/order_no"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_semi_bold"
-        android:gravity="end"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/order_no_txt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/order_no_txt"
-        app:layout_constraintTop_toTopOf="@+id/order_no_txt" />
-
-    <View
-        android:id="@+id/email_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/light_dark"
-        app:layout_constraintBottom_toTopOf="@+id/order_date_txt"
-        app:layout_constraintLeft_toLeftOf="@+id/order_no_txt"
-        app:layout_constraintRight_toRightOf="@+id/order_no"
-        app:layout_constraintTop_toBottomOf="@+id/order_no_txt" />
-
-    <TextView
-        android:id="@+id/order_date_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="Order Date"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/mobile_no_view"
-        app:layout_constraintEnd_toStartOf="@+id/order_date"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_view"
-        tools:layout_editor_absoluteY="30dp" />
+        app:layout_constraintTop_toTopOf="parent" >
 
-    <TextView
-        android:id="@+id/order_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_semi_bold"
-        android:gravity="end"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/order_date_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/order_date_txt"
-        app:layout_constraintTop_toTopOf="@+id/order_date_txt" />
+        <TextView
+            android:id="@+id/order_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:gravity="start"
+            android:text="Order Details"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/mobile_no_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/light_dark"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/dist_name_txt"
-        app:layout_constraintLeft_toLeftOf="@+id/order_date_txt"
-        app:layout_constraintRight_toRightOf="@+id/order_date"
-        app:layout_constraintTop_toBottomOf="@+id/order_date_txt" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/order_data_recycler"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/order_data" />
 
-    <TextView
-        android:id="@+id/dist_name_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="Distributor Name"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/address_1_view"
-        app:layout_constraintEnd_toStartOf="@+id/dist_name"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mobile_no_view"
-        tools:layout_editor_absoluteY="30dp" />
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/nodata"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/nodata_found"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/order_data"
+            app:layout_constraintStart_toStartOf="@+id/order_data"
+            app:layout_constraintTop_toBottomOf="@+id/order_data" />
 
-    <TextView
-        android:id="@+id/dist_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_semi_bold"
-        android:gravity="end"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/dist_name_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dist_name_txt"
-        app:layout_constraintTop_toTopOf="@+id/dist_name_txt" />
+        <TextView
+            android:id="@+id/emptyView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="No Results"
+            android:textSize="17dp"
+            android:visibility="gone"
+            android:layout_marginTop="-50dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toBottomOf="@+id/nodata"
+            app:layout_constraintStart_toStartOf="@+id/order_data" />
 
-    <View
-        android:id="@+id/address_1_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/light_dark"
-        app:layout_constraintLeft_toLeftOf="@+id/dist_name_txt"
-        app:layout_constraintRight_toRightOf="@+id/dist_name"
-        app:layout_constraintTop_toBottomOf="@+id/dist_name_txt" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/grey1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <TextView
-        android:id="@+id/bill_no_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="Bill No"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/address_1_view"
-        app:layout_constraintEnd_toStartOf="@+id/bill_no"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/billno_view"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/bill_no"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_semi_bold"
-        android:gravity="end"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/bill_no_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/bill_no_txt"
-        app:layout_constraintTop_toTopOf="@+id/bill_no_txt" />
-
-    <View
-        android:id="@+id/billno_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/light_dark"
-        app:layout_constraintLeft_toLeftOf="@+id/bill_no_txt"
-        app:layout_constraintRight_toRightOf="@+id/bill_no"
-        app:layout_constraintTop_toBottomOf="@+id/bill_no_txt" />
-
-    <TextView
-        android:id="@+id/amount_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="Amount"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/amount_view"
-        app:layout_constraintEnd_toStartOf="@+id/bill_no"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/billno_view"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/amount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_semi_bold"
-        android:gravity="end"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/amount_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/amount_txt"
-        app:layout_constraintTop_toTopOf="@+id/amount_txt" />
-
-    <View
-        android:id="@+id/amount_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/light_dark"
-        app:layout_constraintLeft_toLeftOf="@+id/amount_txt"
-        app:layout_constraintRight_toRightOf="@+id/amount"
-        app:layout_constraintTop_toBottomOf="@+id/amount_txt" />
-
-    <TextView
-        android:id="@+id/discount_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="Discount"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toStartOf="@+id/amount"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/amount_view"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/discount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_semi_bold"
-        android:gravity="end"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/discount_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/discount_txt"
-        app:layout_constraintTop_toTopOf="@+id/discount_txt" />
-
-    <View
-        android:id="@+id/discount_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/light_dark"
-        app:layout_constraintLeft_toLeftOf="@+id/discount_txt"
-        app:layout_constraintRight_toRightOf="@+id/discount"
-        app:layout_constraintTop_toBottomOf="@+id/discount_txt" />
-
-    <TextView
-        android:id="@+id/amount_type_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="Amount Type"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toStartOf="@+id/amount_type"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/discount_view"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/amount_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_semi_bold"
-        android:gravity="end"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/amount_type_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/amount_type_txt"
-        app:layout_constraintTop_toTopOf="@+id/amount_type_txt" />
-
-    <View
-        android:id="@+id/amount_type_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/light_dark"
-        app:layout_constraintLeft_toLeftOf="@+id/amount_type_txt"
-        app:layout_constraintRight_toRightOf="@+id/amount_type"
-        app:layout_constraintTop_toBottomOf="@+id/amount_type_txt" />
-
-    <TextView
-        android:id="@+id/collected_type_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="start"
-        android:text="Collected Type"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toStartOf="@+id/collected_type"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/amount_type_view"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/collected_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/quicksand_semi_bold"
-        android:gravity="end"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/collected_type_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/collected_type_txt"
-        app:layout_constraintTop_toTopOf="@+id/collected_type_txt" />
-
-    <View
-        android:id="@+id/collected_type_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/light_dark"
-        app:layout_constraintLeft_toLeftOf="@+id/collected_type_txt"
-        app:layout_constraintRight_toRightOf="@+id/collected_type"
-        app:layout_constraintTop_toBottomOf="@+id/collected_type_txt" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

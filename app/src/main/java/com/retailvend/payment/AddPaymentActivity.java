@@ -79,6 +79,8 @@ public class AddPaymentActivity extends AppCompatActivity {
     SessionManagerSP sessionManagerSP;
     Typeface font;
 
+    String currentDate="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,7 +203,7 @@ public class AddPaymentActivity extends AppCompatActivity {
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); //Date and time
-        String currentDate = sdf.format(c.getTime());
+        currentDate = sdf.format(c.getTime());
         txt_add_payment_date.setText(currentDate);
 
         txt_add_payment_date.setOnClickListener(new View.OnClickListener() {
@@ -286,7 +288,7 @@ public class AddPaymentActivity extends AppCompatActivity {
 
 
         Call<AddPaymentModel> call = RetrofitClient
-                .getInstance().getApi().addPayment("_addOutletPayment", assignId, pay_id, employeeId, distributorID, outletId, amt, discount, amt_type, "", bankName, chequeNo, "2");
+                .getInstance().getApi().addPayment("_addOutletPayment", assignId, pay_id, employeeId, distributorID, outletId, amt, discount, amt_type, "", bankName, chequeNo, "2",currentDate);
 
 
         call.enqueue(new Callback<AddPaymentModel>() {

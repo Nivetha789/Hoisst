@@ -1,9 +1,12 @@
 package com.retailvend.orderList;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
 import com.retailvend.model.manageorder.OrderListDatum;
+import com.retailvend.sales.SalesDetailsActivity;
 import com.retailvend.todayoutlet.ProductNameActivity;
 import com.retailvend.todayoutlet.ProductNameAdapter;
 import com.retailvend.utills.BaseViewHolder;
@@ -103,16 +107,18 @@ public class OrderListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public class ViewHolder extends BaseViewHolder {
         @BindView(R.id.order_status)
         TextView order_status;
-        @BindView(R.id.con_name)
-        TextView con_name;
-        @BindView(R.id.date)
-        TextView date;
         @BindView(R.id.order_num)
         TextView order_num;
+        @BindView(R.id.date)
+        TextView date;
         @BindView(R.id.store_name)
         TextView store_name;
+        @BindView(R.id.order_address)
+        TextView order_address;
         @BindView(R.id.cardview)
         CardView cardview;
+        @BindView(R.id.status_img)
+        ImageView status_img;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -128,18 +134,33 @@ public class OrderListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
 //            System.out.println("tesgsg "+salesAgentDataList.get(position));
 
-//            order_status.setText(item.getOrderStatus());
-            con_name.setText(item.getContactName());
+
+            String order_status1=item.getOrderStatus();
+            if(order_status1.equals("1")){
+                order_status.setText("Success");
+                order_status.setTextColor(Color.parseColor("#37AC06"));
+            }else if(order_status1.equals("2")){
+                order_status.setText("Processing");
+                order_status.setTextColor(Color.parseColor("#E0B70C"));
+            }else if(order_status1.equals("8")){
+                order_status.setText("Cancel");
+                order_status.setTextColor(Color.parseColor("#CC1212"));
+            }else if(order_status1.equals("7")){
+                order_status.setText("Completed");
+                order_status.setTextColor(Color.parseColor("#309306"));
+            }
+            order_address.setText(item.getStoreAddress());
             date.setText(item.getOrdered());
             order_num.setText(item.getOrderNo());
             store_name.setText(item.getStoreName());
 
-//            cardview.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    ((ProductNameActivity) activity).updateProdName(item.getProductName(), item.getProductId(), item.getGstVal(), item.getHsnCode());
-//                }
-//            });
+            cardview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent salesDetailsIntent = new Intent(activity, SalesDetailsActivity.class);
+                    salesDetailsIntent.putExtra("random_value",item.getRandomValue());
+                    activity.startActivity(salesDetailsIntent);                }
+            });
         }
     }
 

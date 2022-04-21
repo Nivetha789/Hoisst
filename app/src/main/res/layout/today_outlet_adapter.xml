@@ -89,13 +89,14 @@
                 app:layout_constraintTop_toTopOf="@+id/circle_bg" />
 
             <TextView
-                android:id="@+id/contact_name"
+                android:id="@+id/address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/quicksand_medium"
                 android:gravity="start"
-                android:text="Sai"
+                android:text=""
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@+id/shop_title"
@@ -109,14 +110,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="15dp"
-                android:fontFamily="@font/quicksand_medium"
+                android:fontFamily="@font/quicksand_semi_bold"
                 android:gravity="center"
                 android:text="9195667788"
-                android:textColor="@color/grey"
+                android:textColor="@color/colorAccent"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/shop_title"
-                app:layout_constraintTop_toBottomOf="@+id/contact_name" />
+                app:layout_constraintTop_toBottomOf="@+id/address" />
 
             <TextView
                 android:id="@+id/check_in"

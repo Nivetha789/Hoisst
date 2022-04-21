@@ -168,8 +168,8 @@ public class OutstandingAdapter extends RecyclerView.Adapter<BaseViewHolder>  {
         TextView txt_name;
         @BindView(R.id.txt_avai_no)
         TextView txt_avai_no;
-        @BindView(R.id.contact_name)
-        TextView contact_name;
+        @BindView(R.id.address)
+        TextView address;
         @BindView(R.id.mob_no)
         TextView contact_number;
         @BindView(R.id.bal_amnt)
@@ -197,7 +197,7 @@ public class OutstandingAdapter extends RecyclerView.Adapter<BaseViewHolder>  {
             txt_avai_no.setText("₹ 0" );
         }
         txt_name.setText(item.getCompanyName());
-        contact_name.setText(item.getContactName());
+        address.setText(item.getAddress());
         contact_number.setText(item.getMobile());
         bal_amnt.setText("₹ 0");
 

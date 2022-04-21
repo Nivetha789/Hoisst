@@ -17,6 +17,9 @@ public class OrderListDatum {
     @SerializedName("store_name")
     @Expose
     private String storeName;
+    @SerializedName("store_address")
+    @Expose
+    private String storeAddress;
     @SerializedName("contact_name")
     @Expose
     private String contactName;
@@ -29,15 +32,24 @@ public class OrderListDatum {
     @SerializedName("_processing")
     @Expose
     private String processing;
+    @SerializedName("_packing")
+    @Expose
+    private String packing;
     @SerializedName("_shiped")
     @Expose
     private String shiped;
-    @SerializedName("_canceled")
+    @SerializedName("_invoice")
     @Expose
-    private String canceled;
+    private String invoice;
     @SerializedName("_delivery")
     @Expose
     private String delivery;
+    @SerializedName("_complete")
+    @Expose
+    private String complete;
+    @SerializedName("_canceled")
+    @Expose
+    private String canceled;
     @SerializedName("random_value")
     @Expose
     private String randomValue;
@@ -83,6 +95,14 @@ public class OrderListDatum {
         this.storeName = storeName;
     }
 
+    public String getStoreAddress() {
+        return storeAddress;
+    }
+
+    public void setStoreAddress(String storeAddress) {
+        this.storeAddress = storeAddress;
+    }
+
     public String getContactName() {
         return contactName;
     }
@@ -115,6 +135,14 @@ public class OrderListDatum {
         this.processing = processing;
     }
 
+    public String getPacking() {
+        return packing;
+    }
+
+    public void setPacking(String packing) {
+        this.packing = packing;
+    }
+
     public String getShiped() {
         return shiped;
     }
@@ -123,12 +151,12 @@ public class OrderListDatum {
         this.shiped = shiped;
     }
 
-    public String getCanceled() {
-        return canceled;
+    public String getInvoice() {
+        return invoice;
     }
 
-    public void setCanceled(String canceled) {
-        this.canceled = canceled;
+    public void setInvoice(String invoice) {
+        this.invoice = invoice;
     }
 
     public String getDelivery() {
@@ -137,6 +165,22 @@ public class OrderListDatum {
 
     public void setDelivery(String delivery) {
         this.delivery = delivery;
+    }
+
+    public String getComplete() {
+        return complete;
+    }
+
+    public void setComplete(String complete) {
+        this.complete = complete;
+    }
+
+    public String getCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(String canceled) {
+        this.canceled = canceled;
     }
 
     public String getRandomValue() {

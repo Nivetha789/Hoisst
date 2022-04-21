@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:text="Today Outlets"
+                android:text="Today's Outlets"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"
                 android:gravity="center"

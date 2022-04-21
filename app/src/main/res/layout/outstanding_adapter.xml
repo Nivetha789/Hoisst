@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:weightSum="4">
+                android:weightSum="2">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -76,20 +76,21 @@
                         android:singleLine="true"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/quicksand_medium"
-                        android:text="Contact Name "
+                        android:text="Address "
                         android:textFontWeight="600"
                         android:textColor="#802F3145"
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/contact_name"
+                        android:id="@+id/address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:fontFamily="@font/quicksand_medium"
+                        android:fontFamily="@font/quicksand_semi_bold"
                         android:gravity="start"
                         android:text="-"
                         android:paddingLeft="20dp"
+                        android:paddingRight="8dp"
                         android:singleLine="true"
                         android:textFontWeight="600"
                         android:textColor="@color/colorPrimary"
@@ -119,7 +120,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:fontFamily="@font/quicksand_medium"
+                        android:fontFamily="@font/opensans_semibold"
                         android:gravity="start"
                         android:text="-"
                         android:layout_weight="1"
@@ -127,49 +128,37 @@
                         android:singleLine="true"
                         android:textFontWeight="600"
                         android:layout_marginBottom="15dp"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toStartOf="@+id/circle_bg"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/shop_title"
                         app:layout_constraintTop_toBottomOf="@+id/shop_title" />
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|right"
-                        android:orientation="vertical"
-                      >
+                        android:orientation="horizontal"
+                        android:weightSum="4"
+                        android:layout_marginBottom="10dp"
+                        >
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="bottom|center"
-                            android:gravity="bottom|center"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_weight="2"
+                            android:layout_marginBottom="8dp"
                             android:orientation="vertical">
-
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center|right"
-                                android:paddingLeft="10dp"
+                                android:gravity="start"
+                                android:paddingStart="20dp"
                                 android:paddingBottom="2dp"
                                 android:layout_marginEnd="8dp"
                                 android:singleLine="true"
-                                android:layout_marginTop="4dp"
                                 android:textFontWeight="600"
                                 android:fontFamily="@font/quicksand_medium"
                                 android:text="Available Limit "
@@ -180,67 +169,67 @@
                                 android:id="@+id/txt_avai_no"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:layout_marginEnd="8dp"
-                                android:paddingLeft="20dp"
-                                android:paddingEnd="2dp"
-                                android:fontFamily="@font/quicksand_bold"
-                                android:singleLine="true"
-                                android:text="-"
-                                android:textColor="#2f3145"
-                                android:textSize="14dp" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom|center"
-                        android:layout_marginTop="8dp"
-                        android:layout_gravity="right">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom|end"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="vertical">
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center|right"
-                                android:paddingLeft="10dp"
-                                android:paddingBottom="2dp"
-                                android:layout_marginEnd="8dp"
-                                android:singleLine="true"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:text="Balance Amount "
-                                android:textColor="#802F3145"
-                                android:textSize="12dp"
-                                android:textFontWeight="600"
-                                />
-
-                            <TextView
-                                android:id="@+id/bal_amnt"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="end"
+                                android:gravity="start"
                                 android:layout_marginEnd="8dp"
                                 android:paddingLeft="20dp"
                                 android:paddingEnd="2dp"
                                 android:fontFamily="@font/quicksand_semi_bold"
                                 android:singleLine="true"
-                                android:text="₹ 0"
+                                android:text="-"
                                 android:textColor="@color/greenDark"
                                 android:textSize="14sp" />
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom|center"
+                            android:layout_weight="2"
+                            android:layout_gravity="right">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:layout_gravity="end"
+                                android:gravity="end"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:paddingLeft="10dp"
+                                    android:paddingBottom="2dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:singleLine="true"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:text="Balance Amount "
+                                    android:textColor="#802F3145"
+                                    android:textSize="12dp"
+                                    android:textFontWeight="600"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/bal_amnt"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:layout_marginEnd="10dp"
+                                    android:paddingLeft="20dp"
+                                    android:paddingEnd="2dp"
+                                    android:fontFamily="@font/quicksand_semi_bold"
+                                    android:singleLine="true"
+                                    android:text="₹ 0"
+                                    android:textColor="@color/greenDark"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

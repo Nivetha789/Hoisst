@@ -49,11 +49,9 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
 
     TextView txt_empty, txt_invoice_details_order, txt_inovoice_details_billed,
             txt_invoice_details_address, txt_inovoice_details_store,
-            txt_invoice_details_shipped_address, txt_inoive_details_total_nos,
-            txt_inoive_details_total_kgs, txt_inoive_details_total_price, txt_dis_invoice,
-            txt_invoice_last_bill, txt_invoice_bal_amt, txt_invoice_details_dist, txt_store_name,
-            txt_store_ship, hsnCode, tax_val, central_tax_rate, central_tax_amount, state_tax_rate, state_tax_amount,
-            tax_val_total, central_total, state_total, final_hsn_total, amount_in_words, invoice_num, comp_name, comp_address,
+            txt_invoice_details_shipped_address, txt_dis_invoice,
+            txt_invoice_last_bill, txt_invoice_details_dist, txt_store_name,
+            txt_store_ship,invoice_num, comp_name, comp_address,
             gst_num, contact_no, state_code, pay_method, order_type, amount, bill_date, txt_invoice_details_dist_address,
             txt_invoice_qty, invoice, invoiceClick, delivery, deliveryClick, txt_invoice_sub_total, txt_invoice_current_total;
     RecyclerView recyclerView;
@@ -118,26 +116,14 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
         txt_inovoice_details_billed = findViewById(R.id.txt_inovoice_details_billed);
         txt_invoice_details_address = findViewById(R.id.txt_invoice_details_address);
         txt_invoice_details_shipped_address = findViewById(R.id.txt_invoice_details_shipped_address);
-        txt_inoive_details_total_nos = findViewById(R.id.txt_inoive_details_total_nos);
-        txt_inoive_details_total_kgs = findViewById(R.id.txt_inoive_details_total_kgs);
-        txt_inoive_details_total_price = findViewById(R.id.txt_inoive_details_total_price);
+//        txt_inoive_details_total_nos = findViewById(R.id.txt_inoive_details_total_nos);
+//        txt_inoive_details_total_kgs = findViewById(R.id.txt_inoive_details_total_kgs);
         txt_dis_invoice = findViewById(R.id.txt_dis_invoice);
         txt_invoice_last_bill = findViewById(R.id.txt_invoice_last_bill);
-        txt_invoice_bal_amt = findViewById(R.id.txt_invoice_bal_amt);
         lin_invoice_details_scrollview = findViewById(R.id.lin_invoice_details_scrollview);
         txt_store_name = findViewById(R.id.txt_store_name);
         txt_store_ship = findViewById(R.id.txt_store_ship);
         gst_num = findViewById(R.id.gst_num);
-        hsnCode = findViewById(R.id.hsnCode);
-        tax_val = findViewById(R.id.tax_val);
-        central_tax_rate = findViewById(R.id.central_tax_rate);
-        central_tax_amount = findViewById(R.id.central_tax_amount);
-        state_tax_rate = findViewById(R.id.state_tax_rate);
-        state_tax_amount = findViewById(R.id.state_tax_amount);
-        tax_val_total = findViewById(R.id.tax_val_total);
-        central_total = findViewById(R.id.central_total);
-        state_total = findViewById(R.id.state_total);
-        final_hsn_total = findViewById(R.id.final_hsn_total);
 //        amount_in_words = findViewById(R.id.amount_in_words);
         invoice_num = findViewById(R.id.invoice_num);
         comp_name = findViewById(R.id.comp_name);

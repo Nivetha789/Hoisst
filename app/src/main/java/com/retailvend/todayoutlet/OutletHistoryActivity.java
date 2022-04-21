@@ -2,6 +2,8 @@ package com.retailvend.todayoutlet;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.os.Build;
@@ -24,6 +26,9 @@ import com.retailvend.model.outlets.outletHistory.OutletHisPaymentData;
 import com.retailvend.model.outlets.outletHistory.OutletHistoryData;
 import com.retailvend.model.outlets.outletHistory.OutletHistoryModel;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.targetDetails.BeatTargetAdapter;
+import com.retailvend.targetDetails.ProductTargetAdapter;
+import com.retailvend.targetDetails.TargetDetailsActivity;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 
@@ -36,13 +41,17 @@ import retrofit2.Response;
 
 public class OutletHistoryActivity extends AppCompatActivity {
 
-    TextView order_no,order_date,dist_name,bill_no,amount,amount_type,collected_type,emp_name;
+    TextView emp_name,
+            emptyView;
     Activity activity;
     String outlet_id="";
     List<OutletHisAttendanceData> outletHisAttendanceData;
     List<OutletHisOrderData> outletHisOrderData;
     List<OutletHisPaymentData> outletHisPaymentData;
-    ImageView back;
+    ImageView back, nodata;
+    RecyclerView order_data_recycler;
+
+    OutletHistoryAdapter outletHistoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +85,11 @@ public class OutletHistoryActivity extends AppCompatActivity {
             outlet_id = getIntent().getExtras().getString("outlet_id");
             System.out.println("outlet_idddd "+outlet_id);
         }
-        order_no=findViewById(R.id.order_no);
-        order_date=findViewById(R.id.order_date);
-        dist_name=findViewById(R.id.dist_name);
-        bill_no=findViewById(R.id.bill_no);
-        amount=findViewById(R.id.amount);
-        amount_type=findViewById(R.id.amount_type);
-        collected_type=findViewById(R.id.collected_type);
+        emptyView=findViewById(R.id.emptyView);
         emp_name=findViewById(R.id.emp_name);
         back=findViewById(R.id.back);
+        nodata=findViewById(R.id.nodata);
+        order_data_recycler=findViewById(R.id.order_data_recycler);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,20 +127,38 @@ public class OutletHistoryActivity extends AppCompatActivity {
                     if (outletHistoryModel.getStatus() == 1) {
 
 //                        CustomToast.getInstance(OutletHistoryActivity.this).showSmallCustomToast(outletHistoryModel.getMessage());
+
+
                         outletHisAttendanceData=outletHistoryModel.getData().getAttendanceData();
                         outletHisOrderData=outletHistoryModel.getData().getOrderData();
                         outletHisPaymentData=outletHistoryModel.getData().getPaymentData();
                         emp_name.setText(outletHisAttendanceData.get(0).getEmployeeName());
-                        order_no.setText(outletHisOrderData.get(0).getOrderNo());
-                        order_date.setText(outletHisAttendanceData.get(0).getAttendanceDate());
-                        dist_name.setText(outletHisPaymentData.get(0).getDistributorName());
-                        bill_no.setText(outletHisPaymentData.get(0).getBillNo());
-                        amount.setText(outletHisPaymentData.get(0).getAmount());
-                        amount_type.setText(outletHisPaymentData.get(0).getAmtType());
-                        collected_type.setText(outletHisPaymentData.get(0).getCollectionType());
+
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+                        order_data_recycler.setLayoutManager(layoutManager);
+
+                        outletHistoryAdapter = new OutletHistoryAdapter(OutletHistoryActivity.this, outletHisOrderData,outletHisPaymentData);
+                        order_data_recycler.setAdapter(outletHistoryAdapter);
+                        outletHistoryAdapter.notifyDataSetChanged();
+
+                        if(outletHisOrderData.size()!=0 && outletHisPaymentData.size()!=0){
+                            emptyView.setVisibility(View.GONE);
+                            nodata.setVisibility(View.GONE);
+                            order_data_recycler.setVisibility(View.VISIBLE);
+                        }else{
+                            nodata.setVisibility(View.VISIBLE);
+                            emptyView.setText("No Order Found!!");
+                            emptyView.setVisibility(View.VISIBLE);
+                            order_data_recycler.setVisibility(View.GONE);
+                        }
+
                         CustomProgress.hideProgress(activity);
                     } else {
                         CustomProgress.hideProgress(activity);
+//                        nodata.setVisibility(View.VISIBLE);
+//                        emptyView.setText(outletHistoryModel.getMessage());
+//                        emptyView.setVisibility(View.VISIBLE);
+//                        order_data_recycler.setVisibility(View.GONE);
                         CustomToast.getInstance(OutletHistoryActivity.this).showSmallCustomToast(outletHistoryModel.getMessage());
                     }
 
@@ -151,6 +174,11 @@ public class OutletHistoryActivity extends AppCompatActivity {
                 Log.d("Failure ", t.getMessage());
                 CustomToast.getInstance(OutletHistoryActivity.this).showSmallCustomToast("Something went wrong try again..");
                 CustomProgress.hideProgress(activity);
+//                nodata.setVisibility(View.VISIBLE);
+//                emptyView.setVisibility(View.VISIBLE);
+//                emptyView1.setVisibility(View.VISIBLE);
+//                order_data_recycler.setVisibility(View.GONE);
+//                emptyView.setText("Something went wrong try again..");
             }
         });
     }

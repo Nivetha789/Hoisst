@@ -74,8 +74,8 @@ public class OutstandingDetailsActivity extends AppCompatActivity {
             address.setText(addressTxt);
             mail.setText(mailTxt);
             shop_number.setText(shopNum);
-            avai_amount.setText(avaiAmount);
-            bal_amount.setText(balanceAmount);
+            avai_amount.setText("₹ " +avaiAmount);
+            bal_amount.setText("₹ " +balanceAmount);
         }
 
     }

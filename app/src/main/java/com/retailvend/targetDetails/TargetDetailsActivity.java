@@ -20,6 +20,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
@@ -58,6 +59,8 @@ public class TargetDetailsActivity extends AppCompatActivity {
     List<EmployeeTargetDetailsDatum> employeeTargetDetailsData;
     List<EmployeeTargetProductTarget> employeeTargetProductTargetList;
     List<EmployeeTargetBeatTarget> employeeTargetBeatTargets;
+    String separate2="";
+    TargetDetailsTarget dataObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,16 +149,16 @@ public class TargetDetailsActivity extends AppCompatActivity {
                         targetDetailsDataList = detailsModel.getData().get(0).getTargetList();
 
                         for (int i = 0; i < targetDetailsDataList.size(); i++) {
-                            TargetDetailsTarget dataObject = targetDetailsDataList.get(i);
+                            dataObject = targetDetailsDataList.get(i);
                             if (dataObject.getValue() != 0) {
                                 String[] separated = dataObject.getDate().split("-");
                                 String separate = separated[0];
                                 String separate1 = separated[1];
-                                String separate2 = separated[2];
-//                                System.out.println("separate2 "+separate2);
-                                values.add(new BarEntry(Float.parseFloat(separate2), Float.parseFloat(dataObject.getValue().toString())));
+                                separate2 = separated[2];
+                                values.add(new BarEntry(Float.parseFloat(separate), Float.parseFloat(dataObject.getValue().toString())));
                             }
                         }
+
 //                        targets.add(new BarEntry(Float.parseFloat(year), 508));
 
 //                        targets.add(new BarEntry(2015, 475));
@@ -163,7 +166,7 @@ public class TargetDetailsActivity extends AppCompatActivity {
 //                        targets.add(new BarEntry(2017, 660));
 //                        targets.add(new BarEntry(2018, 550));
                         BarDataSet barDataSet = new BarDataSet(values, "Achievements");
-                        barDataSet.setColors(Color.GREEN);
+                        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
                         barDataSet.setValueTextColor(Color.BLACK);
                         barDataSet.setValueTextSize(16f);
 
