@@ -16,12 +16,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -31,10 +28,7 @@ import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AssignOutletsModel;
-import com.retailvend.model.outlets.ProductNameResModel;
-import com.retailvend.model.outlets.SalesAgentsListModel;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
 import com.retailvend.utills.SessionManagerSP;
@@ -46,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TodayOutletActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class TodayOutletActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     RecyclerView todayOutletRecycler;
     Activity activity;
@@ -57,7 +51,7 @@ public class TodayOutletActivity extends AppCompatActivity implements SwipeRefre
     TextView nodata_txt;
     SessionManagerSP sessionManagerSP;
     LinearLayout searchLayout;
-    ImageView search_icon,nodata;
+    ImageView search_icon, nodata;
     EditText search;
     TextView emptyView;
     ProgressBar progress;
@@ -80,7 +74,7 @@ public class TodayOutletActivity extends AppCompatActivity implements SwipeRefre
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_outlet);
-        activity=this;
+        activity = this;
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -101,9 +95,9 @@ public class TodayOutletActivity extends AppCompatActivity implements SwipeRefre
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
 
-        todayOutletRecycler=findViewById(R.id.today_outlet_recycler);
-        leftArrow=findViewById(R.id.left_arrow);
-        nodata_txt=findViewById(R.id.nodata_txt);
+        todayOutletRecycler = findViewById(R.id.today_outlet_recycler);
+        leftArrow = findViewById(R.id.left_arrow);
+        nodata_txt = findViewById(R.id.nodata_txt);
         progress = findViewById(R.id.progress);
         search = findViewById(R.id.search);
         search_icon = findViewById(R.id.search_icon);
@@ -111,9 +105,9 @@ public class TodayOutletActivity extends AppCompatActivity implements SwipeRefre
         emptyView = findViewById(R.id.emptyView);
         nodata = findViewById(R.id.nodata);
 
-        sessionManagerSP=new SessionManagerSP(TodayOutletActivity.this);
+        sessionManagerSP = new SessionManagerSP(TodayOutletActivity.this);
 
-        todayOutletsDatum=new ArrayList<>();
+        todayOutletsDatum = new ArrayList<>();
 
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,7 +212,7 @@ public class TodayOutletActivity extends AppCompatActivity implements SwipeRefre
     public void todayOutletListApi(int offset1, int limit1, String searchType) {
 //        CustomProgress.showProgress(activity);
 
-        String emp_id= sessionManagerSP.getEmployeeId();
+        String emp_id = sessionManagerSP.getEmployeeId();
 
         if (isLoading) {
             progress.setVisibility(View.GONE);
@@ -231,7 +225,7 @@ public class TodayOutletActivity extends AppCompatActivity implements SwipeRefre
         }
 
         Call<AssignOutletsModel> call = RetrofitClient
-                .getInstance().getApi().todayOutletList("_employeeWiseList",offset1, limit1,emp_id, searchTxt);
+                .getInstance().getApi().todayOutletList("_employeeWiseList", offset1, limit1, emp_id, searchTxt);
 
         call.enqueue(new Callback<AssignOutletsModel>() {
             @Override

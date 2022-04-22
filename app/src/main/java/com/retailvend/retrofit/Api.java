@@ -5,6 +5,7 @@ import com.retailvend.model.collectionmodel.CollectionDetailsListModel;
 import com.retailvend.model.dashboard.SalesDashboardCountModel;
 import com.retailvend.model.delManModels.delCollection.DetailOutletInvAmntBillModel;
 import com.retailvend.model.delManModels.delCollection.delManDeliDetails.DelManDelDetailsModel;
+import com.retailvend.model.delManModels.delCollection.invoiceDetails.InvoiceDetailsModel;
 import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHistoryModel;
 import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
 import com.retailvend.model.delManModels.delCollection.paymentCollection.InvoiceTypeModel;
@@ -283,6 +284,14 @@ public interface Api {
             @Field("offset") int offset,
             @Field("limit") int limit,
             @Field("search") String search
+    );
+
+    //Invoice details
+    @FormUrlEncoded
+    @POST("order/api/invoice_manage_order")
+    Call<InvoiceDetailsModel> invoiceDetails(
+            @Field("method") String method,
+            @Field("random_value") String random_value
     );
 
     //Collection payment

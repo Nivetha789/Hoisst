@@ -1,7 +1,6 @@
-package com.retailvend.sales;
+package com.retailvend.deliveryman.InvoiceList;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,12 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
+import com.retailvend.model.delManModels.delCollection.invoiceDetails.InvoiceBillDetails;
 import com.retailvend.model.delManModels.delCollection.invoiceDetails.InvoiceDetailsModel;
-import com.retailvend.model.sales.SalesBillDetails;
-import com.retailvend.model.sales.SalesDetailsModel;
-import com.retailvend.model.sales.SalesProductDetail;
-import com.retailvend.model.sales.SalesStoreDetails;
-import com.retailvend.model.sales.SalesTaxDetail;
+import com.retailvend.model.delManModels.delCollection.invoiceDetails.InvoiceProductDetail;
+import com.retailvend.model.delManModels.delCollection.invoiceDetails.InvoiceStoreDetails;
+import com.retailvend.model.delManModels.delCollection.invoiceDetails.InvoiceTaxDetail;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomToast;
 
@@ -37,24 +35,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SalesDetailsActivity extends AppCompatActivity {
+public class InvoiceDetailsActivity extends AppCompatActivity {
 
     TextView txt_empty, txt_invoice_details_order, txt_inovoice_details_billed,
             txt_invoice_details_billed_address,
-            txt_invoice_details_shipped_address,  txt_dis_invoice,
+            txt_invoice_details_shipped_address, txt_dis_invoice,
             txt_invoice_last_bill, txt_invoice_qty_total, txt_store_name,
-            txt_store_ship,  invoice_num, comp_name, comp_address,
+            txt_store_ship, invoice_num, comp_name, comp_address,
             gst_num, contact_no, state_code, pay_method, order_type,
-            amount, bill_date,txt_invoice_current_total,toolbar_title;
+            amount, bill_date, txt_invoice_current_total, toolbar_title;
     RecyclerView recyclerView;
     ProgressBar progress;
     NestedScrollView lin_invoice_details_scrollview;
 
-    SalesBillDetails salesBillDetails;
-    SalesStoreDetails salesStoreDetails;
-    SalesDetailsAdapter salesDetailsAdapter;
-    List<SalesProductDetail> productDetails;
-    List<SalesTaxDetail> taxDetails;
+    InvoiceBillDetails invoiceBillDetails;
+    InvoiceStoreDetails invoiceStoreDetails;
+    InvoiceDetailsAdapter invoiceDetailsAdapter;
+    List<InvoiceProductDetail> productDetails;
+    List<InvoiceTaxDetail> taxDetails;
     String random_value = "";
     Activity activity;
     ImageView left_arrow;
@@ -66,7 +64,7 @@ public class SalesDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sales_details);
+        setContentView(R.layout.activity_invoice_details);
         activity = this;
 
         if (Build.VERSION.SDK_INT >= 19) {
@@ -132,16 +130,17 @@ public class SalesDetailsActivity extends AppCompatActivity {
         productDetails = new ArrayList<>();
         taxDetails = new ArrayList<>();
 
-            boolean isConnected = ConnectivityReceiver.isConnected();
-            if (isConnected) {
-                salesInvoiceDetails(random_value);
-            } else {
-                CustomToast.getInstance(SalesDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
-            }
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            invoiceDetails(random_value);
+        } else {
+            CustomToast.getInstance(InvoiceDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+        }
     }
 
-    //sales order details
-    public void salesInvoiceDetails(String randomValue) {
+
+    //invoice details
+    public void invoiceDetails(String randomValue) {
 //        System.out.println("orderIDDDDD :"+orderId);
 
         progress.setVisibility(View.VISIBLE);
@@ -149,44 +148,44 @@ public class SalesDetailsActivity extends AppCompatActivity {
         txt_empty.setVisibility(View.GONE);
 
 
-        Call<SalesDetailsModel> call = RetrofitClient
-                .getInstance().getApi().salesDetails("_orderDetails", randomValue);
+        Call<InvoiceDetailsModel> call = RetrofitClient
+                .getInstance().getApi().invoiceDetails("_detailInvoice", randomValue);
 
 
-        call.enqueue(new Callback<SalesDetailsModel>() {
+        call.enqueue(new Callback<InvoiceDetailsModel>() {
             @Override
-            public void onResponse(@NonNull Call<SalesDetailsModel> call, @NonNull Response<SalesDetailsModel> response) {
+            public void onResponse(@NonNull Call<InvoiceDetailsModel> call, @NonNull Response<InvoiceDetailsModel> response) {
 
                 try {
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    SalesDetailsModel salesDetailsModel = gson.fromJson(json, SalesDetailsModel.class);
+                    InvoiceDetailsModel invoiceDetailsModel = gson.fromJson(json, InvoiceDetailsModel.class);
 
-                    if (salesDetailsModel.getStatus() == 1) {
-                        if (salesDetailsModel.getData() != null) {
-                            salesBillDetails = salesDetailsModel.getData().getBillDetails();
-                            salesStoreDetails = salesDetailsModel.getData().getStoreDetails();
-                            taxDetails = salesDetailsModel.getData().getTaxDetails();
-                            productDetails=salesDetailsModel.getData().getProductDetails();
-                            txt_invoice_details_order.setText(salesBillDetails.getOrderNo());
-                            txt_store_name.setText(salesBillDetails.getStoreName());
-                            txt_invoice_details_billed_address.setText(salesBillDetails.getContactName());
-                            txt_store_ship.setText(salesStoreDetails.getCompanyName());
-                            txt_invoice_details_shipped_address.setText(salesStoreDetails.getAddress());
-                            gst_num.setText("GST: " + salesStoreDetails.getGstNo());
-                            contact_no.setText("Mobile No: " + salesStoreDetails.getMobile());
-                            state_code.setText("State Code: " + salesStoreDetails.getStateCode());
-                            bill_date.setText("Bill Date: " + salesBillDetails.getCreatedate());
+                    if (invoiceDetailsModel.status == 1) {
+                        if (invoiceDetailsModel.data != null) {
+                            invoiceBillDetails = invoiceDetailsModel.data.billDetails;
+                            invoiceStoreDetails = invoiceDetailsModel.data.storeDetails;
+                            taxDetails = invoiceDetailsModel.data.taxDetails;
+                            productDetails = invoiceDetailsModel.data.productDetails;
+                            txt_invoice_details_order.setText(invoiceBillDetails.invoiceNo);
+//                            txt_store_name.setText(invoiceBillDetails.());
+//                            txt_invoice_details_billed_address.setText(invoiceBillDetails.getContactName());
+                            txt_store_ship.setText(invoiceStoreDetails.companyName);
+                            txt_invoice_details_shipped_address.setText(invoiceStoreDetails.address);
+                            gst_num.setText("GST: " + invoiceStoreDetails.gstNo);
+                            contact_no.setText("Mobile No: " + invoiceStoreDetails.mobile);
+                            state_code.setText("State Name: " + invoiceStoreDetails.stateName);
+                            bill_date.setText("Bill Date: " + invoiceBillDetails.createdate);
 
                             int b = 0;
                             double a;
                             for (int i = 0; i < productDetails.size(); i++) {
-                                a = Double.parseDouble(productDetails.get(i).getPrice().trim());
-                                b = Integer.parseInt(productDetails.get(i).getOrderQty().trim());
+                                a = Double.parseDouble(productDetails.get(i).price.trim());
+                                b = Integer.parseInt(productDetails.get(i).orderQty.trim());
                                 totalPrice = a * b;
                                 grandTotalPrice += totalPrice;
-                                String units = productDetails.get(i).getUnitVal();
+                                String units = productDetails.get(i).unitVal;
                                 System.out.println("unitsssss " + units);
 //                                txt_inoive_details_total_units.setText(productDetails.ge);
 
@@ -195,21 +194,21 @@ public class SalesDetailsActivity extends AppCompatActivity {
 
 
                             for (int k = 0; k < productDetails.size(); k++) {
-                                qty += Integer.valueOf(productDetails.get(k).getOrderQty());
+                                qty += Integer.valueOf(productDetails.get(k).orderQty);
                                 System.out.println("qtyyyyyyyy " + qty);
                             }
 
                             txt_invoice_current_total.setText("\u20B9 " + grandTotalPrice);
                             txt_invoice_qty_total.setText(String.valueOf(qty));
 
-                            productDetails = salesDetailsModel.getData().getProductDetails();
+                            productDetails = invoiceDetailsModel.data.productDetails;
 
-                            salesDetailsAdapter = new SalesDetailsAdapter(activity, productDetails);
+                            invoiceDetailsAdapter = new InvoiceDetailsAdapter(activity, productDetails);
                             // use a linear layout manager
                             LinearLayoutManager layoutManager = new LinearLayoutManager(getBaseContext());
                             recyclerView.setLayoutManager(layoutManager);
-                            recyclerView.setAdapter(salesDetailsAdapter);
-                            salesDetailsAdapter.notifyDataSetChanged();
+                            recyclerView.setAdapter(invoiceDetailsAdapter);
+                            invoiceDetailsAdapter.notifyDataSetChanged();
                             progress.setVisibility(View.GONE);
                             lin_invoice_details_scrollview.setVisibility(View.VISIBLE);
                             txt_empty.setVisibility(View.GONE);
@@ -217,13 +216,13 @@ public class SalesDetailsActivity extends AppCompatActivity {
                             progress.setVisibility(View.GONE);
                             lin_invoice_details_scrollview.setVisibility(View.GONE);
                             txt_empty.setVisibility(View.VISIBLE);
-                            CustomToast.getInstance(SalesDetailsActivity.this).showSmallCustomToast(salesDetailsModel.getMessage());
+                            CustomToast.getInstance(InvoiceDetailsActivity.this).showSmallCustomToast(invoiceDetailsModel.message);
                         }
                     } else {
                         progress.setVisibility(View.GONE);
                         lin_invoice_details_scrollview.setVisibility(View.GONE);
                         txt_empty.setVisibility(View.VISIBLE);
-                        CustomToast.getInstance(SalesDetailsActivity.this).showSmallCustomToast(salesDetailsModel.getMessage());
+                        CustomToast.getInstance(InvoiceDetailsActivity.this).showSmallCustomToast(invoiceDetailsModel.message);
                     }
                 } catch (Exception e) {
                     Log.d("Exception", e.getMessage());
@@ -231,16 +230,15 @@ public class SalesDetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SalesDetailsModel> call, Throwable t) {
+            public void onFailure(Call<InvoiceDetailsModel> call, Throwable t) {
                 Log.d("Failure ", t.getMessage());
                 progress.setVisibility(View.GONE);
                 lin_invoice_details_scrollview.setVisibility(View.GONE);
                 txt_empty.setVisibility(View.VISIBLE);
                 txt_empty.setText("Something went wrong try again..");
-                CustomToast.getInstance(SalesDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
+                CustomToast.getInstance(InvoiceDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
 
             }
         });
-
     }
 }

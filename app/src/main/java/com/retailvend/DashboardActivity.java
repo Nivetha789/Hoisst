@@ -29,6 +29,7 @@ import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.changePass.ChangePasswordActivity;
 import com.retailvend.collection.CollectionActivity;
 import com.retailvend.deliveryman.InvoiceList.InvoiceListActivity;
+import com.retailvend.deliveryman.collection.CollectionDeliveryActivity;
 import com.retailvend.deliveryman.outlet.DelManTodayOutletsActivity;
 import com.retailvend.deliveryman.outstand.DelManOutstandActivity;
 import com.retailvend.endTemp.EndTempActivity;
@@ -213,7 +214,7 @@ public class DashboardActivity extends AppCompatActivity {
                     Intent collectionIntent = new Intent(DashboardActivity.this, CollectionActivity.class);
                     startActivity(collectionIntent);
                 } else {
-                    Intent collectionIntent1 = new Intent(DashboardActivity.this, CollectionActivity.class);
+                    Intent collectionIntent1 = new Intent(DashboardActivity.this, CollectionDeliveryActivity.class);
                     startActivity(collectionIntent1);
                 }
             }
@@ -290,7 +291,7 @@ public class DashboardActivity extends AppCompatActivity {
                     Intent collectionIntent = new Intent(DashboardActivity.this, CollectionActivity.class);
                     startActivity(collectionIntent);
                 } else {
-                    Intent collectionIntent1 = new Intent(DashboardActivity.this, CollectionActivity.class);
+                    Intent collectionIntent1 = new Intent(DashboardActivity.this, CollectionDeliveryActivity.class);
                     startActivity(collectionIntent1);
                 }
                 break;

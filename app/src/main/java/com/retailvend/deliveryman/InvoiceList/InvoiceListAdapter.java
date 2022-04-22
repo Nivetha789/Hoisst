@@ -152,9 +152,9 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent salesDetailsIntent = new Intent(activity, SalesDetailsActivity.class);
-//                    salesDetailsIntent.putExtra("random_value",item.getRandomValue());
-//                    activity.startActivity(salesDetailsIntent);
+                    Intent invoiceDetailsIntent = new Intent(activity, InvoiceDetailsActivity.class);
+                    invoiceDetailsIntent.putExtra("random_value",item.getRandomValue());
+                    activity.startActivity(invoiceDetailsIntent);
                     }
             });
         }

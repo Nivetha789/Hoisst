@@ -342,7 +342,7 @@ public class EndTempActivity extends AppCompatActivity {
                         date.setText(dateRes);
                         beat_name.setText(beatRes);
                         total_outlet.setText(totalOutlet);
-                        close_time.setText(startTime1);
+                        close_time.setText(closeTimeRes);
                         new_outlet.setText(newOutletRes);
                         start_time.setText(closeTimeRes);
                         outlet_order.setText(orderOutletRes);
