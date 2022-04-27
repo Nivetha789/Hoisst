@@ -16,6 +16,9 @@ public class OutletHistoryData {
     @SerializedName("payment_data")
     @Expose
     private List<OutletHisPaymentData> paymentData = new ArrayList<>();
+    @SerializedName("invoice_data")
+    @Expose
+    private List<OutletHisInvoiceData> invoiceData = new ArrayList<>();
 
     public List<OutletHisAttendanceData> getAttendanceData() {
         return attendanceData;
@@ -39,5 +42,13 @@ public class OutletHistoryData {
 
     public void setPaymentData(List<OutletHisPaymentData> paymentData) {
         this.paymentData = paymentData;
+    }
+
+    public List<OutletHisInvoiceData> getInvoiceData() {
+        return invoiceData;
+    }
+
+    public void setInvoiceData(List<OutletHisInvoiceData> invoiceData) {
+        this.invoiceData = invoiceData;
     }
 }

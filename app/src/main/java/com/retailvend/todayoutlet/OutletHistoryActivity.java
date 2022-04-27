@@ -21,6 +21,7 @@ import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.AttendanceTypeDatum;
 import com.retailvend.model.outlets.outletHistory.OutletHisAttendanceData;
+import com.retailvend.model.outlets.outletHistory.OutletHisInvoiceData;
 import com.retailvend.model.outlets.outletHistory.OutletHisOrderData;
 import com.retailvend.model.outlets.outletHistory.OutletHisPaymentData;
 import com.retailvend.model.outlets.outletHistory.OutletHistoryData;
@@ -41,17 +42,24 @@ import retrofit2.Response;
 
 public class OutletHistoryActivity extends AppCompatActivity {
 
-    TextView emp_name,
-            emptyView;
+    TextView outlet_name,
+            emptyView,emptyView1,emptyView2,emptyView3;
     Activity activity;
     String outlet_id="";
     List<OutletHisAttendanceData> outletHisAttendanceData;
     List<OutletHisOrderData> outletHisOrderData;
     List<OutletHisPaymentData> outletHisPaymentData;
-    ImageView back, nodata;
-    RecyclerView order_data_recycler;
+    List<OutletHisInvoiceData> outletHisInvoiceData;
+    OutletHistoryData outletHisMainData;
+    ImageView back, nodata,nodata1,nodata2,nodata3;
+    RecyclerView order_data_recycler,attendance_details_recycler,payment_details_recycler,invoice_details_recycler;
 
     OutletHistoryAdapter outletHistoryAdapter;
+    OutletHisAttenAdapter outletHisAttenAdapter;
+    OutletHisPaymentAdapter outletHisPaymentAdapter;
+    OutletHisInvoiceAdapter outletHisInvoiceAdapter;
+
+    String shop_name="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,17 +87,35 @@ public class OutletHistoryActivity extends AppCompatActivity {
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
 
+        outletHisAttendanceData=new ArrayList<>();
+        outletHisOrderData=new ArrayList<>();
+        outletHisPaymentData=new ArrayList<>();
+        outletHisInvoiceData=new ArrayList<>();
+
+        outlet_name=findViewById(R.id.outlet_name);
+        back=findViewById(R.id.back);
+        nodata=findViewById(R.id.nodata);
+        nodata1=findViewById(R.id.nodata1);
+        nodata2=findViewById(R.id.nodata2);
+        nodata3=findViewById(R.id.nodata3);
+        emptyView=findViewById(R.id.emptyView);
+        emptyView1=findViewById(R.id.emptyView1);
+        emptyView2=findViewById(R.id.emptyView2);
+        emptyView3=findViewById(R.id.emptyView3);
+        order_data_recycler=findViewById(R.id.order_data_recycler);
+        attendance_details_recycler=findViewById(R.id.attendance_details_recycler);
+        payment_details_recycler=findViewById(R.id.payment_details_recycler);
+        invoice_details_recycler=findViewById(R.id.invoice_details_recycler);
+
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
             outlet_id = getIntent().getExtras().getString("outlet_id");
-            System.out.println("outlet_idddd "+outlet_id);
+            shop_name=getIntent().getExtras().getString("outlet_name");
+            System.out.println("outlet_idddd "+shop_name);
+            outlet_name.setText(shop_name);
+
         }
-        emptyView=findViewById(R.id.emptyView);
-        emp_name=findViewById(R.id.emp_name);
-        back=findViewById(R.id.back);
-        nodata=findViewById(R.id.nodata);
-        order_data_recycler=findViewById(R.id.order_data_recycler);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,37 +154,116 @@ public class OutletHistoryActivity extends AppCompatActivity {
 
 //                        CustomToast.getInstance(OutletHistoryActivity.this).showSmallCustomToast(outletHistoryModel.getMessage());
 
+                        emptyView.setVisibility(View.GONE);
+                        emptyView1.setVisibility(View.GONE);
+                        emptyView2.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
+                        nodata1.setVisibility(View.GONE);
+                        nodata2.setVisibility(View.GONE);
+                        order_data_recycler.setVisibility(View.VISIBLE);
+                        attendance_details_recycler.setVisibility(View.VISIBLE);
+                        payment_details_recycler.setVisibility(View.VISIBLE);
 
-                        outletHisAttendanceData=outletHistoryModel.getData().getAttendanceData();
-                        outletHisOrderData=outletHistoryModel.getData().getOrderData();
-                        outletHisPaymentData=outletHistoryModel.getData().getPaymentData();
-                        emp_name.setText(outletHisAttendanceData.get(0).getEmployeeName());
+                        outletHisMainData=outletHistoryModel.getData();
+                        outletHisAttendanceData=outletHisMainData.getAttendanceData();
+                        outletHisOrderData=outletHisMainData.getOrderData();
+                        outletHisPaymentData=outletHisMainData.getPaymentData();
+                        outletHisInvoiceData=outletHisMainData.getInvoiceData();
 
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
-                        order_data_recycler.setLayoutManager(layoutManager);
-
-                        outletHistoryAdapter = new OutletHistoryAdapter(OutletHistoryActivity.this, outletHisOrderData,outletHisPaymentData);
-                        order_data_recycler.setAdapter(outletHistoryAdapter);
-                        outletHistoryAdapter.notifyDataSetChanged();
-
-                        if(outletHisOrderData.size()!=0 && outletHisPaymentData.size()!=0){
+                        if(outletHisOrderData.size()>0){
                             emptyView.setVisibility(View.GONE);
                             nodata.setVisibility(View.GONE);
                             order_data_recycler.setVisibility(View.VISIBLE);
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+                            order_data_recycler.setLayoutManager(layoutManager);
+
+                            outletHistoryAdapter = new OutletHistoryAdapter(OutletHistoryActivity.this, outletHisOrderData);
+                            order_data_recycler.setAdapter(outletHistoryAdapter);
+                            outletHistoryAdapter.notifyDataSetChanged();
+
                         }else{
                             nodata.setVisibility(View.VISIBLE);
-                            emptyView.setText("No Order Found!!");
+                            emptyView.setText("No Data Found!!");
                             emptyView.setVisibility(View.VISIBLE);
                             order_data_recycler.setVisibility(View.GONE);
+                        }
+
+                        if(outletHisAttendanceData.size()>0){
+                            emptyView1.setVisibility(View.GONE);
+                            nodata1.setVisibility(View.GONE);
+                            attendance_details_recycler.setVisibility(View.VISIBLE);
+                            LinearLayoutManager layoutManager1 = new LinearLayoutManager(activity);
+                            attendance_details_recycler.setLayoutManager(layoutManager1);
+
+                            outletHisAttenAdapter = new OutletHisAttenAdapter(OutletHistoryActivity.this, outletHisAttendanceData);
+                            attendance_details_recycler.setAdapter(outletHisAttenAdapter);
+                            outletHisAttenAdapter.notifyDataSetChanged();
+                        }else{
+                            nodata1.setVisibility(View.VISIBLE);
+                            emptyView1.setText("No Data Found!!");
+                            emptyView1.setVisibility(View.VISIBLE);
+                            attendance_details_recycler.setVisibility(View.GONE);
+                        }
+
+                        if(outletHisPaymentData.size()>0){
+                            emptyView2.setVisibility(View.GONE);
+                            nodata2.setVisibility(View.GONE);
+                            payment_details_recycler.setVisibility(View.VISIBLE);
+                            LinearLayoutManager layoutManager2 = new LinearLayoutManager(activity);
+                            payment_details_recycler.setLayoutManager(layoutManager2);
+
+                            outletHisPaymentAdapter = new OutletHisPaymentAdapter(OutletHistoryActivity.this, outletHisPaymentData);
+                            payment_details_recycler.setAdapter(outletHisPaymentAdapter);
+                            outletHisPaymentAdapter.notifyDataSetChanged();
+                        }else{
+                            nodata2.setVisibility(View.VISIBLE);
+                            emptyView2.setText("No Data Found!!");
+                            emptyView2.setVisibility(View.VISIBLE);
+                            payment_details_recycler.setVisibility(View.GONE);
+                        }
+
+                        if(outletHisInvoiceData.size()>0){
+                            emptyView3.setVisibility(View.GONE);
+                            nodata3.setVisibility(View.GONE);
+                            invoice_details_recycler.setVisibility(View.VISIBLE);
+                            LinearLayoutManager layoutManager3 = new LinearLayoutManager(activity);
+                            invoice_details_recycler.setLayoutManager(layoutManager3);
+
+                            outletHisInvoiceAdapter = new OutletHisInvoiceAdapter(OutletHistoryActivity.this, outletHisInvoiceData);
+                            invoice_details_recycler.setAdapter(outletHisInvoiceAdapter);
+                            outletHisInvoiceAdapter.notifyDataSetChanged();
+                        }else{
+                            nodata3.setVisibility(View.VISIBLE);
+                            emptyView3.setText("No Data Found!!");LinearLayoutManager layoutManager3 = new LinearLayoutManager(activity);
+                            invoice_details_recycler.setLayoutManager(layoutManager3);
+
+                            outletHisInvoiceAdapter = new OutletHisInvoiceAdapter(OutletHistoryActivity.this, outletHisInvoiceData);
+                            invoice_details_recycler.setAdapter(outletHisInvoiceAdapter);
+                            outletHisInvoiceAdapter.notifyDataSetChanged();
+                            emptyView3.setVisibility(View.VISIBLE);
+                            invoice_details_recycler.setVisibility(View.GONE);
                         }
 
                         CustomProgress.hideProgress(activity);
                     } else {
                         CustomProgress.hideProgress(activity);
-//                        nodata.setVisibility(View.VISIBLE);
-//                        emptyView.setText(outletHistoryModel.getMessage());
-//                        emptyView.setVisibility(View.VISIBLE);
-//                        order_data_recycler.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodata1.setVisibility(View.VISIBLE);
+                        nodata2.setVisibility(View.VISIBLE);
+                        nodata3.setVisibility(View.VISIBLE);
+                        emptyView.setText("No Data Found!!");
+                        emptyView1.setText("No Data Found!!");
+                        emptyView2.setText("No Data Found!!");
+                        emptyView3.setText("No Data Found!!");
+                        emptyView.setText(outletHistoryModel.getMessage());
+                        emptyView.setVisibility(View.VISIBLE);
+                        emptyView1.setText(outletHistoryModel.getMessage());
+                        emptyView2.setVisibility(View.VISIBLE);
+                        emptyView3.setVisibility(View.VISIBLE);
+                        order_data_recycler.setVisibility(View.GONE);
+                        attendance_details_recycler.setVisibility(View.GONE);
+                        payment_details_recycler.setVisibility(View.GONE);
+                        invoice_details_recycler.setVisibility(View.GONE);
                         CustomToast.getInstance(OutletHistoryActivity.this).showSmallCustomToast(outletHistoryModel.getMessage());
                     }
 
@@ -174,11 +279,21 @@ public class OutletHistoryActivity extends AppCompatActivity {
                 Log.d("Failure ", t.getMessage());
                 CustomToast.getInstance(OutletHistoryActivity.this).showSmallCustomToast("Something went wrong try again..");
                 CustomProgress.hideProgress(activity);
-//                nodata.setVisibility(View.VISIBLE);
-//                emptyView.setVisibility(View.VISIBLE);
-//                emptyView1.setVisibility(View.VISIBLE);
-//                order_data_recycler.setVisibility(View.GONE);
-//                emptyView.setText("Something went wrong try again..");
+                nodata.setVisibility(View.VISIBLE);
+                nodata1.setVisibility(View.VISIBLE);
+                nodata2.setVisibility(View.VISIBLE);
+                nodata3.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.VISIBLE);
+                emptyView1.setText("Something went wrong try again..");
+                emptyView2.setText("Something went wrong try again..");
+                emptyView1.setVisibility(View.VISIBLE);
+                emptyView2.setVisibility(View.VISIBLE);
+                emptyView3.setVisibility(View.VISIBLE);
+                order_data_recycler.setVisibility(View.GONE);
+                attendance_details_recycler.setVisibility(View.GONE);
+                payment_details_recycler.setVisibility(View.GONE);
+                invoice_details_recycler.setVisibility(View.GONE);
+                emptyView.setText("Something went wrong try again..");
             }
         });
     }

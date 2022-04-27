@@ -199,6 +199,9 @@
             android:layout_weight="1"
             android:background="@null"
             android:ems="10"
+            android:hint="Search Store name"
+            android:textColorHint="@color/text_color1"
+            android:textSize="14dp"
             android:paddingLeft="10dp" />
 
         <ImageView

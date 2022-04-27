@@ -2,6 +2,7 @@ package com.retailvend.deliveryman.collection;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,16 +128,25 @@ public class CollectionDeliveryAdapter extends RecyclerView.Adapter<BaseViewHold
 //            System.out.println("tesgsg "+salesAgentDataList.get(position));
 
             txt_name.setText(item.getOutletName());
-            txt_preBal_no.setText("₹ " + item.getPreBal());
-            txt_cur_amt.setText("₹ " + item.getCurBal());
+            if(!TextUtils.isEmpty(item.getPreBal())){
+                txt_preBal_no.setText("₹ " + item.getPreBal());
+            }else{
+                txt_preBal_no.setText("₹ " + "0");
+            }
+            if(!TextUtils.isEmpty(item.getCurBal())){
+                txt_cur_amt.setText("₹ " + item.getCurBal());
+            }else{
+                txt_cur_amt.setText("₹ " + "0");
+            }
 
             cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent paymentIntent = new Intent(activity, AddPaymentActivity.class);
+                    Intent paymentIntent = new Intent(activity, PaymentDetailsActivity.class);
                     paymentIntent.putExtra("assign_id", item.getAssignId());
                     paymentIntent.putExtra("name", item.getOutletName());
                     paymentIntent.putExtra("outletId", item.getOutletId());
+                    paymentIntent.putExtra("balamnt", item.getCurBal());
                     activity.startActivity(paymentIntent);
                 }
             });

@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constrain_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/constrain_view">
+    android:layout_height="match_parent">
 
     <View
         android:id="@+id/profile_bg"
@@ -18,8 +18,8 @@
 
     <View
         android:id="@+id/profile_bg_bottom_view"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
+        android:layout_width="420dp"
+        android:layout_height="41dp"
         android:background="@color/transparent"
         app:layout_constraintBottom_toBottomOf="@+id/profile_bg"
         app:layout_constraintLeft_toLeftOf="@+id/profile_bg"
@@ -29,8 +29,8 @@
         android:id="@+id/back"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/ic_left_arrow"
         android:backgroundTint="@color/white"
         android:padding="6dp"
@@ -40,6 +40,7 @@
 
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
@@ -55,19 +56,17 @@
         app:layout_constraintTop_toTopOf="@+id/back" />
 
     <TextView
-        android:id="@+id/emp_name"
+        android:id="@+id/outlet_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/light_dark"
         android:fontFamily="@font/roboto_regular"
         android:gravity="center"
-        android:maxHeight="100dp"
-        android:minHeight="40dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:textColor="@color/white"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/profiler_user_id"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_bg"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/back" />
@@ -80,35 +79,352 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/quicksand_semi_bold"
         android:gravity="center"
-        android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="20sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/profile_bg_bottom_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emp_name" />
+        app:layout_constraintTop_toBottomOf="@+id/outlet_name" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/profile_details_card"
-        android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:cardCornerRadius="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profile_bg_bottom_view">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_bg_bottom_view">
 
-        <include layout="@layout/outlet_details_include" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_bg">
 
-    </androidx.cardview.widget.CardView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/order_data_cons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/order_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:gravity="start"
+                    android:text="Order Details"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/order_data_recycler"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/order_data" />
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/nodata"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/nodata_found"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/order_data"
+                    app:layout_constraintStart_toStartOf="@+id/order_data"
+                    app:layout_constraintTop_toBottomOf="@+id/order_data" />
+
+                <TextView
+                    android:id="@+id/emptyView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-50dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:text="No Results"
+                    android:textSize="17dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/order_data"
+                    app:layout_constraintTop_toBottomOf="@+id/nodata" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/grey1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/attendance_details_cons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/order_data_cons">
+
+                <TextView
+                    android:id="@+id/attendance_details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:gravity="start"
+                    android:text="Attendance Details"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/attendance_details_recycler"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/attendance_details" />
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/nodata1"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/nodata_found"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/attendance_details"
+                    app:layout_constraintStart_toStartOf="@+id/attendance_details"
+                    app:layout_constraintTop_toBottomOf="@+id/attendance_details" />
+
+                <TextView
+                    android:id="@+id/emptyView1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-50dp"
+                    android:gravity="center"
+                    android:text="No Results"
+                    android:textSize="18dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/attendance_details"
+                    app:layout_constraintStart_toStartOf="@+id/attendance_details"
+                    app:layout_constraintTop_toBottomOf="@+id/nodata1" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/grey1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/payment_constrain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/attendance_details_cons">
+
+                <TextView
+                    android:id="@+id/payment_details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:gravity="start"
+                    android:text="Payment Details"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/payment_details_recycler"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/payment_details" />
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/nodata2"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/nodata_found"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/payment_details"
+                    app:layout_constraintStart_toStartOf="@+id/payment_details"
+                    app:layout_constraintTop_toBottomOf="@+id/payment_details" />
+
+                <TextView
+                    android:id="@+id/emptyView2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-50dp"
+                    android:gravity="center"
+                    android:text="No Results"
+                    android:textSize="18dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/payment_details"
+                    app:layout_constraintStart_toStartOf="@+id/payment_details"
+                    app:layout_constraintTop_toBottomOf="@+id/nodata2" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/grey1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/invoice_constrain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/payment_constrain">
+
+                <TextView
+                    android:id="@+id/invoice_details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:gravity="start"
+                    android:text="Invoice Details"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/invoice_details_recycler"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/invoice_details" />
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/nodata3"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/nodata_found"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/invoice_details"
+                    app:layout_constraintStart_toStartOf="@+id/invoice_details"
+                    app:layout_constraintTop_toBottomOf="@+id/invoice_details" />
+
+                <TextView
+                    android:id="@+id/emptyView3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-50dp"
+                    android:gravity="center"
+                    android:text="No Results"
+                    android:textSize="18dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/invoice_details"
+                    app:layout_constraintStart_toStartOf="@+id/invoice_details"
+                    app:layout_constraintTop_toBottomOf="@+id/nodata3" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/grey1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".30" />
+        app:layout_constraintGuide_percent=".20" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

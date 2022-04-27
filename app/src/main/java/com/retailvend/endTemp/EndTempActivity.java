@@ -4,6 +4,7 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,7 +79,6 @@ public class EndTempActivity extends AppCompatActivity {
     String which = "";
     String bill_no = "";
     public static Bitmap bitScroll;
-    File filePath;
     private static String storage;
     private static String DATA_PATH = Environment.getExternalStorageDirectory().toString();
     public static final String TESS_DATA = "/Hoisst";
@@ -106,6 +107,8 @@ public class EndTempActivity extends AppCompatActivity {
     int pageHeight = 1120;
     int pagewidth = 792;
     private static final int PERMISSION_REQUEST_CODE = 200;
+
+    WebView webview;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -155,7 +158,7 @@ public class EndTempActivity extends AppCompatActivity {
             view_pdf.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    viewPdfFile();
+//                    viewPdfFile();
                 }
             });
 
@@ -192,12 +195,25 @@ public class EndTempActivity extends AppCompatActivity {
     }
 
     public void viewPdfFile() {
-
-        File file = new File(this.getExternalFilesDir(null).getAbsolutePath() + file_name_path);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(file), "application/pdf");
-        startActivity(intent);
+//        Uri path = Uri.fromFile(file_name_path);
+        Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+//        pdfIntent.setDataAndType(path , "application/pdf");
+        pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        try {
+            startActivity(pdfIntent );
+        }
+        catch (ActivityNotFoundException e) {
+            Toast.makeText(EndTempActivity.this,
+                    "No Application available to viewPDF",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
+
+//    File file = new File(this.getExternalFilesDir(null).getAbsolutePath() + file_name_path);
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+//        startActivity(intent);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -329,9 +345,8 @@ public class EndTempActivity extends AppCompatActivity {
                         endTempData = detailsModel.getData();
                         endTempOutletList = endTempData.get(0).getOutletList();
                         empname = endTempData.get(0).getName();
-                        dateRes = endTempData.get(0).getDate();
                         totalOutlet = endTempData.get(0).getTotalOutlet();
-//                        startTime1 = endTempData.get(0).ti();
+                        startTime1 = endTempData.get(0).getStartTime();
                         newOutletRes = endTempData.get(0).getNewOutlet();
                         closeTimeRes = endTempData.get(0).getCloseTime();
                         orderOutletRes = endTempData.get(0).getOrderOutlet();
@@ -339,12 +354,11 @@ public class EndTempActivity extends AppCompatActivity {
                         orderTotalRes = endTempData.get(0).getOrderTotal();
                         beatRes = endTempData.get(0).getBeat();
                         name.setText(empname);
-                        date.setText(dateRes);
                         beat_name.setText(beatRes);
                         total_outlet.setText(totalOutlet);
                         close_time.setText(closeTimeRes);
                         new_outlet.setText(newOutletRes);
-                        start_time.setText(closeTimeRes);
+                        start_time.setText(startTime1);
                         outlet_order.setText(orderOutletRes);
                         count_order.setText(orderCountRes);
                         order_total.setText(orderTotalRes);

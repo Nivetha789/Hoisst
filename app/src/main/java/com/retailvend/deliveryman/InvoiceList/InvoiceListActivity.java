@@ -225,7 +225,7 @@ public class InvoiceListActivity extends AppCompatActivity implements SwipeRefre
         }
 
         Call<InvoiceListModel> call = RetrofitClient
-                .getInstance().getApi().delManOrderList("_employeeInvoice", emp_id, offset1, limit1, searchType);
+                .getInstance().getApi().delManOrderList("_employeeInvoice", emp_id, offset1, limit1, searchTxt);
 
         call.enqueue(new Callback<InvoiceListModel>() {
             @Override
@@ -235,66 +235,101 @@ public class InvoiceListActivity extends AppCompatActivity implements SwipeRefre
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    InvoiceListModel productNameResModel = gson.fromJson(json, InvoiceListModel.class);
+                    InvoiceListModel invoiceListModel = gson.fromJson(json, InvoiceListModel.class);
 
-                    if (productNameResModel.getStatus() == 1) {
+                    if (invoiceListModel.getStatus() == 1) {
+
+                        if (searchType.equals("2")) {
+//                            if (todayOutletsDatum.size() > 0) {
+                            invoiceListAdapter.clear();
+//                            }
+                        }
 
                         order_list_recycler.setVisibility(View.VISIBLE);
-                        progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
                         nodata.setVisibility(View.GONE);
+                        searchLayout.setVisibility(View.VISIBLE);
+                        invoiceListData = invoiceListModel.getData();
 
-                        invoiceListData = productNameResModel.getData();
+                        if(invoiceListData.size()>0){
+                            offset = invoiceListModel.getOffset();
+                            limit = invoiceListModel.getLimit();
+                            totalcount = invoiceListModel.getTotalRecord();
 
-                        offset = productNameResModel.getOffset();
-                        limit = productNameResModel.getLimit();
-                        totalcount = productNameResModel.getTotalRecord();
+//                        int offest1 = offset;
+//                        int totalcount1;
+//                        if (totalcount > offset) {
+//                            totalcount1 = offset + limit;
+//                        } else {
+//                            totalcount1 = offset;
+//                        }
 
-                        int offest1 = offset;
-                        int totalcount1;
-                        if (totalcount > offset) {
-                            totalcount1 = offset + limit;
-                        } else {
-                            totalcount1 = offset;
+
+                            currentPage = offset;
+//                        totalPage = totalcount;
+
+
+                            if (currentPage != PAGE_START)
+                                invoiceListAdapter.removeLoading();
+
+                            invoiceListAdapter.addItems(invoiceListData);
+
+                            if (currentPage < totalcount) {
+                                invoiceListAdapter.addLoading();
+                            }else if(currentPage>totalPage){
+                                invoiceListAdapter.addLoading();
+                                invoiceListAdapter.removeLoading();
+                            }
+                            else {
+                                isLastPage = true;
+                                invoiceListAdapter.removeLoading();
+                            }
+                        }else{
+                            if(searchType.equals("2")){
+                                progress.setVisibility(View.GONE);
+                                emptyView.setVisibility(View.VISIBLE);
+                                nodata.setVisibility(View.VISIBLE);
+                                searchLayout.setVisibility(View.GONE);
+                            }
                         }
 
-
-                        currentPage = offest1;
-                        totalPage = totalcount1;
-
-
-                        if (currentPage != PAGE_START)
-                            invoiceListAdapter.removeLoading();
-
-                        invoiceListAdapter.addItems(invoiceListData);
-
-                        if (currentPage < totalPage) {
-                            invoiceListAdapter.addLoading();
-                        } else {
-                            isLastPage = true;
-                        }
                         isLoading = false;
 
 
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.GONE);
-                        nodata.setVisibility(View.GONE);
+//                        emptyView.setVisibility(View.GONE);
+//                        nodata.setVisibility(View.GONE);
+//                        searchLayout.setVisibility(View.VISIBLE);
 
                     } else {
-                        order_list_recycler.setVisibility(View.GONE);
-                        progress.setVisibility(View.GONE);
-                        nodata.setVisibility(View.VISIBLE);
-                        emptyView.setVisibility(View.VISIBLE);
-                        emptyView.setText("No Record Found");
+                        if(searchType.equals("2")){
+                            progress.setVisibility(View.GONE);
+                            emptyView.setVisibility(View.VISIBLE);
+                            nodata.setVisibility(View.VISIBLE);
+                            searchLayout.setVisibility(View.GONE);
+                            order_list_recycler.setVisibility(View.GONE);
+                        }
+//                        todayOutletRecycler.setVisibility(View.GONE);
+//                        progress.setVisibility(View.GONE);
+//                        nodata.setVisibility(View.VISIBLE);
+//                        emptyView.setVisibility(View.VISIBLE);
+//                        emptyView.setText(assignOutletsModel.getMessage());
+//                        searchLayout.setVisibility(View.GONE);
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(InvoiceListActivity.this).showSmallCustomToast("No Record Found");
-//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("No Record Found");
+//                    Toast.makeText(TodayOutletActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
                     progress.setVisibility(View.GONE);
+                    order_list_recycler.setVisibility(View.GONE);
+                    progress.setVisibility(View.GONE);
+                    nodata.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.VISIBLE);
+                    emptyView.setText("No Data Found");
+                    searchLayout.setVisibility(View.GONE);
                     Log.d("Exceptionnnn", e.getMessage());
                 }
             }

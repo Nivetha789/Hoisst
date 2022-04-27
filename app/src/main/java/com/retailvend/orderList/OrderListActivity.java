@@ -230,7 +230,7 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
         }
 
         Call<OrderListModel> call = RetrofitClient
-                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1,searchType);
+                .getInstance().getApi().orderList("_listEmployeeOrderPaginate", emp_id, offset1, limit1,searchTxt);
 
         call.enqueue(new Callback<OrderListModel>() {
             @Override
@@ -240,66 +240,102 @@ public class OrderListActivity extends AppCompatActivity implements SwipeRefresh
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    OrderListModel productNameResModel = gson.fromJson(json, OrderListModel.class);
+                    OrderListModel orderListModel = gson.fromJson(json, OrderListModel.class);
 
-                    if (productNameResModel.getStatus() == 1) {
+                    if (orderListModel.getStatus() == 1) {
+
+                        if (searchType.equals("2")) {
+//                            if (todayOutletsDatum.size() > 0) {
+                            orderListAdapter.clear();
+//                            }
+                        }
 
                         order_list_recycler.setVisibility(View.VISIBLE);
-                        progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
                         nodata.setVisibility(View.GONE);
+                        searchLayout.setVisibility(View.VISIBLE);
+                        orderListData = orderListModel.getData();
 
-                        orderListData = productNameResModel.getData();
+                        if(orderListData.size()>0){
+                            offset = orderListModel.getOffset();
+                            limit = orderListModel.getLimit();
+                            totalcount = orderListModel.getTotalRecord();
 
-                        offset = productNameResModel.getOffset();
-                        limit = productNameResModel.getLimit();
-                        totalcount = productNameResModel.getTotalRecord();
+//                        int offest1 = offset;
+//                        int totalcount1;
+//                        if (totalcount > offset) {
+//                            totalcount1 = offset + limit;
+//                        } else {
+//                            totalcount1 = offset;
+//                        }
 
-                        int offest1 = offset;
-                        int totalcount1;
-                        if (totalcount > offset) {
-                            totalcount1 = offset + limit;
-                        } else {
-                            totalcount1 = offset;
+
+                            currentPage = offset;
+//                        totalPage = totalcount;
+
+
+                            if (currentPage != PAGE_START)
+                                orderListAdapter.removeLoading();
+
+                            orderListAdapter.addItems(orderListData);
+
+                            if (currentPage < totalcount) {
+                                orderListAdapter.addLoading();
+                            }else if(currentPage>totalPage){
+                                orderListAdapter.addLoading();
+                                orderListAdapter.removeLoading();
+                            }
+                            else {
+                                isLastPage = true;
+                                orderListAdapter.removeLoading();
+                            }
+                        }else{
+                            if(searchType.equals("2")){
+                                progress.setVisibility(View.GONE);
+                                emptyView.setVisibility(View.VISIBLE);
+                                nodata.setVisibility(View.VISIBLE);
+                                searchLayout.setVisibility(View.GONE);
+                            }
                         }
 
-
-                        currentPage = offest1;
-                        totalPage = totalcount1;
-
-
-                        if (currentPage != PAGE_START)
-                            orderListAdapter.removeLoading();
-
-                        orderListAdapter.addItems(orderListData);
-
-                        if (currentPage < totalPage) {
-                            orderListAdapter.addLoading();
-                        } else {
-                            isLastPage = true;
-                        }
                         isLoading = false;
 
 
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.GONE);
-                        nodata.setVisibility(View.GONE);
+//                        emptyView.setVisibility(View.GONE);
+//                        nodata.setVisibility(View.GONE);
+//                        searchLayout.setVisibility(View.VISIBLE);
 
                     } else {
-                        order_list_recycler.setVisibility(View.GONE);
-                        progress.setVisibility(View.GONE);
-                        nodata.setVisibility(View.VISIBLE);
-                        emptyView.setVisibility(View.VISIBLE);
-                        emptyView.setText("No Record Found");
+                        System.out.println("searchType "+searchType);
+                        if(searchType.equals("2")){
+                            progress.setVisibility(View.GONE);
+                            emptyView.setVisibility(View.VISIBLE);
+                            nodata.setVisibility(View.VISIBLE);
+                            searchLayout.setVisibility(View.GONE);
+                            order_list_recycler.setVisibility(View.GONE);
+                        }
+//                        todayOutletRecycler.setVisibility(View.GONE);
+//                        progress.setVisibility(View.GONE);
+//                        nodata.setVisibility(View.VISIBLE);
+//                        emptyView.setVisibility(View.VISIBLE);
+//                        emptyView.setText(assignOutletsModel.getMessage());
+//                        searchLayout.setVisibility(View.GONE);
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(OrderListActivity.this).showSmallCustomToast("No Record Found");
-//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("No Record Found");
+//                    Toast.makeText(TodayOutletActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
                     progress.setVisibility(View.GONE);
+                    order_list_recycler.setVisibility(View.GONE);
+                    progress.setVisibility(View.GONE);
+                    nodata.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.VISIBLE);
+                    emptyView.setText("No Data Found");
+                    searchLayout.setVisibility(View.GONE);
                     Log.d("Exceptionnnn", e.getMessage());
                 }
             }

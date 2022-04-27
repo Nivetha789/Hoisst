@@ -47,8 +47,6 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
     int itemCount = 0;
     ProgressBar progress;
     TextView nodata_txt;
-    ConstraintLayout no_data_constrain;
-
 
     SessionManagerSP sessionManagerSP;
     //distributor id
@@ -62,7 +60,8 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
 
     CollectionDeliveryAdapter collectionDeliveryAdapter;
     RecyclerView collection_recyclerView;
-    ImageView left_arrow;
+    ImageView left_arrow,nodata;
+    TextView emptyView;
 
 
     @Override
@@ -92,9 +91,10 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
 
         left_arrow=findViewById(R.id.left_arrow);
         nodata_txt=findViewById(R.id.nodata_txt);
-        no_data_constrain=findViewById(R.id.no_data_constrain);
         collection_recyclerView=findViewById(R.id.collection_recyclerView);
         progress = findViewById(R.id.progress);
+        emptyView = findViewById(R.id.emptyView);
+        nodata = findViewById(R.id.nodata);
 
         sessionManagerSP = new SessionManagerSP(CollectionDeliveryActivity.this);
 
@@ -190,10 +190,12 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
 
         if (isLoading) {
             progress.setVisibility(View.GONE);
-            no_data_constrain.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
         } else {
             progress.setVisibility(View.VISIBLE);
-            no_data_constrain.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
         }
 
         Call<DeliveryCollectionListModel> call = RetrofitClient
@@ -213,57 +215,96 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
 
                         collection_recyclerView.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.GONE);
 
                         deliveryCollectionListData = deliveryCollectionListModel.getData();
 
-                        offset = deliveryCollectionListModel.getOffset();
-                        limit = deliveryCollectionListModel.getLimit();
-                        totalcount = deliveryCollectionListModel.getTotalRecord();
-
-                        int offest1 = offset;
-                        int totalcount1;
-                        if (totalcount > offset) {
-                            totalcount1 = offset + limit;
-                        } else {
-                            totalcount1 = offset;
+                        if (searchType.equals("2")) {
+//                            if (todayOutletsDatum.size() > 0) {
+                            collectionDeliveryAdapter.clear();
+//                            }
                         }
 
+                        collection_recyclerView.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
+                        deliveryCollectionListData = deliveryCollectionListModel.getData();
 
-                        currentPage = offest1;
-                        totalPage = totalcount1;
+                        if(deliveryCollectionListData.size()>0){
+                            offset = deliveryCollectionListModel.getOffset();
+                            limit = deliveryCollectionListModel.getLimit();
+                            totalcount = deliveryCollectionListModel.getTotalRecord();
+
+//                        int offest1 = offset;
+//                        int totalcount1;
+//                        if (totalcount > offset) {
+//                            totalcount1 = offset + limit;
+//                        } else {
+//                            totalcount1 = offset;
+//                        }
 
 
-                        if (currentPage != PAGE_START)
-                            collectionDeliveryAdapter.removeLoading();
+                            currentPage = offset;
+//                        totalPage = totalcount;
 
-                        collectionDeliveryAdapter.addItems(deliveryCollectionListData);
 
-                        if (currentPage < totalPage) {
-                            collectionDeliveryAdapter.addLoading();
-                        } else {
-                            isLastPage = true;
+                            if (currentPage != PAGE_START)
+                                collectionDeliveryAdapter.removeLoading();
+
+                            collectionDeliveryAdapter.addItems(deliveryCollectionListData);
+
+                            if (currentPage < totalcount) {
+                                collectionDeliveryAdapter.addLoading();
+                            }else if(currentPage>totalPage){
+                                collectionDeliveryAdapter.addLoading();
+                                collectionDeliveryAdapter.removeLoading();
+                            }
+                            else {
+                                isLastPage = true;
+                                collectionDeliveryAdapter.removeLoading();
+                            }
+                        }else{
+                            if(searchType.equals("2")){
+                                progress.setVisibility(View.GONE);
+                                emptyView.setVisibility(View.VISIBLE);
+                                nodata.setVisibility(View.VISIBLE);
+                            }
                         }
+
                         isLoading = false;
 
 
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.GONE);
+//                        emptyView.setVisibility(View.GONE);
+//                        nodata.setVisibility(View.GONE);
+//                        searchLayout.setVisibility(View.VISIBLE);
 
                     } else {
-                        collection_recyclerView.setVisibility(View.GONE);
-                        progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.VISIBLE);
-                        nodata_txt.setText("No Record Found");
+                        if(searchType.equals("2")){
+                            progress.setVisibility(View.GONE);
+                            emptyView.setVisibility(View.VISIBLE);
+                            nodata.setVisibility(View.VISIBLE);
+                            collection_recyclerView.setVisibility(View.GONE);
+                        }
+//                        todayOutletRecycler.setVisibility(View.GONE);
+//                        progress.setVisibility(View.GONE);
+//                        nodata.setVisibility(View.VISIBLE);
+//                        emptyView.setVisibility(View.VISIBLE);
+//                        emptyView.setText(assignOutletsModel.getMessage());
+//                        searchLayout.setVisibility(View.GONE);
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(CollectionDeliveryActivity.this).showSmallCustomToast("No Record Found");
-//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("No Record Found");
+//                    Toast.makeText(TodayOutletActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
                     progress.setVisibility(View.GONE);
+                    collection_recyclerView.setVisibility(View.GONE);
+                    progress.setVisibility(View.GONE);
+                    nodata.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.VISIBLE);
+                    emptyView.setText("No Data Found");
                     Log.d("Exceptionnnn", e.getMessage());
                 }
             }
@@ -272,8 +313,9 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
             public void onFailure(@NonNull Call<DeliveryCollectionListModel> call, @NonNull Throwable t) {
                 collection_recyclerView.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
-                no_data_constrain.setVisibility(View.VISIBLE);
-                nodata_txt.setText("Something went wrong try again..");
+                emptyView.setVisibility(View.VISIBLE);
+                nodata.setVisibility(View.VISIBLE);
+                emptyView.setText("Something went wrong try again..");
             }
         });
     }

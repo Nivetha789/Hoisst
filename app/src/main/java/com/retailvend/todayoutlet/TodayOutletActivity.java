@@ -240,69 +240,96 @@ public class TodayOutletActivity extends AppCompatActivity implements SwipeRefre
                     if (assignOutletsModel.getStatus() == 1) {
 
                         if (searchType.equals("2")) {
-                            if (todayOutletsDatum.size() > 0) {
+//                            if (todayOutletsDatum.size() > 0) {
                                 todayOutletAdapter.clear();
-                            }
+//                            }
                         }
 
                         todayOutletRecycler.setVisibility(View.VISIBLE);
-                        progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
                         nodata.setVisibility(View.GONE);
                         searchLayout.setVisibility(View.VISIBLE);
                         todayOutletsDatum = assignOutletsModel.getData();
 
-                        offset = assignOutletsModel.getOffset();
-                        limit = assignOutletsModel.getLimit();
-                        totalcount = assignOutletsModel.getTotalRecord();
+                        if(todayOutletsDatum.size()>0){
+                            offset = assignOutletsModel.getOffset();
+                            limit = assignOutletsModel.getLimit();
+                            totalcount = assignOutletsModel.getTotalRecord();
 
-                        int offest1 = offset;
-                        int totalcount1;
-                        if (totalcount > offset) {
-                            totalcount1 = offset + limit;
-                        } else {
-                            totalcount1 = offset;
+//                        int offest1 = offset;
+//                        int totalcount1;
+//                        if (totalcount > offset) {
+//                            totalcount1 = offset + limit;
+//                        } else {
+//                            totalcount1 = offset;
+//                        }
+
+
+                            currentPage = offset;
+//                        totalPage = totalcount;
+
+
+                            if (currentPage != PAGE_START)
+                                todayOutletAdapter.removeLoading();
+
+                            todayOutletAdapter.addItems(todayOutletsDatum);
+
+                            if (currentPage < totalcount) {
+                                todayOutletAdapter.addLoading();
+                            }else if(currentPage>totalPage){
+                                todayOutletAdapter.addLoading();
+                                todayOutletAdapter.removeLoading();
+                            }
+                            else {
+                                isLastPage = true;
+                                todayOutletAdapter.removeLoading();
+                            }
+                        }else{
+                            if(searchType.equals("2")){
+                                progress.setVisibility(View.GONE);
+                                emptyView.setVisibility(View.VISIBLE);
+                                nodata.setVisibility(View.VISIBLE);
+                                searchLayout.setVisibility(View.GONE);
+                            }
                         }
 
-
-                        currentPage = offest1;
-                        totalPage = totalcount1;
-
-
-                        if (currentPage != PAGE_START)
-                            todayOutletAdapter.removeLoading();
-
-                        todayOutletAdapter.addItems(todayOutletsDatum);
-
-                        if (currentPage < totalPage) {
-                            todayOutletAdapter.addLoading();
-                        } else {
-                            isLastPage = true;
-                        }
                         isLoading = false;
 
 
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.GONE);
-                        nodata.setVisibility(View.GONE);
-                        searchLayout.setVisibility(View.VISIBLE);
+//                        emptyView.setVisibility(View.GONE);
+//                        nodata.setVisibility(View.GONE);
+//                        searchLayout.setVisibility(View.VISIBLE);
 
                     } else {
-                        todayOutletRecycler.setVisibility(View.GONE);
-                        progress.setVisibility(View.GONE);
-                        nodata.setVisibility(View.VISIBLE);
-                        emptyView.setVisibility(View.VISIBLE);
-                        emptyView.setText(assignOutletsModel.getMessage());
-                        searchLayout.setVisibility(View.GONE);
+                        if(searchType.equals("2")){
+                            progress.setVisibility(View.GONE);
+                            emptyView.setVisibility(View.VISIBLE);
+                            nodata.setVisibility(View.VISIBLE);
+                            searchLayout.setVisibility(View.GONE);
+                            todayOutletRecycler.setVisibility(View.GONE);
+                        }
+//                        todayOutletRecycler.setVisibility(View.GONE);
+//                        progress.setVisibility(View.GONE);
+//                        nodata.setVisibility(View.VISIBLE);
+//                        emptyView.setVisibility(View.VISIBLE);
+//                        emptyView.setText(assignOutletsModel.getMessage());
+//                        searchLayout.setVisibility(View.GONE);
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("No Record Found");
+//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("No Record Found");
 //                    Toast.makeText(TodayOutletActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
                     progress.setVisibility(View.GONE);
+                    todayOutletRecycler.setVisibility(View.GONE);
+                    progress.setVisibility(View.GONE);
+                    nodata.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.VISIBLE);
+                    emptyView.setText("No Data Found");
+                    searchLayout.setVisibility(View.GONE);
                     Log.d("Exceptionnnn", e.getMessage());
                 }
             }

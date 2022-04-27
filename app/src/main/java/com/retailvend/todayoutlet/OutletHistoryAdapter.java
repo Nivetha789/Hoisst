@@ -22,10 +22,9 @@ public class OutletHistoryAdapter extends RecyclerView.Adapter<OutletHistoryAdap
     List<OutletHisOrderData> empTargetBeatTargetList;
     List<OutletHisPaymentData> outletHisPaymentData;
 
-    public OutletHistoryAdapter(Context mContext, List<OutletHisOrderData> empTargetProductTargetList1, List<OutletHisPaymentData> outletHisPaymentDataList) {
+    public OutletHistoryAdapter(Context mContext, List<OutletHisOrderData> empTargetProductTargetList1) {
         this.mContext = mContext;
         this.empTargetBeatTargetList = empTargetProductTargetList1;
-        this.outletHisPaymentData = outletHisPaymentDataList;
     }
 
 
@@ -40,16 +39,11 @@ public class OutletHistoryAdapter extends RecyclerView.Adapter<OutletHistoryAdap
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        OutletHisOrderData productDataModel = empTargetBeatTargetList.get(position);
-        OutletHisPaymentData outletHisOrderData11 = outletHisPaymentData.get(position);
+        OutletHisOrderData outletHisOrderData = empTargetBeatTargetList.get(position);
 
-        holder.order_no.setText(productDataModel.getOrderNo());
-        holder.dist_name.setText(outletHisOrderData11.getDistributorName());
-        holder.discount.setText(outletHisOrderData11.getDiscount());
-        holder.bill_no.setText(outletHisOrderData11.getBillNo());
-        holder.amount.setText(outletHisOrderData11.getAmount());
-        holder.collection_type.setText(outletHisOrderData11.getCollectionType());
-        holder.date.setText(outletHisOrderData11.getDate());
+        holder.order_no.setText(outletHisOrderData.getOrderNo());
+        holder.emp_name.setText(outletHisOrderData.getEmpName());
+        holder.date.setText(outletHisOrderData.getOrdered());
 
 
 //        holder.txt_add_to_cart.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +60,7 @@ public class OutletHistoryAdapter extends RecyclerView.Adapter<OutletHistoryAdap
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView order_no, dist_name, discount, bill_no,amount,collection_type,date;
+        public TextView order_no, emp_name,date;
         public CardView cardview;
 
 
@@ -74,11 +68,7 @@ public class OutletHistoryAdapter extends RecyclerView.Adapter<OutletHistoryAdap
             super(view);
 
             order_no = view.findViewById(R.id.order_no);
-            dist_name = view.findViewById(R.id.dist_name);
-            discount = view.findViewById(R.id.discount);
-            bill_no = view.findViewById(R.id.bill_no);
-            amount = view.findViewById(R.id.amount);
-            collection_type = view.findViewById(R.id.collection_type);
+            emp_name = view.findViewById(R.id.emp_name);
             date = view.findViewById(R.id.date);
             cardview = view.findViewById(R.id.cardview);
 

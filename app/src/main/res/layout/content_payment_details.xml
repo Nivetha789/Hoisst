@@ -58,7 +58,7 @@
                     android:layout_gravity="center"
                     android:gravity="center|left"
                     android:paddingLeft="20dp"
-                    android:text="Shop Name :"
+                    android:text="Store Name :"
                     android:textColor="#40000000"
                     android:textSize="12dp" />
 
@@ -137,10 +137,10 @@
 <!--                    app:layout_constraintStart_toStartOf="parent"-->
 <!--                    app:layout_constraintTop_toTopOf="parent">-->
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 <!--                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 
                 <TextView

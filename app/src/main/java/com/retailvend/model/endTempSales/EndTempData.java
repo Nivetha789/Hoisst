@@ -38,6 +38,9 @@ public class EndTempData {
     @SerializedName("close_time")
     @Expose
     private String closeTime;
+    @SerializedName("start_time")
+    @Expose
+    private String startTime;
     @SerializedName("outlet_list")
     @Expose
     private List<EndTempOutlet> outletList = new ArrayList<>();
@@ -120,6 +123,14 @@ public class EndTempData {
 
     public void setCloseTime(String closeTime) {
         this.closeTime = closeTime;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     public List<EndTempOutlet> getOutletList() {

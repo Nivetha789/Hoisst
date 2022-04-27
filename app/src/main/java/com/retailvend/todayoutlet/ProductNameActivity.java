@@ -51,7 +51,7 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
     String order_type="";
     EditText search;
     LinearLayout searchLayout;
-    ImageView search_icon,left_arrow;
+    ImageView search_icon,left_arrow,nodata;
     Activity activity;
     String prod_name="";
     String prod_id="";
@@ -106,6 +106,7 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
         left_arrow = findViewById(R.id.left_arrow);
         progress = findViewById(R.id.progress);
         emptyView = findViewById(R.id.emptyView);
+        nodata = findViewById(R.id.nodata);
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
@@ -247,64 +248,95 @@ public class ProductNameActivity extends AppCompatActivity implements SwipeRefre
                     if (productNameResModel.getStatus() == 1) {
 
                         if (searchType.equals("2")) {
-                            if (productNameList.size() > 0) {
-                                productNameAdapter.clear();
-                            }
+//                            if (todayOutletsDatum.size() > 0) {
+                            productNameAdapter.clear();
+//                            }
                         }
 
                         product_name_recycler.setVisibility(View.VISIBLE);
-                        progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
-
+                        nodata.setVisibility(View.GONE);
+                        searchLayout.setVisibility(View.VISIBLE);
                         productNameList = productNameResModel.getData();
 
-                        offset = productNameResModel.getOffset();
-                        limit = productNameResModel.getLimit();
-                        totalcount = productNameResModel.getTotalRecord();
+                        if(productNameList.size()>0){
+                            offset = productNameResModel.getOffset();
+                            limit = productNameResModel.getLimit();
+                            totalcount = productNameResModel.getTotalRecord();
 
-                        int offest1 = offset;
-                        int totalcount1;
-                        if (totalcount > offset) {
-                            totalcount1 = offset + limit;
-                        } else {
-                            totalcount1 = offset;
+//                        int offest1 = offset;
+//                        int totalcount1;
+//                        if (totalcount > offset) {
+//                            totalcount1 = offset + limit;
+//                        } else {
+//                            totalcount1 = offset;
+//                        }
+
+
+                            currentPage = offset;
+//                        totalPage = totalcount;
+
+
+                            if (currentPage != PAGE_START)
+                                productNameAdapter.removeLoading();
+
+                            productNameAdapter.addItems(productNameList);
+
+                            if (currentPage < totalcount) {
+                                productNameAdapter.addLoading();
+                            }else if(currentPage>totalPage){
+                                productNameAdapter.addLoading();
+                                productNameAdapter.removeLoading();
+                            }
+                            else {
+                                isLastPage = true;
+                                productNameAdapter.removeLoading();
+                            }
+                        }else{
+                            if(searchType.equals("2")){
+                                progress.setVisibility(View.GONE);
+                                emptyView.setVisibility(View.VISIBLE);
+                                nodata.setVisibility(View.VISIBLE);
+                                searchLayout.setVisibility(View.GONE);
+                            }
                         }
 
-
-                        currentPage = offest1;
-                        totalPage = totalcount1;
-
-
-                        if (currentPage != PAGE_START)
-                            productNameAdapter.removeLoading();
-
-                        productNameAdapter.addItems(productNameList);
-
-                        if (currentPage < totalPage) {
-                            productNameAdapter.addLoading();
-                        } else {
-                            isLastPage = true;
-                        }
                         isLoading = false;
 
 
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.GONE);
+//                        emptyView.setVisibility(View.GONE);
+//                        nodata.setVisibility(View.GONE);
+//                        searchLayout.setVisibility(View.VISIBLE);
 
                     } else {
-                        product_name_recycler.setVisibility(View.GONE);
-                        progress.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.VISIBLE);
-                        emptyView.setText("No Record Found");
+                        if(searchType.equals("2")){
+                            progress.setVisibility(View.GONE);
+                            emptyView.setVisibility(View.VISIBLE);
+                            nodata.setVisibility(View.VISIBLE);
+                            searchLayout.setVisibility(View.GONE);
+                        }
+//                        todayOutletRecycler.setVisibility(View.GONE);
+//                        progress.setVisibility(View.GONE);
+//                        nodata.setVisibility(View.VISIBLE);
+//                        emptyView.setVisibility(View.VISIBLE);
+//                        emptyView.setText(assignOutletsModel.getMessage());
+//                        searchLayout.setVisibility(View.GONE);
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(ProductNameActivity.this).showSmallCustomToast("No Record Found");
-//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("No Record Found");
+//                    Toast.makeText(TodayOutletActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
                     progress.setVisibility(View.GONE);
+                    product_name_recycler.setVisibility(View.GONE);
+                    progress.setVisibility(View.GONE);
+                    nodata.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.VISIBLE);
+                    emptyView.setText("No Data Found");
+                    searchLayout.setVisibility(View.GONE);
                     Log.d("Exceptionnnn", e.getMessage());
                 }
             }

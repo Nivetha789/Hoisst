@@ -53,7 +53,7 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="140dp"
+                android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/logo"
@@ -108,51 +108,6 @@
                 app:layout_constraintRight_toRightOf="@+id/name"
                 app:layout_constraintTop_toBottomOf="@+id/name_txt" />
 
-            <TextView
-                android:id="@+id/date_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="4dp"
-                android:fontFamily="@font/quicksand_medium"
-                android:gravity="start"
-                android:text="Date"
-                android:textColor="@color/colorPrimary"
-                android:textSize="13sp"
-                app:layout_constraintBottom_toTopOf="@+id/mobile_no_view"
-                app:layout_constraintEnd_toStartOf="@+id/date"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email_view"
-                tools:layout_editor_absoluteY="30dp" />
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="20dp"
-                android:fontFamily="@font/quicksand_semi_bold"
-                android:gravity="end"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/date_txt"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/date_txt"
-                app:layout_constraintTop_toTopOf="@+id/date_txt" />
-
-        <View
-            android:id="@+id/mobile_no_view"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/light_dark"
-            app:layout_constraintLeft_toLeftOf="@+id/date_txt"
-            app:layout_constraintRight_toRightOf="@+id/date"
-            app:layout_constraintTop_toBottomOf="@+id/date" />
-
         <TextView
             android:id="@+id/start_time_txt"
             android:layout_width="wrap_content"
@@ -163,14 +118,13 @@
             android:fontFamily="@font/quicksand_medium"
             android:gravity="start"
             android:text="Start Time"
-            android:visibility="gone"
             android:textColor="@color/colorPrimary"
             android:textSize="13sp"
             app:layout_constraintEnd_toStartOf="@+id/start_time"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mobile_no_view" />
+            app:layout_constraintTop_toBottomOf="@+id/email_view" />
 
         <TextView
             android:id="@+id/start_time"
@@ -180,7 +134,6 @@
             android:layout_marginEnd="20dp"
             android:fontFamily="@font/quicksand_semi_bold"
             android:gravity="end"
-            android:visibility="gone"
             android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/start_time_txt"
@@ -194,7 +147,6 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="20dp"
-            android:visibility="gone"
             android:background="@color/light_dark"
             app:layout_constraintLeft_toLeftOf="@+id/start_time_txt"
             app:layout_constraintRight_toRightOf="@+id/start_time"
@@ -286,6 +238,48 @@
                 app:layout_constraintTop_toBottomOf="@+id/new_outlet_txt" />
 
         <TextView
+            android:id="@+id/old_outlet_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="start"
+            android:text="Old Outlet"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/new_outlet_view"  />
+
+        <TextView
+            android:id="@+id/old_outlet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/quicksand_semi_bold"
+            android:gravity="end"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/old_outlet_txt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/old_outlet_txt"
+            app:layout_constraintTop_toTopOf="@+id/old_outlet_txt" />
+
+        <View
+            android:id="@+id/old_outlet_view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/light_dark"
+            app:layout_constraintLeft_toLeftOf="@+id/old_outlet_txt"
+            app:layout_constraintRight_toRightOf="@+id/old_outlet"
+            app:layout_constraintTop_toBottomOf="@+id/old_outlet" />
+
+        <TextView
                 android:id="@+id/closing_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -298,7 +292,7 @@
                 android:textSize="13sp"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/new_outlet_view" />
+                app:layout_constraintTop_toBottomOf="@+id/outlet_order_view" />
 
             <TextView
                 android:id="@+id/close_time"
@@ -326,23 +320,23 @@
                 app:layout_constraintRight_toRightOf="@+id/new_outlet"
                 app:layout_constraintTop_toBottomOf="@+id/close_time" />
 
-            <TextView
-                android:id="@+id/outlet_order_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="4dp"
-                android:fontFamily="@font/quicksand_medium"
-                android:gravity="start"
-                android:text="Order Outlet"
-                android:textColor="@color/colorPrimary"
-                android:textSize="13sp"
-                app:layout_constraintEnd_toStartOf="@+id/outlet_order"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/close_time_view" />
+        <TextView
+            android:id="@+id/outlet_order_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="start"
+            android:text="Productive Outlet"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/outlet_order"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/old_outlet_view" />
 
             <TextView
                 android:id="@+id/outlet_order"
@@ -379,14 +373,14 @@
                 android:layout_marginEnd="4dp"
                 android:fontFamily="@font/quicksand_medium"
                 android:gravity="start"
-                android:text="Order Count"
+                android:text="Total Order"
                 android:textColor="@color/colorPrimary"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toStartOf="@+id/count_order"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/outlet_order_view" />
+                app:layout_constraintTop_toBottomOf="@+id/close_time_view" />
 
             <TextView
                 android:id="@+id/count_order"
@@ -423,10 +417,10 @@
                 android:layout_marginEnd="4dp"
                 android:fontFamily="@font/quicksand_medium"
                 android:gravity="start"
-                android:text="Total Order"
+                android:text="Order Value"
                 android:textColor="@color/colorPrimary"
                 android:textSize="13sp"
-                app:layout_constraintEnd_toStartOf="@+id/start_time"
+                app:layout_constraintEnd_toStartOf="@+id/order_total"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
@@ -552,7 +546,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintTop_toBottomOf="@+id/nodata"
+                app:layout_constraintTop_toBottomOf="@+id/no_data"
                 app:layout_constraintStart_toStartOf="@+id/outlet_list" />
 
             <View
@@ -568,24 +562,26 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:background="@drawable/button_shape1"
-                android:id="@+id/view_pdf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="View PDF"
-                android:visibility="gone"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:textColor="@color/white"
-                android:textSize="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/start_time_view" />
+        <TextView
+            android:id="@+id/view_pdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_shape1"
+            android:fontFamily="@font/quicksand_bold"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:text="View PDF"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/prod_target_cons"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

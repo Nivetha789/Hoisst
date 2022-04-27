@@ -88,6 +88,7 @@
                                 android:fontFamily="@font/quicksand_bold"
                                 android:paddingLeft="5dp"
                                 android:paddingTop="16dp"
+                                android:layout_marginRight="10dp"
                                 android:singleLine="true"
                                 android:gravity="end"
                                 android:text="-"
@@ -195,7 +196,7 @@
                             android:gravity="center"
                             android:paddingLeft="5dp"
                             android:text=""
-                            android:textColor="@color/green"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="14dp" />
 
 
@@ -245,8 +246,7 @@
                                     android:fontFamily="@font/quicksand_semi_bold"
                                     android:gravity="center"
                                     android:paddingLeft="5dp"
-                                    android:text=""
-                                    android:textColor="@color/green"
+                                    android:textColor="@color/colorPrimary"
                                     android:textSize="14dp" />
 
 
@@ -258,19 +258,23 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
+                            android:layout_marginRight="10dp"
                             android:orientation="vertical">
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp">
+                                android:layout_marginStart="8dp"
+                                android:gravity="end"
+                                android:layout_marginRight="10dp">
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
                                     android:fontFamily="@font/quicksand_medium"
                                     android:paddingLeft="5dp"
                                     android:singleLine="true"
+                                    android:gravity="end"
                                     android:text="Time"
                                     android:textColor="#802F3145"
                                     android:textFontWeight="600"
@@ -284,15 +288,14 @@
 
                                 <TextView
                                     android:id="@+id/time"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="8dp"
                                     android:layout_marginBottom="5dp"
                                     android:fontFamily="@font/quicksand_semi_bold"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingLeft="5dp"
                                     android:text=""
-                                    android:textColor="@color/green"
+                                    android:textColor="@color/colorPrimary"
                                     android:textSize="14dp" />
 
 

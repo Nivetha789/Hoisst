@@ -75,6 +75,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     LinearLayoutManager mLayoutManager;
     LinearLayout outlet_his_Constrain;
     String store_id = "";
+    String shop_name1="";
     String attendance_status = "";
     String latitude = "";
     String longitude = "";
@@ -144,7 +145,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         builder = new AlertDialog.Builder(this);
 
         assignOutletsDatum = (AssignOutletsDatum) getIntent().getSerializableExtra("todayOutlet");
-        String shop_name1 = assignOutletsDatum.getCompanyName();
+        shop_name1 = assignOutletsDatum.getCompanyName();
         store_id = assignOutletsDatum.getStoreId();
         String shop_number1 = assignOutletsDatum.getMobile();
         String contact_name1 = assignOutletsDatum.getContactName();
@@ -306,6 +307,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             public void onClick(View v) {
                 Intent outletIntent = new Intent(activity, OutletHistoryActivity.class);
                 outletIntent.putExtra("outlet_id",store_id);
+                outletIntent.putExtra("outlet_name",shop_name1);
                 activity.startActivity(outletIntent);
             }
         });
