@@ -63,7 +63,7 @@ public class EndTempActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     Menu menu;
-    TextView mTitle, name, date, beat_name, total_outlet, new_outlet, start_time,
+    TextView mTitle, name, date, beat_name, total_outlet, new_outlet, start_time,old_outlet,
             outlet_order, count_order, order_total, close_time;
     ConstraintLayout main_constrain;
     List<EndTempData> endTempData;
@@ -87,6 +87,7 @@ public class EndTempActivity extends AppCompatActivity {
     String beatRes = "";
     String totalOutlet = "";
     String startTime1 = "";
+    String oldOutlet = "";
     String newOutletRes = "";
     String closeTimeRes = "";
     String orderOutletRes = "";
@@ -136,6 +137,7 @@ public class EndTempActivity extends AppCompatActivity {
             date = findViewById(R.id.date);
             beat_name = findViewById(R.id.beat_name);
             total_outlet = findViewById(R.id.total_outlet_end);
+            old_outlet = findViewById(R.id.old_outlet);
             close_time = findViewById(R.id.close_time);
             new_outlet = findViewById(R.id.new_outlet);
             mTitle = findViewById(R.id.toolbar_title);
@@ -347,8 +349,10 @@ public class EndTempActivity extends AppCompatActivity {
                         empname = endTempData.get(0).getName();
                         totalOutlet = endTempData.get(0).getTotalOutlet();
                         startTime1 = endTempData.get(0).getStartTime();
+                        oldOutlet = endTempData.get(0).getOldOutlet();
                         newOutletRes = endTempData.get(0).getNewOutlet();
                         closeTimeRes = endTempData.get(0).getCloseTime();
+                        System.out.println("closeTimeRes "+closeTimeRes);
                         orderOutletRes = endTempData.get(0).getOrderOutlet();
                         orderCountRes = endTempData.get(0).getOrderCount();
                         orderTotalRes = endTempData.get(0).getOrderTotal();
@@ -359,6 +363,7 @@ public class EndTempActivity extends AppCompatActivity {
                         close_time.setText(closeTimeRes);
                         new_outlet.setText(newOutletRes);
                         start_time.setText(startTime1);
+                        old_outlet.setText(oldOutlet);
                         outlet_order.setText(orderOutletRes);
                         count_order.setText(orderCountRes);
                         order_total.setText(orderTotalRes);
