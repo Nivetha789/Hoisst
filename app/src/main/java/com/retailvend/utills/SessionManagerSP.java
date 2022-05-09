@@ -157,6 +157,28 @@ public class SessionManagerSP {
         editor.commit();
     }
 
+    public String getOutletLat() {
+
+        return pref.getString("OutletLat", "");
+    }
+
+
+    public void setOutletLat(String authkey) {
+        editor.putString("OutletLat", authkey);
+        editor.commit();
+    }
+
+    public String getOutletLong() {
+
+        return pref.getString("OutletLong", "");
+    }
+
+
+    public void setOutletLong(String authkey) {
+        editor.putString("OutletLong", authkey);
+        editor.commit();
+    }
+
     public String getLong() {
 
         return pref.getString("Long", "");

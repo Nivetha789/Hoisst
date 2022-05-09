@@ -17,6 +17,7 @@ import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.ProductNameResData;
 import com.retailvend.model.outlets.SalesAgentData;
 import com.retailvend.utills.BaseViewHolder;
+import com.retailvend.utills.SessionManagerSP;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<BaseViewHolder>  {
     private static final int VIEW_TYPE_LOADING = 0;
     private static final int VIEW_TYPE_NORMAL = 1;
     private static boolean isLoaderVisible = false;
+    SessionManagerSP sessionManagerSP;
 
     public TodayOutletAdapter(Activity context, List<AssignOutletsDatum> itemsModelsl) {
         this.todayOutletsDatum = itemsModelsl;
@@ -41,6 +43,7 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<BaseViewHolder>  {
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
+                sessionManagerSP = new SessionManagerSP(activity);
                 return new ViewHolder(
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.today_outlet_adapter, parent, false));
             case VIEW_TYPE_LOADING:
@@ -134,6 +137,9 @@ public class TodayOutletAdapter extends RecyclerView.Adapter<BaseViewHolder>  {
             shopName.setText(companyName);
             address.setText(address1);
             contactNum.setText(companyNumber);
+            sessionManagerSP.setOutletLat(item.getLatitude());
+            sessionManagerSP.setOutletLong(item.getLongitude());
+
 
             cardview.setOnClickListener(new View.OnClickListener() {
                 @Override

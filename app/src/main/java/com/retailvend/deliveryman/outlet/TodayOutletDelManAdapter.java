@@ -13,9 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
 import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsDatum;
-import com.retailvend.model.outlets.AssignOutletsDatum;
-import com.retailvend.todayoutlet.TodayOutletAdapter;
-import com.retailvend.todayoutlet.TodayOutletDetailsActivity;
 import com.retailvend.utills.BaseViewHolder;
 
 import java.util.List;

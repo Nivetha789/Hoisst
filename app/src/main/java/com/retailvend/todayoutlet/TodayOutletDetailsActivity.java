@@ -89,6 +89,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     String reasonId="";
 
     String assign_id="";
+    String desLatitude="";
+    String desLongitude="";
 
     private boolean locationget;
 
@@ -154,10 +156,6 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String gst1 = assignOutletsDatum.getGstNo();
         String pan1 = assignOutletsDatum.getPanNo();
         attendance_status = assignOutletsDatum.getAttendanceStatus();
-//        latitude = assignOutletsDatum.getLatitude();
-//        longitude = assignOutletsDatum.getLongitude();
-//        System.out.println("latitude "+latitude);
-//        System.out.println("longitude "+longitude);
         shop_name.setText(shop_name1);
         shop_number.setText(shop_number1);
         contact_name.setText(contact_name1);
@@ -165,6 +163,11 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         mail.setText(mail1);
 //        gst.setText(gst1);
 //        pan.setText(pan1);
+
+
+        desLatitude=sessionManagerSP.getOutletLat();
+        desLongitude=sessionManagerSP.getOutletLong();
+
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(TodayOutletDetailsActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
@@ -212,9 +215,25 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         location_constrain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uri = "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + "Map" + ")";
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                startActivity(intent);
+//                if (TextUtils.isEmpty(latitude) && TextUtils.isEmpty(longitude)) {
+//
+//                    Toast.makeText(TodayOutletDetailsActivity.this, "Location is not updated, Try Again", Toast.LENGTH_SHORT).show();
+//                } else {
+
+                    if (TextUtils.isEmpty(desLatitude) && TextUtils.isEmpty(desLongitude)) {
+                        Toast.makeText(TodayOutletDetailsActivity.this, "Designation location empty", Toast.LENGTH_SHORT).show();
+                    } else {
+
+
+                        String strUri = "http://maps.google.com/maps?q=loc:" + desLatitude + "," + desLongitude + " (" + address1 + ")";
+                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(strUri));
+
+                        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+
+                        startActivity(intent);
+                    }
+
+//                }
             }
         });
 
@@ -326,6 +345,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             checked.setVisibility(View.GONE);
             order_type_constrain.setVisibility(View.GONE);
         }
+        desLatitude=sessionManagerSP.getOutletLat();
+        desLongitude=sessionManagerSP.getOutletLong();
     }
 
     public boolean checkGPSON() {
@@ -390,6 +411,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     @Override
     public void onLocationChanged(Location location) {
 
+        desLatitude=sessionManagerSP.getOutletLat();
+        desLongitude=sessionManagerSP.getOutletLong();
         latitude = String.valueOf(location.getLatitude());
         longitude = String.valueOf(location.getLongitude());
         sessionManagerSP.setLat(latitude);
@@ -429,6 +452,12 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        desLatitude=sessionManagerSP.getOutletLat();
+        desLongitude=sessionManagerSP.getOutletLong();
+    }
 
     @Override
     public void onBackPressed() {

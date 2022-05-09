@@ -9,12 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.retailvend.R;
 import com.retailvend.model.outlets.AssignOutletsDatum;
-import com.retailvend.todayoutlet.TodayOutletDetailsActivity;
 import com.retailvend.utills.BaseViewHolder;
 
 import java.util.List;
