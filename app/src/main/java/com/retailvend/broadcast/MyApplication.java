@@ -2,6 +2,8 @@ package com.retailvend.broadcast;
 
 import android.app.Application;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 public class MyApplication extends Application {
 
     private static MyApplication mInstance;
@@ -11,6 +13,8 @@ public class MyApplication extends Application {
         super.onCreate();
 
         mInstance = this;
+        AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_NO);
 
     }
 
