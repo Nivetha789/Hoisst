@@ -876,6 +876,35 @@
                         android:layout_marginRight="15dp"
                         android:background="#40000000" />
 
+                    <LinearLayout
+                        android:id="@+id/lin_print"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/lin_button"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/print_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="center"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="Print Invoice"
+                            android:textColor="#ffffff"
+                            android:textFontWeight="700"
+                            android:textSize="@dimen/btn_text_size" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
 

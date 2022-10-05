@@ -77,6 +77,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     String store_id = "";
     String shop_name1="";
     String attendance_status = "";
+    String upload_status = "";
     String latitude = "";
     String longitude = "";
     ConstraintLayout order_type_constrain, reason_constrain, location_constrain;
@@ -156,6 +157,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String gst1 = assignOutletsDatum.getGstNo();
         String pan1 = assignOutletsDatum.getPanNo();
         attendance_status = assignOutletsDatum.getAttendanceStatus();
+        upload_status = assignOutletsDatum.getUploadStatus();
         shop_name.setText(shop_name1);
         shop_number.setText(shop_number1);
         contact_name.setText(contact_name1);

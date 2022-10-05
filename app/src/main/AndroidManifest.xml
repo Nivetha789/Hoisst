@@ -90,12 +90,6 @@
             android:windowSoftInputMode="stateHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".deliveryman.deliveryDetails.DeliveryDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Hoisst.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
             android:name=".deliveryman.outstand.paymentHistory.DelManPaymentHistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
@@ -249,6 +243,17 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider" />
         </provider>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
     </application>
 
 </manifest>

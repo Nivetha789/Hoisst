@@ -13,7 +13,7 @@ public class RetrofitClient {
     public static final String LIVE_URL = "http://18.139.78.111/index.php/";
 
     //test url
-    public static final String TEST_URL="http://18.139.78.111/beta/index.php/";
+    public static final String TEST_URL="https://www.datasense.in/demo/hoisst/beta/index.php/";
 
 
     private static RetrofitClient mInstance;
@@ -29,7 +29,7 @@ public class RetrofitClient {
 //                .build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(LIVE_URL)
+                .baseUrl(TEST_URL)
                 .client(HTTPInterceptor.logInterceptor().build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

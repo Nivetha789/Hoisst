@@ -1,23 +1,31 @@
 package com.retailvend.deliveryman.InvoiceList;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.retailvend.BuildConfig;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.delManModels.delCollection.invoiceDetails.InvoiceBillDetails;
@@ -28,6 +36,7 @@ import com.retailvend.model.delManModels.delCollection.invoiceDetails.InvoiceTax
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomToast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,10 +65,13 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
     String random_value = "";
     Activity activity;
     ImageView left_arrow;
+    LinearLayout lin_print;
 
     int qty;
     double totalPrice;
     double grandTotalPrice;
+
+    String print_invoice="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,11 +131,27 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
         left_arrow = findViewById(R.id.left_arrow);
         txt_invoice_qty_total = findViewById(R.id.txt_invoice_qty_total);
         txt_invoice_current_total = findViewById(R.id.txt_invoice_current_total);
+        lin_print = findViewById(R.id.lin_print);
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        lin_print.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("print_invoiceprint_invoice " + print_invoice);
+
+                if(!print_invoice.isEmpty()){
+                    WebView mWebView=new WebView(InvoiceDetailsActivity.this);
+                    mWebView.getSettings().setJavaScriptEnabled(true);
+                    mWebView.getSettings().setMediaPlaybackRequiresUserGesture(true);
+                    mWebView.loadUrl("https://docs.google.com/gview?embedded=true&url="+print_invoice);
+                    setContentView(mWebView);
+                }
             }
         });
 
@@ -195,12 +223,12 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
 
                             for (int k = 0; k < productDetails.size(); k++) {
                                 qty += Integer.valueOf(productDetails.get(k).orderQty);
-                                System.out.println("qtyyyyyyyy " + qty);
                             }
 
                             txt_invoice_current_total.setText("\u20B9 " + grandTotalPrice);
                             txt_invoice_qty_total.setText(String.valueOf(qty));
 
+                            print_invoice=invoiceDetailsModel.data.getPrintInvoice();
                             productDetails = invoiceDetailsModel.data.productDetails;
 
                             invoiceDetailsAdapter = new InvoiceDetailsAdapter(activity, productDetails);
