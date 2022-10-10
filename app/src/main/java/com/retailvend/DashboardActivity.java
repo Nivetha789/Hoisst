@@ -27,7 +27,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.changePass.ChangePasswordActivity;
+import com.retailvend.collateral.CollateralsActivity;
 import com.retailvend.collection.CollectionActivity;
+import com.retailvend.createOutlet.CreateOutletsActivity;
 import com.retailvend.deliveryman.InvoiceList.InvoiceListActivity;
 import com.retailvend.deliveryman.collection.CollectionDeliveryActivity;
 import com.retailvend.deliveryman.outlet.DelManTodayOutletsActivity;
@@ -63,16 +65,17 @@ public class DashboardActivity extends AppCompatActivity {
     ImageView navigaion;
     DrawerLayout drawerLayout;
     NavigationView navView;
-    ImageView menu, close;
+    ImageView menu, close, create_outlet_img;
     String login_type = "";
     TextView sales_main_txt, sales_list;
     String distributor_id = "";
-    LinearLayout sales_man_count_details,del_man_cnt_details;
+    LinearLayout sales_man_count_details, del_man_cnt_details;
     Activity activity;
     TextView nodata_txt;
-    TextView tot_outlet_del_count,visit_outlet_del_count,pending_del_count,tot_outlet_count,visit_outlet_count,
-            pending_count,target_count,achievements_count,order_count,order_tot_count,order_list;
-    ConstraintLayout no_data_constrain,today_outlet_menu,target_menu,start_temp_menu,end_temp_menu,collection_menu;
+    TextView tot_outlet_del_count, visit_outlet_del_count, pending_del_count, tot_outlet_count, visit_outlet_count,
+            pending_count, target_count, achievements_count, order_count, order_tot_count, order_list, create_outlet_list;
+    ConstraintLayout no_data_constrain, today_outlet_menu, target_menu, start_temp_menu, end_temp_menu, collection_menu,
+            create_outlet_menu, collaterals_menu;
     List<SalesDashboardCountDatum> salesDashboardCountData;
 
     @Override
@@ -80,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_drawer);
         ButterKnife.bind(this);
-        activity=this;
+        activity = this;
 
         outlet_main_cardview = findViewById(R.id.outlet_main_cardview);
         collection_main_cardview = findViewById(R.id.collection_main_cardview);
@@ -94,28 +97,32 @@ public class DashboardActivity extends AppCompatActivity {
         sales_main_txt = findViewById(R.id.sales_main_txt);
         sales_man_count_details = findViewById(R.id.sales_man_count_details);
         del_man_cnt_details = findViewById(R.id.del_man_cnt_details);
-        nodata_txt=findViewById(R.id.nodata_txt);
-        no_data_constrain=findViewById(R.id.no_data_constrain);
-        tot_outlet_del_count=findViewById(R.id.tot_outlet_del_count);
-        visit_outlet_del_count=findViewById(R.id.visit_outlet_del_count);
-        pending_del_count=findViewById(R.id.pending_del_count);
-        tot_outlet_count=findViewById(R.id.tot_outlet_count);
-        visit_outlet_count=findViewById(R.id.visit_outlet_count);
-        pending_count=findViewById(R.id.pending_count);
-        target_count=findViewById(R.id.target_count);
-        achievements_count=findViewById(R.id.achievements_count);
-        order_count=findViewById(R.id.order_count);
-        order_tot_count=findViewById(R.id.order_tot_count);
-        order_list=findViewById(R.id.order_list);
-        today_outlet_menu=findViewById(R.id.today_outlet_menu);
-        target_menu=findViewById(R.id.target_menu);
-        start_temp_menu=findViewById(R.id.start_temp_menu);
-        end_temp_menu=findViewById(R.id.end_temp_menu);
-        collection_menu=findViewById(R.id.collection_menu);
+        nodata_txt = findViewById(R.id.nodata_txt);
+        no_data_constrain = findViewById(R.id.no_data_constrain);
+        tot_outlet_del_count = findViewById(R.id.tot_outlet_del_count);
+        visit_outlet_del_count = findViewById(R.id.visit_outlet_del_count);
+        pending_del_count = findViewById(R.id.pending_del_count);
+        tot_outlet_count = findViewById(R.id.tot_outlet_count);
+        visit_outlet_count = findViewById(R.id.visit_outlet_count);
+        pending_count = findViewById(R.id.pending_count);
+        target_count = findViewById(R.id.target_count);
+        achievements_count = findViewById(R.id.achievements_count);
+        order_count = findViewById(R.id.order_count);
+        order_tot_count = findViewById(R.id.order_tot_count);
+        order_list = findViewById(R.id.order_list);
+        today_outlet_menu = findViewById(R.id.today_outlet_menu);
+        target_menu = findViewById(R.id.target_menu);
+        start_temp_menu = findViewById(R.id.start_temp_menu);
+        end_temp_menu = findViewById(R.id.end_temp_menu);
+        collection_menu = findViewById(R.id.collection_menu);
+        create_outlet_menu = findViewById(R.id.create_outlet_menu);
+        create_outlet_img = findViewById(R.id.create_outlet_img);
+        create_outlet_list = findViewById(R.id.create_outlet_list);
+        collaterals_menu = findViewById(R.id.collaterals_menu);
 
         sessionManagerSP = new SessionManagerSP(DashboardActivity.this);
 
-        salesDashboardCountData=new ArrayList<>();
+        salesDashboardCountData = new ArrayList<>();
 
         if (Build.VERSION.SDK_INT >= 19) {
 
@@ -163,18 +170,20 @@ public class DashboardActivity extends AppCompatActivity {
             sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             order_list.setText("INVOICE LIST");
-            
+
             today_outlet_menu.setVisibility(View.GONE);
             target_menu.setVisibility(View.GONE);
             start_temp_menu.setVisibility(View.GONE);
             end_temp_menu.setVisibility(View.GONE);
+            create_outlet_menu.setVisibility(View.GONE);
+            collaterals_menu.setVisibility(View.GONE);
 
 //            Typeface font1 = Typeface.createFromAsset(
 //                    this.getAssets(),
 //                    "font/quicksand_medium.ttf");
 //            sales_main_txt.setTypeface(font);
 //            sales_main_txt.setText("DELIVERY LIST");
-        }else{
+        } else {
             collection_menu.setVisibility(View.GONE);
         }
 //        } else {
@@ -274,14 +283,15 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.order_list_constrain, R.id.menu, R.id.logout_constrain, R.id.logout_txt, R.id.collection_menu, R.id.today_outlet_menu,
-            R.id.outstand_menu,R.id.target_menu,R.id.start_temp_menu,R.id.end_temp_menu,R.id.change_pass_menu})
+            R.id.outstand_menu, R.id.target_menu, R.id.start_temp_menu, R.id.end_temp_menu, R.id.change_pass_menu,
+            R.id.create_outlet_menu, R.id.collaterals_menu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.order_list_constrain:
-                if(distributor_id.equals("0")){
+                if (distributor_id.equals("0")) {
                     Intent orderIntent = new Intent(this, OrderListActivity.class);
                     startActivity(orderIntent);
-                }else{
+                } else {
                     Intent orderIntent = new Intent(this, InvoiceListActivity.class);
                     startActivity(orderIntent);
                 }
@@ -296,7 +306,7 @@ public class DashboardActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.today_outlet_menu:
-                System.out.println("iddddd idjdj "+distributor_id);
+                System.out.println("iddddd idjdj " + distributor_id);
                 if (distributor_id.equals("0")) {
                     Intent i = new Intent(DashboardActivity.this, TodayOutletActivity.class);
                     startActivity(i);
@@ -330,19 +340,27 @@ public class DashboardActivity extends AppCompatActivity {
                 }
                 break;
 
-                case R.id.start_temp_menu:
-                    Intent startIntent = new Intent(DashboardActivity.this, StartTempActivity.class);
-                    startActivity(startIntent);
+            case R.id.start_temp_menu:
+                Intent startIntent = new Intent(DashboardActivity.this, StartTempActivity.class);
+                startActivity(startIntent);
                 break;
 
-                case R.id.end_temp_menu:
-                    Intent endIntent = new Intent(DashboardActivity.this, EndTempActivity.class);
-                    startActivity(endIntent);
+            case R.id.end_temp_menu:
+                Intent endIntent = new Intent(DashboardActivity.this, EndTempActivity.class);
+                startActivity(endIntent);
                 break;
 
             case R.id.change_pass_menu:
-                    Intent delIntent = new Intent(DashboardActivity.this, ChangePasswordActivity.class);
-                    startActivity(delIntent);
+                Intent delIntent = new Intent(DashboardActivity.this, ChangePasswordActivity.class);
+                startActivity(delIntent);
+                break;
+            case R.id.create_outlet_menu:
+                Intent createOutletIntent = new Intent(DashboardActivity.this, CreateOutletsActivity.class);
+                startActivity(createOutletIntent);
+                break;
+            case R.id.collaterals_menu:
+                Intent collateralsIntent = new Intent(DashboardActivity.this, CollateralsActivity.class);
+                startActivity(collateralsIntent);
                 break;
             case R.id.logout_constrain:
             case R.id.logout_txt:
@@ -408,11 +426,11 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void countDetailsApi() {
         CustomProgress.showProgress(activity);
-        String emp_id= sessionManagerSP.getEmployeeId();
-        System.out.println("emmmpidd "+emp_id);
+        String emp_id = sessionManagerSP.getEmployeeId();
+        System.out.println("emmmpidd " + emp_id);
 
         Call<SalesDashboardCountModel> call = RetrofitClient
-                .getInstance().getApi().dashboardCount("_employeeDashboard",emp_id);
+                .getInstance().getApi().dashboardCount("_employeeDashboard", emp_id);
 
         call.enqueue(new Callback<SalesDashboardCountModel>() {
             @Override
@@ -427,7 +445,7 @@ public class DashboardActivity extends AppCompatActivity {
                     SalesDashboardCountModel salesDashboardCountModel = gson.fromJson(json, SalesDashboardCountModel.class);
                     String s = salesDashboardCountModel.getMessage();
 
-                    if (salesDashboardCountModel.getStatus()==1) {
+                    if (salesDashboardCountModel.getStatus() == 1) {
 //                        no_data_constrain.setVisibility(View.GONE);
 //                        nodata_txt.setText("");
                         salesDashboardCountData = salesDashboardCountModel.getData();

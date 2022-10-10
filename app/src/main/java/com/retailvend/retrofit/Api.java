@@ -1,22 +1,26 @@
 package com.retailvend.retrofit;
 
+import com.retailvend.model.collateralsDetails.CollateralsDetailsModel;
+import com.retailvend.model.collateralsmodule.CollateralsListResModel;
 import com.retailvend.model.changePassword.ChangePasswordModel;
 import com.retailvend.model.collectionmodel.CollectionDetailsListModel;
+import com.retailvend.model.createOutSales.CreateOutSalesModel;
+import com.retailvend.model.createOutSales.collectionModel.CollectionResModel;
+import com.retailvend.model.createOutletModule.CreateOutletBeatListModel;
 import com.retailvend.model.dashboard.SalesDashboardCountModel;
+import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListModel;
 import com.retailvend.model.delManModels.delCollection.DetailOutletInvAmntBillModel;
+import com.retailvend.model.delManModels.delCollection.addpayment.AddPaymentModel;
 import com.retailvend.model.delManModels.delCollection.delManDeliDetails.DelManDelDetailsModel;
 import com.retailvend.model.delManModels.delCollection.invoiceDetails.InvoiceDetailsModel;
-import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHistoryModel;
 import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
 import com.retailvend.model.delManModels.delCollection.paymentCollection.InvoiceTypeModel;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentCollectionModel;
+import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentTypeModel;
 import com.retailvend.model.delManModels.delCollection.paymentHistory.PaymentHistoryModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.TodayOutletDetailsModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsDetails.UpdateBillModel;
 import com.retailvend.model.delManModels.delCollection.todayOutletsModel.DeliveryTodayOutletsModel;
-import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListModel;
-import com.retailvend.model.delManModels.delCollection.addpayment.AddPaymentModel;
-import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentCollectionModel;
-import com.retailvend.model.delManModels.delCollection.paymentCollection.PaymentTypeModel;
 import com.retailvend.model.endTempSales.EndTempModel;
 import com.retailvend.model.invoiceListModel.InvoiceListModel;
 import com.retailvend.model.login.LoginResModel;
@@ -35,10 +39,14 @@ import com.retailvend.model.startTempSales.StartTempModel;
 import com.retailvend.model.targetDetailssales.EmployeeTargetDetailsData.EmployeeTargetDetailsModel;
 import com.retailvend.model.targetDetailssales.TargetDetailsModel;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface Api {
 
@@ -75,7 +83,7 @@ public interface Api {
             @Field("offset") int offset,
             @Field("limit") int limit,
             @Field("search") String search
-            );
+    );
 
     //create order
     @FormUrlEncoded
@@ -106,14 +114,16 @@ public interface Api {
     );
 
     //add attendance
-    @FormUrlEncoded
+    @Multipart
     @POST("attendance/api/add_attendance")
     Call<AddAttendanceModel> addAttendance(
-            @Field("method") String method,
-            @Field("employee_id") String employee_id,
-            @Field("store_id") String store_id,
-            @Field("latitude") String latitude,
-            @Field("longitude") String longitude
+            @Part("method") RequestBody method,
+            @Part("employee_id") RequestBody employee_id,
+            @Part("store_id") RequestBody store_id,
+            @Part("latitude") RequestBody latitude,
+            @Part("longitude") RequestBody longitude,
+            @Part("upload_status") RequestBody upload_status,
+            @Part MultipartBody.Part image
     );
 
     //product type
@@ -230,6 +240,58 @@ public interface Api {
             @Field("employee_id") String employee_id
     );
 
+    //create outlet beat list
+    @FormUrlEncoded
+    @POST("assignshop/api/employee_wise_shop")
+    Call<CreateOutletBeatListModel> createOutletBeat(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id
+    );
+
+    //create outlet
+    @FormUrlEncoded
+    @POST("outlets/api/outlets")
+    Call<CreateOutSalesModel> createOutletDist(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id,
+            @Field("store_name") String store_name,
+            @Field("contact_name") String contact_name,
+            @Field("mobile") String mobile,
+            @Field("address") String address,
+            @Field("state_id") String state_id,
+            @Field("city_id") String city_id,
+            @Field("zone_id") String zone_id,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude
+    );
+
+    //create outlet collection list
+    @FormUrlEncoded
+    @POST("executive-collection/api/invoice_list")
+    Call<CollectionResModel> collectionSales(
+            @Field("method") String method,
+            @Field("offset") int offset,
+            @Field("limit") int limit,
+            @Field("outlet_id") String outlet_id,
+            @Field("search") String search
+    );
+
+    //collateral list
+    @FormUrlEncoded
+    @POST("collaterals/api/collaterals_list")
+    Call<CollateralsListResModel> collateralsList(
+            @Field("method") String method,
+            @Field("offset") int offset,
+            @Field("limit") int limit);
+
+    //collateral details
+    @FormUrlEncoded
+    @POST("collaterals/api/collaterals_list")
+    Call<CollateralsDetailsModel> collateralsListDetails(
+            @Field("method") String method,
+            @Field("random_val") String random_val);
+
+
 
 
 
@@ -255,7 +317,7 @@ public interface Api {
             @Field("random_value") String random_value
     );
 
- //update status
+    //update status
     @FormUrlEncoded
     @POST("assigninvoice/api/employee_wise_shop")
     Call<UpdateBillModel> delManOutletInvoiceUpdateStatus(
@@ -305,7 +367,7 @@ public interface Api {
     );
 
 
- //payment type
+    //payment type
     @FormUrlEncoded
     @POST("payment/api/outlet_payment")
     Call<PaymentTypeModel> paymentTypeGet(

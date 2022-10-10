@@ -75,6 +75,7 @@ public class AddPaymentActivity extends AppCompatActivity {
     String discount = "";
     String distributorId = "";
     String outletId = "";
+    String paymentId = "";
 
     SessionManagerSP sessionManagerSP;
     Typeface font;
@@ -140,6 +141,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             assignId = (String) b.get("assign_id");
             name = (String) b.get("name");
             outletId = (String) b.get("outletId");
+            paymentId = (String) b.get("paymentId");
         }
 
         boolean isConnected = ConnectivityReceiver.isConnected();
@@ -358,9 +360,17 @@ public class AddPaymentActivity extends AppCompatActivity {
 
                         invoiceTypeDatumList.addAll(invoiceTypeModel.getData()) ;
 
-                        invoiceNoSpinAdapter = new InvoiceNoSpinAdapter(AddPaymentActivity.this, invoiceTypeDatumList);
-                        spin_invoice_num.setAdapter(invoiceNoSpinAdapter);
-                        invoiceNoSpinAdapter.notifyDataSetChanged();
+                        for(int i=0; i<invoiceTypeDatumList.size(); i++) {
+                            if (paymentId.equals(invoiceTypeDatumList.get(i).getPayId())){
+                                invoiceNoSpinAdapter = new InvoiceNoSpinAdapter(AddPaymentActivity.this, invoiceTypeDatumList);
+                                spin_invoice_num.setAdapter(invoiceNoSpinAdapter);
+                                invoiceNoSpinAdapter.notifyDataSetChanged();
+                            }else{
+                                invoiceNoSpinAdapter = new InvoiceNoSpinAdapter(AddPaymentActivity.this, invoiceTypeDatumList);
+                                spin_invoice_num.setAdapter(invoiceNoSpinAdapter);
+                                invoiceNoSpinAdapter.notifyDataSetChanged();
+                            }
+                        }
                     } else {
                         progress.setVisibility(View.GONE);
 //                        CustomToast.getInstance(AddPaymentActivity.this).showSmallCustomToast(invoiceTypeModel.getMessage());

@@ -60,29 +60,28 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/quicksand_medium"
                 android:gravity="center|left"
-                android:paddingLeft="10dp"
+                android:paddingLeft="15dp"
                 android:text="Beat Name *"
                 android:textColor="#40000000"
                 android:textSize="14dp" />
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:background="@drawable/lin_storke">
+
+                <Spinner
+                    android:id="@+id/spin_beat_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:background="@drawable/lin_storke">
+                    android:layout_height="match_parent"
+                    />
 
-                    <Spinner
-                        android:id="@+id/spin_beat_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="4dp"
-                        />
-
-                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,7 +113,7 @@
                     android:id="@+id/store_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="5dp"
                     android:paddingLeft="10dp"
@@ -124,7 +123,7 @@
                     android:fontFamily="@font/quicksand_bold"
                     android:gravity="start"
                     android:hint="Store Name *"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="#40000000"
@@ -147,7 +146,7 @@
                     android:id="@+id/contact_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="5dp"
                     android:paddingLeft="10dp"
@@ -157,7 +156,7 @@
                     android:fontFamily="@font/quicksand_bold"
                     android:gravity="start"
                     android:hint="Contact Name *"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="#40000000"
@@ -180,7 +179,7 @@
                     android:id="@+id/mob_no_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="5dp"
                     android:paddingLeft="10dp"
@@ -192,6 +191,7 @@
                     android:hint="Mobile Number *"
                     android:inputType="number"
                     android:singleLine="true"
+                    android:maxLength="10"
                     android:textColor="@color/black"
                     android:textColorHint="#40000000"
                     android:textSize="14dp" />
@@ -213,7 +213,7 @@
                     android:id="@+id/address_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="5dp"
                     android:paddingLeft="10dp"
@@ -223,104 +223,40 @@
                     android:fontFamily="@font/quicksand_bold"
                     android:gravity="start"
                     android:hint="Address *"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="#40000000"
                     android:textSize="14dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:gravity="center|left"
-                    android:paddingLeft="10dp"
-                    android:text="State Id *"
-                    android:textColor="#40000000"
-                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lin_create"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/lin_button"
+                android:visibility="visible">
 
                 <TextView
-                    android:id="@+id/state_id_text"
+                    android:id="@+id/create_outlet_btn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:background="@drawable/lin_storke"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:gravity="start"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="#40000000"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/quicksand_medium"
-                    android:gravity="center|left"
-                    android:paddingLeft="10dp"
-                    android:text="City Id *"
-                    android:textColor="#40000000"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:id="@+id/city_id_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:background="@drawable/lin_storke"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:gravity="start"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="#40000000"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:gravity="center|left"
-                    android:paddingLeft="10dp"
-                    android:text="Zone Id *"
-                    android:textColor="#40000000"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:id="@+id/zone_id_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:background="@drawable/lin_storke"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:gravity="start"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="#40000000"
-                    android:textSize="14dp" />
+                    android:gravity="center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Create Outlet"
+                    android:textColor="#ffffff"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/btn_text_size" />
 
             </LinearLayout>
 
@@ -332,8 +268,8 @@
 </LinearLayout>
 
 
-<!--store name-->
-<!--contact person-->
-<!--cont number-->
-<!--zone id-->
-<!--address-->
+    <!--store name-->
+    <!--contact person-->
+    <!--cont number-->
+    <!--zone id-->
+    <!--address-->

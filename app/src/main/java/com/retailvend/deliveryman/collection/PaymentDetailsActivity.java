@@ -67,6 +67,7 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
     String name="";
     String amt="";
     String outletId="";
+    String paymentId="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,7 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
             assignId = getIntent().getExtras().getString("assign_id");
             amt = getIntent().getExtras().getString("balamnt");
             outletId = getIntent().getExtras().getString("outletId");
+            paymentId = getIntent().getExtras().getString("paymentId");
 //            System.out.println("outletIdoutletIdoutletId " + outletId);
         }
 
@@ -165,6 +167,7 @@ public class PaymentDetailsActivity extends AppCompatActivity  implements SwipeR
 //                intent.putExtra("balamt", amt);
                 intent.putExtra("name", name);
                 intent.putExtra("outletId", outletId);
+                intent.putExtra("paymentId", paymentId);
 //                System.out.println("outletId1234567 "+outletId);
                 startActivity(intent);
             }

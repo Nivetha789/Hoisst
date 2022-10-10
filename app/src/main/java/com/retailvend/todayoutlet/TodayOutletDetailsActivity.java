@@ -1,16 +1,26 @@
 package com.retailvend.todayoutlet;
 
+import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
+
+import static java.lang.Math.random;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,9 +44,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
+import com.retailvend.createOutlet.salesManCollection.SalesManCollectionActivity;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageDatum;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageModel;
 import com.retailvend.model.outlets.AddAttendanceData;
@@ -45,14 +57,25 @@ import com.retailvend.model.outlets.AssignOutletsDatum;
 import com.retailvend.model.outlets.AttendanceTypeDatum;
 import com.retailvend.model.outlets.AttendanceTypeModel;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.sales.SalesDetailsActivity;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.ReasonBaseAdapter;
 import com.retailvend.utills.SessionManagerSP;
+import com.sromku.simple.storage.SimpleStorage;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,25 +96,25 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     ButtonTypeAdapter buttonTypeAdapter;
     RecyclerView order_type_recycler;
     LinearLayoutManager mLayoutManager;
-    LinearLayout outlet_his_Constrain;
+    LinearLayout outlet_his_Constrain, out_collection_Constrain, image_layout;
     String store_id = "";
-    String shop_name1="";
+    String shop_name1 = "";
     String attendance_status = "";
     String upload_status = "";
     String latitude = "";
     String longitude = "";
-    ConstraintLayout order_type_constrain, reason_constrain, location_constrain;
+    ConstraintLayout order_type_constrain, reason_constrain, location_constrain,call_constrain;
     String type_id = "";
     String type_val = "";
     SessionManagerSP sessionManagerSP;
-    ImageView left_arrow;
+    ImageView left_arrow, captured_icon, captured_img;
     LocationManager locationManager;
-    String reasonTxt="";
-    String reasonId="";
+    String reasonTxt = "";
+    String reasonId = "";
 
-    String assign_id="";
-    String desLatitude="";
-    String desLongitude="";
+    String assign_id = "";
+    String desLatitude = "";
+    String desLongitude = "";
 
     private boolean locationget;
 
@@ -101,6 +124,13 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     ReasonBaseAdapter reasonBaseAdapter;
 
     AlertDialog.Builder builder;
+
+    String mobile="";
+
+
+    File file1;
+    Uri fileUri1;
+    private int REQUEST_IMAGE_CAPTURE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +158,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
 
-
+        captured_icon = findViewById(R.id.captured_icon);
+        captured_img = findViewById(R.id.captured_img);
         shop_name = findViewById(R.id.shop_name);
         shop_number = findViewById(R.id.shop_number);
         contact_name = findViewById(R.id.contact_name);
@@ -144,6 +175,9 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         location_constrain = findViewById(R.id.location_constrain);
         left_arrow = findViewById(R.id.left_arrow);
         outlet_his_Constrain = findViewById(R.id.outlet_his_Constrain);
+        out_collection_Constrain = findViewById(R.id.out_collection_Constrain);
+        image_layout = findViewById(R.id.image_layout);
+        call_constrain = findViewById(R.id.call_constrain);
 
         builder = new AlertDialog.Builder(this);
 
@@ -167,8 +201,17 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 //        pan.setText(pan1);
 
 
-        desLatitude=sessionManagerSP.getOutletLat();
-        desLongitude=sessionManagerSP.getOutletLong();
+        desLatitude = sessionManagerSP.getOutletLat();
+        desLongitude = sessionManagerSP.getOutletLong();
+
+        checkGPSON();
+        getLocation();
+
+        if (upload_status.equals("2")) {
+            image_layout.setVisibility(View.VISIBLE);
+        } else {
+            image_layout.setVisibility(View.GONE);
+        }
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -190,10 +233,6 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             ActivityCompat.requestPermissions(TodayOutletDetailsActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
         }
 
-        checkGPSON();
-        getLocation();
-
-
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,17 +240,36 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             }
         });
 
-        if(attendance_status.equals("1")){
-            System.out.println("attendance_statusdddss "+attendance_status);
+        call_constrain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+shop_number1));
+                startActivity(intent);
+            }
+        });
+
+        image_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
+            }
+        });
+
+        if (attendance_status.equals("1")) {
+            System.out.println("attendance_statusdddss " + attendance_status);
             check_in.setVisibility(View.GONE);
             checked.setVisibility(View.VISIBLE);
             order_type_constrain.setVisibility(View.VISIBLE);
 
-        }else{
+        } else {
             check_in.setVisibility(View.VISIBLE);
             checked.setVisibility(View.GONE);
             order_type_constrain.setVisibility(View.GONE);
-            System.out.println("attendance_status111 "+attendance_status);
+            System.out.println("attendance_status111 " + attendance_status);
         }
 
         location_constrain.setOnClickListener(new View.OnClickListener() {
@@ -222,18 +280,18 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 //                    Toast.makeText(TodayOutletDetailsActivity.this, "Location is not updated, Try Again", Toast.LENGTH_SHORT).show();
 //                } else {
 
-                    if (TextUtils.isEmpty(desLatitude) && TextUtils.isEmpty(desLongitude)) {
-                        Toast.makeText(TodayOutletDetailsActivity.this, "Designation location empty", Toast.LENGTH_SHORT).show();
-                    } else {
+                if (TextUtils.isEmpty(desLatitude) && TextUtils.isEmpty(desLongitude)) {
+                    Toast.makeText(TodayOutletDetailsActivity.this, "Designation location empty", Toast.LENGTH_SHORT).show();
+                } else {
 
 
-                        String strUri = "http://maps.google.com/maps?q=loc:" + desLatitude + "," + desLongitude + " (" + address1 + ")";
-                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(strUri));
+                    String strUri = "http://maps.google.com/maps?q=loc:" + desLatitude + "," + desLongitude + " (" + address1 + ")";
+                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(strUri));
 
-                        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+                    intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
 
-                        startActivity(intent);
-                    }
+                    startActivity(intent);
+                }
 
 //                }
             }
@@ -256,10 +314,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             @Override
             public void onClick(View v) {
                 if (!reasonTxt.isEmpty()) {
-                    if(type_val.equals("Sales Order")){
-                        type_val="1";
-                    }else{
-                        type_val="2";
+                    if (type_val.equals("Sales Order")) {
+                        type_val = "1";
+                    } else {
+                        type_val = "2";
                     }
                     updateAttendanceApi(type_val);
                 } else {
@@ -271,7 +329,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             @Override
             public void onClick(View v) {
                 android.app.AlertDialog.Builder builder1 = new android.app.AlertDialog.Builder(activity);
-                builder1.setMessage("Check In") .setTitle("Check In");
+                builder1.setMessage("Check In").setTitle("Check In");
                 builder1.setMessage("Are you sure you want to Check In?");
                 builder1.setCancelable(true);
 
@@ -287,15 +345,30 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                                 }
                                 checkGPSON();
                                 getLocation();
-                                System.out.println("latitudenewww "+latitude);
-                                System.out.println("longitudenewww "+longitude);
+                                System.out.println("latitudenewww " + latitude);
+                                System.out.println("longitudenewww " + longitude);
                                 if (!TextUtils.isEmpty(latitude) && !TextUtils.isEmpty(longitude)) {
-                                    boolean isConnected = ConnectivityReceiver.isConnected();
-                                    if (isConnected) {
-                                        addAttendanceApi(latitude, longitude);
+
+                                    if (upload_status.equals("2")) {
+                                        if (!file1.getPath().isEmpty()) {
+                                            boolean isConnected = ConnectivityReceiver.isConnected();
+                                            if (isConnected) {
+                                                addAttendanceApi(latitude, longitude);
+                                            } else {
+                                                CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+                                            }
+                                        } else {
+                                            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please Upload shop image");
+                                        }
                                     } else {
-                                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+                                        boolean isConnected = ConnectivityReceiver.isConnected();
+                                        if (isConnected) {
+                                            addAttendanceApi(latitude, longitude);
+                                        } else {
+                                            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+                                        }
                                     }
+
                                 } else {
                                     Toast.makeText(TodayOutletDetailsActivity.this, "Location is not updated, Try Again", Toast.LENGTH_SHORT).show();
                                 }
@@ -327,8 +400,17 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             @Override
             public void onClick(View v) {
                 Intent outletIntent = new Intent(activity, OutletHistoryActivity.class);
-                outletIntent.putExtra("outlet_id",store_id);
-                outletIntent.putExtra("outlet_name",shop_name1);
+                outletIntent.putExtra("outlet_id", store_id);
+                outletIntent.putExtra("outlet_name", shop_name1);
+                activity.startActivity(outletIntent);
+            }
+        });
+
+        out_collection_Constrain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent outletIntent = new Intent(activity, SalesManCollectionActivity.class);
+                outletIntent.putExtra("outlet_id", store_id);
                 activity.startActivity(outletIntent);
             }
         });
@@ -337,18 +419,18 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     @Override
     protected void onResume() {
         super.onResume();
-        if(attendance_status.equals("1")){
+        if (attendance_status.equals("1")) {
             check_in.setVisibility(View.GONE);
             checked.setVisibility(View.VISIBLE);
             order_type_constrain.setVisibility(View.VISIBLE);
 
-        }else{
+        } else {
             check_in.setVisibility(View.VISIBLE);
             checked.setVisibility(View.GONE);
             order_type_constrain.setVisibility(View.GONE);
         }
-        desLatitude=sessionManagerSP.getOutletLat();
-        desLongitude=sessionManagerSP.getOutletLong();
+        desLatitude = sessionManagerSP.getOutletLat();
+        desLongitude = sessionManagerSP.getOutletLong();
     }
 
     public boolean checkGPSON() {
@@ -393,12 +475,12 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     }
 
 
-
     private boolean isLocationEnabled() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
     void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -413,8 +495,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     @Override
     public void onLocationChanged(Location location) {
 
-        desLatitude=sessionManagerSP.getOutletLat();
-        desLongitude=sessionManagerSP.getOutletLong();
+        desLatitude = sessionManagerSP.getOutletLat();
+        desLongitude = sessionManagerSP.getOutletLong();
         latitude = String.valueOf(location.getLatitude());
         longitude = String.valueOf(location.getLongitude());
         sessionManagerSP.setLat(latitude);
@@ -454,17 +536,72 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
     }
 
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        captured_img.setVisibility(View.VISIBLE);
+        captured_icon.setVisibility(View.GONE);
+        Bitmap bitmap =  ImageUtils.getBitmapFromIntent(this, data);
+        captured_img.setImageBitmap(bitmap);// mImage is a ImageView which is bind previously.
+        String imgPath = ImageUtils.createFile(this, bitmap);
+        file1= new File(imgPath);
+
+        Glide.with(TodayOutletDetailsActivity.this).load(bitmap).into(captured_img);
+    }
+
+
     @Override
     protected void onRestart() {
         super.onRestart();
-        desLatitude=sessionManagerSP.getOutletLat();
-        desLongitude=sessionManagerSP.getOutletLong();
+        desLatitude = sessionManagerSP.getOutletLat();
+        desLongitude = sessionManagerSP.getOutletLong();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    public static class ImageUtils {
+
+        public static Bitmap getBitmapFromIntent(Context context, Intent data) {
+            Bitmap bitmap = null;
+
+            if (data.getData() == null) {
+                bitmap = (Bitmap) data.getExtras().get("data");
+            } else {
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), data.getData());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return bitmap;
+        }
+
+
+        public static String createFile(Context context, Bitmap data) {
+            Uri selectedImage = getImageUri(context,data);
+            String[] filePath = {MediaStore.Images.Media.DATA};
+            Cursor c = context.getContentResolver().query(selectedImage, filePath, null, null, null);
+            c.moveToFirst();
+            c.getColumnIndex(filePath[0]);
+            int columnIndex = c.getColumnIndex(filePath[0]);
+            String picturePath = c.getString(columnIndex);
+            c.close();
+
+            return picturePath;
+        }
+
+        public static Uri getImageUri(Context context, Bitmap inImage) {
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Pet_Image", null);
+            return Uri.parse(path);
+        }
+
     }
 
     public void attendanceListApi() {
@@ -482,7 +619,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                     String json = gson.toJson(response.body());
 
                     AttendanceTypeModel attendanceTypeModel = gson.fromJson(json, AttendanceTypeModel.class);
-                    System.out.println("attadanceecev "+response.body());
+                    System.out.println("attadanceecev " + response.body());
 
                     if (attendanceTypeModel.getStatus() == 1) {
                         attendanceTypeData = attendanceTypeModel.getData();
@@ -545,10 +682,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     public void updateAttendanceApi(String typeVal) {
         CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
-        String assign_ID=sessionManagerSP.getAssignId();
+        String assign_ID = sessionManagerSP.getAssignId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude,longitude, typeVal, reasonTxt, assign_ID);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude, longitude, typeVal, reasonTxt, assign_ID);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -591,9 +728,25 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     public void addAttendanceApi(String latitude, String longitude) {
         CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
+        MultipartBody.Part body1;
+
+        if(file1!=null){
+            RequestBody reqFile1 = RequestBody.create(MediaType.parse("image/*"), file1);
+            body1 = MultipartBody.Part.createFormData("c_image", file1.getName(), reqFile1);
+        }else{
+            RequestBody reqFile1 = RequestBody.create(MediaType.parse("image/*"), "");
+            body1 = MultipartBody.Part.createFormData("c_image", "", reqFile1);
+        }
+
+        RequestBody method = RequestBody.create(MediaType.parse("text/plain"), "_addAttendance");
+        RequestBody emp_idd = RequestBody.create(MediaType.parse("text/plain"), emp_id);
+        RequestBody store_Id = RequestBody.create(MediaType.parse("text/plain"), store_id);
+        RequestBody latitude1 = RequestBody.create(MediaType.parse("text/plain"), latitude);
+        RequestBody longitude1 = RequestBody.create(MediaType.parse("text/plain"), longitude);
+        RequestBody upload_Status = RequestBody.create(MediaType.parse("text/plain"), upload_status);
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().addAttendance("_addAttendance", emp_id, store_id, latitude,longitude);
+                .getInstance().getApi().addAttendance(method, emp_idd, store_Id, latitude1, longitude1, upload_Status, body1);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
@@ -607,10 +760,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                     AddAttendanceModel attendanceTypeModel = gson.fromJson(json, AddAttendanceModel.class);
 
                     if (attendanceTypeModel.getStatus() == 1) {
-                        addAttendanceData=attendanceTypeModel.getData();
-                        assign_id=addAttendanceData.get(0).getAttendanceId();
-                        System.out.println("attandaceID "+assign_id);
-                            sessionManagerSP.setAssignId(assign_id);
+                        addAttendanceData = attendanceTypeModel.getData();
+                        assign_id = addAttendanceData.get(0).getAttendanceId();
+                        System.out.println("attandaceID " + assign_id);
+                        sessionManagerSP.setAssignId(assign_id);
 //                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast(attendanceTypeModel.getMessage());
                         check_in.setVisibility(View.GONE);
                         checked.setVisibility(View.VISIBLE);
@@ -657,7 +810,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
                     if (noReasonMessageModel.getStatus() == 1) {
 
-                        noReasonMessageData=noReasonMessageModel.getData();
+                        noReasonMessageData = noReasonMessageModel.getData();
                         if (noReasonMessageData != null) {
 //                            ArrayList<String> list = new ArrayList<String>();
                             for (int i = 0; i < noReasonMessageData.size(); i++) {
@@ -688,7 +841,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                 }
 
             }
-//
+
+            //
             @Override
             public void onFailure(@NonNull Call<NoReasonMessageModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
