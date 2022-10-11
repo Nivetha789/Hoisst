@@ -85,12 +85,12 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
 
         createOutletBeatListData=new ArrayList<>();
 
+        checkGPSON();
+        getLocation();
+
         emp_id= sessionManagerSP.getEmployeeId();
         lat_val = sessionManagerSP.getLat();
         long_val = sessionManagerSP.getLong();
-
-        checkGPSON();
-        getLocation();
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
