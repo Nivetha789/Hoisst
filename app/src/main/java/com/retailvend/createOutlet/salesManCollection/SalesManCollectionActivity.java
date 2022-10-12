@@ -2,12 +2,6 @@ package com.retailvend.createOutlet.salesManCollection;
 
 import static com.retailvend.utills.PaginationListener.PAGE_START;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,7 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
@@ -31,8 +30,6 @@ import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.createOutSales.collectionModel.CollectionResDatum;
 import com.retailvend.model.createOutSales.collectionModel.CollectionResModel;
-import com.retailvend.model.outlets.AssignOutletsDatum;
-import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
@@ -59,7 +56,7 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
     List<CollectionResDatum> todayOutletsDatum;
 
     LinearLayout searchLayout;
-    ImageView search_icon,nodata;
+    ImageView search_icon, nodata;
     EditText search;
     TextView emptyView;
     ProgressBar progress;
@@ -77,7 +74,7 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
 
     String searchTxt = "";
 
-    String outlet_id="";
+    String outlet_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +103,8 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
         toolbar = findViewById(R.id.collection_toolbar);
         collectionRecycler = findViewById(R.id.total_recyclerView);
         leftArrow = findViewById(R.id.left_arrow);
-        nodata_txt=findViewById(R.id.nodata_txt);
-        no_data_constrain=findViewById(R.id.no_data_constrain);
+        nodata_txt = findViewById(R.id.nodata_txt);
+        no_data_constrain = findViewById(R.id.no_data_constrain);
         search = findViewById(R.id.search);
         search_icon = findViewById(R.id.search_icon);
         searchLayout = findViewById(R.id.searchLayout);
@@ -115,9 +112,9 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
         nodata = findViewById(R.id.nodata);
         progress = findViewById(R.id.progress);
 
-        sessionManagerSP=new SessionManagerSP(SalesManCollectionActivity.this);
+        sessionManagerSP = new SessionManagerSP(SalesManCollectionActivity.this);
 
-        todayOutletsDatum=new ArrayList<>();
+        todayOutletsDatum = new ArrayList<>();
 
         Bundle extras = getIntent().getExtras();
 
@@ -146,7 +143,7 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    todayOutletListApi(offset, limit, "2");
+                    todayOutletListApi(offset, limit);
                 } else {
                     CustomToast.getInstance(SalesManCollectionActivity.this).showSmallCustomToast("Please check your internet connection");
                 }
@@ -173,7 +170,7 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    todayOutletListApi(offset, limit, "1");
+                    todayOutletListApi(offset, limit);
 
                 } else {
                     CustomToast.getInstance(SalesManCollectionActivity.this).showSmallCustomToast("Please check your internet connection");
@@ -204,7 +201,7 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            todayOutletListApi(offset, limit, "1");
+            todayOutletListApi(offset, limit);
         } else {
             CustomToast.getInstance(SalesManCollectionActivity.this).showSmallCustomToast("Please check your internet connection");
         }
@@ -220,7 +217,7 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
         salesCollectionAdapter.clear();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            todayOutletListApi(offset, limit, "1");
+            todayOutletListApi(offset, limit);
         } else {
             CustomToast.getInstance(SalesManCollectionActivity.this).showSmallCustomToast("Please check your internet connection");
         }
@@ -234,7 +231,7 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
     }
 
 
-    public void todayOutletListApi(int offset1, int limit1, String searchType) {
+    public void todayOutletListApi(int offset1, int limit1) {
 //        CustomProgress.showProgress(activity);
 
         if (isLoading) {
@@ -247,10 +244,10 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
             nodata.setVisibility(View.GONE);
         }
 
-        String emp_id= sessionManagerSP.getEmployeeId();
+        String emp_id = sessionManagerSP.getEmployeeId();
 
         Call<CollectionResModel> call = RetrofitClient
-                .getInstance().getApi().collectionSales("_invoiceList",offset1, limit1,outlet_id,searchTxt);
+                .getInstance().getApi().collectionSales("_invoiceList", offset1, limit1, outlet_id);
 
         call.enqueue(new Callback<CollectionResModel>() {
             @Override
@@ -263,99 +260,65 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
                     CollectionResModel assignOutletsModel = gson.fromJson(json, CollectionResModel.class);
 
                     if (assignOutletsModel.getStatus() == 1) {
-
-                        if (searchType.equals("2")) {
-//                            if (todayOutletsDatum.size() > 0) {
-                            salesCollectionAdapter.clear();
-//                            }
-                        }
+                        System.out.println("2131333333 ");
 
                         collectionRecycler.setVisibility(View.VISIBLE);
+                        progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
                         nodata.setVisibility(View.GONE);
-                        searchLayout.setVisibility(View.VISIBLE);
+
                         todayOutletsDatum = assignOutletsModel.getData();
 
-                        if(todayOutletsDatum.size()>0){
-                            offset = assignOutletsModel.getOffset();
-                            limit = assignOutletsModel.getLimit();
-                            totalcount = assignOutletsModel.getTotalRecord();
+                        offset = assignOutletsModel.getOffset();
+                        limit = assignOutletsModel.getLimit();
+                        totalcount = assignOutletsModel.getTotalRecord();
 
-//                        int offest1 = offset;
-//                        int totalcount1;
-//                        if (totalcount > offset) {
-//                            totalcount1 = offset + limit;
-//                        } else {
-//                            totalcount1 = offset;
-//                        }
-
-
-                            currentPage = offset;
-//                        totalPage = totalcount;
-
-
-                            if (currentPage != PAGE_START)
-                                salesCollectionAdapter.removeLoading();
-
-                            salesCollectionAdapter.addItems(todayOutletsDatum);
-
-                            if (currentPage < totalcount) {
-                                salesCollectionAdapter.addLoading();
-                            }else if(currentPage>totalPage){
-                                salesCollectionAdapter.addLoading();
-                                salesCollectionAdapter.removeLoading();
-                            }
-                            else {
-                                isLastPage = true;
-                                salesCollectionAdapter.removeLoading();
-                            }
-                        }else{
-                            if(searchType.equals("2")){
-                                progress.setVisibility(View.GONE);
-                                emptyView.setVisibility(View.VISIBLE);
-                                nodata.setVisibility(View.VISIBLE);
-                                searchLayout.setVisibility(View.GONE);
-                            }
+                        int offest1 = offset;
+                        int totalcount1;
+                        if (totalcount > offset) {
+                            totalcount1 = offset + limit;
+                        } else {
+                            totalcount1 = offset;
                         }
 
+
+                        currentPage = offest1;
+                        totalPage = totalcount1;
+
+
+                        if (currentPage != PAGE_START)
+                            salesCollectionAdapter.removeLoading();
+
+                        salesCollectionAdapter.addItems(todayOutletsDatum);
+
+                        if (currentPage < totalPage) {
+                            salesCollectionAdapter.addLoading();
+                        } else {
+                            isLastPage = true;
+                        }
                         isLoading = false;
 
 
 //                        offset = siteListModel.getOffset();
                         progress.setVisibility(View.GONE);
-//                        emptyView.setVisibility(View.GONE);
-//                        nodata.setVisibility(View.GONE);
-//                        searchLayout.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
 
                     } else {
-                        if(searchType.equals("2")){
-                            progress.setVisibility(View.GONE);
-                            emptyView.setVisibility(View.VISIBLE);
-                            nodata.setVisibility(View.VISIBLE);
-                            searchLayout.setVisibility(View.GONE);
-                            collectionRecycler.setVisibility(View.GONE);
-                        }
-
-//                        todayOutletRecycler.setVisibility(View.GONE);
-//                        progress.setVisibility(View.GONE);
-//                        nodata.setVisibility(View.VISIBLE);
-//                        emptyView.setVisibility(View.VISIBLE);
-//                        emptyView.setText(assignOutletsModel.getMessage());
-//                        searchLayout.setVisibility(View.GONE);
+                        System.out.println("66666666666");
+                        collectionRecycler.setVisibility(View.GONE);
+                        progress.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.VISIBLE);
+                        emptyView.setText("No Record Found");
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("No Record Found");
-//                    Toast.makeText(TodayOutletActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                        CustomToast.getInstance(SalesManCollectionActivity.this).showSmallCustomToast("No Record Found");
+//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
                     progress.setVisibility(View.GONE);
-                    collectionRecycler.setVisibility(View.GONE);
-                    progress.setVisibility(View.GONE);
-                    nodata.setVisibility(View.VISIBLE);
-                    emptyView.setVisibility(View.VISIBLE);
-                    emptyView.setText("No Data Found");
-                    searchLayout.setVisibility(View.GONE);
                     Log.d("Exceptionnnn", e.getMessage());
                 }
             }

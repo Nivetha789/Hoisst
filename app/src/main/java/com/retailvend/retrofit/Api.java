@@ -272,8 +272,8 @@ public interface Api {
             @Field("method") String method,
             @Field("offset") int offset,
             @Field("limit") int limit,
-            @Field("outlet_id") String outlet_id,
-            @Field("search") String search
+            @Field("outlet_id") String outlet_id
+//            @Field("search") String search
     );
 
     //collateral list

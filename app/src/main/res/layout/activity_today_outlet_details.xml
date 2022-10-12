@@ -111,25 +111,43 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/call_constrain"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/circle_bg"
-                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
-                app:layout_constraintBottom_toBottomOf="@+id/location_constrain"
+                android:background="@drawable/lin_storke1"
                 app:layout_constraintEnd_toStartOf="@+id/location_constrain"
-                app:layout_constraintTop_toTopOf="@+id/location_constrain" >
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                app:layout_constraintVertical_chainStyle="spread_inside">
 
                 <ImageView
+                    android:id="@+id/ic_call"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_phone"
-                    android:tint="@color/white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/telephone"
                     app:layout_constraintBottom_toBottomOf="parent"
-                   />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/colorAccent" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/quicksand_semi_bold"
+                    android:text="Call"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ic_call"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ic_call"
+                    app:layout_constraintTop_toTopOf="@+id/ic_call"
+                    app:layout_constraintVertical_chainStyle="packed" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -165,7 +183,7 @@
                     android:fontFamily="@font/quicksand_semi_bold"
                     android:text="Location"
                     android:textColor="@color/black"
-                    android:textSize="12dp"
+                    android:textSize="14dp"
                     app:layout_constraintBottom_toBottomOf="@+id/location"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/location"

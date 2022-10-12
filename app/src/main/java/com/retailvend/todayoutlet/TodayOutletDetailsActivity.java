@@ -128,8 +128,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     String mobile="";
 
 
-    File file1;
-    Uri fileUri1;
+    File file1=new File("");
     private int REQUEST_IMAGE_CAPTURE = 100;
 
     @Override
@@ -358,7 +357,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                                                 CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
                                             }
                                         } else {
-                                            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please Upload shop image");
+                                            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please Upload image");
                                         }
                                     } else {
                                         boolean isConnected = ConnectivityReceiver.isConnected();

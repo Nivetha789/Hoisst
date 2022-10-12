@@ -324,6 +324,12 @@ public class CollectionActivity extends AppCompatActivity implements SwipeRefres
                             nodata.setVisibility(View.VISIBLE);
                             searchLayout.setVisibility(View.GONE);
                             collectionRecycler.setVisibility(View.GONE);
+                        }else{
+                            progress.setVisibility(View.GONE);
+                            emptyView.setVisibility(View.VISIBLE);
+                            nodata.setVisibility(View.VISIBLE);
+                            searchLayout.setVisibility(View.GONE);
+                            collectionRecycler.setVisibility(View.GONE);
                         }
 //                        todayOutletRecycler.setVisibility(View.GONE);
 //                        progress.setVisibility(View.GONE);

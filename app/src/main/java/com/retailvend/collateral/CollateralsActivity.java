@@ -308,6 +308,12 @@ public class CollateralsActivity extends AppCompatActivity implements SwipeRefre
                             nodata.setVisibility(View.VISIBLE);
                             searchLayout.setVisibility(View.GONE);
                             order_list_recycler.setVisibility(View.GONE);
+                        }else{
+                            progress.setVisibility(View.GONE);
+                            emptyView.setVisibility(View.VISIBLE);
+                            nodata.setVisibility(View.VISIBLE);
+                            searchLayout.setVisibility(View.GONE);
+                            order_list_recycler.setVisibility(View.GONE);
                         }
 //                        todayOutletRecycler.setVisibility(View.GONE);
 //                        progress.setVisibility(View.GONE);

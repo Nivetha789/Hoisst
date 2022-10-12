@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -60,6 +61,7 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
     String lat_val = "";
     String long_val = "";
     LinearLayout lin_create;
+    ImageView left_arrow;
 
     LocationManager locationManager;
     String desLatitude="";
@@ -82,6 +84,7 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
         mob_no_text=findViewById(R.id.mob_no_text);
         address_text=findViewById(R.id.address_text);
         lin_create=findViewById(R.id.lin_create);
+        left_arrow=findViewById(R.id.left_arrow);
 
         createOutletBeatListData=new ArrayList<>();
 
@@ -114,6 +117,13 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        left_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
 
