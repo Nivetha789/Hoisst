@@ -128,7 +128,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     String mobile="";
 
 
-    File file1=new File("");
+    File file1;
     private int REQUEST_IMAGE_CAPTURE = 100;
 
     @Override
@@ -191,6 +191,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String pan1 = assignOutletsDatum.getPanNo();
         attendance_status = assignOutletsDatum.getAttendanceStatus();
         upload_status = assignOutletsDatum.getUploadStatus();
+        System.out.println("upload_status : "+upload_status);
         shop_name.setText(shop_name1);
         shop_number.setText(shop_number1);
         contact_name.setText(contact_name1);
@@ -259,7 +260,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         });
 
         if (attendance_status.equals("1")) {
-            System.out.println("attendance_statusdddss " + attendance_status);
+//            System.out.println("attendance_statusdddss " + attendance_status);
             check_in.setVisibility(View.GONE);
             checked.setVisibility(View.VISIBLE);
             order_type_constrain.setVisibility(View.VISIBLE);
@@ -268,7 +269,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             check_in.setVisibility(View.VISIBLE);
             checked.setVisibility(View.GONE);
             order_type_constrain.setVisibility(View.GONE);
-            System.out.println("attendance_status111 " + attendance_status);
+//            System.out.println("attendance_status111 " + attendance_status);
         }
 
         location_constrain.setOnClickListener(new View.OnClickListener() {
@@ -743,6 +744,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         RequestBody latitude1 = RequestBody.create(MediaType.parse("text/plain"), latitude);
         RequestBody longitude1 = RequestBody.create(MediaType.parse("text/plain"), longitude);
         RequestBody upload_Status = RequestBody.create(MediaType.parse("text/plain"), upload_status);
+        System.out.println("upload_status777777 "+upload_status);
 
         Call<AddAttendanceModel> call = RetrofitClient
                 .getInstance().getApi().addAttendance(method, emp_idd, store_Id, latitude1, longitude1, upload_Status, body1);
@@ -783,7 +785,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
             @Override
             public void onFailure(@NonNull Call<AddAttendanceModel> call, @NonNull Throwable t) {
-                Log.d("Failure ", t.getMessage());
+                Log.d("Failuresffssf ", t.getMessage());
                 CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Something went wrong try again..");
                 CustomProgress.hideProgress(activity);
             }

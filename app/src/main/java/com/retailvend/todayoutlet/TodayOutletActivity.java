@@ -97,7 +97,6 @@ public class TodayOutletActivity extends AppCompatActivity implements SwipeRefre
 
         todayOutletRecycler = findViewById(R.id.today_outlet_recycler);
         leftArrow = findViewById(R.id.left_arrow);
-        nodata_txt = findViewById(R.id.nodata_txt);
         progress = findViewById(R.id.progress);
         search = findViewById(R.id.search);
         search_icon = findViewById(R.id.search_icon);
