@@ -16,7 +16,9 @@ import com.retailvend.R;
 import com.retailvend.collection.CollectionDetailsActivity;
 import com.retailvend.deliveryman.collection.PaymentDetailsActivity;
 import com.retailvend.model.createOutSales.collectionModel.CollectionResDatum;
+import com.retailvend.payment.AddPaymentActivity;
 import com.retailvend.utills.BaseViewHolder;
+import com.retailvend.utills.SessionManagerSP;
 
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class SalesCollectionAdapter extends RecyclerView.Adapter<BaseViewHolder>
     private static final int VIEW_TYPE_LOADING = 0;
     private static final int VIEW_TYPE_NORMAL = 1;
     private static boolean isLoaderVisible = false;
+    SessionManagerSP sessionManagerSP;
 
     public SalesCollectionAdapter(Activity context, List<CollectionResDatum> itemsModelsl) {
         this.todayOutletsDatum = itemsModelsl;
@@ -41,6 +44,7 @@ public class SalesCollectionAdapter extends RecyclerView.Adapter<BaseViewHolder>
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
+                sessionManagerSP = new SessionManagerSP(activity);
                 return new ViewHolder(
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.sales_collection_adapter, parent, false));
             case VIEW_TYPE_LOADING:
@@ -134,6 +138,7 @@ public class SalesCollectionAdapter extends RecyclerView.Adapter<BaseViewHolder>
             String invoice = item.getBillNo();
             String bal_amt = item.getBalAmt();
             String date = item.getDate();
+            sessionManagerSP.setDistributorId(item.getDistributorId());
 
             storeName.setText(storeName1);
             txt_invoice.setText(invoice);
