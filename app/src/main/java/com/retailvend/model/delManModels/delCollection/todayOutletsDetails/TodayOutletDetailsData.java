@@ -31,6 +31,10 @@ public class TodayOutletDetailsData {
     @SerializedName("return_details")
     @Expose
     private TodayOutletReturnDetails returnDetails;
+    @SerializedName("print_invoice")
+    @Expose
+    private String printInvoice;
+
 
     public TodayOutletDetailsBillDetails getBillDetails() {
         return billDetails;
@@ -94,5 +98,13 @@ public class TodayOutletDetailsData {
 
     public void setReturnDetails(TodayOutletReturnDetails returnDetails) {
         this.returnDetails = returnDetails;
+    }
+
+    public String getPrintInvoice() {
+        return printInvoice;
+    }
+
+    public void setPrintInvoice(String printInvoice) {
+        this.printInvoice = printInvoice;
     }
 }

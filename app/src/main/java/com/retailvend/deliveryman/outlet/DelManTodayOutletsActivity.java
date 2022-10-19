@@ -314,11 +314,11 @@ public class DelManTodayOutletsActivity extends AppCompatActivity implements Swi
                             todayOutletRecycler.setVisibility(View.GONE);
                         }else{
 //                        todayOutletRecycler.setVisibility(View.GONE);
-                        progress.setVisibility(View.GONE);
-                        nodata.setVisibility(View.VISIBLE);
-                        emptyView.setVisibility(View.VISIBLE);
-                        emptyView.setText(assignOutletsModel.getMessage());
-                        searchLayout.setVisibility(View.GONE);
+//                        progress.setVisibility(View.GONE);
+//                        nodata.setVisibility(View.VISIBLE);
+//                        emptyView.setVisibility(View.VISIBLE);
+//                        emptyView.setText(assignOutletsModel.getMessage());
+//                        searchLayout.setVisibility(View.GONE);
 //                        siteListDataModelList.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("No Record Found");

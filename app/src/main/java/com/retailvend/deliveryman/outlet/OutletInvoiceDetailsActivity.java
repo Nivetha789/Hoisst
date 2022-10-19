@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,7 +58,7 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ProgressBar progress;
     NestedScrollView lin_invoice_details_scrollview;
-    LinearLayout order_status_layout, lin_submit;
+    LinearLayout order_status_layout, lin_submit,pdf_viewer;
     ImageView left_arrow;
 
     TodayOutletDetailsBillDetails todayOutletDetailsBillDetails;
@@ -75,6 +76,8 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
     int qty;
     double totalPrice;
     double grandTotalPrice;
+
+    String pdfUrl="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,11 +150,20 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
         txt_invoice_sub_total = findViewById(R.id.txt_invoice_sub_total);
         txt_invoice_current_total = findViewById(R.id.txt_invoice_current_total);
         left_arrow = findViewById(R.id.left_arrow);
+        pdf_viewer = findViewById(R.id.pdf_viewer);
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        pdf_viewer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl));
+                startActivity(browserIntent);
             }
         });
 
@@ -274,6 +286,9 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
                             txt_invoice_details_dist_address.setText(todayOutletDetailsDistributorDetails.getAddress());
 //                            txt_invoice_qty.setText(todayOutletTotalDetails.getTotalQty());
                             txt_invoice_sub_total.setText(todayOutletTotalDetails.getSubTotal());
+
+                            pdfUrl= todayOutletDetailsModel.getData().getPrintInvoice();
+
                             int b = 0;
                             double a;
                             for (int i = 0; i < productDetails.size(); i++) {
@@ -354,7 +369,7 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
         CustomProgress.showProgress(OutletInvoiceDetailsActivity.this);
 
         Call<UpdateBillModel> call = RetrofitClient
-                .getInstance().getApi().delManOutletInvoiceUpdateStatus("_employeeUpdateBill", emp_id, randomValue, "6");
+                .getInstance().getApi().delManOutletInvoiceUpdateStatus("_employeeUpdateBill", emp_id, randomValue, "11");
 
 
         call.enqueue(new Callback<UpdateBillModel>() {
