@@ -26,6 +26,7 @@ import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListData;
 import com.retailvend.model.delManModels.delCollection.DeliveryCollectionListModel;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.todayoutlet.TodayOutletActivity;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
 import com.retailvend.utills.SessionManagerSP;
@@ -90,7 +91,6 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
         }
 
         left_arrow=findViewById(R.id.left_arrow);
-        nodata_txt=findViewById(R.id.nodata_txt);
         collection_recyclerView=findViewById(R.id.collection_recyclerView);
         progress = findViewById(R.id.progress);
         emptyView = findViewById(R.id.emptyView);
@@ -212,100 +212,49 @@ public class CollectionDeliveryActivity extends AppCompatActivity implements Swi
                     DeliveryCollectionListModel deliveryCollectionListModel = gson.fromJson(json, DeliveryCollectionListModel.class);
 
                     if (deliveryCollectionListModel.getStatus() == 1) {
-
                         collection_recyclerView.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
-
-                        deliveryCollectionListData = deliveryCollectionListModel.getData();
-
-                        if (searchType.equals("2")) {
-//                            if (todayOutletsDatum.size() > 0) {
-                            collectionDeliveryAdapter.clear();
-//                            }
-                        }
-
-                        collection_recyclerView.setVisibility(View.VISIBLE);
                         emptyView.setVisibility(View.GONE);
-                        nodata.setVisibility(View.GONE);
                         deliveryCollectionListData = deliveryCollectionListModel.getData();
+                        nodata.setVisibility(View.GONE);
 
-                        if(deliveryCollectionListData.size()>0){
-                            offset = deliveryCollectionListModel.getOffset();
-                            limit = deliveryCollectionListModel.getLimit();
-                            totalcount = deliveryCollectionListModel.getTotalRecord();
+                        offset = deliveryCollectionListModel.getOffset();
 
-//                        int offest1 = offset;
-//                        int totalcount1;
-//                        if (totalcount > offset) {
-//                            totalcount1 = offset + limit;
-//                        } else {
-//                            totalcount1 = offset;
-//                        }
+                        currentPage = deliveryCollectionListModel.getOffset();
+                        totalPage = deliveryCollectionListModel.getTotalRecord();
 
 
-                            currentPage = offset;
-//                        totalPage = totalcount;
-
-
-                            if (currentPage != PAGE_START)
-                                collectionDeliveryAdapter.removeLoading();
-
-                            collectionDeliveryAdapter.addItems(deliveryCollectionListData);
-
-                            if (currentPage < totalcount) {
-                                collectionDeliveryAdapter.addLoading();
-                            }else if(currentPage>totalPage){
-                                collectionDeliveryAdapter.addLoading();
-                                collectionDeliveryAdapter.removeLoading();
-                            }
-                            else {
-                                isLastPage = true;
-                                collectionDeliveryAdapter.removeLoading();
-                            }
-                        }else{
-                            if(searchType.equals("2")){
-                                progress.setVisibility(View.GONE);
-                                emptyView.setVisibility(View.VISIBLE);
-                                nodata.setVisibility(View.VISIBLE);
-                            }
+                        if (currentPage != PAGE_START)
+                            collectionDeliveryAdapter.removeLoading();
+                        collectionDeliveryAdapter.addItems(deliveryCollectionListData);
+//                        swipeRefresh.setRefreshing(false);
+                        // check weather is last page or not
+                        if (currentPage < totalPage) {
+                            collectionDeliveryAdapter.addLoading();
+                        } else {
+                            isLastPage = true;
                         }
-
                         isLoading = false;
 
-
-//                        offset = siteListModel.getOffset();
+                        currentPage = deliveryCollectionListModel.getOffset();
                         progress.setVisibility(View.GONE);
-//                        emptyView.setVisibility(View.GONE);
-//                        nodata.setVisibility(View.GONE);
-//                        searchLayout.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
 
                     } else {
-                        if(searchType.equals("2")){
-                            progress.setVisibility(View.GONE);
-                            emptyView.setVisibility(View.VISIBLE);
-                            nodata.setVisibility(View.VISIBLE);
-                            collection_recyclerView.setVisibility(View.GONE);
-                        }
-//                        todayOutletRecycler.setVisibility(View.GONE);
-//                        progress.setVisibility(View.GONE);
-//                        nodata.setVisibility(View.VISIBLE);
-//                        emptyView.setVisibility(View.VISIBLE);
-//                        emptyView.setText(assignOutletsModel.getMessage());
-//                        searchLayout.setVisibility(View.GONE);
-//                        siteListDataModelList.clear();
+                        collection_recyclerView.setVisibility(View.GONE);
+                        progress.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.VISIBLE);
+                        emptyView.setText(deliveryCollectionListModel.getMessage());
+                        deliveryCollectionListData.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("No Record Found");
-//                    Toast.makeText(TodayOutletActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                        CustomToast.getInstance(CollectionDeliveryActivity.this).showSmallCustomToast("No Record Found");
+//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
-                    progress.setVisibility(View.GONE);
-                    collection_recyclerView.setVisibility(View.GONE);
-                    progress.setVisibility(View.GONE);
-                    nodata.setVisibility(View.VISIBLE);
-                    emptyView.setVisibility(View.VISIBLE);
-                    emptyView.setText("No Data Found");
-                    Log.d("Exceptionnnn", e.getMessage());
+                    Log.d("Exception", e.getMessage());
                 }
             }
 

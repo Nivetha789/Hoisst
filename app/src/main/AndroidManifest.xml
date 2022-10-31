@@ -10,10 +10,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_GPS" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
@@ -36,218 +34,257 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Hoisst"
-        android:usesCleartextTraffic="true">
+        android:theme="@style/Theme.Hoisst">
         <activity
             android:name=".collateral.CollateralsDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false" />
         <activity
             android:name=".collateral.CollateralsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false" />
         <activity
             android:name=".createOutlet.salesManCollection.SalesManCollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false" />
         <activity
             android:name=".createOutlet.CreateOutletsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false" />
         <activity
             android:name=".endTemp.PdfViewerActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Hoisst.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"
+            />
         <activity
             android:name=".deliveryman.InvoiceList.InvoiceDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".deliveryman.InvoiceList.InvoiceListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".endTemp.EndTempActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".startTemp.StartTempActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".targetDetails.TargetDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".todayoutlet.OutletHistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".changePass.ChangePasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".outstand.OutstandingDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".collection.CollectionDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".deliveryman.outstand.paymentHistory.DelManPaymentHistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".deliveryman.outstand.DelManOutstandActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".deliveryman.outlet.DelManTodayOutletsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".deliveryman.outlet.OutletInvoiceDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".payment.AddPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".deliveryman.collection.CollectionDeliveryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".deliveryman.collection.PaymentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".sales.SalesDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".orderList.OrderListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".todayoutlet.SalesAgentNameActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".outstand.OutstandingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".todayoutlet.CreateOutletOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".todayoutlet.ProductNameActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".todayoutlet.TodayOutletDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".sales.SalesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".collection.CollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".todayoutlet.TodayOutletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".ForgetPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Hoisst.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:exported="false"/>
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:exported="false"/>
         <activity
             android:name=".DashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:exported="false"/>
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan">
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -257,7 +294,8 @@
 
         <receiver
             android:name=".broadcast.ConnectivityReceiver"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
@@ -271,7 +309,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider" />
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 

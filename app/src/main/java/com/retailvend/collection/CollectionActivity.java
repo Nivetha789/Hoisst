@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -103,8 +104,6 @@ public class CollectionActivity extends AppCompatActivity implements SwipeRefres
         toolbar = findViewById(R.id.collection_toolbar);
         collectionRecycler = findViewById(R.id.total_recyclerView);
         leftArrow = findViewById(R.id.left_arrow);
-        nodata_txt=findViewById(R.id.nodata_txt);
-        no_data_constrain=findViewById(R.id.no_data_constrain);
         search = findViewById(R.id.search);
         search_icon = findViewById(R.id.search_icon);
         searchLayout = findViewById(R.id.searchLayout);
@@ -124,6 +123,7 @@ public class CollectionActivity extends AppCompatActivity implements SwipeRefres
         });
 
         search.addTextChangedListener(new TextWatcher() {
+            CountDownTimer timer = null;
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -131,19 +131,52 @@ public class CollectionActivity extends AppCompatActivity implements SwipeRefres
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                offset = 0;
-                searchTxt = s.toString();
 
-                boolean isConnected = ConnectivityReceiver.isConnected();
-                if (isConnected) {
-                    todayOutletListApi(offset, limit, "2");
-                } else {
-                    CustomToast.getInstance(CollectionActivity.this).showSmallCustomToast("Please check your internet connection");
+                if (timer != null) {
+                    timer.cancel();
                 }
+
+                timer = new CountDownTimer(1500, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    public void onFinish() {
+
+                        //do what you wish
+
+                        offset = 0;
+                        currentPage = PAGE_START;
+                        isLastPage = false;
+
+                        if (todayOutletsDatum.size() > 0) {
+                            collectionAdapter.removeLoading();
+                        }
+                        collectionAdapter.clear();
+
+                        boolean isConnected = ConnectivityReceiver.isConnected();
+                        if (isConnected) {
+                            todayOutletListApi(offset, limit, "2",s.toString());
+                        } else {
+                            CustomToast.getInstance(CollectionActivity.this).showSmallCustomToast("Please check your internet connection");
+                        }
+
+                    }
+
+                }.start();
+                return;
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (!(s.length() > 0)) {
+                    if (timer != null) {
+                        timer.cancel();
+                    }
+
+                    onRefresh();
+                }
+                return;
             }
         });
 
@@ -163,7 +196,7 @@ public class CollectionActivity extends AppCompatActivity implements SwipeRefres
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    todayOutletListApi(offset, limit, "1");
+                    todayOutletListApi(offset, limit, "1","");
 
                 } else {
                     CustomToast.getInstance(CollectionActivity.this).showSmallCustomToast("Please check your internet connection");
@@ -194,7 +227,7 @@ public class CollectionActivity extends AppCompatActivity implements SwipeRefres
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            todayOutletListApi(offset, limit, "1");
+            todayOutletListApi(offset, limit, "1","");
         } else {
             CustomToast.getInstance(CollectionActivity.this).showSmallCustomToast("Please check your internet connection");
         }
@@ -210,7 +243,7 @@ public class CollectionActivity extends AppCompatActivity implements SwipeRefres
         collectionAdapter.clear();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            todayOutletListApi(offset, limit, "1");
+            todayOutletListApi(offset, limit, "1","");
         } else {
             CustomToast.getInstance(CollectionActivity.this).showSmallCustomToast("Please check your internet connection");
         }
@@ -224,7 +257,7 @@ public class CollectionActivity extends AppCompatActivity implements SwipeRefres
     }
 
 
-    public void todayOutletListApi(int offset1, int limit1, String searchType) {
+    public void todayOutletListApi(int offset1, int limit1, String searchType,String searchTxt) {
 //        CustomProgress.showProgress(activity);
 
         if (isLoading) {
@@ -253,105 +286,52 @@ public class CollectionActivity extends AppCompatActivity implements SwipeRefres
                     AssignOutletsModel assignOutletsModel = gson.fromJson(json, AssignOutletsModel.class);
 
                     if (assignOutletsModel.getStatus() == 1) {
-
-                        if (searchType.equals("2")) {
-//                            if (todayOutletsDatum.size() > 0) {
-                            collectionAdapter.clear();
-//                            }
-                        }
-
                         collectionRecycler.setVisibility(View.VISIBLE);
+                        progress.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
+                        todayOutletsDatum = assignOutletsModel.getData();
+                        nodata.setVisibility(View.GONE);
+                        searchLayout.setVisibility(View.VISIBLE);
+
+                        offset = assignOutletsModel.getOffset();
+
+                        currentPage = assignOutletsModel.getOffset();
+                        totalPage = assignOutletsModel.getTotalRecord();
+
+
+                        if (currentPage != PAGE_START)
+                            collectionAdapter.removeLoading();
+                        collectionAdapter.addItems(todayOutletsDatum);
+//                        swipeRefresh.setRefreshing(false);
+                        // check weather is last page or not
+                        if (currentPage < totalPage) {
+                            collectionAdapter.addLoading();
+                        } else {
+                            isLastPage = true;
+                        }
+                        isLoading = false;
+
+                        currentPage = assignOutletsModel.getOffset();
+                        progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
                         nodata.setVisibility(View.GONE);
                         searchLayout.setVisibility(View.VISIBLE);
-                        todayOutletsDatum = assignOutletsModel.getData();
-
-                        if(todayOutletsDatum.size()>0){
-                            offset = assignOutletsModel.getOffset();
-                            limit = assignOutletsModel.getLimit();
-                            totalcount = assignOutletsModel.getTotalRecord();
-
-//                        int offest1 = offset;
-//                        int totalcount1;
-//                        if (totalcount > offset) {
-//                            totalcount1 = offset + limit;
-//                        } else {
-//                            totalcount1 = offset;
-//                        }
-
-
-                            currentPage = offset;
-//                        totalPage = totalcount;
-
-
-                            if (currentPage != PAGE_START)
-                                collectionAdapter.removeLoading();
-
-                            collectionAdapter.addItems(todayOutletsDatum);
-
-                            if (currentPage < totalcount) {
-                                collectionAdapter.addLoading();
-                            }else if(currentPage>totalPage){
-                                collectionAdapter.addLoading();
-                                collectionAdapter.removeLoading();
-                            }
-                            else {
-                                isLastPage = true;
-                                collectionAdapter.removeLoading();
-                            }
-                        }else{
-                            if(searchType.equals("2")){
-                                progress.setVisibility(View.GONE);
-                                emptyView.setVisibility(View.VISIBLE);
-                                nodata.setVisibility(View.VISIBLE);
-                                searchLayout.setVisibility(View.GONE);
-                            }
-                        }
-
-                        isLoading = false;
-
-
-//                        offset = siteListModel.getOffset();
-                        progress.setVisibility(View.GONE);
-//                        emptyView.setVisibility(View.GONE);
-//                        nodata.setVisibility(View.GONE);
-//                        searchLayout.setVisibility(View.VISIBLE);
 
                     } else {
-                        if(searchType.equals("2")){
-                            progress.setVisibility(View.GONE);
-                            emptyView.setVisibility(View.VISIBLE);
-                            nodata.setVisibility(View.VISIBLE);
-                            searchLayout.setVisibility(View.GONE);
-                            collectionRecycler.setVisibility(View.GONE);
-                        }else{
-                            progress.setVisibility(View.GONE);
-                            emptyView.setVisibility(View.VISIBLE);
-                            nodata.setVisibility(View.VISIBLE);
-                            searchLayout.setVisibility(View.GONE);
-                            collectionRecycler.setVisibility(View.GONE);
-                        }
-//                        todayOutletRecycler.setVisibility(View.GONE);
-//                        progress.setVisibility(View.GONE);
-//                        nodata.setVisibility(View.VISIBLE);
-//                        emptyView.setVisibility(View.VISIBLE);
-//                        emptyView.setText(assignOutletsModel.getMessage());
-//                        searchLayout.setVisibility(View.GONE);
-//                        siteListDataModelList.clear();
+                        collectionRecycler.setVisibility(View.GONE);
+                        progress.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.VISIBLE);
+                        searchLayout.setVisibility(View.VISIBLE);
+                        emptyView.setText(assignOutletsModel.getMessage());
+                        todayOutletsDatum.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("No Record Found");
-//                    Toast.makeText(TodayOutletActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                        CustomToast.getInstance(CollectionActivity.this).showSmallCustomToast("No Record Found");
+//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
-                    progress.setVisibility(View.GONE);
-                    collectionRecycler.setVisibility(View.GONE);
-                    progress.setVisibility(View.GONE);
-                    nodata.setVisibility(View.VISIBLE);
-                    emptyView.setVisibility(View.VISIBLE);
-                    emptyView.setText("No Data Found");
-                    searchLayout.setVisibility(View.GONE);
-                    Log.d("Exceptionnnn", e.getMessage());
+                    Log.d("Exception", e.getMessage());
                 }
             }
 
@@ -360,6 +340,7 @@ public class CollectionActivity extends AppCompatActivity implements SwipeRefres
                 collectionRecycler.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
+                searchLayout.setVisibility(View.GONE);
                 nodata.setVisibility(View.VISIBLE);
                 emptyView.setText("Something went wrong try again..");
             }

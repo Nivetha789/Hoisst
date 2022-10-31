@@ -282,7 +282,8 @@ public interface Api {
     Call<CollateralsListResModel> collateralsList(
             @Field("method") String method,
             @Field("offset") int offset,
-            @Field("limit") int limit);
+            @Field("limit") int limit,
+            @Field("search") String search);
 
     //collateral details
     @FormUrlEncoded

@@ -97,8 +97,6 @@ public class DashboardActivity extends AppCompatActivity {
         sales_main_txt = findViewById(R.id.sales_main_txt);
         sales_man_count_details = findViewById(R.id.sales_man_count_details);
         del_man_cnt_details = findViewById(R.id.del_man_cnt_details);
-        nodata_txt = findViewById(R.id.nodata_txt);
-        no_data_constrain = findViewById(R.id.no_data_constrain);
         tot_outlet_del_count = findViewById(R.id.tot_outlet_del_count);
         visit_outlet_del_count = findViewById(R.id.visit_outlet_del_count);
         pending_del_count = findViewById(R.id.pending_del_count);
@@ -247,6 +245,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (distributor_id.equals("0")) {
+                    //sales man
                     Intent salesIntent = new Intent(DashboardActivity.this, OrderListActivity.class);
                     startActivity(salesIntent);
                 } else {

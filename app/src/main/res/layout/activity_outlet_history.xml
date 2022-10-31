@@ -142,8 +142,8 @@
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/nodata"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/nodata_found"
                     android:visibility="gone"
@@ -223,8 +223,8 @@
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/nodata1"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/nodata_found"
                     android:visibility="gone"
@@ -301,8 +301,8 @@
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/nodata2"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/nodata_found"
                     android:visibility="gone"
@@ -379,8 +379,8 @@
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/nodata3"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/nodata_found"
                     android:visibility="gone"

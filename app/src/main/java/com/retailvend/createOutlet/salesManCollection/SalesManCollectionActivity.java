@@ -103,8 +103,6 @@ public class SalesManCollectionActivity extends AppCompatActivity implements Swi
         toolbar = findViewById(R.id.collection_toolbar);
         collectionRecycler = findViewById(R.id.total_recyclerView);
         leftArrow = findViewById(R.id.left_arrow);
-        nodata_txt = findViewById(R.id.nodata_txt);
-        no_data_constrain = findViewById(R.id.no_data_constrain);
         search = findViewById(R.id.search);
         search_icon = findViewById(R.id.search_icon);
         searchLayout = findViewById(R.id.searchLayout);

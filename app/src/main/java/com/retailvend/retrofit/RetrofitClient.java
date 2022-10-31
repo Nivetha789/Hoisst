@@ -29,7 +29,7 @@ public class RetrofitClient {
 //                .build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(TEST_URL)
+                .baseUrl(LIVE_URL)
                 .client(HTTPInterceptor.logInterceptor().build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

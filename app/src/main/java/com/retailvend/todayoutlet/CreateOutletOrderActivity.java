@@ -63,7 +63,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
     RecyclerView tableList;
     //    ArrayList<CreatePurchaseModel> modelMains;
-    private CreateOutletAdapter adapterMain;
+    CreateOutletAdapter adapterMain;
 
     List<AddProductModel> addProductModel = new ArrayList<>();
     String addProductJson = "";

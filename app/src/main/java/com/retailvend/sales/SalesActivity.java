@@ -100,7 +100,6 @@ public class SalesActivity extends AppCompatActivity implements SwipeRefreshLayo
         leftArrow = findViewById(R.id.left_arrow);
         salesRecycler = findViewById(R.id.sales_recyeclerview);
         progress = findViewById(R.id.progress);
-        nodata_txt = findViewById(R.id.nodata_txt);
         search = findViewById(R.id.search);
         search_icon = findViewById(R.id.search_icon);
         searchLayout = findViewById(R.id.searchLayout);

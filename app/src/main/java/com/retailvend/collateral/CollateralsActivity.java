@@ -5,6 +5,7 @@ import static com.retailvend.utills.PaginationListener.PAGE_START;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -30,6 +31,7 @@ import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.model.collateralsmodule.CollateralsListDatum;
 import com.retailvend.model.collateralsmodule.CollateralsListResModel;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.todayoutlet.TodayOutletActivity;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
 import com.retailvend.utills.SessionManagerSP;
@@ -118,6 +120,7 @@ public class CollateralsActivity extends AppCompatActivity implements SwipeRefre
         });
 
         search.addTextChangedListener(new TextWatcher() {
+            CountDownTimer timer = null;
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -125,19 +128,53 @@ public class CollateralsActivity extends AppCompatActivity implements SwipeRefre
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                offset = 0;
-                searchTxt = s.toString();
 
-                boolean isConnected = ConnectivityReceiver.isConnected();
-                if (isConnected) {
-                    collateralsApi(offset, limit, "2");
-                } else {
-                    CustomToast.getInstance(CollateralsActivity.this).showSmallCustomToast("Please check your internet connection");
+                if (timer != null) {
+                    timer.cancel();
                 }
+
+                timer = new CountDownTimer(1500, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    public void onFinish() {
+
+                        //do what you wish
+                        itemCount = 0;
+                        offset = 0;
+                        currentPage = PAGE_START;
+                        isLastPage = false;
+
+                        if (collateralsListDatum.size() > 0) {
+                            collateralsAdapter.removeLoading();
+                        }
+                        collateralsAdapter.clear();
+
+                        boolean isConnected = ConnectivityReceiver.isConnected();
+                        if (isConnected) {
+                            collateralsApi(offset, limit, "2",s.toString());
+                        } else {
+                            CustomToast.getInstance(CollateralsActivity.this).showSmallCustomToast("Please check your internet connection");
+                        }
+
+                    }
+
+                }.start();
+
+                return;
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (!(s.length() > 0)) {
+                    if (timer != null) {
+                        timer.cancel();
+                    }
+
+                    onRefresh();
+                }
+                return;
             }
         });
 
@@ -159,7 +196,7 @@ public class CollateralsActivity extends AppCompatActivity implements SwipeRefre
 
                 boolean isConnected = ConnectivityReceiver.isConnected();
                 if (isConnected) {
-                    collateralsApi(offset, limit, "1");
+                    collateralsApi(offset, limit, "1","");
 
                 } else {
                     CustomToast.getInstance(CollateralsActivity.this).showSmallCustomToast("Please check your internet connection");
@@ -189,7 +226,7 @@ public class CollateralsActivity extends AppCompatActivity implements SwipeRefre
 
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            collateralsApi(offset, limit, "1");
+            collateralsApi(offset, limit, "1","");
         } else {
             CustomToast.getInstance(CollateralsActivity.this).showSmallCustomToast("Please check your internet connection");
         }
@@ -205,13 +242,13 @@ public class CollateralsActivity extends AppCompatActivity implements SwipeRefre
         collateralsAdapter.clear();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (isConnected) {
-            collateralsApi(offset, limit, "1");
+            collateralsApi(offset, limit, "1","");
         } else {
             CustomToast.getInstance(CollateralsActivity.this).showSmallCustomToast("Please check your internet connection");
         }
     }
 
-    public void collateralsApi(int offset1, int limit1, String searchType) {
+    public void collateralsApi(int offset1, int limit1, String searchType,String searchTxt) {
 //        CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
 
@@ -224,7 +261,7 @@ public class CollateralsActivity extends AppCompatActivity implements SwipeRefre
         }
 
         Call<CollateralsListResModel> call = RetrofitClient
-                .getInstance().getApi().collateralsList("_listCollateralsPaginate", offset1, limit1);
+                .getInstance().getApi().collateralsList("_listCollateralsPaginate", offset1, limit1,searchTxt);
 
         call.enqueue(new Callback<CollateralsListResModel>() {
             @Override
@@ -234,108 +271,55 @@ public class CollateralsActivity extends AppCompatActivity implements SwipeRefre
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    CollateralsListResModel orderListModel = gson.fromJson(json, CollateralsListResModel.class);
+                    CollateralsListResModel collateralsListResModel = gson.fromJson(json, CollateralsListResModel.class);
 
-                    if (orderListModel.getStatus() == 1) {
-
-                        if (searchType.equals("2")) {
-//                            if (todayOutletsDatum.size() > 0) {
-                            collateralsAdapter.clear();
-//                            }
-                        }
-
+                    if (collateralsListResModel.getStatus() == 1) {
                         order_list_recycler.setVisibility(View.VISIBLE);
+                        progress.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
+                        collateralsListDatum = collateralsListResModel.getData();
+                        nodata.setVisibility(View.GONE);
+                        searchLayout.setVisibility(View.VISIBLE);
+
+                        offset = collateralsListResModel.getOffset();
+
+                        currentPage = collateralsListResModel.getOffset();
+                        totalPage = collateralsListResModel.getTotalRecord();
+
+
+                        if (currentPage != PAGE_START)
+                            collateralsAdapter.removeLoading();
+                        collateralsAdapter.addItems(collateralsListDatum);
+//                        swipeRefresh.setRefreshing(false);
+                        // check weather is last page or not
+                        if (currentPage < totalPage) {
+                            collateralsAdapter.addLoading();
+                        } else {
+                            isLastPage = true;
+                        }
+                        isLoading = false;
+
+                        currentPage = collateralsListResModel.getOffset();
+                        progress.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
                         nodata.setVisibility(View.GONE);
                         searchLayout.setVisibility(View.VISIBLE);
-                        collateralsListDatum = orderListModel.getData();
-
-                        if (collateralsListDatum.size() > 0) {
-                            offset = orderListModel.getOffset();
-                            limit = orderListModel.getLimit();
-                            totalcount = orderListModel.getTotalRecord();
-
-//                        int offest1 = offset;
-//                        int totalcount1;
-//                        if (totalcount > offset) {
-//                            totalcount1 = offset + limit;
-//                        } else {
-//                            totalcount1 = offset;
-//                        }
-
-
-                            currentPage = offset;
-//                        totalPage = totalcount;
-
-
-                            if (currentPage != PAGE_START)
-                                collateralsAdapter.removeLoading();
-
-                            collateralsAdapter.addItems(collateralsListDatum);
-
-                            if (currentPage < totalcount) {
-                                collateralsAdapter.addLoading();
-                            } else if (currentPage > totalPage) {
-                                collateralsAdapter.addLoading();
-                                collateralsAdapter.removeLoading();
-                            } else {
-                                isLastPage = true;
-                                collateralsAdapter.removeLoading();
-                            }
-                        } else {
-                            if (searchType.equals("2")) {
-                                progress.setVisibility(View.GONE);
-                                emptyView.setVisibility(View.VISIBLE);
-                                nodata.setVisibility(View.VISIBLE);
-                                searchLayout.setVisibility(View.GONE);
-                            }
-                        }
-
-                        isLoading = false;
-
-
-//                        offset = siteListModel.getOffset();
-                        progress.setVisibility(View.GONE);
-//                        emptyView.setVisibility(View.GONE);
-//                        nodata.setVisibility(View.GONE);
-//                        searchLayout.setVisibility(View.VISIBLE);
 
                     } else {
-                        System.out.println("searchType " + searchType);
-                        if (searchType.equals("2")) {
-                            progress.setVisibility(View.GONE);
-                            emptyView.setVisibility(View.VISIBLE);
-                            nodata.setVisibility(View.VISIBLE);
-                            searchLayout.setVisibility(View.GONE);
-                            order_list_recycler.setVisibility(View.GONE);
-                        }else{
-                            progress.setVisibility(View.GONE);
-                            emptyView.setVisibility(View.VISIBLE);
-                            nodata.setVisibility(View.VISIBLE);
-                            searchLayout.setVisibility(View.GONE);
-                            order_list_recycler.setVisibility(View.GONE);
-                        }
-//                        todayOutletRecycler.setVisibility(View.GONE);
-//                        progress.setVisibility(View.GONE);
-//                        nodata.setVisibility(View.VISIBLE);
-//                        emptyView.setVisibility(View.VISIBLE);
-//                        emptyView.setText(assignOutletsModel.getMessage());
-//                        searchLayout.setVisibility(View.GONE);
-//                        siteListDataModelList.clear();
+                        order_list_recycler.setVisibility(View.GONE);
+                        progress.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.VISIBLE);
+                        searchLayout.setVisibility(View.VISIBLE);
+                        emptyView.setText(collateralsListResModel.getMessage());
+                        collateralsListDatum.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-//                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast("No Record Found");
-//                    Toast.makeText(TodayOutletActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                        CustomToast.getInstance(CollateralsActivity.this).showSmallCustomToast("No Record Found");
+//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
-                    progress.setVisibility(View.GONE);
-                    order_list_recycler.setVisibility(View.GONE);
-                    progress.setVisibility(View.GONE);
-                    nodata.setVisibility(View.VISIBLE);
-                    emptyView.setVisibility(View.VISIBLE);
-                    emptyView.setText("No Data Found");
-                    searchLayout.setVisibility(View.GONE);
-                    Log.d("Exceptionnnn", e.getMessage());
+                    Log.d("Exception", e.getMessage());
                 }
             }
 
@@ -345,6 +329,7 @@ public class CollateralsActivity extends AppCompatActivity implements SwipeRefre
                 progress.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
                 nodata.setVisibility(View.VISIBLE);
+                searchLayout.setVisibility(View.GONE);
                 emptyView.setText("Something went wrong try again..");
             }
         });

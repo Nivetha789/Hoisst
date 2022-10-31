@@ -100,11 +100,11 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/nodata"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@drawable/nodata_found"
         android:visibility="gone"
+        android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +118,7 @@
         android:fontFamily="@font/quicksand_bold"
         android:gravity="center"
         android:layout_marginTop="-50dp"
-        android:text="No Data Found"
+        android:text="No Outlet to work today!!!"
         android:visibility="gone"
         android:textColor="@color/colorPrimary"
         android:textSize="16dp"

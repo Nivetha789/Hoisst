@@ -30,6 +30,7 @@ import com.retailvend.model.delManModels.delCollection.invoiceHistory.InvoiceHis
 import com.retailvend.model.delManModels.delCollection.outstand.OutstandDatum;
 import com.retailvend.model.delManModels.delCollection.outstand.OutstandModel;
 import com.retailvend.retrofit.RetrofitClient;
+import com.retailvend.todayoutlet.TodayOutletActivity;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.PaginationListener;
 import com.retailvend.utills.SessionManagerSP;
@@ -47,19 +48,19 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
     Activity activity;
     LinearLayoutManager mLayoutManager;
     DelManOutstandAdapter delManOutstandAdapter;
-    ImageView leftArrow;
+    ImageView leftArrow,nodata;
     Toolbar toolbar;
     Menu menu;
-    TextView nodata_txt;
-    ConstraintLayout no_data_constrain;
     List<OutstandDatum> outstandListData;
+
+    TextView emptyView;
+    ProgressBar progress;
 
     private int currentPage = PAGE_START;
     private boolean isLastPage = false;
     private int totalPage = 0;
     private boolean isLoading = false;
     int itemCount = 0;
-    ProgressBar progress;
 
     int offset = 0;
     int limit = 10;
@@ -95,8 +96,8 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
         leftArrow = findViewById(R.id.left_arrow);
         invoice_history_recycler = findViewById(R.id.invoice_history_recyecler);
         progress = findViewById(R.id.progress);
-        nodata_txt=findViewById(R.id.nodata_txt);
-        no_data_constrain=findViewById(R.id.no_data_constrain);
+        emptyView = findViewById(R.id.emptyView_txt);
+        nodata = findViewById(R.id.nodata);
 
         sessionManagerSP = new SessionManagerSP(DelManOutstandActivity.this);
 
@@ -180,12 +181,15 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
 //        CustomProgress.showProgress(activity);
         String distributorId = sessionManagerSP.getDistributorId();
 
+
         if (isLoading) {
             progress.setVisibility(View.GONE);
-            no_data_constrain.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
         } else {
             progress.setVisibility(View.VISIBLE);
-            no_data_constrain.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
         }
 
         Call<OutstandModel> call = RetrofitClient
@@ -199,38 +203,26 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    OutstandModel productNameResModel = gson.fromJson(json, OutstandModel.class);
+                    OutstandModel outstandModel = gson.fromJson(json, OutstandModel.class);
 
-                    if (productNameResModel.getStatus() == 1) {
-
+                    if (outstandModel.getStatus() == 1) {
                         invoice_history_recycler.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
+                        outstandListData = outstandModel.getData();
+                        nodata.setVisibility(View.GONE);
 
-                        outstandListData = productNameResModel.getData();
+                        offset = outstandModel.getOffset();
 
-                        offset = productNameResModel.getOffset();
-                        limit = productNameResModel.getLimit();
-                        totalcount = productNameResModel.getTotalRecord();
-
-                        int offest1 = offset;
-                        int totalcount1;
-                        if (totalcount > offset) {
-                            totalcount1 = offset + limit;
-                        } else {
-                            totalcount1 = offset;
-                        }
-
-
-                        currentPage = offest1;
-                        totalPage = totalcount1;
+                        currentPage = outstandModel.getOffset();
+                        totalPage = outstandModel.getTotalRecord();
 
 
                         if (currentPage != PAGE_START)
                             delManOutstandAdapter.removeLoading();
-
                         delManOutstandAdapter.addItems(outstandListData);
-
+//                        swipeRefresh.setRefreshing(false);
+                        // check weather is last page or not
                         if (currentPage < totalPage) {
                             delManOutstandAdapter.addLoading();
                         } else {
@@ -238,25 +230,25 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
                         }
                         isLoading = false;
 
-
-//                        offset = siteListModel.getOffset();
+                        currentPage = outstandModel.getOffset();
                         progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
 
                     } else {
                         invoice_history_recycler.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
-                        no_data_constrain.setVisibility(View.VISIBLE);
-                        nodata_txt.setText("No Record Found");
-//                        siteListDataModelList.clear();
+                        emptyView.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.VISIBLE);
+                        emptyView.setText(outstandModel.getMessage());
+                        outstandListData.clear();
 //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                         CustomToast.getInstance(DelManOutstandActivity.this).showSmallCustomToast("No Record Found");
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
-                    progress.setVisibility(View.GONE);
-                    Log.d("Exceptionnnn", e.getMessage());
+                    Log.d("Exception", e.getMessage());
                 }
             }
 
@@ -264,8 +256,9 @@ public class DelManOutstandActivity extends AppCompatActivity implements SwipeRe
             public void onFailure(@NonNull Call<OutstandModel> call, @NonNull Throwable t) {
                 invoice_history_recycler.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
-                no_data_constrain.setVisibility(View.VISIBLE);
-                nodata_txt.setText("Something went wrong try again..");
+                emptyView.setVisibility(View.VISIBLE);
+                nodata.setVisibility(View.VISIBLE);
+                emptyView.setText("Something went wrong try again..");
             }
         });
     }

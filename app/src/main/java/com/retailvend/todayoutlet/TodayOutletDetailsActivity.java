@@ -1,9 +1,5 @@
 package com.retailvend.todayoutlet;
 
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
-
-import static java.lang.Math.random;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,15 +7,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -61,17 +54,11 @@ import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.ReasonBaseAdapter;
 import com.retailvend.utills.SessionManagerSP;
-import com.sromku.simple.storage.SimpleStorage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -96,14 +83,14 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     ButtonTypeAdapter buttonTypeAdapter;
     RecyclerView order_type_recycler;
     LinearLayoutManager mLayoutManager;
-    LinearLayout outlet_his_Constrain, out_collection_Constrain, image_layout;
+    LinearLayout outlet_his_Constrain, out_collection_Constrain;
     String store_id = "";
     String shop_name1 = "";
     String attendance_status = "";
     String upload_status = "";
     String latitude = "";
     String longitude = "";
-    ConstraintLayout order_type_constrain, reason_constrain, location_constrain,call_constrain;
+    ConstraintLayout order_type_constrain, reason_constrain, location_constrain, call_constrain;
     String type_id = "";
     String type_val = "";
     SessionManagerSP sessionManagerSP;
@@ -125,7 +112,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
     AlertDialog.Builder builder;
 
-    String mobile="";
+    String mobile = "";
 
 
     File file1;
@@ -175,7 +162,6 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         left_arrow = findViewById(R.id.left_arrow);
         outlet_his_Constrain = findViewById(R.id.outlet_his_Constrain);
         out_collection_Constrain = findViewById(R.id.out_collection_Constrain);
-        image_layout = findViewById(R.id.image_layout);
         call_constrain = findViewById(R.id.call_constrain);
 
         builder = new AlertDialog.Builder(this);
@@ -191,7 +177,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String pan1 = assignOutletsDatum.getPanNo();
         attendance_status = assignOutletsDatum.getAttendanceStatus();
         upload_status = assignOutletsDatum.getUploadStatus();
-        System.out.println("upload_status : "+upload_status);
+        System.out.println("upload_status : " + upload_status);
         shop_name.setText(shop_name1);
         shop_number.setText(shop_number1);
         contact_name.setText(contact_name1);
@@ -206,12 +192,6 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
         checkGPSON();
         getLocation();
-
-        if (upload_status.equals("2")) {
-            image_layout.setVisibility(View.VISIBLE);
-        } else {
-            image_layout.setVisibility(View.GONE);
-        }
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -244,18 +224,8 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:"+shop_number1));
+                intent.setData(Uri.parse("tel:" + shop_number1));
                 startActivity(intent);
-            }
-        });
-
-        image_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                }
             }
         });
 
@@ -348,26 +318,31 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                                 System.out.println("latitudenewww " + latitude);
                                 System.out.println("longitudenewww " + longitude);
                                 if (!TextUtils.isEmpty(latitude) && !TextUtils.isEmpty(longitude)) {
-
-                                    if (upload_status.equals("2")) {
-                                        if (!file1.getPath().isEmpty()) {
-                                            boolean isConnected = ConnectivityReceiver.isConnected();
-                                            if (isConnected) {
-                                                addAttendanceApi(latitude, longitude);
-                                            } else {
-                                                CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
-                                            }
-                                        } else {
-                                            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please Upload image");
-                                        }
+                                    boolean isConnected = ConnectivityReceiver.isConnected();
+                                    if (isConnected) {
+                                        addAttendanceApi(latitude, longitude);
                                     } else {
-                                        boolean isConnected = ConnectivityReceiver.isConnected();
-                                        if (isConnected) {
-                                            addAttendanceApi(latitude, longitude);
-                                        } else {
-                                            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
-                                        }
+                                        CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
                                     }
+//                                    if (upload_status.equals("2")) {
+//                                        if (!file1.getPath().isEmpty()) {
+//                                            boolean isConnected = ConnectivityReceiver.isConnected();
+//                                            if (isConnected) {
+//                                                addAttendanceApi(latitude, longitude);
+//                                            } else {
+//                                                CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+//                                            }
+//                                        } else {
+//                                            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please Upload image");
+//                                        }
+//                                    } else {
+//                                        boolean isConnected = ConnectivityReceiver.isConnected();
+//                                        if (isConnected) {
+//                                            addAttendanceApi(latitude, longitude);
+//                                        } else {
+//                                            CustomToast.getInstance(TodayOutletDetailsActivity.this).showSmallCustomToast("Please check your internet connection");
+//                                        }
+//                                    }
 
                                 } else {
                                     Toast.makeText(TodayOutletDetailsActivity.this, "Location is not updated, Try Again", Toast.LENGTH_SHORT).show();
@@ -541,10 +516,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         super.onActivityResult(requestCode, resultCode, data);
         captured_img.setVisibility(View.VISIBLE);
         captured_icon.setVisibility(View.GONE);
-        Bitmap bitmap =  ImageUtils.getBitmapFromIntent(this, data);
+        Bitmap bitmap = ImageUtils.getBitmapFromIntent(this, data);
         captured_img.setImageBitmap(bitmap);// mImage is a ImageView which is bind previously.
         String imgPath = ImageUtils.createFile(this, bitmap);
-        file1= new File(imgPath);
+        file1 = new File(imgPath);
 
         Glide.with(TodayOutletDetailsActivity.this).load(bitmap).into(captured_img);
     }
@@ -583,7 +558,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
 
         public static String createFile(Context context, Bitmap data) {
-            Uri selectedImage = getImageUri(context,data);
+            Uri selectedImage = getImageUri(context, data);
             String[] filePath = {MediaStore.Images.Media.DATA};
             Cursor c = context.getContentResolver().query(selectedImage, filePath, null, null, null);
             c.moveToFirst();
@@ -730,10 +705,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String emp_id = sessionManagerSP.getEmployeeId();
         MultipartBody.Part body1;
 
-        if(file1!=null){
+        if (file1 != null) {
             RequestBody reqFile1 = RequestBody.create(MediaType.parse("image/*"), file1);
             body1 = MultipartBody.Part.createFormData("c_image", file1.getName(), reqFile1);
-        }else{
+        } else {
             RequestBody reqFile1 = RequestBody.create(MediaType.parse("image/*"), "");
             body1 = MultipartBody.Part.createFormData("c_image", "", reqFile1);
         }
@@ -744,7 +719,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         RequestBody latitude1 = RequestBody.create(MediaType.parse("text/plain"), latitude);
         RequestBody longitude1 = RequestBody.create(MediaType.parse("text/plain"), longitude);
         RequestBody upload_Status = RequestBody.create(MediaType.parse("text/plain"), upload_status);
-        System.out.println("upload_status777777 "+upload_status);
+        System.out.println("upload_status777777 " + upload_status);
 
         Call<AddAttendanceModel> call = RetrofitClient
                 .getInstance().getApi().addAttendance(method, emp_idd, store_Id, latitude1, longitude1, upload_Status, body1);
