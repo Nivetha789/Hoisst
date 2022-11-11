@@ -42,6 +42,7 @@ import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.createOutlet.salesManCollection.SalesManCollectionActivity;
+import com.retailvend.loyalty.LoyaltyActivity;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageDatum;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageModel;
 import com.retailvend.model.outlets.AddAttendanceData;
@@ -90,7 +91,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     String upload_status = "";
     String latitude = "";
     String longitude = "";
-    ConstraintLayout order_type_constrain, reason_constrain, location_constrain, call_constrain;
+    ConstraintLayout order_type_constrain, reason_constrain, location_constrain, call_constrain,loyalty_constrain;
     String type_id = "";
     String type_val = "";
     SessionManagerSP sessionManagerSP;
@@ -98,6 +99,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
     LocationManager locationManager;
     String reasonTxt = "";
     String reasonId = "";
+    String otp_status = "";
 
     String assign_id = "";
     String desLatitude = "";
@@ -163,6 +165,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         outlet_his_Constrain = findViewById(R.id.outlet_his_Constrain);
         out_collection_Constrain = findViewById(R.id.out_collection_Constrain);
         call_constrain = findViewById(R.id.call_constrain);
+        loyalty_constrain = findViewById(R.id.loyalty_constrain);
 
         builder = new AlertDialog.Builder(this);
 
@@ -177,6 +180,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         String pan1 = assignOutletsDatum.getPanNo();
         attendance_status = assignOutletsDatum.getAttendanceStatus();
         upload_status = assignOutletsDatum.getUploadStatus();
+        otp_status = assignOutletsDatum.getOtpType();
         System.out.println("upload_status : " + upload_status);
         shop_name.setText(shop_name1);
         shop_number.setText(shop_number1);
@@ -368,6 +372,15 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                 check_in.setVisibility(View.VISIBLE);
                 checked.setVisibility(View.GONE);
                 order_type_recycler.setVisibility(View.GONE);
+            }
+        });
+
+        loyalty_constrain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loyaltyIntent = new Intent(activity, LoyaltyActivity.class);
+                loyaltyIntent.putExtra("outlet_id", store_id);
+                startActivity(loyaltyIntent);
             }
         });
 
@@ -600,7 +613,7 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
                         attendanceTypeData = attendanceTypeModel.getData();
 //                        CustomToast.getInstance(TodayOutletActivity.this).showSmallCustomToast(todayOutletList.getMessage());
 
-                        buttonTypeAdapter = new ButtonTypeAdapter(activity, attendanceTypeData, store_id);
+                        buttonTypeAdapter = new ButtonTypeAdapter(activity, attendanceTypeData, store_id,otp_status);
                         order_type_recycler.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
                         mLayoutManager = new LinearLayoutManager(activity);
                         //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);

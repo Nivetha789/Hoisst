@@ -110,6 +110,51 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loyalty_constrain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/lin_storke1"
+                app:layout_constraintEnd_toStartOf="@+id/call_constrain"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                app:layout_constraintVertical_chainStyle="spread_inside">
+
+                <ImageView
+                    android:id="@+id/ic_loyalty"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/icons_loyalty"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/colorAccent" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/quicksand_semi_bold"
+                    android:text="Loyalty"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ic_loyalty"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ic_loyalty"
+                    app:layout_constraintTop_toTopOf="@+id/ic_loyalty"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/call_constrain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -117,6 +162,8 @@
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/lin_storke1"
                 app:layout_constraintEnd_toStartOf="@+id/location_constrain"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/loyalty_constrain"
                 app:layout_constraintTop_toBottomOf="@+id/cardView"
                 app:layout_constraintVertical_chainStyle="spread_inside">
 
@@ -157,7 +204,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/lin_storke1"
-                app:layout_constraintEnd_toEndOf="@+id/cardView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/call_constrain"
                 app:layout_constraintTop_toBottomOf="@+id/cardView"
                 app:layout_constraintVertical_chainStyle="spread_inside">
 
@@ -318,8 +367,8 @@
                 android:id="@+id/mail_constrain"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/cardView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/cardView"
@@ -444,29 +493,28 @@
                 android:id="@+id/image_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:visibility="gone"
                 android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/constrain_check"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mob_constrain"
-                app:layout_constraintBottom_toTopOf="@+id/constrain_check">
+                app:layout_constraintTop_toBottomOf="@+id/mob_constrain">
 
                 <TextView
                     android:id="@+id/upload_img_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/quicksand_regular"
+                    android:gravity="center"
                     android:text="*Upload shop image*"
                     android:textColor="@color/black"
-                    android:textSize="14dp"
                     android:textFontWeight="800"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    />
+                    android:textSize="14dp" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card_img"
@@ -480,19 +528,19 @@
                         android:id="@+id/captured_icon"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:padding="10dp"
-                        android:visibility="visible"
                         android:layout_gravity="center"
-                        android:src="@drawable/camera" />
+                        android:padding="10dp"
+                        android:src="@drawable/camera"
+                        android:visibility="visible" />
 
                     <ImageView
                         android:id="@+id/captured_img"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        android:padding="10dp"
-                        android:visibility="gone"
+                        android:layout_gravity="center"
                         android:adjustViewBounds="true"
-                        android:layout_gravity="center"/>
+                        android:padding="10dp"
+                        android:visibility="gone" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -502,8 +550,8 @@
                 android:id="@+id/constrain_check"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="3"
                 android:layout_marginTop="20dp"
+                android:weightSum="3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_layout">
@@ -534,10 +582,10 @@
                     android:id="@+id/checkInConstrain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -585,10 +633,10 @@
                     android:id="@+id/out_collection_Constrain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -620,10 +668,10 @@
                 android:id="@+id/order_type_constrain"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constrain_check">
@@ -655,8 +703,8 @@
                 android:id="@+id/reason_constrain"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginTop="15dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/cardView"
                 app:layout_constraintStart_toStartOf="@id/cardView"
@@ -668,8 +716,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/quicksand_bold"
-                    android:text="Reason"
                     android:padding="5dp"
+                    android:text="Reason"
                     android:textColor="@color/black"
                     android:textSize="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -711,7 +759,6 @@
                     app:layout_constraintTop_toBottomOf="@id/reason" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

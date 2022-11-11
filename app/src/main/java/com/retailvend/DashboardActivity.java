@@ -167,7 +167,7 @@ public class DashboardActivity extends AppCompatActivity {
             sales_main_txt.setTypeface(font);
             sales_main_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-            order_list.setText("INVOICE LIST");
+            order_list.setText("DELIVERY LIST");
 
             today_outlet_menu.setVisibility(View.GONE);
             target_menu.setVisibility(View.GONE);

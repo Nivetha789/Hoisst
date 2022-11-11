@@ -94,5 +94,8 @@ dependencies {
     //pdf
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
+    // Pin View (for OTP)
+//    implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
+    implementation 'com.chaos.view:pinview:1.4.4'
 
 }

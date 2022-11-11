@@ -33,7 +33,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.retailvend.R;
+import com.retailvend.VerifyOtpActivity;
 import com.retailvend.broadcast.ConnectivityReceiver;
+import com.retailvend.model.SendOtpModel;
 import com.retailvend.model.order.CreateOrderModel;
 import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.ProductTypeDatum;
@@ -95,6 +97,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     String unitId = "";
     String lat_val = "";
     String long_val = "";
+    String otp_value = "";
     List<ProductTypeDatum> productTypeData;
     private final static int MY_REQUEST_CODE = 1;
     private final static int MY_REQUEST_CODE1 = 2;
@@ -106,10 +109,13 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
     ProductAdapter productAdapter;
 
+    private static CreateOutletOrderActivity instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_sales_order);
+        instance = this;
         activity = this;
 
 
@@ -169,10 +175,10 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         if (data != null) {
             store_id = getIntent().getStringExtra("store_id");
             btn_Type_val = getIntent().getStringExtra("type");
-            System.out.println("typejhjhrhj "+btn_Type_val);
+            otp_value = getIntent().getStringExtra("otp_value");
 
-            if(btn_Type_val.equals("Sales Order")){
-                btn_Type_val="1";
+            if (btn_Type_val.equals("Sales Order")) {
+                btn_Type_val = "1";
             }
         }
 
@@ -202,7 +208,12 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
-                                    createOrderApi();
+
+                                    if (otp_value.equals("2")) {
+                                        sendOtpApi();
+                                    } else {
+                                        createOrderApi();
+                                    }
                                 }
                             });
 
@@ -380,6 +391,10 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         });
     }
 
+    public static CreateOutletOrderActivity getInstance() {
+        return instance;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -473,47 +488,45 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         datePickerDialog.show();
     }
 
-
-    public void createOrderApi() {
+    public void sendOtpApi() {
         CustomProgress.showProgress(activity);
 
         String emp_id = sessionManagerSP.getEmployeeId();
         String attandance_id = sessionManagerSP.getAssignId();
 
-        Call<CreateOrderModel> call = RetrofitClient
-                .getInstance().getApi().createOrder("_addSalesOrder", emp_id, store_id, bill_type, discount.getText().toString(), dueDays.getText().toString(), "1", attandance_id,addProductJson);
+        Call<SendOtpModel> call = RetrofitClient
+                .getInstance().getApi().sendOtp("_sendOtp", store_id, emp_id, "");
 
-        call.enqueue(new Callback<CreateOrderModel>() {
+        call.enqueue(new Callback<SendOtpModel>() {
             @Override
-            public void onResponse(@NonNull Call<CreateOrderModel> call, @NonNull Response<CreateOrderModel> response) {
+            public void onResponse(@NonNull Call<SendOtpModel> call, @NonNull Response<SendOtpModel> response) {
 
                 try {
 
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
 
-                    CreateOrderModel createOrderModel = gson.fromJson(json, CreateOrderModel.class);
-                    String s = createOrderModel.getMessage();
+                    SendOtpModel sendOtpModel = gson.fromJson(json, SendOtpModel.class);
+                    String s = sendOtpModel.getMessage();
 
-                    if (createOrderModel.getStatus() == 1) {
+                    if (sendOtpModel.getStatus() == 1) {
 
 //                        text_signIn.setVisibility(View.VISIBLE);
-                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
+                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(sendOtpModel.getMessage());
 
-                        CustomProgress.hideProgress(activity);
-                        boolean isConnected = ConnectivityReceiver.isConnected();
-                        if (isConnected) {
-                            updateAttendanceApi();
-                        } else {
-//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
-                            CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Please check your internet connection");
-                        }
-
+                        Intent intent = new Intent(CreateOutletOrderActivity.this, VerifyOtpActivity.class);
+                        intent.putExtra("store_id", store_id);
+                        intent.putExtra("bill_type", bill_type);
+                        intent.putExtra("discount", discount.getText().toString());
+                        intent.putExtra("due_days", dueDays.getText().toString());
+                        intent.putExtra("addProductJson", addProductJson);
+                        intent.putExtra("btn_Type_val", btn_Type_val);
+                        startActivity(intent);
                     } else {
 //                        text_signIn.setVisibility(View.VISIBLE);
                         CustomProgress.hideProgress(activity);
                         //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
+                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(sendOtpModel.getMessage());
 //                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
@@ -525,7 +538,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
             }
 
             @Override
-            public void onFailure(@NonNull Call<CreateOrderModel> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<SendOtpModel> call, @NonNull Throwable t) {
                 Log.d("Failure ", t.getMessage());
 //                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                 CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Something went wrong try again..");
@@ -534,6 +547,67 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
             }
         });
     }
+
+    public void createOrderApi() {
+            CustomProgress.showProgress(activity);
+
+            String emp_id = sessionManagerSP.getEmployeeId();
+            String attandance_id = sessionManagerSP.getAssignId();
+
+            Call<CreateOrderModel> call = RetrofitClient
+                    .getInstance().getApi().createOrder("_addSalesOrder", emp_id, store_id, bill_type, discount.getText().toString(), dueDays.getText().toString(), "1", attandance_id, addProductJson);
+
+            call.enqueue(new Callback<CreateOrderModel>() {
+                @Override
+                public void onResponse(@NonNull Call<CreateOrderModel> call, @NonNull Response<CreateOrderModel> response) {
+
+                    try {
+
+                        Gson gson = new Gson();
+                        String json = gson.toJson(response.body());
+
+                        CreateOrderModel createOrderModel = gson.fromJson(json, CreateOrderModel.class);
+                        String s = createOrderModel.getMessage();
+
+                        if (createOrderModel.getStatus() == 1) {
+
+//                        text_signIn.setVisibility(View.VISIBLE);
+                            CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
+
+                            CustomProgress.hideProgress(activity);
+                            boolean isConnected = ConnectivityReceiver.isConnected();
+                            if (isConnected) {
+                                updateAttendanceApi();
+                            } else {
+//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                                CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Please check your internet connection");
+                            }
+
+                        } else {
+//                        text_signIn.setVisibility(View.VISIBLE);
+                            CustomProgress.hideProgress(activity);
+                            //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                            CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
+//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (Exception e) {
+                        Log.d("Exception", e.getMessage());
+                        CustomProgress.hideProgress(activity);
+                    }
+
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<CreateOrderModel> call, @NonNull Throwable t) {
+                    Log.d("Failure ", t.getMessage());
+//                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                    CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Something went wrong try again..");
+//                text_signIn.setVisibility(View.VISIBLE);
+                    CustomProgress.hideProgress(activity);
+                }
+            });
+        }
 
     public void addProductList() {
         String[] parts = txtPrice.getText().toString().split("\\.");
@@ -668,11 +742,11 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     public void updateAttendanceApi() {
         CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
-        String assign_id=sessionManagerSP.getAssignId();
+        String assign_id = sessionManagerSP.getAssignId();
 
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val,long_val, btn_Type_val, "", assign_id);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", assign_id);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override

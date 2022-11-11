@@ -385,6 +385,7 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
                     if (updateBillModel.getStatus() == 1) {
                         CustomToast.getInstance(OutletInvoiceDetailsActivity.this).showSmallCustomToast(updateBillModel.getMessage());
                         CustomProgress.hideProgress(OutletInvoiceDetailsActivity.this);
+                        onBackPressed();
                     } else {
                         progress.setVisibility(View.GONE);
                         lin_invoice_details_scrollview.setVisibility(View.GONE);

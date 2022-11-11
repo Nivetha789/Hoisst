@@ -1,5 +1,7 @@
 package com.retailvend.retrofit;
 
+import com.retailvend.model.SendOtpModel;
+import com.retailvend.model.VerifyOtpModel;
 import com.retailvend.model.collateralsDetails.CollateralsDetailsModel;
 import com.retailvend.model.collateralsmodule.CollateralsListResModel;
 import com.retailvend.model.changePassword.ChangePasswordModel;
@@ -24,6 +26,7 @@ import com.retailvend.model.delManModels.delCollection.todayOutletsModel.Deliver
 import com.retailvend.model.endTempSales.EndTempModel;
 import com.retailvend.model.invoiceListModel.InvoiceListModel;
 import com.retailvend.model.login.LoginResModel;
+import com.retailvend.model.loyalty.LoyaltyModel;
 import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageModel;
 import com.retailvend.model.order.CreateOrderModel;
@@ -291,6 +294,34 @@ public interface Api {
     Call<CollateralsDetailsModel> collateralsListDetails(
             @Field("method") String method,
             @Field("random_val") String random_val);
+
+     //loyalty details
+    @FormUrlEncoded
+    @POST("loyalty/api/outlet-loyalty")
+    Call<LoyaltyModel> loyaltyDetails(
+            @Field("method") String method,
+            @Field("outlet_id") String outlet_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit,
+            @Field("search") String search);
+
+    //send otp
+    @FormUrlEncoded
+    @POST("outlet-order/api/outlet_otp")
+    Call<SendOtpModel> sendOtp(
+            @Field("method") String method,
+            @Field("outlet_id") String outlet_id,
+            @Field("employee_id") String employee_id,
+            @Field("otp_value") String otp_value);
+
+    //verify otp
+    @FormUrlEncoded
+    @POST("outlet-order/api/outlet_otp")
+    Call<VerifyOtpModel> verifyOtp(
+            @Field("method") String method,
+            @Field("outlet_id") String outlet_id,
+            @Field("employee_id") String employee_id,
+            @Field("otp_value") String otp_value);
 
 
 

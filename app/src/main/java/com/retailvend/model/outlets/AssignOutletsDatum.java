@@ -72,6 +72,10 @@ public class AssignOutletsDatum implements Serializable {
     @SerializedName("upload_status")
     @Expose
     private String uploadStatus;
+    @SerializedName("otp_type")
+    @Expose
+    private String otpType;
+
 
     public String getStoreId() {
         return storeId;
@@ -247,5 +251,13 @@ public class AssignOutletsDatum implements Serializable {
 
     public void setUploadStatus(String uploadStatus) {
         this.uploadStatus = uploadStatus;
+    }
+
+    public String getOtpType() {
+        return otpType;
+    }
+
+    public void setOtpType(String otpType) {
+        this.otpType = otpType;
     }
 }

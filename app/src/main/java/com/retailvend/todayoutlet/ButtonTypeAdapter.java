@@ -24,14 +24,16 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
     private Activity activity;
     private List<AttendanceTypeDatum> attendanceTypeDatumList;
     String store_Id = "";
+    String otp_value = "";
     private int index = -1;
 
     SessionManagerSP sessionManagerSP;
 
-    ButtonTypeAdapter(Activity activity, List<AttendanceTypeDatum> assignOutletsDatum, String storeId) {
+    ButtonTypeAdapter(Activity activity, List<AttendanceTypeDatum> assignOutletsDatum, String storeId,String otpValue) {
         this.activity = activity;
         this.attendanceTypeDatumList = assignOutletsDatum;
         this.store_Id = storeId;
+        this.otp_value = otpValue;
         this.sessionManagerSP = new SessionManagerSP(activity);
     }
 
@@ -109,6 +111,7 @@ public class ButtonTypeAdapter extends RecyclerView.Adapter<ButtonTypeAdapter.My
                 Intent intent = new Intent(activity, CreateOutletOrderActivity.class);
                 intent.putExtra("store_id", store_Id);
                 intent.putExtra("type", typeVal);
+                intent.putExtra("otp_value", otp_value);
                 activity.startActivity(intent);
                 ((TodayOutletDetailsActivity) activity).hideReason(typeId, typeVal);
             }
