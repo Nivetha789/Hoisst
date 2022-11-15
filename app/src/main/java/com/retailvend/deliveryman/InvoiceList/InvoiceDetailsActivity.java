@@ -48,8 +48,7 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
 
     TextView txt_empty, txt_invoice_details_order, txt_inovoice_details_billed,
             txt_invoice_details_billed_address,
-            txt_invoice_details_shipped_address, txt_dis_invoice,
-            txt_invoice_last_bill, txt_invoice_qty_total, txt_store_name,
+            txt_invoice_details_shipped_address, txt_dis_invoice, txt_invoice_qty_total, txt_store_name,
             txt_store_ship, invoice_num, comp_name, comp_address,
             gst_num, contact_no, state_code, pay_method, order_type,
             amount, bill_date, txt_invoice_current_total, toolbar_title;
@@ -114,7 +113,6 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
         txt_invoice_details_billed_address = findViewById(R.id.txt_invoice_details_billed_address);
         txt_invoice_details_shipped_address = findViewById(R.id.txt_invoice_details_shipped_address);
         txt_dis_invoice = findViewById(R.id.txt_dis_invoice);
-        txt_invoice_last_bill = findViewById(R.id.txt_invoice_last_bill);
         lin_invoice_details_scrollview = findViewById(R.id.lin_invoice_details_scrollview);
         txt_store_name = findViewById(R.id.txt_store_name);
         txt_store_ship = findViewById(R.id.txt_store_ship);
