@@ -89,7 +89,7 @@ dependencies {
     implementation 'com.github.mergehez:ArgPlayer:v3.1'
 
     //video
-    implementation 'com.github.mukeshsolanki:BetterVideoPlayer:1.0.2'
+    implementation 'com.github.halilozercan:BetterVideoPlayer:kotlin-SNAPSHOT'
 
     //pdf
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'

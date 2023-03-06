@@ -22,23 +22,19 @@ import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.halilibo.bettervideoplayer.BetterVideoCallback;
-import com.halilibo.bettervideoplayer.BetterVideoPlayer;
+import com.halilibo.bvpkotlin.BetterVideoPlayer;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
-import com.retailvend.endTemp.PdfViewerActivity;
 import com.retailvend.model.collateralsDetails.CollateralsDetailsData;
 import com.retailvend.model.collateralsDetails.CollateralsDetailsModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomToast;
 
-import java.io.File;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CollateralsDetailsActivity extends AppCompatActivity implements BetterVideoCallback {
+public class CollateralsDetailsActivity extends AppCompatActivity implements  BetterVideoCallback{
 
     TextView txt_empty, name,view_pdf_desc;
     ProgressBar progress;
@@ -96,7 +92,7 @@ public class CollateralsDetailsActivity extends AppCompatActivity implements Bet
         view_pdf_desc = findViewById(R.id.view_pdf_desc);
         left_arrow = findViewById(R.id.left_arrow);
 
-        betterVideoPlayer.setCallback(this);
+//        betterVideoPlayer.setCallback(this);
 
         pdf_viewer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,45 +126,6 @@ public class CollateralsDetailsActivity extends AppCompatActivity implements Bet
 
     // Methods for the implemented EasyVideoCallback
 
-    @Override
-    public void onStarted(BetterVideoPlayer player) {
-        Log.i(TAG, "Started");
-    }
-
-    @Override
-    public void onPaused(BetterVideoPlayer player) {
-        Log.i(TAG, "Paused");
-    }
-
-    @Override
-    public void onPreparing(BetterVideoPlayer player) {
-        Log.i(TAG, "Preparing");
-    }
-
-    @Override
-    public void onPrepared(BetterVideoPlayer player) {
-        Log.i(TAG, "Prepared");
-    }
-
-    @Override
-    public void onBuffering(int percent) {
-        Log.i(TAG, "Buffering " + percent);
-    }
-
-    @Override
-    public void onError(BetterVideoPlayer player, Exception e) {
-        Log.i(TAG, "Error " + e.getMessage());
-    }
-
-    @Override
-    public void onCompletion(BetterVideoPlayer player) {
-        Log.i(TAG, "Completed");
-    }
-
-    @Override
-    public void onToggleControls(BetterVideoPlayer player, boolean isShowing) {
-        Log.i(TAG, "Controls toggled " + isShowing);
-    }
 
     //collaterals details
     public void collateralsDetailsApi(String randomValue) {
