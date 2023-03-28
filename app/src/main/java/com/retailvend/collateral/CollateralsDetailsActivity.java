@@ -1,6 +1,5 @@
 package com.retailvend.collateral;
 
-import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -34,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CollateralsDetailsActivity extends AppCompatActivity implements  BetterVideoCallback{
+public class CollateralsDetailsActivity extends AppCompatActivity{
 
     TextView txt_empty, name,view_pdf_desc;
     ProgressBar progress;

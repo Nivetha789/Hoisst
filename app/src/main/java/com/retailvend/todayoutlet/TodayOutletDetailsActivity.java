@@ -671,9 +671,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
         String assign_ID = sessionManagerSP.getAssignId();
+        String invoice_id = sessionManagerSP.getInvoiceId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude, longitude, typeVal, reasonTxt, assign_ID);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, latitude, longitude, typeVal, reasonTxt, assign_ID,invoice_id);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override

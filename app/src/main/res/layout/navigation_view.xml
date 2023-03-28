@@ -517,6 +517,7 @@
                 android:background="@drawable/hover_style"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/outlet_bal_menu"
                 app:layout_constraintTop_toBottomOf="@+id/create_outlet_menu">
 
                 <ImageView
@@ -547,6 +548,56 @@
                     app:layout_constraintBottom_toBottomOf="@+id/collaterals_img"
                     app:layout_constraintStart_toEndOf="@+id/collaterals_img"
                     app:layout_constraintTop_toTopOf="@+id/collaterals_img"
+                    app:layout_constraintVertical_bias="0.533" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey1"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/outlet_bal_menu"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/hover_style"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/collaterals_menu">
+
+                <ImageView
+                    android:id="@+id/outlet_bal_img"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/ic_collection"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/outlet_bal"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                   />
+
+                <TextView
+                    android:id="@+id/outlet_bal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="OUTLET BALANCE"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/outlet_bal_img"
+                    app:layout_constraintStart_toEndOf="@+id/outlet_bal_img"
+                    app:layout_constraintTop_toTopOf="@+id/outlet_bal_img"
                     app:layout_constraintVertical_bias="0.533" />
 
                 <View

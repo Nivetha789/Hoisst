@@ -146,6 +146,17 @@ public class SessionManagerSP {
         editor.commit();
     }
 
+    public String getInvoiceId() {
+
+        return pref.getString("InvoiceId", "");
+    }
+
+
+    public void setInvoiceId(String authkey) {
+        editor.putString("InvoiceId", authkey);
+        editor.commit();
+    }
+
     public String getLat() {
 
         return pref.getString("Lat", "");

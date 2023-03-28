@@ -25,6 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
+import com.retailvend.balancesales.OutletBalanceActivity;
 import com.retailvend.broadcast.ConnectivityReceiver;
 import com.retailvend.changePass.ChangePasswordActivity;
 import com.retailvend.collateral.CollateralsActivity;
@@ -75,7 +76,7 @@ public class DashboardActivity extends AppCompatActivity {
     TextView tot_outlet_del_count, visit_outlet_del_count, pending_del_count, tot_outlet_count, visit_outlet_count,
             pending_count, target_count, achievements_count, order_count, order_tot_count, order_list, create_outlet_list;
     ConstraintLayout no_data_constrain, today_outlet_menu, target_menu, start_temp_menu, end_temp_menu, collection_menu,
-            create_outlet_menu, collaterals_menu;
+            create_outlet_menu, collaterals_menu, outlet_bal_menu;
     List<SalesDashboardCountDatum> salesDashboardCountData;
 
     @Override
@@ -117,6 +118,7 @@ public class DashboardActivity extends AppCompatActivity {
         create_outlet_img = findViewById(R.id.create_outlet_img);
         create_outlet_list = findViewById(R.id.create_outlet_list);
         collaterals_menu = findViewById(R.id.collaterals_menu);
+        outlet_bal_menu = findViewById(R.id.outlet_bal_menu);
 
         sessionManagerSP = new SessionManagerSP(DashboardActivity.this);
 
@@ -175,6 +177,7 @@ public class DashboardActivity extends AppCompatActivity {
             end_temp_menu.setVisibility(View.GONE);
             create_outlet_menu.setVisibility(View.GONE);
             collaterals_menu.setVisibility(View.GONE);
+            outlet_bal_menu.setVisibility(View.GONE);
 
 //            Typeface font1 = Typeface.createFromAsset(
 //                    this.getAssets(),
@@ -283,7 +286,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     @OnClick({R.id.order_list_constrain, R.id.menu, R.id.logout_constrain, R.id.logout_txt, R.id.collection_menu, R.id.today_outlet_menu,
             R.id.outstand_menu, R.id.target_menu, R.id.start_temp_menu, R.id.end_temp_menu, R.id.change_pass_menu,
-            R.id.create_outlet_menu, R.id.collaterals_menu})
+            R.id.create_outlet_menu, R.id.collaterals_menu,R.id.outlet_bal_menu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.order_list_constrain:
@@ -360,6 +363,10 @@ public class DashboardActivity extends AppCompatActivity {
             case R.id.collaterals_menu:
                 Intent collateralsIntent = new Intent(DashboardActivity.this, CollateralsActivity.class);
                 startActivity(collateralsIntent);
+                break;
+            case R.id.outlet_bal_menu:
+                Intent outletBalIntent = new Intent(DashboardActivity.this, OutletBalanceActivity.class);
+                startActivity(outletBalIntent);
                 break;
             case R.id.logout_constrain:
             case R.id.logout_txt:

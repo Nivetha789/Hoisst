@@ -50,6 +50,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
 
     String otp = "";
     String store_id = "";
+    String order_id = "";
     String bill_type = "";
     String discount = "";
     String due_days = "";
@@ -352,12 +353,13 @@ public class VerifyOtpActivity extends AppCompatActivity {
         CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
         String assign_id = sessionManagerSP.getAssignId();
+        String invoice_id = sessionManagerSP.getInvoiceId();
         lat_val = sessionManagerSP.getLat();
         long_val = sessionManagerSP.getLong();
 
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", assign_id);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", assign_id,invoice_id);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override

@@ -743,10 +743,10 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
         String assign_id = sessionManagerSP.getAssignId();
-
+        String invoice_id = sessionManagerSP.getInvoiceId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", assign_id);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", assign_id,invoice_id);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override

@@ -288,6 +288,8 @@ public class OutletInvoiceDetailsActivity extends AppCompatActivity {
                             txt_invoice_sub_total.setText(todayOutletTotalDetails.getSubTotal());
 
                             pdfUrl= todayOutletDetailsModel.getData().getPrintInvoice();
+                            String invoice_id=todayOutletDetailsBillDetails.getInvoiceId();
+                            sessionManagerSP.setInvoiceId(invoice_id);
 
                             int b = 0;
                             double a;

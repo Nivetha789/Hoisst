@@ -30,6 +30,7 @@ import com.retailvend.model.loyalty.LoyaltyModel;
 import com.retailvend.model.manageorder.OrderListModel;
 import com.retailvend.model.noreasonOutlet.NoReasonMessageModel;
 import com.retailvend.model.order.CreateOrderModel;
+import com.retailvend.model.outletBalanceModule.OutletBalanceModel;
 import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.AssignOutletsModel;
 import com.retailvend.model.outlets.AttendanceTypeModel;
@@ -113,7 +114,8 @@ public interface Api {
             @Field("longitude") String longitude,
             @Field("attendance_type") String attendance_type,
             @Field("reason") String reason,
-            @Field("attendance_id") String attendance_id
+            @Field("attendance_id") String attendance_id,
+            @Field("order_id") String order_id
     );
 
     //add attendance
@@ -305,6 +307,16 @@ public interface Api {
             @Field("limit") int limit,
             @Field("search") String search);
 
+    //Outlet balance list
+    @FormUrlEncoded
+    @POST("outlets/api/outletPayment")
+    Call<OutletBalanceModel> outletBalance(
+            @Field("method") String method,
+            @Field("employee_id") String employee_id,
+            @Field("offset") int offset,
+            @Field("limit") int limit,
+            @Field("search") String search);
+
     //send otp
     @FormUrlEncoded
     @POST("outlet-order/api/outlet_otp")
@@ -439,7 +451,8 @@ public interface Api {
             @Field("bank_name") String bank_name,
             @Field("cheque_no") String cheque_no,
             @Field("entry_type") String entry_type,
-            @Field("entry_date") String entry_date
+            @Field("entry_date") String entry_date,
+            @Field("cheque_date") String cheque_date
     );
 
     //Outstand List
