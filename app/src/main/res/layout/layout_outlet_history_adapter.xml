@@ -148,120 +148,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:paddingLeft="5dp"
-                                android:singleLine="true"
-                                android:text="Bill No"
-                                android:textColor="#802F3145"
-                                android:textFontWeight="600"
-                                android:textSize="12dp" />
-
-                            <TextView
-                                android:id="@+id/bill_no"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/quicksand_semi_bold"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text=""
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="end"
-                                android:paddingLeft="5dp"
-                                android:singleLine="true"
-                                android:text="Amount"
-                                android:textColor="#802F3145"
-                                android:textFontWeight="600"
-                                android:textSize="12dp" />
-
-                            <TextView
-                                android:id="@+id/amount"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/quicksand_semi_bold"
-                                android:gravity="end"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text=""
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:paddingLeft="5dp"
-                                android:singleLine="true"
-                                android:text="Collection Type"
-                                android:textColor="#802F3145"
-                                android:textFontWeight="600"
-                                android:textSize="12dp" />
-
-                            <TextView
-                                android:id="@+id/collection_type"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/quicksand_semi_bold"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingBottom="5dp"
-                                android:text=""
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
+                        android:layout_marginStart="8dp"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -269,7 +158,7 @@
                             android:layout_marginEnd="10dp"
                             android:layout_marginBottom="5dp"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="start"
                             android:orientation="vertical">
 
                             <TextView
@@ -289,7 +178,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/quicksand_semi_bold"
-                                android:gravity="end"
+                                android:gravity="start"
+                                android:layout_gravity="start"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="5dp"
                                 android:paddingBottom="5dp"
