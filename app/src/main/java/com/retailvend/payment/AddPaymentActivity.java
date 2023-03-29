@@ -290,7 +290,7 @@ public class AddPaymentActivity extends AppCompatActivity {
 
 
         Call<AddPaymentModel> call = RetrofitClient
-                .getInstance().getApi().addPayment("_addOutletPayment", assignId, pay_id, employeeId, distributorID, outletId, amt, discount, amt_type, "", bankName, chequeNo, "2",currentDate,cheque_date.getText().toString());
+                .getInstance().getApi().addPayment("_addOutletPayment", assignId, pay_id, employeeId, distributorID, outletId, amt, discount, amt_type, "", bankName, chequeNo, "2",currentDate,cheque_date.getText().toString(),cheque_date.getText().toString());
 
 
         call.enqueue(new Callback<AddPaymentModel>() {

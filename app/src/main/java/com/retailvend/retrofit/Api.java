@@ -452,7 +452,8 @@ public interface Api {
             @Field("cheque_no") String cheque_no,
             @Field("entry_type") String entry_type,
             @Field("entry_date") String entry_date,
-            @Field("cheque_date") String cheque_date
+            @Field("cheque_date") String cheque_date,
+            @Field("collect_date") String collect_date
     );
 
     //Outstand List
