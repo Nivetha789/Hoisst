@@ -157,6 +157,50 @@ public class SessionManagerSP {
         editor.commit();
     }
 
+    //state id
+    public String getStateId() {
+
+        return pref.getString("StateId", "");
+    }
+
+
+    public void setStateId(String authkey) {
+        editor.putString("StateId", authkey);
+        editor.commit();
+    }
+
+    //city id
+    public String getCityId() {
+
+        return pref.getString("CityId", "");
+    }
+
+
+    public void setCityId(String authkey) {
+        editor.putString("CityId", authkey);
+        editor.commit();
+    }
+
+    //Zone id
+    public String getZoneId() {
+        return pref.getString("ZoneId", "");
+    }
+
+    public void setZoneId(String authkey) {
+        editor.putString("ZoneId", authkey);
+        editor.commit();
+    }
+
+    //outlet id
+    public String getOutletId() {
+        return pref.getString("OutletId", "");
+    }
+
+    public void setOutletId(String authkey) {
+        editor.putString("OutletId", authkey);
+        editor.commit();
+    }
+
     public String getLat() {
 
         return pref.getString("Lat", "");

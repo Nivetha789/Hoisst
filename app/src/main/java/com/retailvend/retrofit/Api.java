@@ -136,7 +136,13 @@ public interface Api {
     @POST("catlog/api/productType")
     Call<ProductTypeModel> productType(
             @Field("method") String method,
-            @Field("product_id") String product_id
+            @Field("state_id") String state_id,
+            @Field("city_id") String city_id,
+            @Field("zone_id") String zone_id,
+            @Field("outlet_id") String outlet_id,
+            @Field("type_id") String type_id,
+            @Field("view_type") String view_type
+
     );
 
     //sales agent types

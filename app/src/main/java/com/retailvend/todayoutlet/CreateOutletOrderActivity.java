@@ -677,11 +677,14 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
     public void productTypeApi(String prodId) {
         CustomProgress.showProgress(activity);
+        String state_id = sessionManagerSP.getStateId();
+        String city_id = sessionManagerSP.getCityId();
+        String zone_id = sessionManagerSP.getZoneId();
 
 //        String emp_id= SharedPrefManager.getInstance(CreateOutletOrderActivity.this).getUser().getId();
 
         Call<ProductTypeModel> call = RetrofitClient
-                .getInstance().getApi().productType("_listProductType", prodId);
+                .getInstance().getApi().productType("_detailProductType", state_id,city_id,zone_id,store_id,type_id,"1");
 
         call.enqueue(new Callback<ProductTypeModel>() {
             @Override

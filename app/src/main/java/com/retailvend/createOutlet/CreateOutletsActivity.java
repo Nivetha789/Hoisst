@@ -12,12 +12,10 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,17 +25,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.retailvend.R;
 import com.retailvend.broadcast.ConnectivityReceiver;
-import com.retailvend.collection.CollectionActivity;
 import com.retailvend.model.createOutSales.CreateOutSalesModel;
 import com.retailvend.model.createOutletModule.CreateOutletBeatListDatum;
 import com.retailvend.model.createOutletModule.CreateOutletBeatListModel;
-import com.retailvend.model.noreasonOutlet.NoReasonMessageDatum;
 import com.retailvend.retrofit.RetrofitClient;
-import com.retailvend.todayoutlet.CreateOutletOrderActivity;
-import com.retailvend.todayoutlet.TodayOutletDetailsActivity;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
-import com.retailvend.utills.ReasonBaseAdapter;
 import com.retailvend.utills.SessionManagerSP;
 
 import java.util.ArrayList;
@@ -47,25 +40,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CreateOutletsActivity extends AppCompatActivity implements LocationListener{
+public class CreateOutletsActivity extends AppCompatActivity implements LocationListener {
 
     Spinner spin_beat_name;
-    EditText store_name,contact_name,mob_no_text,address_text;
+    EditText store_name, contact_name, mob_no_text, address_text;
     private boolean isLoading = false;
     Activity activity;
     SessionManagerSP sessionManagerSP;
-    String emp_id="";
+    String emp_id = "";
     List<CreateOutletBeatListDatum> createOutletBeatListData;
     BeatAdapter beatAdapter;
-    String stateId,cityId,zoneId="";
+    String stateId, cityId, zoneId = "";
     String lat_val = "";
     String long_val = "";
     LinearLayout lin_create;
     ImageView left_arrow;
 
     LocationManager locationManager;
-    String desLatitude="";
-    String desLongitude="";
+    String desLatitude = "";
+    String desLongitude = "";
     String latitude = "";
     String longitude = "";
     private boolean locationget;
@@ -74,24 +67,24 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_outlets);
-        activity=this;
+        activity = this;
 
-        sessionManagerSP=new SessionManagerSP(CreateOutletsActivity.this);
+        sessionManagerSP = new SessionManagerSP(CreateOutletsActivity.this);
 
-        spin_beat_name=findViewById(R.id.spin_beat_name);
-        store_name=findViewById(R.id.store_name);
-        contact_name=findViewById(R.id.contact_name);
-        mob_no_text=findViewById(R.id.mob_no_text);
-        address_text=findViewById(R.id.address_text);
-        lin_create=findViewById(R.id.lin_create);
-        left_arrow=findViewById(R.id.left_arrow);
+        spin_beat_name = findViewById(R.id.spin_beat_name);
+        store_name = findViewById(R.id.store_name);
+        contact_name = findViewById(R.id.contact_name);
+        mob_no_text = findViewById(R.id.mob_no_text);
+        address_text = findViewById(R.id.address_text);
+        lin_create = findViewById(R.id.lin_create);
+        left_arrow = findViewById(R.id.left_arrow);
 
-        createOutletBeatListData=new ArrayList<>();
+        createOutletBeatListData = new ArrayList<>();
 
         checkGPSON();
         getLocation();
 
-        emp_id= sessionManagerSP.getEmployeeId();
+        emp_id = sessionManagerSP.getEmployeeId();
         lat_val = sessionManagerSP.getLat();
         long_val = sessionManagerSP.getLong();
 
@@ -107,10 +100,13 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 CreateOutletBeatListDatum createOutletBeatListDatum = createOutletBeatListData.get(i);
-                if(createOutletBeatListDatum!=null){
-                    stateId=createOutletBeatListDatum.getStateId();
-                    cityId=createOutletBeatListDatum.getCityId();
-                    zoneId=createOutletBeatListDatum.getZoneId();
+                if (createOutletBeatListDatum != null) {
+                    stateId = createOutletBeatListDatum.getStateId();
+                    cityId = createOutletBeatListDatum.getCityId();
+                    zoneId = createOutletBeatListDatum.getZoneId();
+                    sessionManagerSP.setStateId(stateId);
+                    sessionManagerSP.setCityId(cityId);
+                    sessionManagerSP.setZoneId(zoneId);
                 }
             }
 
@@ -130,30 +126,30 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
         lin_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(spin_beat_name!=null){
-                    if(!store_name.getText().toString().isEmpty()){
-                        if(!contact_name.getText().toString().isEmpty()){
-                            if(!mob_no_text.getText().toString().isEmpty()){
-                                if(!address_text.getText().toString().isEmpty()){
+                if (spin_beat_name != null) {
+                    if (!store_name.getText().toString().isEmpty()) {
+                        if (!contact_name.getText().toString().isEmpty()) {
+                            if (!mob_no_text.getText().toString().isEmpty()) {
+                                if (!address_text.getText().toString().isEmpty()) {
                                     boolean isConnected = ConnectivityReceiver.isConnected();
                                     if (isConnected) {
                                         createOutletApi();
                                     } else {
                                         CustomToast.getInstance(CreateOutletsActivity.this).showSmallCustomToast("Please check your internet connection");
                                     }
-                                }else{
+                                } else {
                                     CustomToast.getInstance(CreateOutletsActivity.this).showSmallCustomToast("Address should not be empty");
                                 }
-                            }else{
+                            } else {
                                 CustomToast.getInstance(CreateOutletsActivity.this).showSmallCustomToast("Mobile number should not be empty");
                             }
-                        }else{
+                        } else {
                             CustomToast.getInstance(CreateOutletsActivity.this).showSmallCustomToast("Contact Name should not be empty");
                         }
-                    }else{
+                    } else {
                         CustomToast.getInstance(CreateOutletsActivity.this).showSmallCustomToast("Store Name should not be empty");
                     }
-                }else{
+                } else {
                     CustomToast.getInstance(CreateOutletsActivity.this).showSmallCustomToast("Select Beat");
                 }
             }
@@ -202,12 +198,12 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
     }
 
 
-
     private boolean isLocationEnabled() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
     void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -221,8 +217,8 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
     @Override
     public void onLocationChanged(Location location) {
 
-        desLatitude=sessionManagerSP.getOutletLat();
-        desLongitude=sessionManagerSP.getOutletLong();
+        desLatitude = sessionManagerSP.getOutletLat();
+        desLongitude = sessionManagerSP.getOutletLong();
         latitude = String.valueOf(location.getLatitude());
         longitude = String.valueOf(location.getLongitude());
         sessionManagerSP.setLat(latitude);
@@ -265,8 +261,8 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
     @Override
     protected void onRestart() {
         super.onRestart();
-        desLatitude=sessionManagerSP.getOutletLat();
-        desLongitude=sessionManagerSP.getOutletLong();
+        desLatitude = sessionManagerSP.getOutletLat();
+        desLongitude = sessionManagerSP.getOutletLong();
     }
 
     @Override
@@ -282,7 +278,7 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
         CustomProgress.showProgress(activity);
 
         Call<CreateOutletBeatListModel> call = RetrofitClient
-                .getInstance().getApi().createOutletBeat("_employeeWiseBeat",emp_id);
+                .getInstance().getApi().createOutletBeat("_employeeWiseBeat", emp_id);
 
         call.enqueue(new Callback<CreateOutletBeatListModel>() {
             @Override
@@ -294,7 +290,7 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
                     String json = gson.toJson(response.body());
                     CreateOutletBeatListModel loginModule = gson.fromJson(json, CreateOutletBeatListModel.class);
 
-                    if (loginModule.getStatus()==1) {
+                    if (loginModule.getStatus() == 1) {
                         createOutletBeatListData = loginModule.getData();
                         beatAdapter = new BeatAdapter(CreateOutletsActivity.this, createOutletBeatListData);
                         spin_beat_name.setAdapter(beatAdapter);
@@ -328,8 +324,8 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
         CustomProgress.showProgress(activity);
 
         Call<CreateOutSalesModel> call = RetrofitClient
-                .getInstance().getApi().createOutletDist("_newOutlets",emp_id,store_name.getText().toString(),contact_name.getText().toString(),mob_no_text.getText().toString(),
-                        address_text.getText().toString(),stateId,cityId,zoneId,lat_val,long_val);
+                .getInstance().getApi().createOutletDist("_newOutlets", emp_id, store_name.getText().toString(), contact_name.getText().toString(), mob_no_text.getText().toString(),
+                        address_text.getText().toString(), stateId, cityId, zoneId, lat_val, long_val);
 
         call.enqueue(new Callback<CreateOutSalesModel>() {
             @Override
@@ -341,7 +337,7 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
                     String json = gson.toJson(response.body());
                     CreateOutSalesModel loginModule = gson.fromJson(json, CreateOutSalesModel.class);
 
-                    if (loginModule.getStatus()==1) {
+                    if (loginModule.getStatus() == 1) {
                         CustomToast.getInstance(CreateOutletsActivity.this).showSmallCustomToast(loginModule.getMessage());
                         CustomProgress.hideProgress(activity);
                         onBackPressed();
