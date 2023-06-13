@@ -118,7 +118,10 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
 
 
     File file1;
-    private int REQUEST_IMAGE_CAPTURE = 100;
+
+    String state_id="";
+    String city_id="";
+    String zone_id="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +184,9 @@ public class TodayOutletDetailsActivity extends AppCompatActivity implements Loc
         attendance_status = assignOutletsDatum.getAttendanceStatus();
         upload_status = assignOutletsDatum.getUploadStatus();
         otp_status = assignOutletsDatum.getOtpType();
+        sessionManagerSP.setStateId(assignOutletsDatum.getStateId());
+        sessionManagerSP.setCityId(assignOutletsDatum.getCityId());
+        sessionManagerSP.setZoneId(assignOutletsDatum.getZoneId());
         System.out.println("upload_status : " + upload_status);
         shop_name.setText(shop_name1);
         shop_number.setText(shop_number1);

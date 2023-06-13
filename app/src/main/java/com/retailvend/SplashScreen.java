@@ -2,6 +2,7 @@ package com.retailvend;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.os.*;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -101,20 +103,7 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
 
                     } else {
 
-                        if (sessionManagerSP.getPhonelogin().equals("1")) {
-                            Intent i = new Intent(SplashScreen.this, DashboardActivity.class);
-                            startActivity(i);
-
-                            // close this activity
-                            finish();
-                        } else {
-                            sessionManagerSP.setPhonelogin("0");
-                            Intent i = new Intent(SplashScreen.this, LoginActivity.class);
-                            startActivity(i);
-
-                            // close this activity
-                            finish();
-                        }
+                        checkRedirectScreen();
 
                     }
 
@@ -134,41 +123,96 @@ public class SplashScreen extends AppCompatActivity implements ConnectivityRecei
                                            @NonNull int[] grantResults) {
 
         if (requestCode == 101) {
-            // BEGIN_INCLUDE(permission_result)
-            // Received permission result for camera permission.
-//            Log.i(TAG, "Received response for Camera permission request.");
-
-            // Check if the only required permission has been granted
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Camera permission has been granted, preview can be displayed
-//                Log.i(TAG, "CAMERA permission has now been granted. Showing preview.");
-//                Toast.makeText(MainActivity.this, "Granded", Toast.LENGTH_SHORT).show();
-
-                if (sessionManagerSP.getPhonelogin().equals("1")) {
-                    Intent i = new Intent(SplashScreen.this, DashboardActivity.class);
-                    startActivity(i);
-
-                    // close this activity
-                    finish();
-                } else {
-                    sessionManagerSP.setPhonelogin("0");
-                    Intent i = new Intent(SplashScreen.this, LoginActivity.class);
-                    startActivity(i);
-
-                    // close this activity
-                    finish();
+            if (permissions.length == 0) {
+                return;
+            }
+            boolean allPermissionsGranted = true;
+            if (grantResults.length > 0) {
+                for (int grantResult : grantResults) {
+                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                        allPermissionsGranted = false;
+                        break;
+                    }
                 }
+            }
+            if (!allPermissionsGranted) {
+                boolean somePermissionsForeverDenied = false;
+                for (String permission : permissions) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                        //denied
+                        Log.e("denied", permission);
+//                        sessionManagerSP.setForceDined("true");
+                        checkRedirectScreen();
 
+                    } else {
+                        if (ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+                            //allowed
+                            Log.e("allowed", permission);
+//                            sessionManagerSP.setForceDined("false");
+
+                            checkRedirectScreen();
+
+                        } else {
+                            //set to never ask again
+                            Log.e("set to never ask again", permission);
+                            somePermissionsForeverDenied = true;
+//                            sessionManagerSP.setForceDined("true");
+                            checkRedirectScreen();
+                        }
+                    }
+                }
+//                if (somePermissionsForeverDenied) {
+//                    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+//                    alertDialogBuilder.setTitle("Permissions Required")
+//                            .setMessage("You have forcefully denied some of the required permissions " +
+//                                    "for this action. Please open settings, go to permissions and allow them.")
+//                            .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+//                                            Uri.fromParts("package", getPackageName(), null));
+//                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                    startActivity(intent);
+//                                }
+//                            })
+//                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                }
+//                            })
+//                            .setCancelable(false)
+//                            .create()
+//                            .show();
+//                }
             } else {
-//                Log.i(TAG, "CAMERA permission was NOT granted.");
-                CustomToast.getInstance(SplashScreen.this).showSmallCustomToast("Permission Denied");
+
+//                sessionManagerSP.setForceDined("false");
+
+                checkRedirectScreen();
+
             }
             // END_INCLUDE(permission_result)
 
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
 
+    void checkRedirectScreen(){
+        if (sessionManagerSP.getPhonelogin().equals("1")) {
+            Intent i = new Intent(SplashScreen.this, DashboardActivity.class);
+            startActivity(i);
+
+            // close this activity
+            finish();
+        } else {
+            sessionManagerSP.setPhonelogin("0");
+            Intent i = new Intent(SplashScreen.this, LoginActivity.class);
+            startActivity(i);
+
+            // close this activity
+            finish();
+        }
     }
 
     private void checkConnection() {

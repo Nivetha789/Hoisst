@@ -38,6 +38,7 @@ import com.retailvend.model.outlets.ProductNameResModel;
 import com.retailvend.model.outlets.ProductTypeModel;
 import com.retailvend.model.outlets.SalesAgentsListModel;
 import com.retailvend.model.outlets.outletHistory.OutletHistoryModel;
+import com.retailvend.model.outlets.productDetailsModel.ProductDetailsModel;
 import com.retailvend.model.sales.SalesDetailsModel;
 import com.retailvend.model.startTempSales.StartTempModel;
 import com.retailvend.model.targetDetailssales.EmployeeTargetDetailsData.EmployeeTargetDetailsModel;
@@ -135,6 +136,15 @@ public interface Api {
     @FormUrlEncoded
     @POST("catlog/api/productType")
     Call<ProductTypeModel> productType(
+            @Field("method") String method,
+            @Field("product_id") String product_id
+
+    );
+
+    //Detail product type
+    @FormUrlEncoded
+    @POST("catlog/api/productType")
+    Call<ProductDetailsModel> productTypeDetails(
             @Field("method") String method,
             @Field("state_id") String state_id,
             @Field("city_id") String city_id,

@@ -1,0 +1,184 @@
+package com.retailvend.model.outlets.productDetailsModel;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+public class ProductTypeDetailDatum {
+    @SerializedName("type_id")
+    @Expose
+    private String typeId;
+    @SerializedName("sub_code")
+    @Expose
+    private String subCode;
+    @SerializedName("product_id")
+    @Expose
+    private String productId;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("product_type")
+    @Expose
+    private String productType;
+    @SerializedName("product_unit")
+    @Expose
+    private String productUnit;
+    @SerializedName("unit_name")
+    @Expose
+    private String unitName;
+    @SerializedName("mrp_price")
+    @Expose
+    private String mrpPrice;
+    @SerializedName("product_price")
+    @Expose
+    private String productPrice;
+    @SerializedName("ven_price")
+    @Expose
+    private String venPrice;
+    @SerializedName("dis_price")
+    @Expose
+    private String disPrice;
+    @SerializedName("product_stock")
+    @Expose
+    private String productStock;
+    @SerializedName("type_stock")
+    @Expose
+    private String typeStock;
+    @SerializedName("published")
+    @Expose
+    private String published;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("createdate")
+    @Expose
+    private String createdate;
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getSubCode() {
+        return subCode;
+    }
+
+    public void setSubCode(String subCode) {
+        this.subCode = subCode;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public String getProductUnit() {
+        return productUnit;
+    }
+
+    public void setProductUnit(String productUnit) {
+        this.productUnit = productUnit;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
+
+    public String getMrpPrice() {
+        return mrpPrice;
+    }
+
+    public void setMrpPrice(String mrpPrice) {
+        this.mrpPrice = mrpPrice;
+    }
+
+    public String getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public String getVenPrice() {
+        return venPrice;
+    }
+
+    public void setVenPrice(String venPrice) {
+        this.venPrice = venPrice;
+    }
+
+    public String getDisPrice() {
+        return disPrice;
+    }
+
+    public void setDisPrice(String disPrice) {
+        this.disPrice = disPrice;
+    }
+
+    public String getProductStock() {
+        return productStock;
+    }
+
+    public void setProductStock(String productStock) {
+        this.productStock = productStock;
+    }
+
+    public String getTypeStock() {
+        return typeStock;
+    }
+
+    public void setTypeStock(String typeStock) {
+        this.typeStock = typeStock;
+    }
+
+    public String getPublished() {
+        return published;
+    }
+
+    public void setPublished(String published) {
+        this.published = published;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(String createdate) {
+        this.createdate = createdate;
+    }
+
+}

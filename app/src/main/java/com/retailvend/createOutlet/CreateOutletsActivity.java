@@ -104,9 +104,6 @@ public class CreateOutletsActivity extends AppCompatActivity implements Location
                     stateId = createOutletBeatListDatum.getStateId();
                     cityId = createOutletBeatListDatum.getCityId();
                     zoneId = createOutletBeatListDatum.getZoneId();
-                    sessionManagerSP.setStateId(stateId);
-                    sessionManagerSP.setCityId(cityId);
-                    sessionManagerSP.setZoneId(zoneId);
                 }
             }
 

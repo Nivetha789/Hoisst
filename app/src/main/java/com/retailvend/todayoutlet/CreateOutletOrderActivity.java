@@ -40,13 +40,14 @@ import com.retailvend.model.order.CreateOrderModel;
 import com.retailvend.model.outlets.AddAttendanceModel;
 import com.retailvend.model.outlets.ProductTypeDatum;
 import com.retailvend.model.outlets.ProductTypeModel;
+import com.retailvend.model.outlets.productDetailsModel.ProductDetailsModel;
+import com.retailvend.model.outlets.productDetailsModel.ProductTypeDetailDatum;
 import com.retailvend.productModel.AddProductModel;
 import com.retailvend.retrofit.RetrofitClient;
 import com.retailvend.utills.CustomProgress;
 import com.retailvend.utills.CustomToast;
 import com.retailvend.utills.ProductAdapter;
 import com.retailvend.utills.SessionManagerSP;
-import com.retailvend.utills.SharedPrefManager;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -95,10 +96,12 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     String type_id = "";
     String unitItem = "";
     String unitId = "";
+    String typeId = "";
     String lat_val = "";
     String long_val = "";
     String otp_value = "";
     List<ProductTypeDatum> productTypeData;
+    List<ProductTypeDetailDatum> productTypeDetailsData;
     private final static int MY_REQUEST_CODE = 1;
     private final static int MY_REQUEST_CODE1 = 2;
     //    String[] unitValue;
@@ -161,6 +164,8 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         discount = findViewById(R.id.discount);
         dueDays = findViewById(R.id.dueDays);
         discountLayout = findViewById(R.id.discountLayout);
+
+        productTypeDetailsData = new ArrayList<>();
 
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,9 +265,8 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
                 unitItem = productTypeDatum.getDescription();
                 unitId = productTypeDatum.getProductUnit();
-                price = productTypeDatum.getProductPrice();
-                txtPrice.setText("₹." + price);
-                type_id = productTypeDatum.getTypeId();
+                typeId = productTypeDatum.getTypeId();
+                productTypeDetailsApi(typeId);
             }
 
             @Override
@@ -549,65 +553,65 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
     }
 
     public void createOrderApi() {
-            CustomProgress.showProgress(activity);
+        CustomProgress.showProgress(activity);
 
-            String emp_id = sessionManagerSP.getEmployeeId();
-            String attandance_id = sessionManagerSP.getAssignId();
+        String emp_id = sessionManagerSP.getEmployeeId();
+        String attandance_id = sessionManagerSP.getAssignId();
 
-            Call<CreateOrderModel> call = RetrofitClient
-                    .getInstance().getApi().createOrder("_addSalesOrder", emp_id, store_id, bill_type, discount.getText().toString(), dueDays.getText().toString(), "1", attandance_id, addProductJson);
+        Call<CreateOrderModel> call = RetrofitClient
+                .getInstance().getApi().createOrder("_addSalesOrder", emp_id, store_id, bill_type, discount.getText().toString(), dueDays.getText().toString(), "1", attandance_id, addProductJson);
 
-            call.enqueue(new Callback<CreateOrderModel>() {
-                @Override
-                public void onResponse(@NonNull Call<CreateOrderModel> call, @NonNull Response<CreateOrderModel> response) {
+        call.enqueue(new Callback<CreateOrderModel>() {
+            @Override
+            public void onResponse(@NonNull Call<CreateOrderModel> call, @NonNull Response<CreateOrderModel> response) {
 
-                    try {
+                try {
 
-                        Gson gson = new Gson();
-                        String json = gson.toJson(response.body());
+                    Gson gson = new Gson();
+                    String json = gson.toJson(response.body());
 
-                        CreateOrderModel createOrderModel = gson.fromJson(json, CreateOrderModel.class);
-                        String s = createOrderModel.getMessage();
+                    CreateOrderModel createOrderModel = gson.fromJson(json, CreateOrderModel.class);
+                    String s = createOrderModel.getMessage();
 
-                        if (createOrderModel.getStatus() == 1) {
+                    if (createOrderModel.getStatus() == 1) {
 
 //                        text_signIn.setVisibility(View.VISIBLE);
-                            CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
+                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
 
-                            CustomProgress.hideProgress(activity);
-                            boolean isConnected = ConnectivityReceiver.isConnected();
-                            if (isConnected) {
-                                updateAttendanceApi();
-                            } else {
-//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
-                                CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Please check your internet connection");
-                            }
-
+                        CustomProgress.hideProgress(activity);
+                        boolean isConnected = ConnectivityReceiver.isConnected();
+                        if (isConnected) {
+                            updateAttendanceApi();
                         } else {
-//                        text_signIn.setVisibility(View.VISIBLE);
-                            CustomProgress.hideProgress(activity);
-                            //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                            CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
-//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                            CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Please check your internet connection");
                         }
 
-                    } catch (Exception e) {
-                        Log.d("Exception", e.getMessage());
+                    } else {
+//                        text_signIn.setVisibility(View.VISIBLE);
                         CustomProgress.hideProgress(activity);
+                        //                        Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                        CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast(createOrderModel.getMessage());
+//                    Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
                     }
 
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<CreateOrderModel> call, @NonNull Throwable t) {
-                    Log.d("Failure ", t.getMessage());
-//                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
-                    CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Something went wrong try again..");
-//                text_signIn.setVisibility(View.VISIBLE);
+                } catch (Exception e) {
+                    Log.d("Exception", e.getMessage());
                     CustomProgress.hideProgress(activity);
                 }
-            });
-        }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CreateOrderModel> call, @NonNull Throwable t) {
+                Log.d("Failure ", t.getMessage());
+//                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                CustomToast.getInstance(CreateOutletOrderActivity.this).showSmallCustomToast("Something went wrong try again..");
+//                text_signIn.setVisibility(View.VISIBLE);
+                CustomProgress.hideProgress(activity);
+            }
+        });
+    }
 
     public void addProductList() {
         String[] parts = txtPrice.getText().toString().split("\\.");
@@ -616,15 +620,15 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         int a = Integer.parseInt(part2);
         int b = Integer.parseInt(qty.getText().toString().trim());
         totalPriceList = a * b;
-//        System.out.println("parts " + parts[2]);
         System.out.println("totalPriceList " + totalPriceList);
-        addProductModel.add(new AddProductModel(prod_id, prod_name, type_id, unitId, price, totalPriceList, qty.getText().toString()));
+        addProductModel.add(new AddProductModel(prod_id, prod_name, typeId, unitId, price, totalPriceList, qty.getText().toString()));
         updateAddProductAdapter("add", 0);
         product_name.setText("");
         productTypeData.clear();
         spin_name.setAdapter(null);
         txtPrice.setText("");
         qty.setText("");
+//        System.out.println("parts " + prod_id+" , "+ prod_name+" , "+ typeId+" , "+ unitId+" , "+ price+" , "+totalPriceList+" , "+ qty.getText().toString());
     }
 
 
@@ -677,14 +681,11 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
     public void productTypeApi(String prodId) {
         CustomProgress.showProgress(activity);
-        String state_id = sessionManagerSP.getStateId();
-        String city_id = sessionManagerSP.getCityId();
-        String zone_id = sessionManagerSP.getZoneId();
 
 //        String emp_id= SharedPrefManager.getInstance(CreateOutletOrderActivity.this).getUser().getId();
 
         Call<ProductTypeModel> call = RetrofitClient
-                .getInstance().getApi().productType("_detailProductType", state_id,city_id,zone_id,store_id,type_id,"1");
+                .getInstance().getApi().productType("_listProductType", prodId);
 
         call.enqueue(new Callback<ProductTypeModel>() {
             @Override
@@ -742,6 +743,61 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         });
     }
 
+    public void productTypeDetailsApi(String typeId) {
+        CustomProgress.showProgress(activity);
+        String state_id = sessionManagerSP.getStateId();
+        String city_id = sessionManagerSP.getCityId();
+        String zone_id = sessionManagerSP.getZoneId();
+
+//        String emp_id= SharedPrefManager.getInstance(CreateOutletOrderActivity.this).getUser().getId();
+
+        Call<ProductDetailsModel> call = RetrofitClient
+                .getInstance().getApi().productTypeDetails("_detailProductType", state_id, city_id, zone_id, store_id, typeId, "1");
+
+        call.enqueue(new Callback<ProductDetailsModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ProductDetailsModel> call, @NonNull Response<ProductDetailsModel> response) {
+
+                try {
+
+                    Gson gson = new Gson();
+                    String json = gson.toJson(response.body());
+
+                    ProductDetailsModel productTypeModel = gson.fromJson(json, ProductDetailsModel.class);
+
+                    if (productTypeModel.getStatus() == 1) {
+                        CustomProgress.hideProgress(activity);
+                        productTypeDetailsData = productTypeModel.getData();
+
+                        if (productTypeDetailsData != null) {
+                            for (int i = 0; i <= productTypeDetailsData.size(); i++) {
+                                price = productTypeDetailsData.get(i).getMrpPrice();
+                                txtPrice.setText("₹." + productTypeDetailsData.get(i).getMrpPrice());
+                            }
+                        }
+                    } else {
+                        CustomProgress.hideProgress(activity);
+//                        CustomToast.getInstance(activity).showSmallCustomToast(productTypeModel.getMessage());
+                    }
+
+                } catch (Exception e) {
+                    Log.d("Exception", e.getMessage());
+                    CustomProgress.hideProgress(activity);
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ProductDetailsModel> call, @NonNull Throwable t) {
+                Log.d("Failure ", t.getMessage());
+//                Toast.makeText(LoginActivity.this, "Invalid User Name or Password", Toast.LENGTH_SHORT).show();
+                CustomToast.getInstance(activity).showSmallCustomToast("Something went wrong try again..");
+//                text_signIn.setVisibility(View.VISIBLE);
+                CustomProgress.hideProgress(activity);
+            }
+        });
+    }
+
     public void updateAttendanceApi() {
         CustomProgress.showProgress(activity);
         String emp_id = sessionManagerSP.getEmployeeId();
@@ -749,7 +805,7 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
         String invoice_id = sessionManagerSP.getInvoiceId();
 
         Call<AddAttendanceModel> call = RetrofitClient
-                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", assign_id,invoice_id);
+                .getInstance().getApi().updateAttendance("_updateAttendance", emp_id, store_id, lat_val, long_val, btn_Type_val, "", assign_id, invoice_id);
 
         call.enqueue(new Callback<AddAttendanceModel>() {
             @Override
