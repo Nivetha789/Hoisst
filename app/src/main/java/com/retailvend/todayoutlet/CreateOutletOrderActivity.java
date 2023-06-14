@@ -771,8 +771,8 @@ public class CreateOutletOrderActivity extends AppCompatActivity implements Adap
 
                         if (productTypeDetailsData != null) {
                             for (int i = 0; i <= productTypeDetailsData.size(); i++) {
-                                price = productTypeDetailsData.get(i).getMrpPrice();
-                                txtPrice.setText("₹." + productTypeDetailsData.get(i).getMrpPrice());
+                                price = productTypeDetailsData.get(i).getProductPrice();
+                                txtPrice.setText("₹." + productTypeDetailsData.get(i).getProductPrice());
                             }
                         }
                     } else {
